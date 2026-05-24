@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://m5yng5prgcip"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_iyf10"]
+[ext_resource type="Texture2D" uid="uid://b2ghjmgfs5uoe" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Volleyball Tile.png" id="2_37typ"]
+[ext_resource type="PackedScene" uid="uid://dy6i607ryxmxm" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/BlankBackground.tscn" id="3_wfb80"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_ect1w"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_51k1r"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_duph7"]
+[ext_resource type="PackedScene" uid="uid://b5lf243tgfp82" path="res://Scenes/Object Scenes/Mode Stuff/Survival/Sumo/TheRing.tscn" id="7_85klk"]
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+script = ExtResource("1_iyf10")
+CameraZoom = 0.8
+floorColorOverride = Color(0.952941, 0.788235, 0.545098, 1)
+InsideColorOverride = Color(0.854902, 0.647059, 0.533333, 1)
+OutlineColorOverride = Color(0.768627, 0.427451, 0.368627, 1)
+groundTexture = ExtResource("2_37typ")
+background = ExtResource("3_wfb80")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-2304, -1152, -2304, 1344, 2304, 1344, 2304, -1280, -2304, -1280, -2304, -1152, 2176, -1152, 2176, 640, -2176, 640, -2176, -1152)
+metadata/invert = true
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+texture = ExtResource("4_ect1w")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1472, 576)
+texture = ExtResource("5_51k1r")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1472, 576)
+texture = ExtResource("5_51k1r")
+flip_h = true
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1216, 384)
+texture = ExtResource("5_51k1r")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1216, 384)
+texture = ExtResource("5_51k1r")
+flip_h = true
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-960, 192)
+texture = ExtResource("5_51k1r")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(960, 192)
+texture = ExtResource("5_51k1r")
+flip_h = true
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-704, 0)
+texture = ExtResource("5_51k1r")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(704, 0)
+texture = ExtResource("5_51k1r")
+flip_h = true
+
+[node name="ItemSpawner" parent="." instance=ExtResource("6_duph7")]
+position = Vector2(-512, -512)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("6_duph7")]
+position = Vector2(576, -512)
+
+[node name="TheRing" parent="." instance=ExtResource("7_85klk")]
+scale = Vector2(0.9, 0.9)

@@ -1,0 +1,132 @@
+[gd_scene load_steps=12 format=3 uid="uid://hl8udnv43ic6"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_wn5gm"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="2_1x065"]
+[ext_resource type="PackedScene" uid="uid://c684fq7g521q8" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/MountainPeakBackground.tscn" id="2_8dyq2"]
+[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="2_28u54"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="4_0t0ht"]
+[ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Scenes/Object Scenes/Level Stuff/Sand.tscn" id="5_6u7tv"]
+[ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Scenes/Object Scenes/Mode Stuff/Golf/GolfHole.tscn" id="6_120ft"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8txa"]
+size = Vector2(6656, 3744)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d6gc2"]
+size = Vector2(128, 4992)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qs0tx"]
+size = Vector2(7680, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rym46"]
+size = Vector2(448, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(-128, -768)
+script = ExtResource("1_wn5gm")
+LevelUnit = 4
+CameraZoom = 0.6
+background = ExtResource("2_8dyq2")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(128, 720)
+shape = SubResource("RectangleShape2D_q8txa")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(505.6, 0)
+polygon = PackedVector2Array(-2809.6, 1920, -1913.6, 1920, -1849.6, 3200, -2873.6, 3200)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-454.4, 2688)
+polygon = PackedVector2Array(1030.4, -640, 966.4, -640, 902.4, 512, 2822.4, 512, 2630.4, -832, 2566.4, -832, 2118.4, -512, 1862.4, -512, 1862.4, -384, 1414.4, -384, 1414.4, -512, 1158.4, -512)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(505.6, 0)
+polygon = PackedVector2Array(-2809.6, -576, -2553.6, 256, -1785.6, 256, -1657.6, 128, -1337.6, 704, -1337.6, 728, -1657.6, 768, -2617.6, 768, -2809.6, 704)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(505, 0)
+polygon = PackedVector2Array(-633, -128, -633, 0, -577, 64, 135, 640, 1543, 640, 1671, 0, 1671, -128, 1223, -192, 1031, -192, 903, -256, 839, -256, 839, 0, 647, 0, 647, -256, 583, -256, 327, -192, -249, -192)
+
+[node name="DeathZone" parent="." instance=ExtResource("2_28u54")]
+position = Vector2(-3904, 1088)
+
+[node name="CollisionShape2D" parent="DeathZone" index="0"]
+position = Vector2(128, -384)
+shape = SubResource("RectangleShape2D_d6gc2")
+
+[node name="DeathZone2" parent="." instance=ExtResource("2_28u54")]
+position = Vector2(-3904, 1088)
+
+[node name="CollisionShape2D" parent="DeathZone2" index="0"]
+position = Vector2(7680, -384)
+shape = SubResource("RectangleShape2D_d6gc2")
+
+[node name="DeathZone3" parent="." instance=ExtResource("2_28u54")]
+position = Vector2(-3904, 1088)
+
+[node name="CollisionShape2D" parent="DeathZone3" index="0"]
+position = Vector2(3904, -2944)
+shape = SubResource("RectangleShape2D_qs0tx")
+
+[node name="DeathZone4" parent="." instance=ExtResource("2_28u54")]
+position = Vector2(-3904, 1088)
+
+[node name="CollisionShape2D" parent="DeathZone4" index="0"]
+position = Vector2(3904, 2176)
+shape = SubResource("RectangleShape2D_qs0tx")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1664, 1664)
+texture = ExtResource("2_1x065")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1792, 1664)
+texture = ExtResource("2_1x065")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1920, 1664)
+texture = ExtResource("2_1x065")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2048, 1664)
+texture = ExtResource("2_1x065")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1664, 1536)
+texture = ExtResource("2_1x065")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1792, 1536)
+texture = ExtResource("2_1x065")
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1920, 1536)
+texture = ExtResource("2_1x065")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2048, 1536)
+texture = ExtResource("2_1x065")
+
+[node name="ItemSpawner" parent="." instance=ExtResource("4_0t0ht")]
+position = Vector2(1536, 1880)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("4_0t0ht")]
+position = Vector2(1600, -448)
+
+[node name="Sand2" parent="." instance=ExtResource("5_6u7tv")]
+position = Vector2(960, 1856)
+
+[node name="CollisionShape2D" parent="Sand2" index="0"]
+position = Vector2(224, 384)
+shape = SubResource("RectangleShape2D_rym46")
+
+[node name="Hole" parent="." instance=ExtResource("6_120ft")]
+position = Vector2(1280, -64)
+
+[editable path="DeathZone"]
+[editable path="DeathZone2"]
+[editable path="DeathZone3"]
+[editable path="DeathZone4"]
+[editable path="Sand2"]

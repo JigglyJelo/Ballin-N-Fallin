@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://h4y8bi6prkry"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/LevelMenu.cs" id="2_1u16u"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="2_rfns1"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="3_i8aar"]
+
+[node name="LevelMenu" type="Node2D"]
+script = ExtResource("2_1u16u")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 640.0
+offset_bottom = -846.0
+scale = Vector2(1.5, 1.5)
+text = "Mode Levels"
+label_settings = ExtResource("2_rfns1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="MenuBackButton" parent="." instance=ExtResource("3_i8aar")]
+position = Vector2(1750, 970)

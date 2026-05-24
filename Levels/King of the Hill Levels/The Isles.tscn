@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://de4is5ecax1w1"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_bxaac"]
+[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_tvh6x"]
+[ext_resource type="PackedScene" uid="uid://baf3theg36lvb" path="res://Scenes/Object Scenes/Mode Stuff/King of the Hill/KothZone.tscn" id="3_xelj5"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="5_hyq4w"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="6_a1622"]
+[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="7_be241"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="7_scr51"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_of0fm"]
+size = Vector2(7168, 4032)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ihjk8"]
+size = Vector2(4864, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+script = ExtResource("1_bxaac")
+CameraZoom = 0.55
+background = ExtResource("2_tvh6x")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(0, -128)
+shape = SubResource("RectangleShape2D_of0fm")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-3712, 2176, -3712, -2304, 3712, -2304, 3712, 2176, 2432, 2176, 2432, -640, 3328, -640, 3328, -1920, -3328, -1920, -3328, -640, -2432, -640, -2432, 2176)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-448, 960, 448, 960, 448, 2176, -448, 2176)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-1792, 384, -1152, 384, -1152, 2176, -1792, 2176)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1792, 384, 1152, 384, 1152, 2176, 1792, 2176)
+
+[node name="KothZone" parent="." instance=ExtResource("3_xelj5")]
+
+[node name="CollisionPolygon2D" parent="KothZone" index="0"]
+polygon = PackedVector2Array(448, 960, 448, 384, -448, 384, -448, 960)
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(-2880, -896)
+texture = ExtResource("5_hyq4w")
+
+[node name="RespawnPoint2" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(2880, -896)
+texture = ExtResource("5_hyq4w")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-3136, -832)
+texture = ExtResource("6_a1622")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2624, -832)
+texture = ExtResource("6_a1622")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-3136, -1152)
+texture = ExtResource("6_a1622")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2624, -1152)
+texture = ExtResource("6_a1622")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(2624, -832)
+texture = ExtResource("6_a1622")
+flip_h = true
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(3136, -832)
+texture = ExtResource("6_a1622")
+flip_h = true
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(2624, -1152)
+texture = ExtResource("6_a1622")
+flip_h = true
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(3136, -1152)
+texture = ExtResource("6_a1622")
+flip_h = true
+
+[node name="ItemSpawner" parent="." instance=ExtResource("7_scr51")]
+position = Vector2(-1472, 0)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("7_scr51")]
+position = Vector2(1472, 0)
+
+[node name="DeathZone" parent="." instance=ExtResource("7_be241")]
+position = Vector2(0, 2240)
+
+[node name="CollisionShape2D" parent="DeathZone" index="0"]
+shape = SubResource("RectangleShape2D_ihjk8")
+
+[editable path="KothZone"]
+[editable path="DeathZone"]

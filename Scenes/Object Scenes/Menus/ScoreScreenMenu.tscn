@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1m6seqonfx4b"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/ScoreScreenMenu.cs" id="1_qoh07"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="2_aaaqf"]
+
+[node name="ScoreScreenMenu" type="Node2D"]
+process_mode = 1
+script = ExtResource("1_qoh07")
+
+[node name="Selections" type="Node" parent="."]
+
+[node name="PlayText" type="Label" parent="Selections"]
+offset_left = 1466.5
+offset_top = 1000.0
+offset_right = 2373.5
+offset_bottom = 1234.0
+pivot_offset = Vector2(453.5, 117)
+text = "Play Again"
+label_settings = ExtResource("2_aaaqf")
+horizontal_alignment = 1
+
+[node name="ChangeText" type="Label" parent="Selections"]
+offset_left = 1243.5
+offset_top = 1300.0
+offset_right = 2596.5
+offset_bottom = 1534.0
+pivot_offset = Vector2(676.5, 117)
+text = "Change Settings"
+label_settings = ExtResource("2_aaaqf")
+horizontal_alignment = 1
+
+[node name="QuitText" type="Label" parent="Selections"]
+offset_left = 1693.0
+offset_top = 1600.0
+offset_right = 2147.0
+offset_bottom = 1834.0
+pivot_offset = Vector2(227, 117)
+text = "Quit"
+label_settings = ExtResource("2_aaaqf")
+horizontal_alignment = 1

@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0b20opd6aq21"]
+
+[ext_resource type="Script" path="res://Scripts/Modes/Survival/Trash.cs" id="1_hoiy3"]
+[ext_resource type="Texture2D" uid="uid://d3juuk4n2yn7g" path="res://Assets/Sprites/Mode Stuff/Trash/WasteBarrel.png" id="1_hvor8"]
+[ext_resource type="Script" path="res://Scripts/InterpolatedBody.cs" id="2_rekab"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ugvfo"]
+friction = 0.25
+bounce = 0.2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1rjef"]
+size = Vector2(204, 300)
+
+[node name="Node" type="Node"]
+script = ExtResource("1_hoiy3")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Regain", "Trash"]]
+physics_interpolation_mode = 1
+mass = 3.0
+physics_material_override = SubResource("PhysicsMaterial_ugvfo")
+can_sleep = false
+script = ExtResource("2_rekab")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_1rjef")
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Smoothing2D"]
+texture_repeat = 3
+texture = ExtResource("1_hvor8")
+region_enabled = true
+region_rect = Rect2(0, 0, 206, 298)

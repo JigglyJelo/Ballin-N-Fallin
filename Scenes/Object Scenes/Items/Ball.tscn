@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://cys6uwaactj4q"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://cl78t0kopdgd6" path="res://Materials/PlayerPhysicsMaterial.tres" id="1_u2pas"]
+[ext_resource type="Script" path="res://Scripts/Items/Spawnable Item Scripts/BallScript.cs" id="2_gp4e6"]
+[ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Scenes/Object Scenes/Particles/Shadow.tscn" id="2_id3sp"]
+[ext_resource type="Shape2D" uid="uid://mmicm5qifgge" path="res://Materials/PlayerShape.tres" id="3_nn2xx"]
+[ext_resource type="Script" path="res://Scripts/InterpolatedBody.cs" id="4_0ve30"]
+[ext_resource type="Texture2D" uid="uid://dlm0ki33nhb7f" path="res://Assets/Sprites/Player/Ball31.png" id="4_mae86"]
+[ext_resource type="Texture2D" uid="uid://2n6tbh4lhy5d" path="res://Assets/Sprites/Player/190/BallLines.png" id="6_a7mkp"]
+[ext_resource type="Texture2D" uid="uid://br0xolkmnp2kg" path="res://Assets/Sprites/Player/190/Outline.png" id="6_x67au"]
+[ext_resource type="AudioStream" uid="uid://c4exk1s5oqhbl" path="res://Assets/SFX/bounce.ogg" id="7_xkxgu"]
+[ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="8_aog5p"]
+
+[node name="Ball" type="Node2D" groups=["Bump", "Item"]]
+script = ExtResource("2_gp4e6")
+
+[node name="Shadow" parent="." instance=ExtResource("2_id3sp")]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Bump", "Item"]]
+physics_interpolation_mode = 1
+physics_material_override = ExtResource("1_u2pas")
+gravity_scale = 2.0
+continuous_cd = 2
+contact_monitor = true
+max_contacts_reported = 6
+linear_damp = 0.125
+angular_damp = 0.125
+script = ExtResource("4_0ve30")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = ExtResource("3_nn2xx")
+
+[node name="Area2D" type="Area2D" parent="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/Area2D"]
+shape = ExtResource("3_nn2xx")
+
+[node name="BounceSound" type="AudioStreamPlayer2D" parent="RigidBody2D"]
+stream = ExtResource("7_xkxgu")
+bus = &"SFX"
+
+[node name="ShadowRemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
+remote_path = NodePath("../../Shadow")
+update_rotation = false
+update_scale = false
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+visible = false
+
+[node name="BallSprite" type="Sprite2D" parent="Smoothing2D"]
+texture_repeat = 3
+scale = Vector2(3.015, 3.015)
+texture = ExtResource("4_mae86")
+region_enabled = true
+region_rect = Rect2(0, 62, 62, 62)
+
+[node name="Shading" type="Sprite2D" parent="Smoothing2D"]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("8_aog5p")
+
+[node name="LinesSprite" type="Sprite2D" parent="Smoothing2D"]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("6_a7mkp")
+
+[node name="OutlineSprite" type="Sprite2D" parent="Smoothing2D"]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("6_x67au")
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_entered"]

@@ -1,0 +1,95 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv2evldohts40"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/MainMenu.cs" id="1_7hwb8"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="3_45pv8"]
+
+[node name="Main Menu" type="Node2D"]
+script = ExtResource("1_7hwb8")
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="Play Text" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.0
+offset_top = -117.0
+offset_right = 178.0
+offset_bottom = 117.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(177, 117)
+text = "Play"
+label_settings = ExtResource("3_45pv8")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Online Text" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -401.0
+offset_top = 125.0
+offset_right = 402.0
+offset_bottom = 476.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(401, 175)
+text = "Online"
+label_settings = ExtResource("3_45pv8")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Settings Text" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -510.0
+offset_top = 400.0
+offset_right = 510.0
+offset_bottom = 751.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(510, 175)
+text = "Settings"
+label_settings = ExtResource("3_45pv8")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Exit Text" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.5
+offset_top = 733.0
+offset_right = 155.5
+offset_bottom = 967.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(155.5, 117)
+text = "Exit"
+label_settings = ExtResource("3_45pv8")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Copyright" type="Label" parent="."]
+self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
+offset_left = -1920.0
+offset_top = 1010.0
+offset_right = -605.0
+offset_bottom = 1244.0
+scale = Vector2(0.333, 0.333)
+text = "© 2026 JigglyJello"
+label_settings = ExtResource("3_45pv8")

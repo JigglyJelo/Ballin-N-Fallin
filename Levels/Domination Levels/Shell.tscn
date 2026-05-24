@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://q3dk6sixm7gh"]
+
+[ext_resource type="PackedScene" uid="uid://dqswlrmdevp58" path="res://Levels/_Base Levels/Shell.tscn" id="1_6uec7"]
+[ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Scenes/Object Scenes/Mode Stuff/Domination/DominationZone.tscn" id="6_o8axa"]
+
+[node name="Level" instance=ExtResource("1_6uec7")]
+
+[node name="DominationZone" parent="." index="12" instance=ExtResource("6_o8axa")]
+position = Vector2(-1845, 450)
+
+[node name="DominationZone2" parent="." index="13" instance=ExtResource("6_o8axa")]
+position = Vector2(1775, 439)
+
+[node name="DominationZone3" parent="." index="14" instance=ExtResource("6_o8axa")]
+position = Vector2(2, -672)
+
+[node name="DominationZone4" parent="." index="15" instance=ExtResource("6_o8axa")]
+position = Vector2(718, 1470)
+
+[node name="DominationZone5" parent="." index="16" instance=ExtResource("6_o8axa")]
+position = Vector2(-814, 1416)
+
+[node name="DominationZone6" parent="." index="17" instance=ExtResource("6_o8axa")]
+position = Vector2(1215, -325)
+
+[node name="DominationZone7" parent="." index="18" instance=ExtResource("6_o8axa")]
+position = Vector2(-1370, -218)
+
+[node name="DominationZone8" parent="." index="19" instance=ExtResource("6_o8axa")]
+position = Vector2(-441, 167)
+
+[node name="DominationZone9" parent="." index="20" instance=ExtResource("6_o8axa")]
+position = Vector2(451, 204)
+
+[node name="DominationZone10" parent="." index="21" instance=ExtResource("6_o8axa")]
+position = Vector2(-451, 829)
+
+[node name="DominationZone11" parent="." index="22" instance=ExtResource("6_o8axa")]
+position = Vector2(451, 829)

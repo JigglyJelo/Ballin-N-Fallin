@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://rncu3w882iba"]
+
+[ext_resource type="PackedScene" uid="uid://gry0r2s1m3ge" path="res://Scenes/Object Scenes/Backgrounds/BackgroundTemplate.tscn" id="1_txe7h"]
+[ext_resource type="Texture2D" uid="uid://6r6jx1yvscx0" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/MountainRange/MountainRangeTop.png" id="2_ge3o7"]
+[ext_resource type="Texture2D" uid="uid://cxyyds7taiu87" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Front/DenseForest/DenseForestTop.png" id="3_8wduy"]
+[ext_resource type="Texture2D" uid="uid://f4kv6fsnutkr" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Front/DenseForest/DenseForestMid.png" id="4_xrq64"]
+
+[node name="Background" instance=ExtResource("1_txe7h")]
+
+[node name="Mountains" type="Node2D" parent="BackgroundLayers" index="0"]
+
+[node name="MountainTop" type="Sprite2D" parent="BackgroundLayers/Mountains" index="0"]
+position = Vector2(1920, 851)
+scale = Vector2(2, 2)
+texture = ExtResource("2_ge3o7")
+
+[node name="MountainBottom" type="Polygon2D" parent="BackgroundLayers/Mountains" index="1"]
+position = Vector2(0, 1)
+color = Color(0.8, 0.8, 0.8, 1)
+polygon = PackedVector2Array(3840, 1132, 3840, 1315, 0, 1315, 0, 1132)
+
+[node name="Forest" type="Node2D" parent="BackgroundLayers" index="1"]
+
+[node name="ForestTop" type="Sprite2D" parent="BackgroundLayers/Forest" index="0"]
+position = Vector2(1920, 1163)
+scale = Vector2(2, 2)
+texture = ExtResource("3_8wduy")
+
+[node name="ForestMiddle" type="Sprite2D" parent="BackgroundLayers/Forest" index="1"]
+position = Vector2(1920, 1433)
+scale = Vector2(2, 2)
+texture = ExtResource("4_xrq64")
+
+[node name="ForestBottom" type="Polygon2D" parent="BackgroundLayers/Forest" index="2"]
+color = Color(0.294118, 0.294118, 0.294118, 1)
+polygon = PackedVector2Array(3840, 1548, 3840, 2160, 0, 2160, 0, 1548)

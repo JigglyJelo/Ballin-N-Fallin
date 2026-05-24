@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://oojnkeb07bov"]
+
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="1_3kdnx"]
+[ext_resource type="Script" path="res://Scripts/Menus/Settings Menu/SoundtrackMenu.cs" id="1_ew2eo"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_g7um2"]
+
+[node name="SoundtrackMenu" type="Node2D"]
+script = ExtResource("1_ew2eo")
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -808.0
+offset_top = -1112.0
+offset_right = 835.0
+offset_bottom = -878.0
+text = "Custom Soundtrack"
+label_settings = ExtResource("1_3kdnx")
+
+[node name="SelectButton" type="Polygon2D" parent="."]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(1178, -1056, 1173, -896, 1472, -896, 1456, -1083)
+
+[node name="BackDirectoryButton" type="Polygon2D" parent="."]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-1689, -1018, -1694, -890, -1406, -896, -1417, -1034)
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_g7um2")]
+position = Vector2(1750, 970)

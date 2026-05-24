@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://ibjwnlhjrvd"]
+
+[ext_resource type="Script" path="res://Scripts/Modes/Survival/Trash.cs" id="1_1flxx"]
+[ext_resource type="Script" path="res://Scripts/InterpolatedBody.cs" id="2_cgqrb"]
+[ext_resource type="Texture2D" uid="uid://bkmosxfq65ihk" path="res://Assets/Sprites/Mode Stuff/Trash/crate.png" id="2_mschx"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_giq5l"]
+friction = 0.67
+bounce = 0.1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qfdcs"]
+size = Vector2(384, 384)
+
+[node name="Node" type="Node"]
+script = ExtResource("1_1flxx")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Regain", "Trash"]]
+physics_interpolation_mode = 1
+mass = 6.0
+physics_material_override = SubResource("PhysicsMaterial_giq5l")
+can_sleep = false
+script = ExtResource("2_cgqrb")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_qfdcs")
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Smoothing2D"]
+texture_repeat = 3
+texture = ExtResource("2_mschx")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 384)

@@ -1,0 +1,125 @@
+[gd_scene load_steps=11 format=3 uid="uid://blvbwis3142q8"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_2tfso"]
+[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="2_22bmg"]
+[ext_resource type="PackedScene" uid="uid://b2ydssn5bu2oi" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/Cutouts.tscn" id="2_ays8c"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_e34q5"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_d0iyf"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_upu38"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_snlv5"]
+size = Vector2(3840, 2160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iba28"]
+size = Vector2(128, 3200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mnrtg"]
+size = Vector2(128, 3200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qmxs7"]
+size = Vector2(4608, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(0, -512)
+script = ExtResource("1_2tfso")
+background = ExtResource("2_ays8c")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(0, 320)
+shape = SubResource("RectangleShape2D_snlv5")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-1024, 2176, -1024, 1152, 1024, 1152, 1024, 2176)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-704, 512, -704, 384, -448, 384, -448, 512)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(448, 512, 448, 384, 704, 384, 704, 512)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1472, 768, 1472, 256, 1600, 256, 1600, 768)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-1600, 768, -1600, 256, -1472, 256, -1472, 768)
+
+[node name="DeathZone" parent="." instance=ExtResource("2_22bmg")]
+position = Vector2(2240, 512)
+
+[node name="CollisionShape2D" parent="DeathZone" index="0"]
+position = Vector2(0, 64)
+shape = SubResource("RectangleShape2D_iba28")
+
+[node name="DeathZone2" parent="." instance=ExtResource("2_22bmg")]
+position = Vector2(2240, 512)
+
+[node name="CollisionShape2D" parent="DeathZone2" index="0"]
+position = Vector2(-4480, 64)
+shape = SubResource("RectangleShape2D_mnrtg")
+
+[node name="DeathZone3" parent="." instance=ExtResource("2_22bmg")]
+position = Vector2(2240, 512)
+
+[node name="CollisionShape2D" parent="DeathZone3" index="0"]
+position = Vector2(-2240, -1600)
+shape = SubResource("RectangleShape2D_qmxs7")
+
+[node name="DeathZone4" parent="." instance=ExtResource("2_22bmg")]
+position = Vector2(2240, 512)
+
+[node name="CollisionShape2D" parent="DeathZone4" index="0"]
+position = Vector2(-2240, 1728)
+shape = SubResource("RectangleShape2D_qmxs7")
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(0, 640)
+texture = ExtResource("4_e34q5")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-576, 832)
+texture = ExtResource("5_upu38")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-256, 1024)
+texture = ExtResource("5_upu38")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-576, 320)
+texture = ExtResource("5_upu38")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-192, 512)
+texture = ExtResource("5_upu38")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(256, 1024)
+texture = ExtResource("5_upu38")
+flip_h = true
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(576, 832)
+texture = ExtResource("5_upu38")
+flip_h = true
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(192, 512)
+texture = ExtResource("5_upu38")
+flip_h = true
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(576, 320)
+texture = ExtResource("5_upu38")
+flip_h = true
+
+[node name="ItemSpawner" parent="." instance=ExtResource("5_d0iyf")]
+position = Vector2(-896, 384)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("5_d0iyf")]
+position = Vector2(896, 384)
+
+[editable path="DeathZone"]
+[editable path="DeathZone2"]
+[editable path="DeathZone3"]
+[editable path="DeathZone4"]

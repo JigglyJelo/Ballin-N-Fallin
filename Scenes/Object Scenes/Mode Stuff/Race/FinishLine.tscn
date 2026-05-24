@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cedmqpxe4ge46"]
+
+[ext_resource type="Script" path="res://Scripts/Modes/Race/RaceCheckpoint.cs" id="1_jvhlo"]
+[ext_resource type="Texture2D" uid="uid://dhyoxhfh43pvb" path="res://Assets/Sprites/Mode Stuff/Race/finishTile.png" id="2_8si2q"]
+[ext_resource type="AudioStream" uid="uid://di1d11gds8qel" path="res://Assets/SFX/lap.ogg" id="3_tablg"]
+[ext_resource type="AudioStream" uid="uid://d0ais7f4uxvo1" path="res://Assets/SFX/complete.ogg" id="4_iw1wo"]
+
+[node name="FinishLine" type="Area2D"]
+script = ExtResource("1_jvhlo")
+isFinish = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+debug_color = Color(1, 1, 1, 0.501961)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("2_8si2q")
+region_enabled = true
+region_rect = Rect2(128, 128, 128, 128)
+
+[node name="LapSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_tablg")
+
+[node name="FinishSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_iw1wo")
+
+[connection signal="body_entered" from="." to="." method="_body_entered"]

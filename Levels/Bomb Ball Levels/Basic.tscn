@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://pxsdv448dt7c"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_t2512"]
+[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="2_rfsyq"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_hf8bt"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_210sh"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_5osmp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qeb0l"]
+size = Vector2(4352, 2304)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(0, -448)
+script = ExtResource("1_t2512")
+CameraZoom = 0.95
+background = ExtResource("2_rfsyq")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(0, 512)
+shape = SubResource("RectangleShape2D_qeb0l")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1920, -704, 2688, -704, 2688, 1728, -2688, 1728, -2688, -704, 1920, -704, 1920, -448, -1920, -448, -1920, 1472, 1920, 1472)
+metadata/invert = true
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(0, 576)
+texture = ExtResource("3_hf8bt")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-640, 1280)
+texture = ExtResource("4_210sh")
+metadata/team = "A"
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-960, 1280)
+texture = ExtResource("4_210sh")
+metadata/team = "A"
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-1280, 1280)
+texture = ExtResource("4_210sh")
+metadata/team = "A"
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-1600, 1280)
+texture = ExtResource("4_210sh")
+metadata/team = "A"
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(640, 1280)
+texture = ExtResource("4_210sh")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(960, 1280)
+texture = ExtResource("4_210sh")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(1280, 1280)
+texture = ExtResource("4_210sh")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(1600, 1280)
+texture = ExtResource("4_210sh")
+flip_h = true
+metadata/team = "B"
+
+[node name="ItemSpawner" parent="." instance=ExtResource("6_5osmp")]
+position = Vector2(0, -320)

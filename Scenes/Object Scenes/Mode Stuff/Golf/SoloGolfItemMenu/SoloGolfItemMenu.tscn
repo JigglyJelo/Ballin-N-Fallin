@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://byjpqpoximpqy"]
+
+[ext_resource type="Script" path="res://Scripts/Modes/Golf/SoloGolfItemMenu.cs" id="1_dwcma"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="2_fk42s"]
+[ext_resource type="Texture2D" uid="uid://k6timim6853t" path="res://Assets/Sprites/Player/TransformBar.png" id="3_cqudd"]
+
+[node name="ItemMenu" type="Node2D"]
+process_mode = 2
+script = ExtResource("1_dwcma")
+
+[node name="ItemMenu" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="ItemMenu"]
+color = Color(0, 0, 0, 0.501961)
+polygon = PackedVector2Array(3840, 0, 3840, 2176, 0, 2176, 0, 0)
+
+[node name="ItemsText" type="Label" parent="ItemMenu"]
+offset_left = 1344.0
+offset_right = 1965.0
+offset_bottom = 235.0
+scale = Vector2(2, 2)
+text = "Items"
+label_settings = ExtResource("2_fk42s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JuiceText" type="Label" parent="ItemMenu"]
+self_modulate = Color(1, 0.52549, 0, 1)
+offset_top = 1706.0
+offset_right = 1920.0
+offset_bottom = 1941.0
+scale = Vector2(2, 2)
+text = "Juice: 6.0"
+label_settings = ExtResource("2_fk42s")
+horizontal_alignment = 1
+
+[node name="Cursor" type="Sprite2D" parent="ItemMenu"]
+position = Vector2(-176, -123)
+texture = ExtResource("3_cqudd")
+
+[node name="Selections" type="Node2D" parent="ItemMenu"]

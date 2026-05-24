@@ -1,0 +1,216 @@
+[gd_scene load_steps=20 format=3 uid="uid://d3kluve2qip6p"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_hclno"]
+[ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Scenes/Object Scenes/Mode Stuff/Race/FinishLine.tscn" id="2_6ysr6"]
+[ext_resource type="PackedScene" uid="uid://cpksc5ah7h8vi" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/MovingCloudsBottom.tscn" id="2_vwajy"]
+[ext_resource type="Script" path="res://Scripts/Modes/Race/RaceCheckpoint.cs" id="3_tx3di"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_frdcu"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_rvt75"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m31uu"]
+size = Vector2(7054, 3968)
+
+[sub_resource type="Curve2D" id="Curve2D_6gjli"]
+bake_interval = 50.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1856, -64, 212.878, -155.331, -212.878, 155.331, -2432, 64, 0, 0, 0, 0, -2624, 320, -200, 0, 200, 0, -2368, 448, 0, 0, 0, 0, -2112, 320, 0, 0, 0, 0, -1856, -64)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_lkg7d"]
+bake_interval = 50.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1088, 320, 450, 0, -450, 0, 640, 448, 0, 0, 0, 0, 192, 320, 0, 0, 0, 0, 1088, 320)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_c6oyf"]
+bake_interval = 50.0
+_data = {
+"points": PackedVector2Array(0, 100, 0, 0, -3264, 512, 0, 100, 0, -100, -2944, 320, 0, 0, 0, 0, -3264, 64, 0, 0, 0, 0, -3264, 512)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_qy20t"]
+bake_interval = 50.0
+_data = {
+"points": PackedVector2Array(0, 400, 0, 0, 832, -576, 0, 400, 0, -400, 0, -1088, 0, 0, 0, 0, 832, -1600, 0, 0, 0, 0, 896, -1600, 0, 0, 0, 0, 896, -576, 0, 0, 0, 0, 832, -576)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_0gw3n"]
+bake_interval = 50.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -2752, -2368, 0, 0, 0, 0, -2624, -2368, 31.8366, 26.727, -31.8366, -26.727, -2654, -2465, 0, 0, 0, 0, -2752, -2496, 0, 0, 0, 0, -2752, -2368)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_2cij6"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -896, -1152, 0, 0, 0, 0, -896, 1024, 0, 0, 0, 0, 640, 1024, 0, 1080, 0, -1080, -640, -64, 0, 0, 0, 0, 640, -1152, 0, 0, 0, 0, -896, -1152)
+}
+point_count = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_684k0"]
+size = Vector2(128, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fqc6"]
+size = Vector2(768, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwfsq"]
+size = Vector2(128, 512)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hde"]
+size = Vector2(128, 512)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ucuik"]
+size = Vector2(512, 128)
+
+[sub_resource type="Curve2D" id="Curve2D_52b2i"]
+bake_interval = 10.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -448, 1600, 0, 0, 0, 0, 320, 1472, 0, 0, 0, 0, 1152, 1664, 0, 0, 0, 0, 2176, 1408, 0, 0, 0, 0, 1984, 704, 0, 0, 0, 0, 896, 640, 0, 0, 0, 0, -448, -128, 0, 0, 0, 0, -448, -448, 0, 0, 0, 0, -128, -768, 0, 0, 0, 0, 896, -832, 0, 0, 0, 0, 1536, -832, 0, 0, 0, 0, 2176, -768, 0, 0, 0, 0, 2176, -1344, 0, 0, 0, 0, 1472, -1728, 0, 0, 0, 0, -576, -1728, 0, 0, 0, 0, -1856, -1728, 0, 0, 0, 0, -1856, -704, 0, 0, 0, 0, -1280, -704, 0, 0, 0, 0, -1280, -192, 0, 0, 0, 0, -1856, 320, 0, 0, 0, 0, -2304, 896, 0, 0, 0, 0, -1984, 1728, 0, 0, 0, 0, -640, 1600)
+}
+point_count = 23
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+script = ExtResource("1_hclno")
+LevelUnit = 2
+CameraZoom = 0.55
+background = ExtResource("2_vwajy")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(-192, 0)
+shape = SubResource("RectangleShape2D_m31uu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(512, 960)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-3200, 1344, -3200, 960, -960, 960, -960, 832, -448, 832, 64, 704, 384, 960, 896, 960, 1216, 704, 1408, 896, 1856, 896, 1856, -576, 832, -576, 832, -1600, 1856, -1600, 1856, -2368, 1344, -2880, -3008, -2880, -3008, -896, -2624, -704, -2624, -576, -3200, -576, -3200, 1344, -4256, 1344, -4256, -3008, 2848, -3008, 2848, 1344)
+metadata/invert = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1088, 320, 1088, 64, -192, 64, -831, -192, -1087, -576, -1087, -1472, -639, -2112, 1216, -2112, 1216, -2240, 1088, -2368, -1600, -2368, -1600, -1984, -1984, -1984, -1984, -2432, -2112, -2496, -2112, -1856, -1600, -1856, -1600, -960, -1728, -960, -1728, -832, -1984, -832, -1984, -704, -2112, -704, -2112, -576, -1856, -576, -1856, -448, -1856, -64, -2112, 320)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-2752, -2368, -2752, -1216, -1984, -1216, -1984, -1472, -2112, -1472, -2112, -1344, -2624, -1344, -2624, -2368)
+
+[node name="Path2D" type="Path2D" parent="StaticBody2D"]
+curve = SubResource("Curve2D_6gjli")
+
+[node name="Path2D2" type="Path2D" parent="StaticBody2D"]
+curve = SubResource("Curve2D_lkg7d")
+
+[node name="Path2D3" type="Path2D" parent="StaticBody2D"]
+curve = SubResource("Curve2D_c6oyf")
+metadata/invert = true
+
+[node name="Path2D4" type="Path2D" parent="StaticBody2D"]
+curve = SubResource("Curve2D_qy20t")
+metadata/invert = true
+
+[node name="Path2D5" type="Path2D" parent="StaticBody2D"]
+curve = SubResource("Curve2D_0gw3n")
+
+[node name="Path2D6" type="Path2D" parent="StaticBody2D"]
+position = Vector2(-512, -960)
+curve = SubResource("Curve2D_2cij6")
+
+[node name="FinishLine" parent="." instance=ExtResource("2_6ysr6")]
+position = Vector2(1152, 640)
+
+[node name="CollisionShape2D" parent="FinishLine" index="0"]
+position = Vector2(-1664, 960)
+shape = SubResource("RectangleShape2D_684k0")
+
+[node name="Sprite2D" parent="FinishLine" index="1"]
+position = Vector2(-1664, 960)
+region_rect = Rect2(128, 128, 128, 640)
+
+[node name="Checkpoint" type="Area2D" parent="."]
+script = ExtResource("3_tx3di")
+id = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint"]
+position = Vector2(1984, 1088)
+shape = SubResource("RectangleShape2D_7fqc6")
+debug_color = Color(0, 1, 0, 0.501961)
+
+[node name="Checkpoint2" type="Area2D" parent="."]
+script = ExtResource("3_tx3di")
+id = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2"]
+position = Vector2(1664, -896)
+shape = SubResource("RectangleShape2D_dwfsq")
+debug_color = Color(0, 1, 0, 0.501961)
+
+[node name="Checkpoint3" type="Area2D" parent="."]
+script = ExtResource("3_tx3di")
+id = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint3"]
+position = Vector2(-1024, -1664)
+shape = SubResource("RectangleShape2D_k6hde")
+debug_color = Color(0, 1, 0, 0.501961)
+
+[node name="Checkpoint4" type="Area2D" parent="."]
+script = ExtResource("3_tx3di")
+id = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint4"]
+position = Vector2(-1856, 320)
+shape = SubResource("RectangleShape2D_ucuik")
+debug_color = Color(0, 1, 0, 0.501961)
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1344, 1664)
+texture = ExtResource("4_frdcu")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1344, 1536)
+texture = ExtResource("4_frdcu")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1216, 1536)
+texture = ExtResource("4_frdcu")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1088, 1536)
+texture = ExtResource("4_frdcu")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1216, 1664)
+texture = ExtResource("4_frdcu")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1088, 1664)
+texture = ExtResource("4_frdcu")
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-960, 1664)
+texture = ExtResource("4_frdcu")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-960, 1536)
+texture = ExtResource("4_frdcu")
+
+[node name="ItemSpawner" parent="." instance=ExtResource("5_rvt75")]
+position = Vector2(576, 384)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("5_rvt75")]
+position = Vector2(-1280, -1280)
+
+[node name="ItemSpawner3" parent="." instance=ExtResource("5_rvt75")]
+position = Vector2(1152, 1664)
+
+[node name="RacePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_52b2i")
+
+[connection signal="body_entered" from="Checkpoint" to="Checkpoint" method="_body_entered"]
+[connection signal="body_entered" from="Checkpoint2" to="Checkpoint2" method="_body_entered"]
+[connection signal="body_entered" from="Checkpoint3" to="Checkpoint3" method="_body_entered"]
+[connection signal="body_entered" from="Checkpoint4" to="Checkpoint4" method="_body_entered"]
+
+[editable path="FinishLine"]

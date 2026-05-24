@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmnn6w55xjnt1"]
+
+[ext_resource type="Texture2D" uid="uid://dackt2kb3nbo7" path="res://Assets/Sprites/Player/Ball63.png" id="1_2pevj"]
+[ext_resource type="Texture2D" uid="uid://cmtbji5no5wo2" path="res://Assets/Sprites/Player/500/Eyes/NeutralEyes.png" id="2_ch616"]
+[ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="2_dwxfu"]
+[ext_resource type="Texture2D" uid="uid://bjvo6aqhyx5p6" path="res://Assets/Sprites/Player/500/BallLines.png" id="2_s7lvn"]
+[ext_resource type="Texture2D" uid="uid://dkl0813004x0l" path="res://Assets/Sprites/Player/500/Pupils/NeutralPupils.png" id="3_dx6qb"]
+[ext_resource type="Texture2D" uid="uid://3uv460kx5rqu" path="res://Assets/Sprites/Player/500/Outline.png" id="4_wqrhg"]
+
+[node name="Player" type="Node2D" groups=["Player"]]
+
+[node name="BallSprite" type="Sprite2D" parent="."]
+texture_repeat = 3
+scale = Vector2(3.95, 3.95)
+texture = ExtResource("1_2pevj")
+region_enabled = true
+region_rect = Rect2(0, 0, 126, 126)
+
+[node name="ShadingSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_dwxfu")
+
+[node name="LinesSprite" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("2_s7lvn")
+
+[node name="EyesSprite" type="Sprite2D" parent="."]
+clip_children = 2
+texture = ExtResource("2_ch616")
+
+[node name="PupilsSprite" type="Sprite2D" parent="EyesSprite"]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("3_dx6qb")
+
+[node name="OutlineSprite" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("4_wqrhg")

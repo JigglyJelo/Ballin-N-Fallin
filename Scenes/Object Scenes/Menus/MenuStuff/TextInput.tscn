@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://benlioo3kdhb3"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/Menu Stuff/TextInput.cs" id="1_mi7pi"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="2_34uls"]
+
+[node name="TextInput" type="Polygon2D"]
+polygon = PackedVector2Array(0, 0, 832, 0, 832, 320, 0, 320)
+script = ExtResource("1_mi7pi")
+
+[node name="Outline" type="Line2D" parent="."]
+closed = true
+default_color = Color(0, 0, 0, 1)
+
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+self_modulate = Color(1, 1, 1, 0.501961)
+
+[node name="InputLabel" type="Label" parent="CanvasGroup"]
+offset_right = 832.0
+offset_bottom = 320.0
+label_settings = ExtResource("2_34uls")
+horizontal_alignment = 1
+vertical_alignment = 1

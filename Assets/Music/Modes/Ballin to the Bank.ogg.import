@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cexvgx17fkuyo"
+path="res://.godot/imported/Ballin to the Bank.ogg-18dfc28e550b472c33a008a3a71d92c7.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/Modes/Ballin to the Bank.ogg"
+dest_files=["res://.godot/imported/Ballin to the Bank.ogg-18dfc28e550b472c33a008a3a71d92c7.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

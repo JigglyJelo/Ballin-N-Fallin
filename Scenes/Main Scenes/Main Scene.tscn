@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dme3ppymd8g6u"]
+
+[ext_resource type="Script" path="res://Scripts/Game.cs" id="1_nn26k"]
+[ext_resource type="Script" path="res://Scripts/SceneTransitioner.cs" id="2_of2mv"]
+[ext_resource type="Script" path="res://Scripts/DynamicCamera.cs" id="2_tuvjl"]
+[ext_resource type="Script" path="res://Scripts/Cursor.cs" id="3_3hbu3"]
+
+[node name="Game" type="Node"]
+physics_interpolation_mode = 2
+script = ExtResource("1_nn26k")
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("2_tuvjl")
+
+[node name="SceneTransitioner" type="Node" parent="."]
+process_mode = 4
+script = ExtResource("2_of2mv")
+
+[node name="CursorManager" type="Node" parent="."]
+script = ExtResource("3_3hbu3")

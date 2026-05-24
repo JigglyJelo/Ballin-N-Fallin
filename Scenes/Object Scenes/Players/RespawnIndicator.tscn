@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6fxj2araxyyq"]
+
+[ext_resource type="Texture2D" uid="uid://dackt2kb3nbo7" path="res://Assets/Sprites/Player/Ball63.png" id="1_a5lir"]
+[ext_resource type="Script" path="res://Scripts/Visual Effects/RespawnIndicator.cs" id="1_qve7n"]
+[ext_resource type="Texture2D" uid="uid://dg0t5gagwh4b1" path="res://Assets/Sprites/Player/380/Outline.png" id="3_vccs3"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="4_yknqm"]
+
+[node name="RespawnIndicator" type="Node2D"]
+script = ExtResource("1_qve7n")
+
+[node name="BallSprite" type="Sprite2D" parent="."]
+texture_repeat = 3
+position = Vector2(-2, -2)
+scale = Vector2(3, 3)
+texture = ExtResource("1_a5lir")
+region_enabled = true
+region_rect = Rect2(0, 0, 124, 124)
+
+[node name="OutlineSprite" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+texture_repeat = 3
+texture = ExtResource("3_vccs3")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -175.0
+offset_top = -117.0
+offset_right = 178.0
+offset_bottom = 117.0
+pivot_offset = Vector2(176, 117)
+text = "7.7"
+label_settings = ExtResource("4_yknqm")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,129 @@
+[gd_scene load_steps=13 format=3 uid="uid://dcqiq1s4manhd"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_3mkrw"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="2_2jfr5"]
+[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="2_od8uk"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="3_dxurg"]
+[ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Scenes/Object Scenes/Mode Stuff/Race/FinishLine.tscn" id="4_hm6xk"]
+[ext_resource type="PackedScene" uid="uid://bn403mgsuccm0" path="res://Scenes/Object Scenes/Mode Stuff/Race/Checkpoint.tscn" id="5_sakdp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8n4m8"]
+size = Vector2(3840, 2304)
+
+[sub_resource type="Curve2D" id="Curve2D_ngls7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -384, 768, 0, 0, 0, 0, 1664, 768, 0, 0, 0, 0, 1664, -768, 0, 0, 0, 0, -1664, -768, 0, 0, 0, 0, -1664, 768, 0, 0, 0, 0, -512, 768)
+}
+point_count = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_712np"]
+size = Vector2(128, 832)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t8h71"]
+size = Vector2(640, 138)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0fqym"]
+size = Vector2(138, 832)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2cxn"]
+size = Vector2(640, 138)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+script = ExtResource("1_3mkrw")
+LevelUnit = 6
+background = ExtResource("2_od8uk")
+metadata/medals = PackedFloat32Array(50, 42, 35, 30)
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8n4m8")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-384, 768)
+polygon = PackedVector2Array(-1472, 384, -1472, -128, -1088, 256, 1856, 256, 2240, -128, 2240, -1408, 1856, -1792, -1088, -1792, -1472, -1408, -1472, 384, -1536, 384, -1536, -1920, 2304, -1920, 2304, 384)
+metadata/invert = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-128, 832)
+polygon = PackedVector2Array(-1088, -960, -1088, -704, -1024, -640, 1286.81, -640, 1344, -704, 1344, -960, 1280, -1024, -1024, -1024)
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1088, 640)
+texture = ExtResource("2_2jfr5")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1088, 512)
+texture = ExtResource("2_2jfr5")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-960, 512)
+texture = ExtResource("2_2jfr5")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-832, 512)
+texture = ExtResource("2_2jfr5")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-960, 640)
+texture = ExtResource("2_2jfr5")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-832, 640)
+texture = ExtResource("2_2jfr5")
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-704, 640)
+texture = ExtResource("2_2jfr5")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-704, 512)
+texture = ExtResource("2_2jfr5")
+
+[node name="ItemSpawner" parent="." instance=ExtResource("3_dxurg")]
+position = Vector2(1280, 832)
+
+[node name="ItemSpawner3" parent="." instance=ExtResource("3_dxurg")]
+position = Vector2(0, -320)
+
+[node name="RacePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ngls7")
+
+[node name="FinishLine" parent="." instance=ExtResource("4_hm6xk")]
+position = Vector2(-448, 704)
+
+[node name="CollisionShape2D" parent="FinishLine" index="0"]
+position = Vector2(0, -96)
+shape = SubResource("RectangleShape2D_712np")
+
+[node name="Sprite2D" parent="FinishLine" index="1"]
+position = Vector2(0, -96)
+region_rect = Rect2(128, 128, 128, 832)
+
+[node name="Checkpoint" parent="." instance=ExtResource("5_sakdp")]
+position = Vector2(1408, 320)
+
+[node name="CollisionShape2D" parent="Checkpoint" index="0"]
+position = Vector2(128, -320)
+shape = SubResource("RectangleShape2D_t8h71")
+
+[node name="Checkpoint2" parent="." instance=ExtResource("5_sakdp")]
+position = Vector2(320, -320)
+id = 2
+
+[node name="CollisionShape2D" parent="Checkpoint2" index="0"]
+position = Vector2(-320, -288)
+shape = SubResource("RectangleShape2D_0fqym")
+
+[node name="Checkpoint3" parent="." instance=ExtResource("5_sakdp")]
+position = Vector2(-1600, -192)
+id = 3
+
+[node name="CollisionShape2D" parent="Checkpoint3" index="0"]
+position = Vector2(64, 192)
+shape = SubResource("RectangleShape2D_l2cxn")
+
+[editable path="FinishLine"]
+[editable path="Checkpoint"]
+[editable path="Checkpoint2"]
+[editable path="Checkpoint3"]

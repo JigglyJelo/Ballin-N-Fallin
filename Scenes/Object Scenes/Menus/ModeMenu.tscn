@@ -1,0 +1,275 @@
+[gd_scene load_steps=4 format=3 uid="uid://xhmkmp6b7u3g"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/ModeMenu.cs" id="1_71h3v"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="2_li23j"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="14_kiihf"]
+
+[node name="ModeMenu" type="Node2D"]
+script = ExtResource("1_71h3v")
+VisibleItems = 7
+
+[node name="Label" type="Label" parent="."]
+offset_left = 420.0
+offset_top = -1097.0
+offset_right = 1858.0
+offset_bottom = -863.0
+scale = Vector2(0.8, 0.8)
+text = "Choose a Mode"
+label_settings = ExtResource("2_li23j")
+horizontal_alignment = 1
+
+[node name="ModeIcon" type="Sprite2D" parent="."]
+position = Vector2(1041.5, -345.5)
+
+[node name="DescriptionLabel" type="Label" parent="."]
+offset_left = 207.0
+offset_top = 198.0
+offset_right = 2278.0
+offset_bottom = 979.0
+scale = Vector2(0.8, 0.8)
+label_settings = ExtResource("2_li23j")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="MenuBackButton" parent="." instance=ExtResource("14_kiihf")]
+position = Vector2(1750, 970)
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="Mode" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = -896.0
+offset_right = 285.0
+offset_bottom = -662.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode2" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = -656.0
+offset_right = 285.0
+offset_bottom = -422.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode3" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = -416.0
+offset_right = 285.0
+offset_bottom = -182.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode4" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = -176.0
+offset_right = 285.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode5" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 64.0
+offset_right = 285.0
+offset_bottom = 298.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode6" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 304.0
+offset_right = 285.0
+offset_bottom = 538.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode7" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 544.0
+offset_right = 285.0
+offset_bottom = 778.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode8" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 784.0
+offset_right = 285.0
+offset_bottom = 1018.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode9" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 1024.0
+offset_right = 285.0
+offset_bottom = 1258.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode10" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 1264.0
+offset_right = 285.0
+offset_bottom = 1498.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode11" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 1504.0
+offset_right = 285.0
+offset_bottom = 1738.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode12" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 1744.0
+offset_right = 285.0
+offset_bottom = 1978.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode13" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 1984.0
+offset_right = 285.0
+offset_bottom = 2218.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode14" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1875.0
+offset_top = 2224.0
+offset_right = 285.0
+offset_bottom = 2458.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mode"
+label_settings = ExtResource("2_li23j")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

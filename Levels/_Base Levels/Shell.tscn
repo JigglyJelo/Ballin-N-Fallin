@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqswlrmdevp58"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_epang"]
+[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_ooffi"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_8xire"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_t3isn"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_rvkq4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abyno"]
+size = Vector2(5376, 2816)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(0, -448)
+script = ExtResource("1_epang")
+CameraZoom = 0.75
+background = ExtResource("2_ooffi")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(0, 448)
+shape = SubResource("RectangleShape2D_abyno")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1152, -1088, 3456, -1088, 3456, 1984, -3456, 1984, -3456, -1088, 1152, -1088, 1152, -832, -1088, -832, -2304, -192, -2304, 1088, -1088, 1728, 1088, 1728, 2304, 1024, 2304, -192, 1152, -832)
+metadata/invert = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(0, 256)
+polygon = PackedVector2Array(-896, -192, -512, -576, 512, -576, 896, -192, 896, -128, 768, -128, 512, -384, -512, -384, -768, -128, -896, -128)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(0, 192)
+polygon = PackedVector2Array(896, 576, 896, 768, 768, 960, -768, 960, -896, 768, -896, 576, -576, 832, 576, 832)
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(0, -576)
+texture = ExtResource("3_8xire")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-128, 1408)
+texture = ExtResource("4_t3isn")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-448, 1408)
+texture = ExtResource("4_t3isn")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-768, 1408)
+texture = ExtResource("4_t3isn")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1088, 1408)
+texture = ExtResource("4_t3isn")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(128, 1408)
+texture = ExtResource("4_t3isn")
+flip_h = true
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(448, 1408)
+texture = ExtResource("4_t3isn")
+flip_h = true
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(768, 1408)
+texture = ExtResource("4_t3isn")
+flip_h = true
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1088, 1408)
+texture = ExtResource("4_t3isn")
+flip_h = true
+
+[node name="ItemSpawner" parent="." instance=ExtResource("5_rvkq4")]
+position = Vector2(0, 1600)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsr6besg37ro2"]
+
+[ext_resource type="Texture2D" uid="uid://4ujurxlpynk1" path="res://Assets/Sprites/Player/127/Ball.png" id="1_3o6oa"]
+
+[sub_resource type="Curve" id="Curve_o6mf1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.376405, 0.472527), -0.0337249, -0.0337249, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_qespn"]
+colors = PackedColorArray(1, 0.376471, 0, 1, 0.129558, 0.129558, 0.129558, 1)
+
+[node name="Explosion" type="CPUParticles2D"]
+z_index = 1
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+randomness = 0.07
+lifetime_randomness = 0.02
+texture = ExtResource("1_3o6oa")
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 393.94
+initial_velocity_max = 586.86
+damping_min = 66.667
+damping_max = 71.717
+scale_amount_min = 1.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_o6mf1")
+color_ramp = SubResource("Gradient_qespn")

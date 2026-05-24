@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://vj4kuow0qshq"]
+
+[ext_resource type="Script" path="res://Scripts/Score Screen/EndBackgroundTransition.cs" id="1_l70rp"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="2_ntnxr"]
+[ext_resource type="AudioStream" uid="uid://doi2l66pm1jn0" path="res://Assets/SFX/whistle.ogg" id="3_1cn6f"]
+
+[node name="BackgroundTransition" type="CanvasLayer"]
+script = ExtResource("1_l70rp")
+
+[node name="ScoreText" type="Label" parent="."]
+offset_right = 2560.0
+offset_bottom = 256.0
+scale = Vector2(1.5, 1.5)
+text = "Finish!"
+label_settings = ExtResource("2_ntnxr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_1cn6f")
+autoplay = true
+bus = &"SFX"

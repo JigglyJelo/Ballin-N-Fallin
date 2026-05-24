@@ -1,0 +1,157 @@
+[gd_scene load_steps=17 format=3 uid="uid://7f1lfyswuxqv"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_6m04d"]
+[ext_resource type="Texture2D" uid="uid://pylypiewve4i" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Hot Potato Tile.png" id="2_obci2"]
+[ext_resource type="PackedScene" uid="uid://ckx1p2l4jo13o" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/FactoryBackground.tscn" id="3_ihqjq"]
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Booster.cs" id="4_pmb32"]
+[ext_resource type="Texture2D" uid="uid://b3hx18comgvx1" path="res://Assets/Sprites/Level Stuff/Boost.png" id="5_q7bq7"]
+[ext_resource type="Texture2D" uid="uid://bpnj3q3hggiya" path="res://Assets/Sprites/Level Stuff/BoostRight.png" id="6_j2scd"]
+[ext_resource type="Texture2D" uid="uid://b354l87y6ddrk" path="res://Assets/Sprites/Mode Stuff/Trash/Box.png" id="7_cnbci"]
+[ext_resource type="Script" path="res://Scripts/Modes/Survival/TrashCompactor.cs" id="8_8lnlj"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="9_j07au"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="10_4iln5"]
+[ext_resource type="Script" path="res://Scripts/Level Stuff/DeathTile.cs" id="11_hsa8j"]
+[ext_resource type="PackedScene" uid="uid://cryhqyifcuaju" path="res://Scenes/Object Scenes/Level Stuff/EmotionZone.tscn" id="12_12o7r"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="13_v1x8x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cc2qt"]
+size = Vector2(1280, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xvixe"]
+size = Vector2(1280, 832)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mt77g"]
+size = Vector2(4608, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(-384, -448)
+script = ExtResource("1_6m04d")
+CameraZoom = 0.8
+floorColorOverride = Color(0.294118, 0.294118, 0.294118, 1)
+InsideColorOverride = Color(0, 0.117647, 0.333333, 1)
+OutlineColorOverride = Color(0, 0, 0.117647, 1)
+groundTexture = ExtResource("2_obci2")
+background = ExtResource("3_ihqjq")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-2048, -1920, 2816, -1920, 2816, 2752, -2048, 2752, -2048, -1920, -640, -1664, -1920, -448, -1920, 1536, -128, 1728, -128, 2112, -256, 2432, -256, 2688, 1024, 2688, 1024, 2432, 896, 2112, 896, 1728, 2688, 1472, 2688, -448, 1408, -1664, -640, -1664)
+
+[node name="ConveyorBelt" type="Area2D" parent="."]
+position = Vector2(0, -2000)
+script = ExtResource("4_pmb32")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ConveyorBelt"]
+
+[node name="Polygon2D" type="Polygon2D" parent="ConveyorBelt"]
+z_index = -4
+texture_repeat = 2
+scale = Vector2(1.06104, 1)
+color = Color(0, 1, 1, 0.25098)
+texture = ExtResource("5_q7bq7")
+polygon = PackedVector2Array(844.454, 3088, 2533.36, 3088, 2533.36, 3472, 844.454, 3728)
+
+[node name="ConveyorBelt2" type="Area2D" parent="."]
+position = Vector2(0, -2000)
+script = ExtResource("4_pmb32")
+direction = Vector2(1, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ConveyorBelt2"]
+
+[node name="Polygon2D" type="Polygon2D" parent="ConveyorBelt2"]
+z_index = -4
+texture_repeat = 2
+scale = Vector2(1.06104, 1)
+color = Color(0, 1, 1, 0.25098)
+texture = ExtResource("6_j2scd")
+polygon = PackedVector2Array(-120.636, 3088, -1809.55, 3088, -1809.55, 3536, -120.636, 3728)
+
+[node name="TrashSpawner" type="Sprite2D" parent="."]
+texture_repeat = 3
+position = Vector2(384, -1280)
+texture = ExtResource("7_cnbci")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+script = ExtResource("8_8lnlj")
+TrashLaunchAngle = 3.142
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(384, -64)
+texture = ExtResource("9_j07au")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1472, 576)
+texture = ExtResource("10_4iln5")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(2240, 576)
+texture = ExtResource("10_4iln5")
+flip_h = true
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1216, 384)
+texture = ExtResource("10_4iln5")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1984, 384)
+texture = ExtResource("10_4iln5")
+flip_h = true
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-960, 192)
+texture = ExtResource("10_4iln5")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1728, 192)
+texture = ExtResource("10_4iln5")
+flip_h = true
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-704, 0)
+texture = ExtResource("10_4iln5")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1472, 0)
+texture = ExtResource("10_4iln5")
+flip_h = true
+
+[node name="DeathZone" type="Area2D" parent="."]
+script = ExtResource("11_hsa8j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(384, 2560)
+shape = SubResource("RectangleShape2D_cc2qt")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[node name="EmotionZone" parent="." instance=ExtResource("12_12o7r")]
+Emotion = 4
+
+[node name="CollisionShape2D" parent="EmotionZone" index="0"]
+position = Vector2(384, 2016)
+shape = SubResource("RectangleShape2D_xvixe")
+
+[node name="OneWay" type="StaticBody2D" parent="." groups=["NoRegain"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWay"]
+position = Vector2(384, -384)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_mt77g")
+one_way_collision = true
+
+[node name="Polygon2D" type="Polygon2D" parent="OneWay"]
+position = Vector2(80, 0)
+scale = Vector2(0.958333, 1)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-2086.96, -448, 2721.39, -448, 2721.39, -320, -2086.96, -320)
+
+[node name="ItemSpawner" parent="." instance=ExtResource("13_v1x8x")]
+position = Vector2(384, -960)
+
+[connection signal="body_entered" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_entered"]
+[connection signal="body_exited" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_exited"]
+[connection signal="body_entered" from="ConveyorBelt2" to="ConveyorBelt2" method="_on_body_entered"]
+[connection signal="body_exited" from="ConveyorBelt2" to="ConveyorBelt2" method="_on_body_exited"]
+[connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
+
+[editable path="EmotionZone"]

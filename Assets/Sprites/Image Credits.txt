@@ -1,0 +1,20 @@
+The majority of image assets were original creations by JigglyJello
+Listed below are the third party assets used:
+
+Seamless HD landscape in parts by PWL: CC0
+https://opengameart.org/content/seamless-hd-landscape-in-parts
+
+Seamless cave in parts by PWL: CC0
+https://opengameart.org/content/seamless-cave-in-parts
+
+Backgrounds & Effects sprite pack by PucciGames: CC0
+https://opengameart.org/content/backgrounds-effects-sprite-pack
+
+2D Platformer Volcano Pack 1.1 by Tio Aimar: CC0
+https://opengameart.org/content/2d-platformer-volcano-pack-11
+
+Various assets from kenney.nl: CC0
+https://www.kenney.nl/assets/background-elements-remastered
+https://www.kenney.nl/assets/input-prompts
+
+Some CC0 assets may have been used that aren't listed here because I was unable to relocate them or forgot about them. If missing credits are found they will be added here.

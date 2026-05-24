@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqmquh3k7rxbi"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_nmqin"]
+[ext_resource type="PackedScene" uid="uid://c67evamjga26g" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/MountainsBackground.tscn" id="2_g2ycs"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_geaib"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_1y327"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_5mefn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6pa7"]
+size = Vector2(5120, 2560)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(0, -448)
+script = ExtResource("1_nmqin")
+CameraZoom = 0.8
+background = ExtResource("2_g2ycs")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(0, 320)
+shape = SubResource("RectangleShape2D_o6pa7")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(2304, -1024, 2688, -1024, 2688, 1728, -2688, 1728, -2688, -1024, 2304, -1024, 2304, -768, -2304, -768, -2304, 1472, 2304, 1472)
+metadata/invert = true
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(0, 576)
+texture = ExtResource("3_geaib")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-640, 1280)
+texture = ExtResource("4_1y327")
+metadata/team = "A"
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-960, 1280)
+texture = ExtResource("4_1y327")
+metadata/team = "A"
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1280, 1280)
+texture = ExtResource("4_1y327")
+metadata/team = "A"
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1600, 1280)
+texture = ExtResource("4_1y327")
+metadata/team = "A"
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(640, 1280)
+texture = ExtResource("4_1y327")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(960, 1280)
+texture = ExtResource("4_1y327")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1280, 1280)
+texture = ExtResource("4_1y327")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1600, 1280)
+texture = ExtResource("4_1y327")
+flip_h = true
+metadata/team = "B"
+
+[node name="ItemSpawner" parent="." instance=ExtResource("5_5mefn")]
+position = Vector2(0, -320)
+
+[node name="PayloadPath" type="Line2D" parent="."]
+points = PackedVector2Array(-1920, 192, 0, 1024, 1920, 192)
+default_color = Color(0.25098, 0.25098, 0.25098, 1)

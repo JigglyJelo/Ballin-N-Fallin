@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=3 uid="uid://v0l5a5qvxqg6"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_jt4cu"]
+[ext_resource type="PackedScene" uid="uid://c0pmfvhnbqpni" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/CastleBackground.tscn" id="2_1usdm"]
+[ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Scenes/Object Scenes/Mode Stuff/Golf/GolfHole.tscn" id="2_juykk"]
+[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="4_ljy0i"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_b12bs"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_bar28"]
+[ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Scenes/Object Scenes/Level Stuff/Sand.tscn" id="6_00c4n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gji0p"]
+size = Vector2(5376, 2944)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_csdne"]
+size = Vector2(384, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qcex5"]
+size = Vector2(640, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rym46"]
+size = Vector2(256, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(-128, -768)
+script = ExtResource("1_jt4cu")
+LevelUnit = 3
+CameraZoom = 0.725
+background = ExtResource("2_1usdm")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(128, 704)
+shape = SubResource("RectangleShape2D_gji0p")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(2176, 1792, 2240, 1792, 2240, 1920, 2304, 1920, 2304, 2816, 2688, 2816, 2688, 2880, 2176, 2880, 2176, 2304, -2688, 2304, -2688, -896, -2432, -896, 2944, -896, 2944, 2944, 2688, 2944, 2688, -640, -2432, -640, -2432, 1792, -1792, 1792, -1792, 1664, -1152, 1664, -1152, 1920, -512, 1920, -512, 1408, -384, 1280, -128, 1280, -128, 1152, 64, 1152, 128, 1216, 128, 1792, 640, 1792, 640, 1472, 768, 1408, 768, 1536, 896, 1600, 896, 1920, 1152, 1920, 1152, 2048, 1408, 2048, 1408, 1728, 1472, 1664, 1664, 1664, 1664, 1920, 1856, 1920, 1856, 1664, 2176, 1664)
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1920, 1536)
+texture = ExtResource("5_b12bs")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2048, 1536)
+texture = ExtResource("5_b12bs")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2176, 1536)
+texture = ExtResource("5_b12bs")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2304, 1536)
+texture = ExtResource("5_b12bs")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1920, 1408)
+texture = ExtResource("5_b12bs")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2048, 1408)
+texture = ExtResource("5_b12bs")
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2176, 1408)
+texture = ExtResource("5_b12bs")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2304, 1408)
+texture = ExtResource("5_b12bs")
+
+[node name="DeathZone" parent="." instance=ExtResource("4_ljy0i")]
+position = Vector2(2496, 2752)
+
+[node name="CollisionShape2D" parent="DeathZone" index="0"]
+shape = SubResource("RectangleShape2D_csdne")
+
+[node name="ItemSpawner" parent="." instance=ExtResource("5_bar28")]
+position = Vector2(-832, 1408)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("5_bar28")]
+position = Vector2(384, 1472)
+
+[node name="Sand" parent="." instance=ExtResource("6_00c4n")]
+position = Vector2(-1088, 1728)
+
+[node name="CollisionShape2D" parent="Sand" index="0"]
+position = Vector2(256, 64)
+shape = SubResource("RectangleShape2D_qcex5")
+
+[node name="Sand2" parent="." instance=ExtResource("6_00c4n")]
+position = Vector2(960, 1856)
+
+[node name="CollisionShape2D" parent="Sand2" index="0"]
+position = Vector2(320, 128)
+shape = SubResource("RectangleShape2D_rym46")
+
+[node name="Hole" parent="." instance=ExtResource("2_juykk")]
+position = Vector2(1792, 1856)
+
+[editable path="DeathZone"]
+[editable path="Sand"]
+[editable path="Sand2"]

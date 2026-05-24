@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cl8q23tlnfw1k"]
+
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="1_q811k"]
+
+[node name="M1" type="Polygon2D"]
+polygon = PackedVector2Array(-53, -254, 32, -254, 86, -23, 113, -23, 236, 254, -240, 254, -179, 101, -139, 101)
+script = ExtResource("1_q811k")
+stroke_color = Color(1, 1, 1, 1)

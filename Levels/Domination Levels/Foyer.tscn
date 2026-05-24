@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://de6elumxmxoxv"]
+
+[ext_resource type="PackedScene" uid="uid://chgfonqy7dwgc" path="res://Levels/_Base Levels/Foyer.tscn" id="1_ar1t3"]
+[ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Scenes/Object Scenes/Mode Stuff/Domination/DominationZone.tscn" id="6_7snal"]
+
+[node name="Level" instance=ExtResource("1_ar1t3")]
+
+[node name="DominationZone" parent="." index="12" instance=ExtResource("6_7snal")]
+position = Vector2(-3, 323)
+
+[node name="DominationZone2" parent="." index="13" instance=ExtResource("6_7snal")]
+position = Vector2(-1409, -477)
+
+[node name="DominationZone3" parent="." index="14" instance=ExtResource("6_7snal")]
+position = Vector2(1490, -531)
+
+[node name="DominationZone4" parent="." index="15" instance=ExtResource("6_7snal")]
+position = Vector2(-1860, 310)
+
+[node name="DominationZone5" parent="." index="16" instance=ExtResource("6_7snal")]
+position = Vector2(1873, 297)
+
+[node name="DominationZone6" parent="." index="17" instance=ExtResource("6_7snal")]
+position = Vector2(1066, 1164)
+
+[node name="DominationZone7" parent="." index="18" instance=ExtResource("6_7snal")]
+position = Vector2(-992, 1171)

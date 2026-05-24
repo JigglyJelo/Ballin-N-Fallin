@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cxepxwu1t1bfk"
+path="res://.godot/imported/Bomb Ball.ogg-0d74060cc38e6bd2e723059134c72fe0.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/Modes/Bomb Ball.ogg"
+dest_files=["res://.godot/imported/Bomb Ball.ogg-0d74060cc38e6bd2e723059134c72fe0.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

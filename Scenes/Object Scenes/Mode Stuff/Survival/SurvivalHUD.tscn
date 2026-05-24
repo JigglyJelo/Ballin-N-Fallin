@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://qtn7hbcmglhq"]
+
+[ext_resource type="Script" path="res://Scripts/Modes/Survival/SurvivalHUD.cs" id="1_r20i7"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="2_6ps4t"]
+
+[node name="SurvivalTimerText" type="Node"]
+process_mode = 3
+script = ExtResource("1_r20i7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TimerText" type="Label" parent="CanvasLayer"]
+offset_left = 3046.0
+offset_right = 3841.0
+offset_bottom = 351.0
+text = "0:00:000"
+label_settings = ExtResource("2_6ps4t")

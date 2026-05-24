@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c7bkgihkbsrvs"
+path="res://.godot/imported/King of the Hill.ogg-3db113554f9286ac751ea5b4242cac2c.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/Modes/King of the Hill.ogg"
+dest_files=["res://.godot/imported/King of the Hill.ogg-3db113554f9286ac751ea5b4242cac2c.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,140 @@
+[gd_scene load_steps=12 format=3 uid="uid://3l8cgrf3xnla"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_qv0gb"]
+[ext_resource type="PackedScene" uid="uid://baf3theg36lvb" path="res://Scenes/Object Scenes/Mode Stuff/King of the Hill/KothZone.tscn" id="2_3nvyc"]
+[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_vjj0n"]
+[ext_resource type="Script" path="res://Scripts/Level Stuff/DeathTile.cs" id="3_r0soh"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_0au2n"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_m0133"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_o2bk1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvip6"]
+size = Vector2(5485, 2944)
+
+[sub_resource type="Curve2D" id="Curve2D_fryv7"]
+bake_interval = 50.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1408, 1408, 0, 0, 0, 0, 1408, 1408, 115, 230, -115, -230, 1152, 1024, 220, 260, -220, -260, 768, 256, 0, 0, 0, 0, 448, 256, 0, 0, 0, 0, 448, 384, 0, 0, 0, 0, -448, 384, 0, 0, 0, 0, -448, 256, 220, -260, -220, 260, -768, 256, 115, -230, -115, 230, -1152, 1024, 0, 0, 0, 0, -1408, 1408)
+}
+point_count = 11
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kmgy4"]
+size = Vector2(128, 4096)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jbnau"]
+size = Vector2(7420, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(0, -128)
+script = ExtResource("1_qv0gb")
+CameraZoom = 0.7
+background = ExtResource("2_vjj0n")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(0, 320)
+shape = SubResource("RectangleShape2D_cvip6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(2560, 1792, 2560, 2048, -2560, 2048, -2560, 1792, -2432, 1152, -2304, 1024, -2176, 1024, -2048, 1152, -1920, 1408, -1408, 1408, 1408, 1408, 1920, 1408, 2048, 1152, 2176, 1024, 2304, 1024, 2432, 1152)
+
+[node name="Path2D" type="Path2D" parent="StaticBody2D"]
+curve = SubResource("Curve2D_fryv7")
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-448, 256, 448, 256, 448, 384, -448, 384)
+
+[node name="KothZone" parent="." instance=ExtResource("2_3nvyc")]
+
+[node name="CollisionPolygon2D" parent="KothZone" index="0"]
+polygon = PackedVector2Array(448, 256, 448, -320, -448, -320, -448, 256)
+
+[node name="DeathZone" type="Area2D" parent="."]
+script = ExtResource("3_r0soh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(3776, 128)
+shape = SubResource("RectangleShape2D_kmgy4")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[node name="DeathZone2" type="Area2D" parent="."]
+script = ExtResource("3_r0soh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone2"]
+position = Vector2(-3776, 128)
+shape = SubResource("RectangleShape2D_kmgy4")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[node name="DeathZone3" type="Area2D" parent="."]
+script = ExtResource("3_r0soh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone3"]
+position = Vector2(0, -1856)
+shape = SubResource("RectangleShape2D_jbnau")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[node name="DeathZone4" type="Area2D" parent="."]
+script = ExtResource("3_r0soh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone4"]
+position = Vector2(0, 2112)
+shape = SubResource("RectangleShape2D_jbnau")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(-1664, 1024)
+texture = ExtResource("4_0au2n")
+
+[node name="RespawnPoint2" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(1664, 1024)
+texture = ExtResource("4_0au2n")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1856, 1216)
+texture = ExtResource("5_m0133")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1472, 1216)
+texture = ExtResource("5_m0133")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1856, 832)
+texture = ExtResource("5_m0133")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1472, 832)
+texture = ExtResource("5_m0133")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1472, 1216)
+texture = ExtResource("5_m0133")
+flip_h = true
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1856, 1216)
+texture = ExtResource("5_m0133")
+flip_h = true
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1472, 832)
+texture = ExtResource("5_m0133")
+flip_h = true
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1856, 832)
+texture = ExtResource("5_m0133")
+flip_h = true
+
+[node name="ItemSpawner" parent="." instance=ExtResource("6_o2bk1")]
+position = Vector2(-2240, 576)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("6_o2bk1")]
+position = Vector2(2240, 448)
+
+[connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="DeathZone2" to="DeathZone2" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="DeathZone3" to="DeathZone3" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="DeathZone4" to="DeathZone4" method="_on_area_2d_body_entered"]
+
+[editable path="KothZone"]

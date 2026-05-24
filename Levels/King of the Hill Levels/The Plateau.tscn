@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=3 uid="uid://2377xuuli085"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_hp0yf"]
+[ext_resource type="PackedScene" uid="uid://baf3theg36lvb" path="res://Scenes/Object Scenes/Mode Stuff/King of the Hill/KothZone.tscn" id="2_27nm6"]
+[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_ic4fq"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_a37oa"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_3h1up"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_pwiph"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djmoj"]
+size = Vector2(5485, 3078)
+
+[sub_resource type="Curve2D" id="Curve2D_27e5t"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1408, 1408, 0, 0, 0, 0, 1408, 1408, 270, 390, -270, -390, 1024, 1024, 0, 0, 0, 0, 704, 512, 0, 0, 0, 0, 704, 640, 0, 0, 0, 0, -704, 640, 0, 0, 0, 0, -704, 512, 270, -390, -270, 390, -1024, 1024, 0, 0, 0, 0, -1408, 1408)
+}
+point_count = 9
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+script = ExtResource("1_hp0yf")
+CameraZoom = 0.7
+background = ExtResource("2_ic4fq")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_djmoj")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(2560, 1408, 2560, 2048, -2816, 2048, -2816, -1664, 2816, -1664, 2816, 2048, 2560, 2048, 2560, -1408, -2560, -1408, -2560, 1408)
+metadata/invert = true
+
+[node name="Path2D" type="Path2D" parent="StaticBody2D"]
+curve = SubResource("Curve2D_27e5t")
+metadata/invert = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-704, 512, -704, 640, 704, 640, 704, 512)
+metadata/invert = true
+
+[node name="KothZone" parent="." instance=ExtResource("2_27nm6")]
+
+[node name="CollisionPolygon2D" parent="KothZone" index="0"]
+polygon = PackedVector2Array(576, 512, 576, -256, -576, -256, -576, 512)
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(-1664, 1024)
+texture = ExtResource("4_a37oa")
+
+[node name="RespawnPoint2" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(1664, 1024)
+texture = ExtResource("4_a37oa")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1856, 1216)
+texture = ExtResource("5_pwiph")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1472, 1216)
+texture = ExtResource("5_pwiph")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1856, 832)
+texture = ExtResource("5_pwiph")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1472, 832)
+texture = ExtResource("5_pwiph")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1472, 1216)
+texture = ExtResource("5_pwiph")
+flip_h = true
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1856, 1216)
+texture = ExtResource("5_pwiph")
+flip_h = true
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1472, 832)
+texture = ExtResource("5_pwiph")
+flip_h = true
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(1856, 832)
+texture = ExtResource("5_pwiph")
+flip_h = true
+
+[node name="ItemSpawner" parent="." instance=ExtResource("5_3h1up")]
+position = Vector2(-2368, 1216)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("5_3h1up")]
+position = Vector2(2368, 1216)
+
+[editable path="KothZone"]

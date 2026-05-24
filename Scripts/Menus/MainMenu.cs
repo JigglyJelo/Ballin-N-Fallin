@@ -1,0 +1,100 @@
+using Godot;
+
+public partial class MainMenu : VerticalMenu{
+	private Label playText, onlineText, settingsText, exitText,copyrightText;
+	private readonly Color COPYRIGHT_COLOR = Color.Color8(192,192,192);
+	private readonly Color COPYRIGHT_COLOR_HOVERED = Color.Color8(225,225,225);
+	public override void _Ready(){
+		base._Ready();
+		Selection = 1;
+		totalSelections = 4;
+		defaultFontSize = 1;
+		playText = GetNode<Label>("Selections/Play Text");
+		onlineText = GetNode<Label>("Selections/Online Text");
+		settingsText = GetNode<Label>("Selections/Settings Text");
+		exitText = GetNode<Label>("Selections/Exit Text");
+		copyrightText = GetNode<Label>("Copyright");
+		UpdateSelectionVisual();
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		//foreach(byte id in Game.InputIds) Input.StopJoyVibration(id-1);
+		foreach(PlayerData playerData in Game.PlayerDatas){
+			Input.StopJoyVibration((int)playerData.InputDevice);
+		}
+		AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Logo.tscn").Instantiate());
+	}
+
+    public override void _Process(double delta){
+        base._Process(delta);
+
+		//Load Credits Menu
+		if(IsMouseOverLabel(copyrightText)){
+			Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
+			if(Input.IsActionJustReleased("Charge N Launch Mouse")){
+				MenuScene.MenuNode.AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "CreditsMenu.tscn").Instantiate());
+				QueueFree();
+				SFX.Play("Confirm");
+			}
+			if(copyrightText.SelfModulate != COPYRIGHT_COLOR_HOVERED){
+				copyrightText.SelfModulate = COPYRIGHT_COLOR_HOVERED;
+				SFX.Play("Move");
+			}
+		}else if(copyrightText.SelfModulate != COPYRIGHT_COLOR){
+			copyrightText.SelfModulate = COPYRIGHT_COLOR;
+		}
+    }
+
+    private void LoadMouseMenu(string nextMenu){
+		MouseMenu mouseMenu = GD.Load<PackedScene>(MenuScene.MENU_PATH + "MouseMenu.tscn").Instantiate<MouseMenu>();
+		mouseMenu.NextMenu = nextMenu;
+		GetParent().AddChild(mouseMenu);
+		QueueFree();
+	}
+
+	private void LoadPlayerMenu(){
+		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "PlayerMenu.tscn").Instantiate());
+		QueueFree();
+	}
+
+	private void LoadOnlineMenu(){
+		Game.MouseMode = Game.MouseModeEnum.Off;
+		MenuScene.LoadMenu("Online/OnlineMenu");
+		QueueFree();
+	}
+
+	private void LoadSettingsMenu(){
+		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Settings/SettingsMenu.tscn").Instantiate());
+		QueueFree();
+	}
+
+	private void QuitGame(){
+		GetTree().Quit();
+	}
+
+	protected override void MenuChoose(int choice){
+		SFX.Play("Confirm");
+		switch(choice){
+			case 1:
+				if(Input.IsActionJustReleased("Charge N Launch Mouse")){
+					LoadMouseMenu("PlayerMenu");
+				}else{
+					LoadPlayerMenu();
+				}
+				break;
+			case 2:
+				if(Input.IsActionJustReleased("Charge N Launch Mouse")){
+					LoadMouseMenu("Online/OnlineMenu");
+				}else{
+					LoadOnlineMenu();
+				}
+				break;
+			case 3: LoadSettingsMenu(); break;
+			case 4: QuitGame(); break;
+		}
+		QueueFree();
+	}
+
+	public override void MenuBack(){
+		SFX.Play("Back");
+		QuitGame();
+	}
+}

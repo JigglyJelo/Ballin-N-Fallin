@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=3 uid="uid://6l8pmkvryjd5"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_6kfv0"]
+[ext_resource type="PackedScene" uid="uid://cqdnd2vlvyawg" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/ForestBackground.tscn" id="2_fde4d"]
+[ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Scenes/Object Scenes/Mode Stuff/Golf/GolfHole.tscn" id="2_h6yyr"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_5w1iu"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="4_2t3tb"]
+[ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Scenes/Object Scenes/Level Stuff/Sand.tscn" id="5_oqvmh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xvnr"]
+size = Vector2(5888, 3296)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lfuqx"]
+size = Vector2(448, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spnwh"]
+size = Vector2(512, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(-320, -832)
+script = ExtResource("1_6kfv0")
+LevelUnit = 5
+CameraZoom = 0.675
+background = ExtResource("2_fde4d")
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(320, 848)
+shape = SubResource("RectangleShape2D_0xvnr")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(2176, 1920, 2560, 1536, 2816, 1536, 2816, 1792, 3008, 1792, 3008, 1536, 3136, 1472, 3136, 1216, 3008, 1216, 3008, 1152, 3072, 1022.29, 3072, 384.456, 2048, 384, 2048, 320, 2176, 320, 2432, 256, 2816, 0, 3072, -384, 3072, -896, 3392, -896, 3392, 2688, -2944, 2688, -2944, -896, 3072, -896, 3072, -640, -2432, -640, -2432, 1792, -1792, 1792, -1792, 2304, -1152, 2304, -640, 2048, -384, 1536, -128, 1536, 128, 2048, 512, 2048, 512, 2240, 960, 2240, 960, 2048, 1280, 2048, 1536, 1920)
+metadata/invert = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1408, 832, 2176, 832, 2368, 704, 2368, 896, 2496, 1024, 2496, 1152, 2176, 1600, 1792, 1152, 1472, 1024)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-448, 256, -640, 256, -640, 384, -448, 512, -192, 640, 0, 832, 256, 960, 256, 256, 64, 256, 64, 384, -448, 384)
+
+[node name="Hole" parent="." instance=ExtResource("2_h6yyr")]
+position = Vector2(2944, 1728)
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1920, 1536)
+texture = ExtResource("3_5w1iu")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2048, 1536)
+texture = ExtResource("3_5w1iu")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2176, 1536)
+texture = ExtResource("3_5w1iu")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2304, 1536)
+texture = ExtResource("3_5w1iu")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-1920, 1408)
+texture = ExtResource("3_5w1iu")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2048, 1408)
+texture = ExtResource("3_5w1iu")
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2176, 1408)
+texture = ExtResource("3_5w1iu")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-2304, 1408)
+texture = ExtResource("3_5w1iu")
+
+[node name="ItemSpawner" parent="." instance=ExtResource("4_2t3tb")]
+position = Vector2(-128, -128)
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("4_2t3tb")]
+position = Vector2(-1408, 1920)
+
+[node name="ItemSpawner3" parent="." instance=ExtResource("4_2t3tb")]
+position = Vector2(2112, 64)
+
+[node name="Sand" parent="." instance=ExtResource("5_oqvmh")]
+position = Vector2(576, 2112)
+
+[node name="CollisionShape2D" parent="Sand" index="0"]
+position = Vector2(160, 32)
+shape = SubResource("RectangleShape2D_lfuqx")
+
+[node name="Sand2" parent="." instance=ExtResource("5_oqvmh")]
+position = Vector2(-384, 320)
+
+[node name="CollisionShape2D" parent="Sand2" index="0"]
+position = Vector2(192, 0)
+shape = SubResource("RectangleShape2D_spnwh")
+
+[editable path="Sand"]
+[editable path="Sand2"]

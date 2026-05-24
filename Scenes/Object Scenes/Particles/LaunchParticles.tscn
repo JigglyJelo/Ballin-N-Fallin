@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://d11d2tx2jw5iq"]
+
+[ext_resource type="Texture2D" uid="uid://c0trp07tcdaj2" path="res://Assets/Sprites/Player/LineSmallest.png" id="1_oapo1"]
+
+[sub_resource type="Curve" id="Curve_mierm"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.165644, 1), 0.0, 0.0, 0, 0, Vector2(0.343374, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[node name="LaunchParticles" type="CPUParticles2D"]
+z_index = -3
+emitting = false
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.1
+lifetime_randomness = 0.03
+texture = ExtResource("1_oapo1")
+emission_shape = 3
+emission_rect_extents = Vector2(10, 45)
+particle_flag_align_y = true
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+damping_min = 94.74
+damping_max = 94.74
+scale_amount_min = 0.8
+scale_amount_max = 1.6
+scale_amount_curve = SubResource("Curve_mierm")

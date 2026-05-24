@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bg0a0f2215bkm"
+path="res://.godot/imported/Crown the King.ogg-1f2b5fc7ea9ed1116e28b6550dba2754.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/Modes/Crown the King.ogg"
+dest_files=["res://.godot/imported/Crown the King.ogg-1f2b5fc7ea9ed1116e28b6550dba2754.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

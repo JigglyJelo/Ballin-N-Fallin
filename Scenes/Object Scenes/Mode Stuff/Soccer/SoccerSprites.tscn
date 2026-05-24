@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://tp0wgmpwgo8b"]
+
+[ext_resource type="Texture2D" uid="uid://dackt2kb3nbo7" path="res://Assets/Sprites/Player/Ball63.png" id="1_efjbv"]
+[ext_resource type="Texture2D" uid="uid://bj11rypl1k4o2" path="res://Assets/Sprites/Mode Stuff/Soccer/Soccerball/SoccerBallPatches.png" id="2_ml2sj"]
+[ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="3_ihwoi"]
+[ext_resource type="Texture2D" uid="uid://qpmka14hyb2c" path="res://Assets/Sprites/Mode Stuff/Soccer/Soccerball/SoccerBallLines.png" id="4_hf4mg"]
+
+[node name="Sprites" type="Node2D"]
+
+[node name="Back" type="Sprite2D" parent="."]
+texture_repeat = 3
+scale = Vector2(3.1, 3.1)
+texture = ExtResource("1_efjbv")
+region_enabled = true
+region_rect = Rect2(0, 0, 126, 126)
+
+[node name="Patches" type="Sprite2D" parent="."]
+self_modulate = Color(0.117647, 0.117647, 0.117647, 1)
+texture_repeat = 3
+scale = Vector2(0.742, 0.742)
+texture = ExtResource("2_ml2sj")
+region_enabled = true
+region_rect = Rect2(0, 0, 560, 544)
+
+[node name="Shading" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.509804)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_ihwoi")
+
+[node name="Lines" type="Sprite2D" parent="."]
+self_modulate = Color(0.117647, 0.117647, 0.117647, 1)
+texture_repeat = 3
+scale = Vector2(0.742, 0.742)
+texture = ExtResource("4_hf4mg")
+region_enabled = true
+region_rect = Rect2(0, 0, 560, 544)

@@ -1,0 +1,142 @@
+[gd_scene load_steps=17 format=3 uid="uid://cl1wflbx7lwd"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_66h86"]
+[ext_resource type="Texture2D" uid="uid://pylypiewve4i" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Hot Potato Tile.png" id="2_nvooh"]
+[ext_resource type="PackedScene" uid="uid://ckx1p2l4jo13o" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/FactoryBackground.tscn" id="3_eji3x"]
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Booster.cs" id="4_qjx3l"]
+[ext_resource type="Texture2D" uid="uid://b3hx18comgvx1" path="res://Assets/Sprites/Level Stuff/Boost.png" id="5_c6ku0"]
+[ext_resource type="Texture2D" uid="uid://b354l87y6ddrk" path="res://Assets/Sprites/Mode Stuff/Trash/Box.png" id="6_drvia"]
+[ext_resource type="Script" path="res://Scripts/Modes/Survival/TrashCompactor.cs" id="7_qg81t"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="8_ql201"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="9_wbu20"]
+[ext_resource type="Script" path="res://Scripts/Level Stuff/DeathTile.cs" id="10_x2oqr"]
+[ext_resource type="PackedScene" uid="uid://cryhqyifcuaju" path="res://Scenes/Object Scenes/Level Stuff/EmotionZone.tscn" id="11_2gbuh"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="12_4yfsd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wsvcj"]
+size = Vector2(6848, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rciy3"]
+size = Vector2(192, 1792)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xvixe"]
+size = Vector2(1344, 1792)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32ctc"]
+size = Vector2(1664, 128)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(-384, -448)
+script = ExtResource("1_66h86")
+CameraZoom = 0.75
+floorColorOverride = Color(0.294118, 0.294118, 0.294118, 1)
+InsideColorOverride = Color(0, 0.333333, 0, 1)
+OutlineColorOverride = Color(0, 0.117647, 0, 1)
+groundTexture = ExtResource("2_nvooh")
+background = ExtResource("3_eji3x")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-2944, -1088, 4224, -1088, 4224, 1984, -2944, 1984, -2944, 1344, 4096, 1344, 4096, -320, -2944, -320)
+
+[node name="ConveyorBelt" type="Area2D" parent="."]
+position = Vector2(0, 1408)
+script = ExtResource("4_qjx3l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorBelt"]
+visible = false
+position = Vector2(672, -384)
+shape = SubResource("RectangleShape2D_wsvcj")
+
+[node name="Polygon2D" type="Polygon2D" parent="ConveyorBelt"]
+z_index = -4
+texture_repeat = 2
+position = Vector2(-167.651, 0)
+color = Color(0, 1, 1, 0.25098)
+texture = ExtResource("5_c6ku0")
+texture_offset = Vector2(0, 64)
+texture_scale = Vector2(0.8, 0.8)
+polygon = PackedVector2Array(-2584.35, -704, 4263.65, -704, 4263.65, -64, -2584.35, -64)
+
+[node name="TrashSpawner" type="Sprite2D" parent="."]
+texture_repeat = 3
+position = Vector2(3648, 320)
+texture = ExtResource("6_drvia")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+script = ExtResource("7_qg81t")
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(0, 128)
+texture = ExtResource("8_ql201")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(320, 1152)
+texture = ExtResource("9_wbu20")
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(0, 1152)
+texture = ExtResource("9_wbu20")
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-320, 1152)
+texture = ExtResource("9_wbu20")
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-640, 1152)
+texture = ExtResource("9_wbu20")
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-448, 832)
+texture = ExtResource("9_wbu20")
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(-128, 832)
+texture = ExtResource("9_wbu20")
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(192, 832)
+texture = ExtResource("9_wbu20")
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+position = Vector2(512, 832)
+texture = ExtResource("9_wbu20")
+
+[node name="DeathZone" type="Area2D" parent="."]
+script = ExtResource("10_x2oqr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(-2848, 576)
+shape = SubResource("RectangleShape2D_rciy3")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[node name="EmotionZone" parent="." instance=ExtResource("11_2gbuh")]
+Emotion = 4
+
+[node name="CollisionShape2D" parent="EmotionZone" index="0"]
+position = Vector2(-2080, 576)
+shape = SubResource("RectangleShape2D_xvixe")
+
+[node name="OneWay" type="StaticBody2D" parent="." groups=["NoRegain"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWay"]
+position = Vector2(1728, 512)
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_32ctc")
+one_way_collision = true
+
+[node name="Polygon2D" type="Polygon2D" parent="OneWay"]
+position = Vector2(-128, 15.4483)
+scale = Vector2(1, 1.03448)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(1792, -324.268, 1920, -324.268, 1920, 1284.27, 1792, 1284.27)
+
+[node name="ItemSpawner" parent="." instance=ExtResource("12_4yfsd")]
+position = Vector2(3072, -64)
+
+[connection signal="body_entered" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_entered"]
+[connection signal="body_exited" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_exited"]
+[connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
+
+[editable path="EmotionZone"]

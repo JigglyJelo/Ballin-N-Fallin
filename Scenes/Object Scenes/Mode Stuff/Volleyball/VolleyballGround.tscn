@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1i874ym0t6rl"]
+
+[ext_resource type="Script" path="res://Scripts/Modes/Volleyball/VolleyballGround.cs" id="1_q1fhu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7qlh"]
+size = Vector2(1792, 32)
+
+[node name="Goal" type="Area2D" groups=["Stop Prediction"]]
+script = ExtResource("1_q1fhu")
+team = "A"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w7qlh")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[connection signal="body_entered" from="." to="." method="_on_area_2d_body_entered"]

@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://blmaeou7tx214"]
+
+[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_uepfe"]
+[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="2_l3tp1"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_r0jfx"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_jnjac"]
+[ext_resource type="Script" path="res://Scripts/Level Stuff/DeathTile.cs" id="4_x0515"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_mtbnw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rciy3"]
+size = Vector2(128, 1152)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sbkhp"]
+size = Vector2(4096, 2304)
+
+[node name="Level" type="Node2D" groups=["Regain"]]
+position = Vector2(0, -448)
+script = ExtResource("1_uepfe")
+CameraZoom = 0.95
+background = ExtResource("2_l3tp1")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1920, -704, 2688, -704, 2688, 1600, -2688, 1600, -2688, -704, 1920, -704, 1920, -448, -1920, -448, -1920, -64, -2560, -64, -2560, 1088, -1920, 1088, -1920, 1472, 1920, 1472, 1920, 1088, 2560, 1088, 2560, -64, 1920, -64)
+metadata/invert = true
+
+[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
+position = Vector2(0, 576)
+texture = ExtResource("2_r0jfx")
+
+[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-640, 1280)
+texture = ExtResource("3_jnjac")
+metadata/team = "A"
+
+[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-960, 1280)
+texture = ExtResource("3_jnjac")
+metadata/team = "A"
+
+[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-1280, 1280)
+texture = ExtResource("3_jnjac")
+metadata/team = "A"
+
+[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(-1600, 1280)
+texture = ExtResource("3_jnjac")
+metadata/team = "A"
+
+[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(640, 1280)
+texture = ExtResource("3_jnjac")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(960, 1280)
+texture = ExtResource("3_jnjac")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(1280, 1280)
+texture = ExtResource("3_jnjac")
+flip_h = true
+metadata/team = "B"
+
+[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(1600, 1280)
+texture = ExtResource("3_jnjac")
+flip_h = true
+metadata/team = "B"
+
+[node name="DeathZone" type="Area2D" parent="."]
+script = ExtResource("4_x0515")
+team = "B"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(2496, 512)
+shape = SubResource("RectangleShape2D_rciy3")
+debug_color = Color(0, 0, 1, 0.501961)
+
+[node name="DeathZone2" type="Area2D" parent="."]
+script = ExtResource("4_x0515")
+team = "A"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone2"]
+position = Vector2(-2496, 512)
+shape = SubResource("RectangleShape2D_rciy3")
+debug_color = Color(1, 0, 0, 0.501961)
+
+[node name="ItemSpawner" parent="." instance=ExtResource("5_mtbnw")]
+position = Vector2(0, -320)
+
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
+position = Vector2(0, 448)
+shape = SubResource("RectangleShape2D_sbkhp")
+
+[connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="DeathZone2" to="DeathZone2" method="_on_area_2d_body_entered"]

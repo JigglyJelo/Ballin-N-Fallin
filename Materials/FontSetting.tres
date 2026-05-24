@@ -1,0 +1,12 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://db32ti2uhafpf"]
+
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="1_2nwhp"]
+
+[resource]
+font = ExtResource("1_2nwhp")
+font_size = 200
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(11, 11)
