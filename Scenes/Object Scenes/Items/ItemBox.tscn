@@ -35,7 +35,6 @@ shape = SubResource("RectangleShape2D_d2l6w")
 shape = SubResource("RectangleShape2D_d2l6w")
 
 [node name="Smoothing2D" type="Node2D" parent="."]
-scale = Vector2(1e-05, 1e-05)
 
 [node name="Visuals" type="Node2D" parent="Smoothing2D"]
 
