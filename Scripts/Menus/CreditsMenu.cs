@@ -41,7 +41,7 @@ public partial class CreditsMenu : VerticalMenu{
     public override void _Process(double delta){
         if(displayingSubCredits){
 			//Only check for back button
-			for(int i = 1; i <= Game.MAX_PLAYERS; i++){
+			for(int i = 0; i < Game.MAX_PLAYERS; i++){
 				if(Input.IsActionJustReleased("B" + i)){
 					MenuBack();
 					return;
