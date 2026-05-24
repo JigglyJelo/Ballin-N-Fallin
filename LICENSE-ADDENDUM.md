@@ -16,6 +16,7 @@ Non-code assets (including, but not limited to, art, audio, and media files) sub
 
 
 3\. Forward-Looking Consent for Future Platforms
+
 To ensure the game can adapt to a changing gaming landscape, the project requires the ability to link against other standard storefront and multiplayer services without violating the license.
 
 By intentionally submitting a software code contribution to this project, you explicitly grant a perpetual and irrevocable right to the original author and Project Lead, JigglyJello, to update or adjust this specific addendum in the future to clarify its wording, or to authorize linking with other similar third-party distribution, matchmaking, multiplayer, and gaming SDKs, and you actively apply any such future linking permissions to your contributed code.
