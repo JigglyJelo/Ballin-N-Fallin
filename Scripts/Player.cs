@@ -211,9 +211,11 @@ public partial class Player : Node2D{
 		RouletteSound.MaxDistance = 2304*zoomScale;
 		usernameText.Text = Game.GetUsername(Id);
 		ShowUsernameText();
-		Tween usernameTween = CreateTween();
-		usernameTween.TweenProperty(usernameGroup,"self_modulate",new Color(PlayerColor,0),3);
-		usernameTween.TweenCallback(Callable.From(HideUsernameText));
+		if(!AccessibilityMenu.AlwaysShowNames){
+			Tween usernameTween = CreateTween();
+			usernameTween.TweenProperty(usernameGroup,"self_modulate",new Color(PlayerColor,0),3);
+			usernameTween.TweenCallback(Callable.From(HideUsernameText));
+		}
 	}
 
 	public override void _PhysicsProcess(double delta){

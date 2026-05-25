@@ -73,7 +73,7 @@ public partial class Game : Node{
     };
     //Settings
     public static StompSettingEnum StompSetting = StompSettingEnum.On;
-    public static byte MusicVolume, SFXVolume;
+    public static byte MasterVolume, MusicVolume, SFXVolume;
     public static int Resolution = 2160;
     public static bool AutoStartNewTour = false;
     //Advanced Tour Settings
@@ -247,7 +247,7 @@ public partial class Game : Node{
     }
     public static void UpdateWindowSize(){
 		if(Resolution > DisplayServer.ScreenGetSize().Y){
-			int defaultResolution = SettingsMenu.RESOLUTIONS[SettingsMenu.GetDefaultResolution()-1];
+			int defaultResolution = VideoMenu.RESOLUTIONS[VideoMenu.GetDefaultResolution()-1];
 			DisplayServer.WindowSetSize(new Vector2I((int)Math.Ceiling((16f/9f) * defaultResolution),defaultResolution));
 		}else{
 			DisplayServer.WindowSetSize(new Vector2I((int)Math.Ceiling((16f/9f) * Resolution),Resolution));

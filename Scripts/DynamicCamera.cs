@@ -46,7 +46,7 @@ public partial class DynamicCamera : Camera2D{
     }
 
     private void CameraMovements(float fDelta){
-        if(currentLevel != Level.LevelNode){
+        if(currentLevel != Level.LevelNode || !AccessibilityMenu.DynamicCameraEnabled){
             currentLevel = Level.LevelNode;
             
             CollisionShape2D initBounds = Level.LevelNode.GetNodeOrNull<CollisionShape2D>("CameraBoundary");
@@ -57,6 +57,7 @@ public partial class DynamicCamera : Camera2D{
             Zoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
             targetZoom = Zoom;
             smoothedVelocity = Vector2.Zero; 
+            if(!AccessibilityMenu.DynamicCameraEnabled) return;
         }
         
         //Grab visual rectangle limits and zoom floor

@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh48nfoipc6v"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/Settings Menu/AccessibilityMenu.cs" id="1_8uce1"]
+[ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Scenes/Object Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="2_i2lqk"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Materials/FontSetting.tres" id="3_u726u"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_gcqj4"]
+
+[node name="Accessibility Menu" type="Node2D"]
+script = ExtResource("1_8uce1")
+
+[node name="Settings Text" type="Label" parent="."]
+offset_left = -1705.0
+offset_top = -935.0
+offset_right = 2135.0
+offset_bottom = -695.0
+text = "Accessibility"
+label_settings = ExtResource("3_u726u")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="ArrowSelections" parent="." instance=ExtResource("2_i2lqk")]
+
+[node name="Selections" type="Node2D" parent="."]
+position = Vector2(215, 0)
+
+[node name="Camera Text" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -662.0
+offset_right = 56.0
+offset_bottom = -422.0
+text = "Camera: Dynamic"
+label_settings = ExtResource("3_u726u")
+vertical_alignment = 1
+
+[node name="Name Text" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -362.0
+offset_right = 42.0
+offset_bottom = -122.0
+text = "Display Names: At start"
+label_settings = ExtResource("3_u726u")
+vertical_alignment = 1
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_gcqj4")]
+position = Vector2(1750, 970)
