@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc3m2adpkches"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_3l6ca"]
+[ext_resource type="Texture2D" uid="uid://ds22eryj77en2" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/IndoorTile/TileBG.png" id="2_ugiry"]
+
+[node name="Background" type="CanvasLayer"]
+layer = -5
+script = ExtResource("1_3l6ca")
+
+[node name="Gradient" type="TextureRect" parent="."]
+offset_right = 3840.0
+offset_bottom = 2160.0
+
+[node name="BackgroundLayers" type="Node" parent="."]
+
+[node name="Tiles" type="Sprite2D" parent="BackgroundLayers"]
+self_modulate = Color(0.784314, 0.784314, 0.784314, 1)
+texture_repeat = 2
+texture = ExtResource("2_ugiry")
+centered = false
+region_enabled = true
+region_rect = Rect2(41, 41, 3840, 2160)

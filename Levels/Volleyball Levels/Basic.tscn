@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://clj14g21wifm"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_sjq56"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_sjq56"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_drh0q"]
-[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_ubc2f"]
+[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_ubc2f"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_c5i1a"]
-[ext_resource type="PackedScene" uid="uid://c1i874ym0t6rl" path="res://Scenes/Object Scenes/Mode Stuff/Volleyball/VolleyballGround.tscn" id="4_ostg6"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_a2yoy"]
+[ext_resource type="PackedScene" uid="uid://c1i874ym0t6rl" path="res://Source/Scenes/Object Scenes/Mode Stuff/Volleyball/VolleyballGround.tscn" id="4_ostg6"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_a2yoy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qrrgm"]
 size = Vector2(4096, 2176)

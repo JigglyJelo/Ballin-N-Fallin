@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://b5tw6075q2v0s"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_h4ff7"]
-[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="3_s2c13"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_h4ff7"]
+[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="3_s2c13"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_5vfvo"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_vfj44"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_q8cjo"]
-[ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Scenes/Object Scenes/Mode Stuff/Domination/DominationZone.tscn" id="8_p6vxf"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_q8cjo"]
+[ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Source/Scenes/Object Scenes/Mode Stuff/Domination/DominationZone.tscn" id="8_p6vxf"]
 
 [node name="Level" type="Node2D" groups=["Regain"]]
 position = Vector2(-64, -512)

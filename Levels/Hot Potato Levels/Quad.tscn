@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://coyyminaa31wq"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_qqoyh"]
-[ext_resource type="PackedScene" uid="uid://chmv8a46qy7f0" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/CaveBackground.tscn" id="2_81isw"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_qqoyh"]
+[ext_resource type="PackedScene" uid="uid://chmv8a46qy7f0" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/CaveBackground.tscn" id="2_81isw"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_kibsk"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_vonqu"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="4_2gwco"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="4_2gwco"]
 
 [node name="Level" type="Node2D" groups=["Regain"]]
 position = Vector2(0, -320)

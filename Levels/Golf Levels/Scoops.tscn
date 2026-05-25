@@ -1,12 +1,12 @@
 [gd_scene load_steps=13 format=3 uid="uid://diiubx4uq8sv2"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_8ccy0"]
-[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="2_cgyws"]
-[ext_resource type="PackedScene" uid="uid://rncu3w882iba" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/DenseForest.tscn" id="2_cmal5"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_8ccy0"]
+[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="2_cgyws"]
+[ext_resource type="PackedScene" uid="uid://rncu3w882iba" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/DenseForest.tscn" id="2_cmal5"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_3smvq"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="4_pcvki"]
-[ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Scenes/Object Scenes/Mode Stuff/Golf/GolfHole.tscn" id="5_ktyoi"]
-[ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Scenes/Object Scenes/Level Stuff/Sand.tscn" id="6_yexf6"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="4_pcvki"]
+[ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Source/Scenes/Object Scenes/Mode Stuff/Golf/GolfHole.tscn" id="5_ktyoi"]
+[ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Source/Scenes/Object Scenes/Level Stuff/Sand.tscn" id="6_yexf6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnmnd"]
 size = Vector2(5888, 3296)

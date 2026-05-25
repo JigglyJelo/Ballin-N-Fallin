@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqav6j18dtpc"]
+
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="1_gw0w6"]
+
+[node name="Label" type="Label"]
+offset_right = 3840.0
+offset_bottom = 237.0
+text = "Level"
+label_settings = ExtResource("1_gw0w6")
+horizontal_alignment = 1
+vertical_alignment = 1

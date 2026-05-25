@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://djylq3t6en5wh"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Modes/Survival/Trash.cs" id="1_vnc4p"]
+[ext_resource type="Texture2D" uid="uid://7tqakxvnqcfa" path="res://Assets/Sprites/Mode Stuff/Trash/cone.png" id="2_2rg5d"]
+[ext_resource type="Script" path="res://Source/Scripts/InterpolatedBody.cs" id="2_gmoif"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_81x7b"]
+friction = 0.25
+bounce = 0.2
+
+[node name="Node" type="Node"]
+script = ExtResource("1_vnc4p")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Bump", "Trash"]]
+physics_interpolation_mode = 1
+physics_material_override = SubResource("PhysicsMaterial_81x7b")
+can_sleep = false
+script = ExtResource("2_gmoif")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+polygon = PackedVector2Array(-11, -87, 11, -87, 53, 56, 75, 56, 75, 88, -75, 88, -75, 56, -53, 56)
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Smoothing2D"]
+texture_repeat = 3
+texture = ExtResource("2_2rg5d")
+region_enabled = true
+region_rect = Rect2(0, 0, 150, 175)

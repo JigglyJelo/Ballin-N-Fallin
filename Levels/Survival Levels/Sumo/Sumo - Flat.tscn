@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://m5yng5prgcip"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_iyf10"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_iyf10"]
 [ext_resource type="Texture2D" uid="uid://b2ghjmgfs5uoe" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Volleyball Tile.png" id="2_37typ"]
-[ext_resource type="PackedScene" uid="uid://dy6i607ryxmxm" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/BlankBackground.tscn" id="3_wfb80"]
+[ext_resource type="PackedScene" uid="uid://dy6i607ryxmxm" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/BlankBackground.tscn" id="3_wfb80"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_ect1w"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_51k1r"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_duph7"]
-[ext_resource type="PackedScene" uid="uid://b5lf243tgfp82" path="res://Scenes/Object Scenes/Mode Stuff/Survival/Sumo/TheRing.tscn" id="7_85klk"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_duph7"]
+[ext_resource type="PackedScene" uid="uid://b5lf243tgfp82" path="res://Source/Scenes/Object Scenes/Mode Stuff/Survival/Sumo/TheRing.tscn" id="7_85klk"]
 
 [node name="Level" type="Node2D" groups=["Regain"]]
 script = ExtResource("1_iyf10")

@@ -1,0 +1,157 @@
+[gd_scene load_steps=23 format=3 uid="uid://ck1d1utbid0dt"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Modes/ModeSetter.cs" id="1_5rc4v"]
+[ext_resource type="Script" path="res://Source/Scripts/Modes/MusicPlayer.cs" id="2_yikq2"]
+[ext_resource type="AudioStream" uid="uid://cf7uht76mpgh7" path="res://Assets/SFX/bad.ogg" id="3_35lsv"]
+[ext_resource type="Script" path="res://Source/Scripts/SFX.cs" id="3_sswyi"]
+[ext_resource type="AudioStream" uid="uid://di1d11gds8qel" path="res://Assets/SFX/lap.ogg" id="5_8mvj1"]
+[ext_resource type="AudioStream" uid="uid://d0ais7f4uxvo1" path="res://Assets/SFX/complete.ogg" id="6_yc106"]
+[ext_resource type="AudioStream" uid="uid://c7u8giea1yepf" path="res://Assets/SFX/golf hole.ogg" id="7_7bd4n"]
+[ext_resource type="AudioStream" uid="uid://cycloo1q2qegb" path="res://Assets/SFX/airhorn.ogg" id="8_7ifns"]
+[ext_resource type="AudioStream" uid="uid://cndmgulqss8h" path="res://Assets/SFX/quaker540__hq-explosion.ogg" id="8_dklq0"]
+[ext_resource type="AudioStream" uid="uid://bttypg7cbwydt" path="res://Assets/SFX/balloon_pop.ogg" id="9_etuxj"]
+[ext_resource type="AudioStream" uid="uid://dtdqcyi58snu3" path="res://Assets/SFX/353799__monte32__footsteps_6_dirt_shoe.ogg" id="10_4aek1"]
+[ext_resource type="Script" path="res://Source/Scripts/Online/OnlineReadier.cs" id="10_nec5n"]
+[ext_resource type="AudioStream" uid="uid://dx10wxt8ceg47" path="res://Assets/SFX/garyq__tank-fire-mixed.ogg" id="11_b3juk"]
+[ext_resource type="AudioStream" uid="uid://c4dupxxcy32up" path="res://Assets/SFX/Menu/keypress-017.ogg" id="12_4tppv"]
+[ext_resource type="Script" path="res://Source/Scripts/Items/Spawnable Item Scripts/ItemSynchronizer.cs" id="13_jg7uh"]
+[ext_resource type="AudioStream" uid="uid://dfpy1y6bip17b" path="res://Assets/SFX/sieuamthanh__orchestra-hit-a7-a8.ogg" id="13_qv56m"]
+[ext_resource type="AudioStream" uid="uid://i2srjvx1wggd" path="res://Assets/SFX/jayrom01__whip-and-crack-sound.ogg" id="14_mj3by"]
+[ext_resource type="AudioStream" uid="uid://dntmgv83chc8b" path="res://Assets/SFX/coin-gavynator.ogg" id="15_370ei"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="15_gxw6u"]
+[ext_resource type="AudioStream" uid="uid://b2hg5ebch3f1m" path="res://Assets/SFX/kenneynl_tone1.ogg" id="16_3hmsa"]
+[ext_resource type="Script" path="res://Source/Scripts/Visual Effects/ParticleManager.cs" id="17_ivexy"]
+[ext_resource type="Script" path="res://Source/Scripts/Death.cs" id="20_jyd88"]
+
+[node name="Scene" type="Node"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+autoplay = true
+bus = &"Music"
+script = ExtResource("2_yikq2")
+
+[node name="SFXManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("3_sswyi")
+
+[node name="Bad" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("3_35lsv")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Lap" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("5_8mvj1")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Finish" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("6_yc106")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="GolfHole" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("7_7bd4n")
+max_distance = 10000.0
+attenuation = 0.001
+bus = &"SFX"
+
+[node name="Airhorn" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("8_7ifns")
+max_distance = 10000.0
+attenuation = 0.001
+bus = &"SFX"
+
+[node name="Explosion" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("8_dklq0")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Pop" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("9_etuxj")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Sand" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("10_4aek1")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Blast" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("11_b3juk")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Move" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("12_4tppv")
+max_distance = 10000.0
+attenuation = 0.001
+bus = &"SFX"
+
+[node name="Orchestra" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("13_qv56m")
+max_distance = 10000.0
+attenuation = 0.001
+bus = &"SFX"
+
+[node name="Whip" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("14_mj3by")
+max_distance = 10000.0
+attenuation = 0.001
+bus = &"SFX"
+
+[node name="Coin" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("15_370ei")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="Beep" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = ExtResource("16_3hmsa")
+max_distance = 10000.0
+attenuation = 0.001
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="Mode Setter" type="Node" parent="."]
+script = ExtResource("1_5rc4v")
+
+[node name="OnlineReadier" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("10_nec5n")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="OnlineReadier"]
+layer = 128
+
+[node name="StatusText" type="Label" parent="OnlineReadier/CanvasLayer"]
+offset_left = 7.0
+offset_top = 2032.0
+offset_right = 7647.0
+offset_bottom = 2266.0
+scale = Vector2(0.5, 0.5)
+label_settings = ExtResource("15_gxw6u")
+horizontal_alignment = 2
+
+[node name="ItemSpawner" type="Node" parent="."]
+script = ExtResource("13_jg7uh")
+
+[node name="ParticleManager" type="Node" parent="."]
+script = ExtResource("17_ivexy")
+
+[node name="DeathManager" type="Node" parent="."]
+script = ExtResource("20_jyd88")

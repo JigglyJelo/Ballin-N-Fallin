@@ -1,0 +1,273 @@
+[gd_scene load_steps=37 format=3 uid="uid://b78ro40qrxhlk"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Player.cs" id="1_5nebf"]
+[ext_resource type="PhysicsMaterial" uid="uid://cl78t0kopdgd6" path="res://Source/Materials/PlayerPhysicsMaterial.tres" id="1_xiy12"]
+[ext_resource type="Shape2D" uid="uid://mmicm5qifgge" path="res://Source/Materials/PlayerShape.tres" id="2_4c1gn"]
+[ext_resource type="PackedScene" uid="uid://3j2q7w1qlu5t" path="res://Source/Scenes/Object Scenes/Particles/Trail.tscn" id="2_pxjd3"]
+[ext_resource type="Texture2D" uid="uid://cj8th7x6xkja0" path="res://Assets/Sprites/Player/63/Ball.png" id="3_gdt3x"]
+[ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Source/Scenes/Object Scenes/Particles/Shadow.tscn" id="3_urjuj"]
+[ext_resource type="Texture2D" uid="uid://dlm0ki33nhb7f" path="res://Assets/Sprites/Player/Ball31.png" id="5_mmhx2"]
+[ext_resource type="Texture2D" uid="uid://2n6tbh4lhy5d" path="res://Assets/Sprites/Player/190/BallLines.png" id="6_khj8r"]
+[ext_resource type="Texture2D" uid="uid://t6tm52yejvsb" path="res://Assets/Sprites/Player/190/Eyes/NeutralEyes.png" id="6_qw1l1"]
+[ext_resource type="Texture2D" uid="uid://3m0fhcijwhc6" path="res://Assets/Sprites/Player/190/Pupils/NeutralPupils.png" id="7_i2jnn"]
+[ext_resource type="Texture2D" uid="uid://br0xolkmnp2kg" path="res://Assets/Sprites/Player/190/Outline.png" id="8_0x18p"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="10_p03id"]
+[ext_resource type="Texture2D" uid="uid://cyxwobqv8r4ui" path="res://Assets/Sprites/Items/Small/Pepper.png" id="11_7llrt"]
+[ext_resource type="AudioStream" uid="uid://c2ooj1e2e16qo" path="res://Assets/SFX/slots.ogg" id="12_3bcce"]
+[ext_resource type="Texture2D" uid="uid://k6timim6853t" path="res://Assets/Sprites/Player/TransformBar.png" id="12_fhs5s"]
+[ext_resource type="Texture2D" uid="uid://ctlp00apfi0c2" path="res://Assets/Sprites/Items/Small/Bowling Ball.png" id="12_w5fhc"]
+[ext_resource type="AudioStream" uid="uid://bqlveuj505gx2" path="res://Assets/SFX/cash register.ogg" id="12_wvlv7"]
+[ext_resource type="Texture2D" uid="uid://b53tmvfot13gc" path="res://Assets/Sprites/Items/Small/Inverter.png" id="13_32uyd"]
+[ext_resource type="AudioStream" uid="uid://c4exk1s5oqhbl" path="res://Assets/SFX/bounce.ogg" id="13_eshxk"]
+[ext_resource type="AudioStream" uid="uid://ja4o5c5hg2dj" path="res://Assets/SFX/flame.ogg" id="14_iha6a"]
+[ext_resource type="Texture2D" uid="uid://sw1orfa4ltup" path="res://Assets/Sprites/Items/Small/Booll.png" id="14_nf216"]
+[ext_resource type="Texture2D" uid="uid://dqi6cyfvm1o22" path="res://Assets/Sprites/Items/Small/Big Fungus.png" id="15_b0vbp"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="15_vudw1"]
+[ext_resource type="Texture2D" uid="uid://cbwj4dorfrndb" path="res://Assets/Sprites/Items/Small/Small Ball.png" id="16_uhq62"]
+[ext_resource type="Texture2D" uid="uid://117w2mhl1472" path="res://Assets/Sprites/Items/Small/Stop Sign.png" id="17_7tfd0"]
+[ext_resource type="Texture2D" uid="uid://b0r8dbxt4aur6" path="res://Assets/Sprites/Items/Small/Moon.png" id="18_tvn25"]
+[ext_resource type="Texture2D" uid="uid://c8n25xoxfwogo" path="res://Assets/Sprites/Items/Small/Wings.png" id="19_vednr"]
+[ext_resource type="Texture2D" uid="uid://d4esn3d6vhohv" path="res://Assets/Sprites/Items/Small/Ball.png" id="20_alnmc"]
+[ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="21_ism5j"]
+[ext_resource type="Texture2D" uid="uid://22wvuhy1skfh" path="res://Assets/Sprites/Player/HalfArrow.png" id="22_8po4q"]
+[ext_resource type="PackedScene" uid="uid://3hnqc6r5kp1o" path="res://Source/Scenes/Object Scenes/Particles/BlastZoneParticles.tscn" id="27_62bxl"]
+[ext_resource type="Script" path="res://Source/Scripts/InterpolatedBody.cs" id="27_513li"]
+[ext_resource type="PackedScene" uid="uid://cl2773npcmkn1" path="res://Source/Scenes/Object Scenes/Particles/Pop Particles.tscn" id="29_tj5wo"]
+
+[sub_resource type="Curve" id="Curve_kg2yp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252809, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_xiyfj"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6tlje"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_7llrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_w5fhc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_32uyd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_nf216")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_b0vbp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_uhq62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_7tfd0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_tvn25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_vednr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_alnmc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="Node2D" groups=["Player"]]
+script = ExtResource("1_5nebf")
+
+[node name="Trail" parent="." instance=ExtResource("2_pxjd3")]
+
+[node name="Shadow" parent="." instance=ExtResource("3_urjuj")]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="HUDNoRotate" type="RemoteTransform2D" parent="Visuals"]
+remote_path = NodePath("../HUD")
+update_rotation = false
+update_scale = false
+
+[node name="HUD" type="Node2D" parent="Visuals"]
+
+[node name="FlameParticles" type="CPUParticles2D" parent="Visuals/HUD"]
+z_index = 1
+emitting = false
+amount = 12
+randomness = 0.1
+lifetime_randomness = 0.1
+texture = ExtResource("3_gdt3x")
+emission_shape = 1
+emission_sphere_radius = 91.0
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 190.0
+initial_velocity_max = 285.0
+scale_amount_min = 0.75
+scale_amount_max = 1.5
+scale_amount_curve = SubResource("Curve_kg2yp")
+color = Color(1, 0.368627, 0, 0.501961)
+color_ramp = SubResource("Gradient_xiyfj")
+
+[node name="ModeText" type="Label" parent="Visuals/HUD"]
+offset_left = -683.0
+offset_top = -10.0
+offset_right = 683.0
+offset_bottom = 246.0
+scale = Vector2(0.375, 0.375)
+pivot_offset = Vector2(683, 128)
+label_settings = ExtResource("10_p03id")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UsernameGroup" type="CanvasGroup" parent="Visuals/HUD"]
+
+[node name="UsernameText" type="Label" parent="Visuals/HUD/UsernameGroup"]
+offset_left = -1136.0
+offset_top = -297.0
+offset_right = 1137.0
+offset_bottom = -63.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(1136.5, 117)
+label_settings = ExtResource("10_p03id")
+horizontal_alignment = 1
+
+[node name="RouletteAnimation" type="AnimatedSprite2D" parent="Visuals/HUD"]
+visible = false
+position = Vector2(0, -180)
+sprite_frames = SubResource("SpriteFrames_6tlje")
+
+[node name="ItemSprite" type="Sprite2D" parent="Visuals/HUD"]
+position = Vector2(0, -180)
+
+[node name="ItemAmountLabel" type="Label" parent="Visuals/HUD/ItemSprite"]
+offset_left = 34.0
+offset_right = 130.0
+offset_bottom = 234.0
+scale = Vector2(0.25, 0.25)
+text = " "
+label_settings = ExtResource("10_p03id")
+
+[node name="ItemTriangle" type="Polygon2D" parent="Visuals/HUD"]
+visible = false
+position = Vector2(0, -180)
+polygon = PackedVector2Array(-16, 60, 16, 60, 0, 83)
+script = ExtResource("15_vudw1")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 5.0
+stroke_sharp_limit = 4.0
+
+[node name="Item Bar" type="TextureProgressBar" parent="Visuals/HUD"]
+offset_left = -62.5
+offset_top = -123.0
+offset_right = 187.5
+offset_bottom = -68.0
+scale = Vector2(0.5, 0.5)
+texture_progress = ExtResource("12_fhs5s")
+metadata/_edit_use_anchors_ = true
+
+[node name="ArrowSprite" type="Sprite2D" parent="Visuals/HUD"]
+texture_repeat = 3
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("22_8po4q")
+region_enabled = true
+region_rect = Rect2(0, 0, 147, 76)
+
+[node name="Sprites" type="Node2D" parent="Visuals"]
+
+[node name="Rotation" type="Node2D" parent="Visuals/Sprites"]
+
+[node name="BallSprite" type="Sprite2D" parent="Visuals/Sprites/Rotation"]
+texture_repeat = 3
+scale = Vector2(3.015, 3.015)
+texture = ExtResource("5_mmhx2")
+region_enabled = true
+region_rect = Rect2(0, 0, 62, 62)
+
+[node name="Shading" type="Sprite2D" parent="Visuals/Sprites/Rotation"]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("21_ism5j")
+
+[node name="LinesSprite" type="Sprite2D" parent="Visuals/Sprites/Rotation"]
+self_modulate = Color(0, 0, 0, 1)
+use_parent_material = true
+texture = ExtResource("6_khj8r")
+
+[node name="EyesSprite" type="Sprite2D" parent="Visuals/Sprites/Rotation/LinesSprite"]
+clip_children = 2
+use_parent_material = true
+texture = ExtResource("6_qw1l1")
+
+[node name="PupilsSprite" type="Sprite2D" parent="Visuals/Sprites/Rotation/LinesSprite/EyesSprite"]
+self_modulate = Color(0, 0, 0, 1)
+use_parent_material = true
+texture = ExtResource("7_i2jnn")
+
+[node name="OutlineSprite" type="Sprite2D" parent="Visuals/Sprites/Rotation"]
+self_modulate = Color(0, 0, 0, 1)
+texture_repeat = 3
+use_parent_material = true
+texture = ExtResource("8_0x18p")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Player"]]
+physics_material_override = ExtResource("1_xiy12")
+gravity_scale = 2.0
+continuous_cd = 2
+contact_monitor = true
+max_contacts_reported = 6
+linear_damp = 0.2
+angular_damp = 0.125
+script = ExtResource("27_513li")
+VisualsNode = NodePath("../Visuals")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+visible = false
+shape = ExtResource("2_4c1gn")
+
+[node name="BounceSound" type="AudioStreamPlayer2D" parent="RigidBody2D"]
+stream = ExtResource("13_eshxk")
+max_distance = 2500.0
+attenuation = 0.01
+max_polyphony = 2
+bus = &"SFX"
+
+[node name="FlameSound" type="AudioStreamPlayer2D" parent="RigidBody2D"]
+stream = ExtResource("14_iha6a")
+max_distance = 2500.0
+attenuation = 0.01
+bus = &"SFX"
+
+[node name="RouletteSound" type="AudioStreamPlayer2D" parent="RigidBody2D"]
+stream = ExtResource("12_3bcce")
+max_distance = 2500.0
+attenuation = 0.01
+bus = &"SFX"
+
+[node name="ItemSound" type="AudioStreamPlayer2D" parent="RigidBody2D"]
+stream = ExtResource("12_wvlv7")
+max_distance = 2500.0
+attenuation = 0.01
+bus = &"SFX"
+
+[node name="ShadowRemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
+remote_path = NodePath("../../Shadow")
+update_rotation = false
+update_scale = false
+
+[node name="Particles" type="Node" parent="."]
+process_mode = 4
+
+[node name="BlastZoneParticles" parent="Particles" instance=ExtResource("27_62bxl")]
+texture_repeat = 3
+
+[node name="PopParticles" parent="Particles" instance=ExtResource("29_tj5wo")]
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_entered"]
+[connection signal="body_exited" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_exited"]
+[connection signal="body_shape_entered" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_shape_entered"]

@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddgbtxy1y78xq"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/MenuScene.cs" id="1_5y6bx"]
+[ext_resource type="AudioStream" uid="uid://dd2u0alxwq5w4" path="res://Assets/Music/Menu.ogg" id="3_xo7lv"]
+[ext_resource type="Script" path="res://Source/Scripts/SFX.cs" id="4_7ggn3"]
+[ext_resource type="AudioStream" uid="uid://btq4qp4fvqyrs" path="res://Assets/SFX/Menu/confirm.ogg" id="5_8g3dp"]
+[ext_resource type="AudioStream" uid="uid://sek7s07hype1" path="res://Assets/SFX/Menu/back.ogg" id="6_ulqei"]
+[ext_resource type="AudioStream" uid="uid://c4dupxxcy32up" path="res://Assets/SFX/Menu/keypress-017.ogg" id="7_pywyu"]
+[ext_resource type="PackedScene" uid="uid://s1fupi1cythv" path="res://Source/Scenes/Object Scenes/Backgrounds/MenuBackground.tscn" id="8_8odrv"]
+[ext_resource type="AudioStream" uid="uid://byp56obcr85mg" path="res://Assets/SFX/Menu/gun_cocking.ogg" id="8_eprgt"]
+
+[node name="Scene" type="Node"]
+script = ExtResource("1_5y6bx")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_xo7lv")
+bus = &"Music"
+
+[node name="SFX" type="Node" parent="."]
+process_mode = 4
+script = ExtResource("4_7ggn3")
+
+[node name="Confirm" type="AudioStreamPlayer2D" parent="SFX"]
+process_mode = 3
+stream = ExtResource("5_8g3dp")
+bus = &"SFX"
+
+[node name="Back" type="AudioStreamPlayer2D" parent="SFX"]
+process_mode = 3
+stream = ExtResource("6_ulqei")
+bus = &"SFX"
+
+[node name="Move" type="AudioStreamPlayer2D" parent="SFX"]
+process_mode = 3
+stream = ExtResource("7_pywyu")
+bus = &"SFX"
+
+[node name="PlayerEnter" type="AudioStreamPlayer2D" parent="SFX"]
+process_mode = 3
+stream = ExtResource("8_eprgt")
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Background" parent="." instance=ExtResource("8_8odrv")]

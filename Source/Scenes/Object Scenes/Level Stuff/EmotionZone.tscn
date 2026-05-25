@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cryhqyifcuaju"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/EmotionZone.cs" id="1_afnnl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6s3hm"]
+size = Vector2(128, 128)
+
+[node name="EmotionZone" type="Area2D"]
+script = ExtResource("1_afnnl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6s3hm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://7y74q6l2qvog"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Modes/Survival/Trash.cs" id="1_vloyq"]
+[ext_resource type="Texture2D" uid="uid://bqedcq64h6f46" path="res://Assets/Sprites/Mode Stuff/Soccer/SportBall.png" id="2_euv8a"]
+[ext_resource type="Script" path="res://Source/Scripts/InterpolatedBody.cs" id="2_x40jm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4us5k"]
+friction = 0.5
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wcv7a"]
+radius = 192.0
+
+[node name="Node" type="Node"]
+script = ExtResource("1_vloyq")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Bump", "Trash"]]
+physics_interpolation_mode = 1
+mass = 1.5
+physics_material_override = SubResource("PhysicsMaterial_4us5k")
+gravity_scale = 0.75
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource("2_x40jm")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_wcv7a")
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Smoothing2D"]
+texture_repeat = 3
+texture = ExtResource("2_euv8a")
+region_enabled = true
+region_rect = Rect2(0, 0, 380, 380)

@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://tbwddy7esir7"]
+
+[ext_resource type="PackedScene" uid="uid://vmlp1fgggjan" path="res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/Coin.tscn" id="1_eqeei"]
+
+[node name="Single" type="Node2D"]
+
+[node name="Coin" parent="." instance=ExtResource("1_eqeei")]
+position = Vector2(64, -176)
+
+[node name="Coin2" parent="." instance=ExtResource("1_eqeei")]
+position = Vector2(64, 96)
+
+[node name="Coin3" parent="." instance=ExtResource("1_eqeei")]
+position = Vector2(-64, 96)
+
+[node name="Coin4" parent="." instance=ExtResource("1_eqeei")]
+position = Vector2(-64, -40)
+
+[node name="Coin5" parent="." instance=ExtResource("1_eqeei")]
+position = Vector2(-64, -176)
+
+[node name="Coin6" parent="." instance=ExtResource("1_eqeei")]
+position = Vector2(64, -40)

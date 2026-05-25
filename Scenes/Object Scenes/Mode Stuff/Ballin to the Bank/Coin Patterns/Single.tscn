@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cabu2qhqw4638"]
-
-[ext_resource type="PackedScene" uid="uid://vmlp1fgggjan" path="res://Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/Coin.tscn" id="1_tqgim"]
-
-[node name="Single" type="Node2D"]
-
-[node name="Coin" parent="." instance=ExtResource("1_tqgim")]

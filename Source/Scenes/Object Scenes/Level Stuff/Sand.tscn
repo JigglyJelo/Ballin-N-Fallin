@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://1388bpo3io0t"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Sand.cs" id="1_rcv83"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvu1i"]
+size = Vector2(128, 128)
+
+[node name="Sand" type="Area2D" groups=["Stop Prediction"]]
+collision_layer = 3
+script = ExtResource("1_rcv83")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kvu1i")
+debug_color = Color(1, 0.831373, 0.270588, 0.419608)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

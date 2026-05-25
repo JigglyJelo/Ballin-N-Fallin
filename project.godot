@@ -13,7 +13,7 @@ config_version=5
 config/name="Ballin N Fallin"
 config/description="Ballin N Fallin"
 config/version="1.0"
-run/main_scene="res://Scenes/Main Scenes/Main Scene.tscn"
+run/main_scene="res://Source/Scenes/Main Scenes/Main Scene.tscn"
 config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
 run/delta_smoothing=false
 boot_splash/show_image=false
@@ -24,7 +24,7 @@ config/windows_native_icon="res://Assets/Sprites/Ballin N Fallin.ico"
 
 [audio]
 
-buses/default_bus_layout="res://Materials/default_bus_layout.tres"
+buses/default_bus_layout="res://Source/Materials/default_bus_layout.tres"
 
 [autoload]
 
@@ -67,28 +67,29 @@ folder_colors={
 "res://Levels/Survival Levels/": "red",
 "res://Levels/Target Test Levels/": "red",
 "res://Levels/Volleyball Levels/": "yellow",
-"res://Materials/": "teal",
-"res://Scenes/": "purple",
-"res://Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/": "yellow",
-"res://Scenes/Object Scenes/Mode Stuff/Bomb Ball/": "gray",
-"res://Scenes/Object Scenes/Mode Stuff/Domination/": "red",
-"res://Scenes/Object Scenes/Mode Stuff/Golf/": "teal",
-"res://Scenes/Object Scenes/Mode Stuff/King of the Hill/": "green",
-"res://Scenes/Object Scenes/Mode Stuff/Payload/": "yellow",
-"res://Scenes/Object Scenes/Mode Stuff/Race/": "orange",
-"res://Scenes/Object Scenes/Mode Stuff/Survival/": "red",
-"res://Scenes/Object Scenes/Mode Stuff/Volleyball/": "yellow",
-"res://Scripts/": "green",
-"res://Scripts/Modes/Ballin to the Bank/": "yellow",
-"res://Scripts/Modes/Bomb Ball/": "gray",
-"res://Scripts/Modes/Crown the King/": "pink",
-"res://Scripts/Modes/Deathmatch/": "blue",
-"res://Scripts/Modes/Domination/": "red",
-"res://Scripts/Modes/Golf/": "teal",
-"res://Scripts/Modes/Hot Potato/": "gray",
-"res://Scripts/Modes/Payload/": "yellow",
-"res://Scripts/Modes/Race/": "orange",
-"res://Scripts/Modes/Survival/": "red"
+"res://Source/": "blue",
+"res://Source/Materials/": "teal",
+"res://Source/Scenes/": "purple",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/": "yellow",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Bomb Ball/": "gray",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Domination/": "red",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Golf/": "teal",
+"res://Source/Scenes/Object Scenes/Mode Stuff/King of the Hill/": "green",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Payload/": "yellow",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Race/": "orange",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Survival/": "red",
+"res://Source/Scenes/Object Scenes/Mode Stuff/Volleyball/": "yellow",
+"res://Source/Scripts/": "green",
+"res://Source/Scripts/Modes/Ballin to the Bank/": "yellow",
+"res://Source/Scripts/Modes/Bomb Ball/": "gray",
+"res://Source/Scripts/Modes/Crown the King/": "pink",
+"res://Source/Scripts/Modes/Deathmatch/": "blue",
+"res://Source/Scripts/Modes/Domination/": "red",
+"res://Source/Scripts/Modes/Golf/": "teal",
+"res://Source/Scripts/Modes/Hot Potato/": "gray",
+"res://Source/Scripts/Modes/Payload/": "yellow",
+"res://Source/Scripts/Modes/Race/": "orange",
+"res://Source/Scripts/Modes/Survival/": "red"
 }
 
 [filesystem]

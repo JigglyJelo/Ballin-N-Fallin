@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://cqmquh3k7rxbi"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_nmqin"]
-[ext_resource type="PackedScene" uid="uid://c67evamjga26g" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/MountainsBackground.tscn" id="2_g2ycs"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_nmqin"]
+[ext_resource type="PackedScene" uid="uid://c67evamjga26g" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/MountainsBackground.tscn" id="2_g2ycs"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_geaib"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_1y327"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_5mefn"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_5mefn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6pa7"]
 size = Vector2(5120, 2560)
