@@ -19,5 +19,5 @@ A Physics-based multiplayer party game in development
 ### Asset Licenses
 Media files located in this repository (including, but not limited to, images, audio, and fonts) are not covered by the AGPL code license.
 
-* **Proprietary Assets:** Unless otherwise noted, all original game art, images, sprites, and branding are proprietary (All Rights Reserved).
+* **Proprietary Assets:** Unless otherwise noted, all original game art, images, sprites, levels, and branding are proprietary (All Rights Reserved).
 * **Third-Party Assets:** Certain media files, such as fonts, audio, and specific images, are used under their respective open-source or commercial licenses (e.g., SIL Open Font License, CC-BY). Please refer to the `ATTRIBUTIONS.txt` file or the local credits files within those specific asset folders for their exact terms.
