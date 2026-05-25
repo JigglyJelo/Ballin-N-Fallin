@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://c0pmfvhnbqpni"]
+
+[ext_resource type="PackedScene" uid="uid://gry0r2s1m3ge" path="res://Source/Scenes/Object Scenes/Backgrounds/BackgroundTemplate.tscn" id="1_tmg1e"]
+[ext_resource type="PackedScene" uid="uid://ck6hegmlr65da" path="res://Source/Scenes/Object Scenes/Backgrounds/BackgroundElements/Clouds.tscn" id="2_o5u3f"]
+[ext_resource type="Texture2D" uid="uid://day2tkuhk8i43" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Front/Hills/HillsQuarter.png" id="3_4iyqk"]
+[ext_resource type="Texture2D" uid="uid://d1en4td6tvs6k" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/CastleBack.png" id="3_ktpl3"]
+[ext_resource type="Texture2D" uid="uid://l3chgtunmbj7" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Elements/Mount1.png" id="4_71upk"]
+
+[node name="Background" instance=ExtResource("1_tmg1e")]
+
+[node name="Clouds" parent="." index="1" instance=ExtResource("2_o5u3f")]
+
+[node name="MidHills" type="Node2D" parent="BackgroundLayers" index="0"]
+
+[node name="Back" type="Sprite2D" parent="BackgroundLayers/MidHills" index="0"]
+self_modulate = Color(0.392157, 0.392157, 0.392157, 1)
+texture_repeat = 2
+position = Vector2(0, 891)
+scale = Vector2(2, 2)
+texture = ExtResource("3_4iyqk")
+centered = false
+region_enabled = true
+region_rect = Rect2(775, 1, 1920, 73)
+
+[node name="Top" type="Sprite2D" parent="BackgroundLayers/MidHills" index="1"]
+self_modulate = Color(0.666667, 0.666667, 0.666667, 1)
+texture_repeat = 2
+position = Vector2(0, 900)
+scale = Vector2(2, 2)
+texture = ExtResource("3_4iyqk")
+centered = false
+region_enabled = true
+region_rect = Rect2(1514, 1, 1920, 73)
+
+[node name="Bot" type="Polygon2D" parent="BackgroundLayers/MidHills" index="2"]
+color = Color(0.666667, 0.666667, 0.666667, 1)
+polygon = PackedVector2Array(0, 1043, 0, 1441, 3840, 1441, 3840, 1043)
+
+[node name="Mountains" type="Node2D" parent="BackgroundLayers" index="1"]
+modulate = Color(0.784314, 0.784314, 0.784314, 1)
+
+[node name="1" type="Sprite2D" parent="BackgroundLayers/Mountains" index="0"]
+position = Vector2(425, 1133)
+rotation = -0.120428
+scale = Vector2(1.667, 1.667)
+texture = ExtResource("4_71upk")
+
+[node name="1F" type="Sprite2D" parent="BackgroundLayers/Mountains" index="1"]
+position = Vector2(1644, 1154)
+rotation = 0.10472
+texture = ExtResource("4_71upk")
+flip_h = true
+
+[node name="1T" type="Sprite2D" parent="BackgroundLayers/Mountains" index="2"]
+position = Vector2(3098.06, 887.983)
+rotation = 0.120428
+scale = Vector2(1.667, 2.22624)
+texture = ExtResource("4_71upk")
+
+[node name="Castle" type="Node2D" parent="BackgroundLayers" index="2"]
+
+[node name="Top" type="Sprite2D" parent="BackgroundLayers/Castle" index="0"]
+position = Vector2(0, 796)
+scale = Vector2(2, 2)
+texture = ExtResource("3_ktpl3")
+centered = false
+
+[node name="Bot" type="Polygon2D" parent="BackgroundLayers/Castle" index="1"]
+color = Color(0.847059, 0.847059, 0.847059, 1)
+polygon = PackedVector2Array(0, 1456, 3840, 1456, 3840, 2160, 0, 2160)

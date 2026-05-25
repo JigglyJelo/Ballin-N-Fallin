@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://gry0r2s1m3ge"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_nfdtk"]
+
+[node name="Background" type="CanvasLayer"]
+layer = -5
+script = ExtResource("1_nfdtk")
+
+[node name="Gradient" type="TextureRect" parent="."]
+offset_right = 3840.0
+offset_bottom = 2160.0
+
+[node name="BackgroundLayers" type="Node" parent="."]

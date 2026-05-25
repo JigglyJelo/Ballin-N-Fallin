@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cchm5obln88v3"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Online/PingGetter.cs" id="1_ofo3k"]
+
+[node name="PingGetter" type="Node"]
+process_mode = 3
+process_priority = -1
+process_physics_priority = -1
+script = ExtResource("1_ofo3k")

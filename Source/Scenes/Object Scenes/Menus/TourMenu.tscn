@@ -1,0 +1,123 @@
+[gd_scene load_steps=7 format=3 uid="uid://fsyp7xhhbpup"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/TourMenu.cs" id="1_oosdl"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_6fscv"]
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="2_7rvig"]
+[ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_0353d"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3kpyk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ci4ky"]
+font = ExtResource("2_7rvig")
+font_size = 200
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(11, 11)
+
+[node name="TourMenu" type="Node2D"]
+script = ExtResource("1_oosdl")
+
+[node name="SettingsText" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -1105.0
+offset_bottom = -855.0
+scale = Vector2(2, 2)
+text = "Settings"
+label_settings = ExtResource("2_6fscv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EventsText" type="Label" parent="."]
+visible = false
+offset_left = -1920.0
+offset_right = -1036.0
+offset_bottom = 240.0
+text = "Events: On"
+label_settings = SubResource("LabelSettings_ci4ky")
+vertical_alignment = 1
+
+[node name="TeamsText" type="Label" parent="."]
+visible = false
+offset_left = -1920.0
+offset_top = 240.0
+offset_right = -1813.0
+offset_bottom = 480.0
+text = "Teams"
+label_settings = SubResource("LabelSettings_ci4ky")
+vertical_alignment = 1
+
+[node name="AdvancedText" type="Label" parent="."]
+visible = false
+offset_left = -1920.0
+offset_top = 480.0
+offset_right = -1106.0
+offset_bottom = 720.0
+text = "Advanced"
+label_settings = SubResource("LabelSettings_ci4ky")
+vertical_alignment = 1
+
+[node name="ArrowSelections" parent="." instance=ExtResource("4_0353d")]
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="PointsText" type="Label" parent="Selections"]
+offset_left = -1735.0
+offset_top = -480.0
+offset_right = -348.0
+offset_bottom = -240.0
+text = "Points to Win: 50"
+label_settings = ExtResource("2_6fscv")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="ItemsText" type="Label" parent="Selections"]
+offset_left = -1735.0
+offset_top = -215.0
+offset_right = -936.0
+offset_bottom = 25.0
+text = "Items: On"
+label_settings = ExtResource("2_6fscv")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="StompText" type="Label" parent="Selections"]
+offset_left = -1735.0
+offset_top = 50.0
+offset_right = -606.0
+offset_bottom = 290.0
+text = "Stomping: On"
+label_settings = ExtResource("2_6fscv")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="ModesText" type="Label" parent="Selections"]
+offset_left = -1735.0
+offset_top = 315.0
+offset_right = -674.0
+offset_bottom = 555.0
+text = "Mode Toggle"
+label_settings = ExtResource("2_6fscv")
+vertical_alignment = 1
+
+[node name="StartText200" type="Label" parent="Selections"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = 500.0
+offset_right = 960.0
+offset_bottom = 750.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(960, 125)
+text = "Start"
+label_settings = ExtResource("2_6fscv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuBackButton" parent="." instance=ExtResource("5_3kpyk")]
+position = Vector2(1750, 970)

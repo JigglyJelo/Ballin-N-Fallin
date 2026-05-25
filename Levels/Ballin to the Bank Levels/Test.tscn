@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://cahd344g36wok"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_xn28q"]
-[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="3_fdfnj"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_xn28q"]
+[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="3_fdfnj"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_3xr7o"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_iy75a"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_ut4wl"]
-[ext_resource type="PackedScene" uid="uid://73lg8k8dvblk" path="res://Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/Piggy.tscn" id="8_dqqn8"]
-[ext_resource type="PackedScene" uid="uid://dpetd5su5wr8n" path="res://Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/CoinSpawner.tscn" id="14_3kx2l"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_ut4wl"]
+[ext_resource type="PackedScene" uid="uid://73lg8k8dvblk" path="res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/Piggy.tscn" id="8_dqqn8"]
+[ext_resource type="PackedScene" uid="uid://dpetd5su5wr8n" path="res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/CoinSpawner.tscn" id="14_3kx2l"]
 
 [node name="Level" type="Node2D" groups=["Regain"]]
 position = Vector2(-64, -512)

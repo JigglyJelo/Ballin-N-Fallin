@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://7l5m4yykrrg7"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Backgrounds/StraightMovingBackgroundElement.cs" id="1_jrpsl"]
+[ext_resource type="Texture2D" uid="uid://5j1st611h7ob" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Moving/BottomClouds/MovingCloudBack.png" id="2_xr5q1"]
+[ext_resource type="Texture2D" uid="uid://c20b12heo434m" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Moving/BottomClouds/MovingCloudFront.png" id="3_30i4b"]
+
+[node name="Clouds" type="Node"]
+
+[node name="GroundCloudsBack" type="Node" parent="."]
+script = ExtResource("1_jrpsl")
+startingPosition = Vector2(0, 1400)
+movementDirection = Vector2(1, 0)
+minSpeed = 80.0
+maxSpeed = 80.0
+movingTexture = ExtResource("2_xr5q1")
+textureScale = 2.0
+
+[node name="Polygon2D" type="Polygon2D" parent="GroundCloudsBack"]
+color = Color(0.890196, 0.890196, 0.890196, 1)
+polygon = PackedVector2Array(0, 1982, 3840, 1982, 3840, 1696, 0, 1696)
+
+[node name="GroundCloudsFront" type="Node" parent="."]
+script = ExtResource("1_jrpsl")
+startingPosition = Vector2(0, 1600)
+movementDirection = Vector2(1, 0)
+minSpeed = 130.0
+maxSpeed = 130.0
+movingTexture = ExtResource("3_30i4b")
+textureScale = 2.0
+
+[node name="Polygon2D" type="Polygon2D" parent="GroundCloudsFront"]
+polygon = PackedVector2Array(0, 1982, 3840, 1982, 3840, 2160, 0, 2160)

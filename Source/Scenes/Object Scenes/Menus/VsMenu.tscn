@@ -1,0 +1,278 @@
+[gd_scene load_steps=12 format=3 uid="uid://o4cw4adu2ry1"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/VsMenu.cs" id="1_n6mne"]
+[ext_resource type="Texture2D" uid="uid://ytpljltjqyub" path="res://Assets/Sprites/Menus/Trophy.png" id="3_o456u"]
+[ext_resource type="Texture2D" uid="uid://iu2o7up6gedt" path="res://Assets/Sprites/Player/380/BallLines.png" id="4_6845c"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="5_tbmwm"]
+[ext_resource type="Texture2D" uid="uid://ul3iw4cn2nvk" path="res://Assets/Sprites/Player/380/Eyes/HappyEyes.png" id="6_exgrr"]
+[ext_resource type="Texture2D" uid="uid://dn1h2bqbd5t17" path="res://Assets/Sprites/Player/380/Eyes/AnnoyedEyes.png" id="7_nisig"]
+[ext_resource type="Texture2D" uid="uid://cbj6rakvp5gus" path="res://Assets/Sprites/Player/380/Pupils/NeutralPupils.png" id="7_tm7ll"]
+[ext_resource type="Texture2D" uid="uid://dg0t5gagwh4b1" path="res://Assets/Sprites/Player/380/Outline.png" id="7_wntgp"]
+[ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Object Scenes/Players/StaticPlayer.tscn" id="8_ddswx"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="8_ldtqb"]
+[ext_resource type="Texture2D" uid="uid://2r1hf8bgmhew" path="res://Assets/Sprites/Player/380/Eyes/AngryEyes.png" id="9_4m6qy"]
+
+[node name="VsMenu" type="Node2D"]
+position = Vector2(-480, -270)
+script = ExtResource("1_n6mne")
+
+[node name="MenuBackButton" parent="." instance=ExtResource("8_ldtqb")]
+position = Vector2(2230, 1240)
+
+[node name="Selections" type="Node2D" parent="."]
+position = Vector2(-400, 0)
+
+[node name="TourButton" type="Polygon2D" parent="Selections"]
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(520, -520, 520, 520, -520, 520, -520, -520)
+
+[node name="Outline" type="Line2D" parent="Selections/TourButton"]
+points = PackedVector2Array(-530, -530, 530, -530, 530, 530, -530, 530)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Orange" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
+position = Vector2(-330, -330)
+rotation = 0.785398
+scale = Vector2(0.75, 0.75)
+
+[node name="BallSprite" parent="Selections/TourButton/Orange" index="0"]
+self_modulate = Color(1, 0.290196, 0, 1)
+
+[node name="ShadingSprite" parent="Selections/TourButton/Orange" index="1"]
+self_modulate = Color(1, 0.290196, 0, 1)
+
+[node name="LinesSprite" parent="Selections/TourButton/Orange" index="2"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("4_6845c")
+
+[node name="EyesSprite" parent="Selections/TourButton/Orange" index="3"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("9_4m6qy")
+
+[node name="PupilsSprite" parent="Selections/TourButton/Orange/EyesSprite" index="0"]
+position = Vector2(10, 10)
+texture = ExtResource("7_tm7ll")
+
+[node name="OutlineSprite" parent="Selections/TourButton/Orange" index="4"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("7_wntgp")
+
+[node name="Lime" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
+position = Vector2(330, -330)
+rotation = -0.785398
+scale = Vector2(0.75, 0.75)
+
+[node name="BallSprite" parent="Selections/TourButton/Lime" index="0"]
+self_modulate = Color(0, 1, 0.231373, 1)
+
+[node name="ShadingSprite" parent="Selections/TourButton/Lime" index="1"]
+self_modulate = Color(0, 1, 0.231373, 1)
+
+[node name="LinesSprite" parent="Selections/TourButton/Lime" index="2"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("4_6845c")
+flip_h = true
+
+[node name="EyesSprite" parent="Selections/TourButton/Lime" index="3"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("9_4m6qy")
+flip_h = true
+
+[node name="PupilsSprite" parent="Selections/TourButton/Lime/EyesSprite" index="0"]
+position = Vector2(-10, 10)
+texture = ExtResource("7_tm7ll")
+flip_h = true
+
+[node name="OutlineSprite" parent="Selections/TourButton/Lime" index="4"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("7_wntgp")
+flip_h = true
+
+[node name="Cyan" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
+position = Vector2(-330, 330)
+rotation = -0.785398
+scale = Vector2(0.75, 0.75)
+
+[node name="BallSprite" parent="Selections/TourButton/Cyan" index="0"]
+self_modulate = Color(0, 0.65098, 1, 1)
+
+[node name="ShadingSprite" parent="Selections/TourButton/Cyan" index="1"]
+self_modulate = Color(0, 0.65098, 1, 1)
+
+[node name="LinesSprite" parent="Selections/TourButton/Cyan" index="2"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("4_6845c")
+
+[node name="EyesSprite" parent="Selections/TourButton/Cyan" index="3"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("9_4m6qy")
+
+[node name="PupilsSprite" parent="Selections/TourButton/Cyan/EyesSprite" index="0"]
+position = Vector2(10, 0)
+texture = ExtResource("7_tm7ll")
+
+[node name="OutlineSprite" parent="Selections/TourButton/Cyan" index="4"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("7_wntgp")
+flip_h = true
+
+[node name="Pink" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
+position = Vector2(330, 330)
+rotation = 0.785398
+scale = Vector2(0.75, 0.75)
+
+[node name="BallSprite" parent="Selections/TourButton/Pink" index="0"]
+self_modulate = Color(1, 0.396078, 0.858824, 1)
+
+[node name="ShadingSprite" parent="Selections/TourButton/Pink" index="1"]
+self_modulate = Color(1, 0.396078, 0.858824, 1)
+
+[node name="LinesSprite" parent="Selections/TourButton/Pink" index="2"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("4_6845c")
+flip_h = true
+
+[node name="EyesSprite" parent="Selections/TourButton/Pink" index="3"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("9_4m6qy")
+flip_h = true
+
+[node name="PupilsSprite" parent="Selections/TourButton/Pink/EyesSprite" index="0"]
+texture = ExtResource("7_tm7ll")
+offset = Vector2(-10, 0)
+flip_h = true
+
+[node name="OutlineSprite" parent="Selections/TourButton/Pink" index="4"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("7_wntgp")
+flip_h = true
+
+[node name="TrophySprite" type="Sprite2D" parent="Selections/TourButton"]
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("3_o456u")
+
+[node name="TourText" type="Label" parent="Selections/TourButton"]
+offset_left = -540.0
+offset_top = 280.0
+offset_right = 540.0
+offset_bottom = 520.0
+text = "Tour"
+label_settings = ExtResource("5_tbmwm")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="FreeplayButton" type="Polygon2D" parent="Selections"]
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(1240, -520, 1240, 520, 2280, 520, 2280, -520)
+
+[node name="Outline" type="Line2D" parent="Selections/FreeplayButton"]
+points = PackedVector2Array(1240, -530, 1240, 530, 2290, 530, 2290, -530)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Yellow" parent="Selections/FreeplayButton" instance=ExtResource("8_ddswx")]
+position = Vector2(1500, 0)
+scale = Vector2(0.75, 0.75)
+
+[node name="BallSprite" parent="Selections/FreeplayButton/Yellow" index="0"]
+self_modulate = Color(0.988235, 1, 0, 1)
+
+[node name="ShadingSprite" parent="Selections/FreeplayButton/Yellow" index="1"]
+self_modulate = Color(0.988235, 1, 0, 1)
+
+[node name="LinesSprite" parent="Selections/FreeplayButton/Yellow" index="2"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("4_6845c")
+
+[node name="EyesSprite" parent="Selections/FreeplayButton/Yellow" index="3"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("6_exgrr")
+
+[node name="PupilsSprite" parent="Selections/FreeplayButton/Yellow/EyesSprite" index="0"]
+texture = ExtResource("7_tm7ll")
+
+[node name="OutlineSprite" parent="Selections/FreeplayButton/Yellow" index="4"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("7_wntgp")
+
+[node name="Purple" parent="Selections/FreeplayButton" instance=ExtResource("8_ddswx")]
+position = Vector2(2050, 0)
+scale = Vector2(0.75, 0.75)
+
+[node name="BallSprite" parent="Selections/FreeplayButton/Purple" index="0"]
+self_modulate = Color(0.662745, 0, 0.780392, 1)
+
+[node name="ShadingSprite" parent="Selections/FreeplayButton/Purple" index="1"]
+self_modulate = Color(0.662745, 0, 0.780392, 1)
+
+[node name="LinesSprite" parent="Selections/FreeplayButton/Purple" index="2"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("4_6845c")
+flip_h = true
+
+[node name="EyesSprite" parent="Selections/FreeplayButton/Purple" index="3"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("7_nisig")
+flip_h = true
+
+[node name="PupilsSprite" parent="Selections/FreeplayButton/Purple/EyesSprite" index="0"]
+texture = ExtResource("7_tm7ll")
+flip_h = true
+
+[node name="OutlineSprite" parent="Selections/FreeplayButton/Purple" index="4"]
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("7_wntgp")
+flip_h = true
+
+[node name="FreeplayText" type="Label" parent="Selections/FreeplayButton"]
+offset_left = 1205.0
+offset_top = 242.0
+offset_right = 2285.0
+offset_bottom = 482.0
+text = "Freeplay"
+label_settings = ExtResource("5_tbmwm")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="HowToPlayButton" type="Polygon2D" parent="Selections"]
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(1880, 660, 1880, 890, -120, 890, -120, 660)
+
+[node name="Outline" type="Line2D" parent="Selections/HowToPlayButton"]
+points = PackedVector2Array(1890, 650, 1890, 900, -130, 900, -130, 650)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="HowToPlayText" type="Label" parent="Selections/HowToPlayButton"]
+offset_left = 362.0
+offset_top = 656.0
+offset_right = 1442.0
+offset_bottom = 896.0
+text = "How to Play"
+label_settings = ExtResource("5_tbmwm")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="?" type="Label" parent="Selections/HowToPlayButton"]
+self_modulate = Color(0.784314, 0.784314, 0.784314, 1)
+offset_left = 101.0
+offset_top = 624.0
+offset_right = 194.0
+offset_bottom = 858.0
+scale = Vector2(1.25, 1.25)
+text = "?"
+label_settings = ExtResource("5_tbmwm")
+
+[editable path="Selections/TourButton/Orange"]
+[editable path="Selections/TourButton/Lime"]
+[editable path="Selections/TourButton/Cyan"]
+[editable path="Selections/TourButton/Pink"]
+[editable path="Selections/FreeplayButton/Yellow"]
+[editable path="Selections/FreeplayButton/Purple"]

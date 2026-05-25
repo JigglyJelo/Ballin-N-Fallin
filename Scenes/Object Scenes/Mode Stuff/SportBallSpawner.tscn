@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://rcpqy76216a0"]
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner"]
-_spawnable_scenes = PackedStringArray("res://Scenes/Object Scenes/Mode Stuff/SportBall.tscn")
-spawn_path = NodePath(".")
-spawn_limit = 1

@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://nj6kipa3fs7d"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Score Screen/EndscreenResult.cs" id="1_yumwt"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_00l8t"]
+[ext_resource type="PhysicsMaterial" uid="uid://cl78t0kopdgd6" path="res://Source/Materials/PlayerPhysicsMaterial.tres" id="3_kg24c"]
+[ext_resource type="Script" path="res://Source/Scripts/Score Screen/ScoreScreenPlayer.cs" id="4_j1agt"]
+[ext_resource type="Shape2D" uid="uid://mmicm5qifgge" path="res://Source/Materials/PlayerShape.tres" id="5_xtvoh"]
+[ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="6_n5hdi"]
+[ext_resource type="AudioStream" uid="uid://c4exk1s5oqhbl" path="res://Assets/SFX/bounce.ogg" id="6_sbqx5"]
+
+[node name="PlayerEndscreenResult" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_yumwt")
+
+[node name="RoundResult" type="Label" parent="."]
+offset_left = -576.0
+offset_top = -1856.0
+offset_right = 960.0
+offset_bottom = -832.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(768, 512)
+label_settings = ExtResource("2_00l8t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerScore" type="Label" parent="."]
+offset_left = -322.0
+offset_right = 707.0
+offset_bottom = 234.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(514.5, 0)
+text = "Score: 000"
+label_settings = ExtResource("2_00l8t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bar" type="Polygon2D" parent="."]
+texture_filter = 1
+polygon = PackedVector2Array(0, -768, 384, -768, 384, 0, 0, 0)
+
+[node name="BarOutline" type="Line2D" parent="Bar"]
+position = Vector2(0, -10)
+points = PackedVector2Array(0, -758, 384, -758, 384, 10, 0, 10)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Player" type="RigidBody2D" parent="."]
+position = Vector2(192, -1100)
+physics_material_override = ExtResource("3_kg24c")
+gravity_scale = 2.0
+contact_monitor = true
+max_contacts_reported = 1
+linear_damp = 0.125
+script = ExtResource("4_j1agt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = ExtResource("5_xtvoh")
+
+[node name="BallSprite" type="Sprite2D" parent="Player"]
+texture_repeat = 3
+region_enabled = true
+region_rect = Rect2(0, 0, 62, 62)
+
+[node name="ShadingSprite" type="Sprite2D" parent="Player"]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("6_n5hdi")
+
+[node name="OutlineSprite" type="Sprite2D" parent="Player"]
+
+[node name="LinesSprite" type="Sprite2D" parent="Player"]
+
+[node name="EyeSprite" type="Sprite2D" parent="Player"]
+clip_children = 2
+
+[node name="PupilSprite" type="Sprite2D" parent="Player/EyeSprite"]
+self_modulate = Color(0, 0, 0, 1)
+
+[node name="BounceSound" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("6_sbqx5")
+max_distance = 4000.0
+attenuation = 0.01
+bus = &"SFX"
+
+[connection signal="body_entered" from="Player" to="Player" method="Collision"]

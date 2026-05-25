@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck7gb6d3bj75h"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Online/PlayerSync.cs" id="1_oiq4v"]
+
+[node name="PlayerSynchronizer" type="Node"]
+process_priority = 100
+process_physics_priority = 100
+script = ExtResource("1_oiq4v")

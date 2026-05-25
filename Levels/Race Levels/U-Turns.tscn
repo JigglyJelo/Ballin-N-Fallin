@@ -1,11 +1,11 @@
 [gd_scene load_steps=16 format=3 uid="uid://bu2ruhkhmjgqh"]
 
-[ext_resource type="Script" path="res://Scripts/Level Stuff/Level.cs" id="1_m3vll"]
-[ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Scenes/Object Scenes/Mode Stuff/Race/FinishLine.tscn" id="2_f38ue"]
-[ext_resource type="PackedScene" uid="uid://dgxf7pk383ys5" path="res://Scenes/Object Scenes/Backgrounds/FullBackgrounds/L Abstract.tscn" id="2_o2kmg"]
-[ext_resource type="PackedScene" uid="uid://bn403mgsuccm0" path="res://Scenes/Object Scenes/Mode Stuff/Race/Checkpoint.tscn" id="3_63py0"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_m3vll"]
+[ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Source/Scenes/Object Scenes/Mode Stuff/Race/FinishLine.tscn" id="2_f38ue"]
+[ext_resource type="PackedScene" uid="uid://dgxf7pk383ys5" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/L Abstract.tscn" id="2_o2kmg"]
+[ext_resource type="PackedScene" uid="uid://bn403mgsuccm0" path="res://Source/Scenes/Object Scenes/Mode Stuff/Race/Checkpoint.tscn" id="3_63py0"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_pv8o1"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_caj0e"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_caj0e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wwbk"]
 size = Vector2(6372, 3584)

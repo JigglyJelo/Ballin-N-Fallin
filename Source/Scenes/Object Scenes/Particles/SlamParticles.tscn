@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://mwy67djefahr"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Visual Effects/SlamParticles.cs" id="2_la1im"]
+[ext_resource type="Texture2D" uid="uid://d0nytgst13sdw" path="res://Assets/Sprites/Particles/Slam/bishie_sparkle_1.png" id="2_urmek"]
+[ext_resource type="Texture2D" uid="uid://beiaudnkp842h" path="res://Assets/Sprites/Particles/Slam/9_pointed_star.png" id="3_e6r1u"]
+[ext_resource type="Texture2D" uid="uid://bttr5qomfuvbc" path="res://Assets/Sprites/Particles/Slam/bishie_sparkle_2.png" id="4_3se8m"]
+
+[node name="SlamParticles" type="Sprite2D"]
+texture_repeat = 3
+texture = ExtResource("3_e6r1u")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+script = ExtResource("2_la1im")
+
+[node name="Diamond" type="Sprite2D" parent="."]
+self_modulate = Color(0.501961, 0.501961, 0.501961, 1)
+z_index = -1
+texture_repeat = 3
+texture = ExtResource("2_urmek")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="Star" type="Sprite2D" parent="."]
+self_modulate = Color(0.784314, 0.784314, 0.784314, 1)
+z_index = -1
+texture_repeat = 3
+texture = ExtResource("4_3se8m")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
