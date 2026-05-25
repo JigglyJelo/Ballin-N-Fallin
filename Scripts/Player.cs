@@ -739,8 +739,8 @@ public partial class Player : Node2D{
 			if(itemRouletteTimer >= 2){
 				itemSound.Play();
 				ItemRouletteAnimation.Pause();
-				ItemRouletteAnimation.Visible = false;
-				itemSprite.Visible = true;
+				SetRouletteSpriteVisibility(false);
+				SetItemSpriteVisibility(true);
 				itemTriangle.Visible = true;
 				if(Item is TransformItem) TransformBar.Visible = true;
 				itemRouletteTimer = 0;
@@ -927,8 +927,8 @@ public partial class Player : Node2D{
 	public void StartItemRoulette(){
 		if(Online.IsRpcFromHost()){
 			ItemRouletteAnimation.Play();
-			ItemRouletteAnimation.Visible = true;
-			itemSprite.Visible = false;
+			SetItemSpriteVisibility(false);
+			SetRouletteSpriteVisibility(true);
 			itemTriangle.Visible = true;
 			TransformBar.Visible = false;
 			RouletteSound.Play();
@@ -971,9 +971,20 @@ public partial class Player : Node2D{
 			} 
 			else{
 				itemSprite.Texture = null;
+				SetItemSpriteVisibility(false);
 				itemTriangle.Visible = false;
-			} 
+			}
 		}
+	}
+
+	private void SetItemSpriteVisibility(bool visible){
+		itemSprite.Visible = visible;
+		usernameGroup.Position = visible ? new Vector2(0, -96) : Vector2.Zero;
+	}
+
+	private void SetRouletteSpriteVisibility(bool visible){
+		ItemRouletteAnimation.Visible = visible;
+		usernameGroup.Position = visible ? new Vector2(0, -96) : Vector2.Zero;
 	}
 	
 	public bool Finished{
