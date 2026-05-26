@@ -8,9 +8,9 @@
 script = ExtResource("1_5ia61")
 
 [node name="Settings Text" type="Label" parent="."]
-offset_left = -1705.0
+offset_left = -1920.0
 offset_top = -935.0
-offset_right = 2135.0
+offset_right = 1920.0
 offset_bottom = -695.0
 text = "Settings"
 label_settings = ExtResource("2_a7hwm")
@@ -20,7 +20,6 @@ metadata/setting = true
 metadata/nonclickable = true
 
 [node name="Selections" type="Node2D" parent="."]
-position = Vector2(215, 0)
 
 [node name="Video Text" type="Label" parent="Selections"]
 offset_left = -1920.0
