@@ -56,7 +56,6 @@ public partial class MainMenu : VerticalMenu{
 	}
 
 	private void LoadOnlineMenu(){
-		Game.MouseMode = Game.MouseModeEnum.Off;
 		MenuScene.LoadMenu("Online/OnlineMenu");
 		QueueFree();
 	}

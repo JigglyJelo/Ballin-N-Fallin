@@ -60,7 +60,7 @@ public partial class ModeMenu : ScrollableMenu{
 
     public override void _Process(double delta){
         InputChecks(delta, inputId);
-        if(Input.IsActionJustReleased("Y" + inputId)){
+        if(inputId < (int)PlayerData.PlayerInputDevice.Mouse && Input.IsActionJustReleased("Y" + inputId)){
             Selection = new Random().Next(1, texts.Length+1);
             UpdateSelectionVisual();
         }

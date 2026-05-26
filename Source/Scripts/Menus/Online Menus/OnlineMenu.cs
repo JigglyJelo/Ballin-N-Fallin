@@ -31,10 +31,9 @@ public partial class OnlineMenu : VerticalMenu{
 		for(byte i = 0; i < Game.MAX_PLAYERS; i++){
 			if(Input.IsActionJustReleased("Charge N Launch" + i)) Online.InputId = (PlayerData.PlayerInputDevice)i;
 		}
-		if(Input.IsActionJustReleased("Slam Mouse")){
-			//Game.Mouse = true;
-			//Online.InputId = 1;
-		} 
+		if(Input.IsActionJustReleased("Charge N Launch Mouse")){
+			Online.InputId = PlayerData.PlayerInputDevice.Mouse;
+		}
 		InputChecks(delta);
 	}
 

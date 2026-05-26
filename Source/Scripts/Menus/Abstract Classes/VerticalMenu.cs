@@ -14,6 +14,7 @@ public abstract partial class VerticalMenu : Menu{
     protected override void InputChecks(double delta,int id){
         float fDelta = (float)delta;
         MouseInputs(fDelta);
+        if(id >= (int)PlayerData.PlayerInputDevice.Mouse) return;
         joystickTimer += fDelta;
         switch(GetInputDirection(id)){
             case InputDirection.Up when joystickTimer >= TIMEOUT:

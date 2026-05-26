@@ -19,7 +19,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		if(Game.UsingMouse()){
 			colorText.Text = "Click to change color";
 			colorText.GetNode<Sprite2D>("ButtonPrompt").Visible = false;
-		} 
+		}
 		UpdateSelectionVisual();
 		UpdateTexts();
 		if(!IsMultiplayerAuthority()){

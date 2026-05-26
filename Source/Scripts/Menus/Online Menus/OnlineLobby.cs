@@ -227,12 +227,6 @@ public partial class OnlineLobby : Node{
 					break;
 				}
 			}
-			//Online.PlayerColors.Add(playerColor);
-			//Color[] playerColors = new Color[Game.PlayerDatas.Count];
-			//for(int i = 0; i < playerColors.Length; i++){
-				//playerColors[i] = Game.PlayerDatas[i].PlayerColor;
-			//}
-			//Rpc(nameof(SyncPlayerColors),playerColors);
 		}
 	}
 

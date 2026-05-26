@@ -218,6 +218,7 @@ texture = ExtResource("8_0x18p")
 [node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Player"]]
 physics_material_override = ExtResource("1_xiy12")
 gravity_scale = 2.0
+can_sleep = false
 continuous_cd = 2
 contact_monitor = true
 max_contacts_reported = 6
