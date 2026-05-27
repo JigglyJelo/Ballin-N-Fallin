@@ -98,7 +98,7 @@ public partial class SoundtrackMenu : VerticalMenu{
 
 	public override void MenuBack(){
 		Game.Save.SetValue("Sound","Custom Soundtrack",Game.CustomSoundtrack);
-		Game.Save.Save(Game.SETTINGS_PATH);
+		Game.Save.Save(Game.SAVE_PATH);
 		MenuScene.LoadMenu("Settings/SettingsMenu");
 		SFX.Play("Back");
 		QueueFree();

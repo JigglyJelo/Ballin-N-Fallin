@@ -14,7 +14,6 @@ public partial class MenuScene : Node{
 		Music.Playing = false;
 		if(Game.FirstBoot){
 			Game.Save.Load(Game.SAVE_PATH);
-			Game.Save.Load(Game.SETTINGS_PATH);
 			SettingsMenu.LoadData();
 			AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Music"),(float)(20 * Math.Log10(Game.MusicVolume / 100.0)));
 			AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("SFX"),(float)(20 * Math.Log10(Game.SFXVolume / 100.0)));

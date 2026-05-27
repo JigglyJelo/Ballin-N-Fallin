@@ -42,11 +42,11 @@ public partial class AccessibilityMenu : VerticalMenu{
     private void SaveData(){
         Game.Save.SetValue("Accessibility","Dynamic Camera",DynamicCameraEnabled);
         Game.Save.SetValue("Accessibility","Always show names",AlwaysShowNames);
-        Game.Save.Save(Game.SETTINGS_PATH);
+        Game.Save.Save(Game.SAVE_PATH);
     }
 
     public static void LoadData(){
-        Game.Save.Load(Game.SETTINGS_PATH);
+        Game.Save.Load(Game.SAVE_PATH);
         DynamicCameraEnabled = (bool)Game.Save.GetValue("Accessibility", "Dynamic Camera", true);
         AlwaysShowNames = (bool)Game.Save.GetValue("Accessibility", "Always show names", false);
     }
