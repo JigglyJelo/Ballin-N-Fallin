@@ -96,11 +96,11 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
         Game.Save.SetValue("Sound","Music Volume",Game.MusicVolume);
         Game.Save.SetValue("Sound","SFX Volume",Game.SFXVolume);
         Game.Save.SetValue("Sound","Custom Soundtrack",Game.CustomSoundtrack);
-        Game.Save.Save(Game.SETTINGS_PATH);
+        Game.Save.Save(Game.SAVE_PATH);
     }
 
     public static void LoadData(){
-        Game.Save.Load(Game.SETTINGS_PATH);
+        Game.Save.Load(Game.SAVE_PATH);
         //Volume
         Game.MasterVolume = (byte)Game.Save.GetValue("Sound", "Master Volume", 50);
         Game.MusicVolume = (byte)Game.Save.GetValue("Sound", "Music Volume", 50);

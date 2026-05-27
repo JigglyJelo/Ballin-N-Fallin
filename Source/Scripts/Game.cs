@@ -10,8 +10,7 @@ public partial class Game : Node{
     public static ConfigFile Save = new ConfigFile();
     public static bool FirstBoot = true;
 	public const int MAX_PLAYERS = 8;
-    public const string SAVE_PATH = "user://save.cfg";
-    public const string SETTINGS_PATH = "user://Settings.cfg";
+    public const string SAVE_PATH = "user://Save.cfg";
     public const string LEVELS_PATH = "res://Levels/";
     public const int BASE_RES = 2160; //Base/Default Resolution of Ballin N Fallin 4k 2160p
     public static int TotalPlayers = 1;

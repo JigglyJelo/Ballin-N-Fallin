@@ -93,11 +93,11 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
         Game.Save.SetValue("Video","Framerate Cap",fpsCap);
         Game.Save.SetValue("Video","VSync",vSyncEnabled);
         Game.Save.SetValue("Video","Fullscreen",(int)DisplayServer.WindowGetMode());
-        Game.Save.Save(Game.SETTINGS_PATH);
+        Game.Save.Save(Game.SAVE_PATH);
     }
 
     public static void LoadData(){
-        Game.Save.Load(Game.SETTINGS_PATH);
+        Game.Save.Load(Game.SAVE_PATH);
         //Resolution
         resolutionIndex = (byte)Game.Save.GetValue("Video","Resolution", GetDefaultResolution());
         int oldResolution = Game.Resolution;
