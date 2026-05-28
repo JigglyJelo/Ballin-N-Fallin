@@ -63,7 +63,7 @@ public partial class ParticleManager : Node{
 		const float MIN_VEL = 200;
 		const float MAX_VEL = 500;
 		if(launchParticle.Emitting) launchParticle.Emitting = false;
-		float velMultiplier = 1 + (magnitude/Player.MAX_LAUNCH_POWER);
+		float velMultiplier = 1 + (magnitude/PlayerPhysics.MAX_LAUNCH_POWER);
 		launchParticle.GlobalPosition = position;
 		launchParticle.Rotation = angle;
 		launchParticle.InitialVelocityMin = MIN_VEL * velMultiplier;

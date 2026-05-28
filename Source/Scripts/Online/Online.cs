@@ -188,7 +188,7 @@ public partial class Online{
 		//Checks if the player is inside a collisionshape
 		//Only supports checking if the player (Because it is a circle) is inside a rectangular or circular shape
 		bool playerInsideArea(Player player,CollisionShape2D collisionShape){
-			float playerRadius = Player.RADIUS * player.PlayerScale;
+			float playerRadius = PlayerPhysics.RADIUS * player.PlayerScale;
 			// Ensure the collisionShape is a RectangleShape2D
 			switch(collisionShape.Shape){
 				case RectangleShape2D rectangleShape:{

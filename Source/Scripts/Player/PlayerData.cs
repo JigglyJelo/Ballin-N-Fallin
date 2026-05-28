@@ -11,6 +11,14 @@ public partial class PlayerData{
         Username = username;
         InputDevice = inputId;
         UUID = uuid;
+        VibrationEnabled = true;
+    }
+
+    public PlayerData(string username, PlayerInputDevice inputId, int uuid, bool vibrationEnabled){
+        Username = username;
+        InputDevice = inputId;
+        UUID = uuid;
+        VibrationEnabled = vibrationEnabled;
     }
 
     public enum PlayerInputDevice : int{

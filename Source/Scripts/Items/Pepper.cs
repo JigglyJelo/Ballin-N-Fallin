@@ -12,6 +12,6 @@ public class Pepper : SingleUseItem{
 		if(Math.Sign(Player.Rb.LinearVelocity.Y) != Math.Sign(Player.InputVector.Y)) 
 			Player.Rb.LinearVelocity = new Vector2(Player.Rb.LinearVelocity.X,0);
 		//Launch
-		Player.Rb.SetDeferred("linear_velocity",Player.Rb.LinearVelocity + (Player.InputVector * (Player.MAX_LAUNCH_POWER+Player.MIN_LAUNCH_POWER) * 1.5f));//(Player.SPEED_CAP / (3+(1f/3))))
+		Player.Rb.SetDeferred("linear_velocity",Player.Rb.LinearVelocity + (Player.InputVector * (PlayerPhysics.MAX_LAUNCH_POWER+PlayerPhysics.MIN_LAUNCH_POWER) * 1.5f));//(Player.SPEED_CAP / (3+(1f/3))))
 	}
 }

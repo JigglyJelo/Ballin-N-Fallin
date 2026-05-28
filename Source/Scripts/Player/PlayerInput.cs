@@ -24,8 +24,8 @@ public partial class PlayerInput{
 		player.RawInputVector = Input.GetVector("Aim Left" + InputId,"Aim Right" + InputId,"Aim Up" + InputId,"Aim Down" + InputId);
 		player.InputVector = player.RawInputVector.Normalized();
 		
-		if(Input.IsActionPressed("Charge N Launch" + InputId) && player.LaunchPower < Player.MAX_LAUNCH_POWER && player.CanLaunch){
-			player.LaunchPower += delta * ((Player.MAX_LAUNCH_POWER/Player.MAX_LAUNCH_TIME) * player.GetChargeSpeedMultiplier());
+		if(Input.IsActionPressed("Charge N Launch" + InputId) && player.LaunchPower < PlayerPhysics.MAX_LAUNCH_POWER && player.CanLaunch){
+			player.LaunchPower += delta * ((PlayerPhysics.MAX_LAUNCH_POWER/PlayerPhysics.MAX_LAUNCH_TIME) * player.GetChargeSpeedMultiplier());
 		}
 		if(Input.IsActionJustReleased("Charge N Launch" + InputId)) player.Launch();
 		if(Input.IsActionJustPressed("Slam" + InputId)) player.Slam();
@@ -49,8 +49,8 @@ public partial class PlayerInput{
 			player.InputVector = player.RawInputVector;
 		}
 		
-		if(Input.IsActionPressed("Charge N Launch Mouse") && player.LaunchPower < Player.MAX_LAUNCH_POWER && player.CanLaunch){
-			player.LaunchPower += delta * ((Player.MAX_LAUNCH_POWER/Player.MAX_LAUNCH_TIME) * player.GetChargeSpeedMultiplier());
+		if(Input.IsActionPressed("Charge N Launch Mouse") && player.LaunchPower < PlayerPhysics.MAX_LAUNCH_POWER && player.CanLaunch){
+			player.LaunchPower += delta * ((PlayerPhysics.MAX_LAUNCH_POWER/PlayerPhysics.MAX_LAUNCH_TIME) * player.GetChargeSpeedMultiplier());
 		}
 		if(Input.IsActionJustReleased("Charge N Launch Mouse")) player.Launch();
 		if(Input.IsActionJustPressed("Slam Mouse")) player.Slam();

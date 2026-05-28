@@ -119,15 +119,15 @@ public partial class Golf : Mode, ILevelLoadedEvent{
 
     public override void PlayerRegainCheck(Player player, float delta) {
         if(player.IsRegaining){
-            if(player.StillTimer >= 2){
+            if(player.Physics.StillTimer >= 2){
                 player.CanLaunch = true;
                 player.CanSlam = true;
                 player.SetNewPos = false;
-                player.StillTimer = 0;
-            }else if(player.StillTimer >= 1 && player.StillTimer < 2 && Mathf.Abs(player.Rb.GlobalPosition.DistanceTo(player.SpawnPoint)) < 512 && Golf.PlayerStrokes[player.Index] != 0){
+                player.Physics.StillTimer = 0;
+            }else if(player.Physics.StillTimer >= 1 && player.Physics.StillTimer < 2 && Mathf.Abs(player.Rb.GlobalPosition.DistanceTo(player.SpawnPoint)) < 512 && Golf.PlayerStrokes[player.Index] != 0){
                 player.PlayerEmotion = Player.Emotion.Annoyed;
             }
-            player.StillTimer += delta;
+            player.Physics.StillTimer += delta;
         }
 
         if(player.Invulnerable && Golf.PlayerStrokes[player.Index] == 0 && Game.TotalPlayers != 1){
