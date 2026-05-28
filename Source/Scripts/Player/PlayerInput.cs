@@ -32,7 +32,7 @@ public partial class PlayerInput{
 		if(Input.IsActionJustReleased("Charge N Launch" + InputId)) player.Launch();
 		if(Input.IsActionJustPressed("Slam" + InputId)) player.Slam();
 		if(Input.IsActionJustPressed("Y" + InputId)) player.Visuals.Rpc(nameof(player.Visuals.ShowPlayerText));
-		if(Input.IsActionJustPressed("Item" + InputId)) player.ItemButtonPressed();
+		if(Input.IsActionJustPressed("Item" + InputId)) player.Inventory.ItemButtonPressed();
 		if(Input.IsActionJustPressed("Start" + InputId)){
 			PauseMenu.Pauser = player.Id;
 			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/PauseMenu.tscn").Instantiate());
@@ -64,7 +64,7 @@ public partial class PlayerInput{
 		if(Input.IsActionJustReleased("Charge N Launch Mouse")) player.Launch();
 		if(Input.IsActionJustPressed("Slam Mouse")) player.Slam();
 		if(Input.IsActionPressed("Y Mouse")) player.Visuals.Rpc(nameof(player.Visuals.ShowPlayerText));
-		if(player.Item != null && Input.IsActionJustReleased("Item Mouse") && !player.Visuals.ItemRouletteAnimation.Visible) player.ItemButtonPressed();
+		if(player.Inventory.Item != null && Input.IsActionJustReleased("Item Mouse") && !player.Visuals.ItemRouletteAnimation.Visible) player.Inventory.ItemButtonPressed();
 		if(Input.IsActionPressed("Pause Keyboard")){
 			PauseMenu.Pauser = player.Id;
 			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/PauseMenu.tscn").Instantiate());

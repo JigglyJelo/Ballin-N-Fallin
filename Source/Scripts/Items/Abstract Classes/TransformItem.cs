@@ -7,7 +7,7 @@ public abstract class TransformItem : Item{
     protected float timer = 0;
 
     public TransformItem(Player player,ItemEnum itemType,float transformTime): base(player,itemType){
-        if(Player.Item != null && Player.Item is TransformItem) Player.Visuals.TransformBar.Value = 100;
+        if(Player.Inventory.Item != null && Player.Inventory.Item is TransformItem) Player.Visuals.TransformBar.Value = 100;
         this.transformTime = transformTime;
     }
 
@@ -18,7 +18,7 @@ public abstract class TransformItem : Item{
             if(timer >= transformTime){
                 Player.Visuals.TransformBar.Value = 0;
                 Player.ResetTransformation();
-                Player.Item = null;
+                Player.Inventory.Item = null;
             }
         }
     }

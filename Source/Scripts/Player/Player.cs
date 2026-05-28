@@ -20,7 +20,7 @@ public partial class Player : Node2D{
 	//Gameplay variables
 	public float LaunchPower = 0;
 	public float Score;
-	private Item item = null;
+	
 	public string Team = "";
 	public bool FlippedStart = false, SetNewPos = true;
 	private bool finished, invulnerable;
@@ -38,7 +38,6 @@ public partial class Player : Node2D{
 	}
 	//Timers
 	public float BounceTimer, FrozenTimer, InvulnerabilityTimer;
-	private float itemRouletteTimer;
 	private float textTimer = 3;
 	//Vibration variables
 	//Sync & Online Variables
@@ -49,19 +48,20 @@ public partial class Player : Node2D{
 	public InterpolatedBody Rb;
 	public PlayerVisuals Visuals;
 	public PlayerInput PlayerInput;
+	public PlayerInventory Inventory;
 	public PlayerData PlayerData;
 
 	public override void _Ready(){
 		Physics = new PlayerPhysics(this);
 		PlayerData = Game.PlayerDatas[Id-1];
 		PlayerInput = new PlayerInput(this);
+		Inventory = new PlayerInventory(this);
 		PlayerColor = PlayerData.PlayerColor;
 		Index = Id-1;
 		//Nodes
 		Rb = GetNode<InterpolatedBody>("RigidBody2D");
 		Visuals = GetNode<PlayerVisuals>("Visuals");
 		shadow = GetNode<Shadow>("Shadow");
-		
 		BounceSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/BounceSound");
 		FlameSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/FlameSound");
 		RouletteSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/RouletteSound");
@@ -74,8 +74,7 @@ public partial class Player : Node2D{
 		RbShape = GetNode<CollisionShape2D>("RigidBody2D/CollisionShape2D");
 
 		Visuals.VisualsReady(this);
-		//if(Online.IsOnline) OwnerId = Online.PlayerInfos[Id-1].UUID;
-		//else OwnerId = 1;
+
 		OwnerId = PlayerData.UUID;
 		if(Game.MouseMode != Game.MouseModeEnum.Cursor) Input.MouseMode = Input.MouseModeEnum.Hidden;
 		PlayerSpawned();
@@ -94,7 +93,6 @@ public partial class Player : Node2D{
 		if(Online.IsOnline && !Mode.Finished){
 			if(TicksToIgnore > 0) TicksToIgnore--;
 		}
-		//shadow.GlobalPosition = Rb.GlobalPosition;
 		
 		//Controls
 		if(OwnsPlayer()){
@@ -300,68 +298,30 @@ public partial class Player : Node2D{
 		}
 	}
 
-	public void ItemButtonPressed(){
-		if(Item != null && !Visuals.ItemRouletteAnimation.Visible){
-			RpcId(1,nameof(ClientSendUseItem));
-		}
-	}
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SetItemFromEnum(byte itemEnum){
-		switch((Item.ItemEnum)itemEnum){
-			case Item.ItemEnum.BigFungus: Item = new BigFungus(this); break;
-			case Item.ItemEnum.Booll: Item = new Booll(this); break;
-			case Item.ItemEnum.BowlingBall: Item = new BowlingBall(this); break;
-			case Item.ItemEnum.Inverter: Item = new Inverter(this); break;
-			case Item.ItemEnum.Moon: Item = new Moon(this); break;
-			case Item.ItemEnum.SmallBall: Item = new SmallBall(this); break;
-			case Item.ItemEnum.Wings: Item = new Wings(this); break;
-		}
-	}
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void SetItemFromEnum(byte itemEnum){
+        Inventory.SetItemFromEnum(itemEnum);
+    }
 
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SetItemFromEnum(byte itemEnum,byte amount){
-		switch((Item.ItemEnum)itemEnum){
-			case Item.ItemEnum.Ball: Item = new Ball(this,amount); break;
-			case Item.ItemEnum.Pepper: Item = new Pepper(this,amount); break;
-			case Item.ItemEnum.StopSign: Item = new StopSign(this,amount); break;
-		}
-	}
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.Item)]
-	private void ClientSendUseItem(){
-		if(Online.IsHost()){
-			if(IsRpcFromPlayerOwner()){
-				if(Item is SingleUseItem suItem){
-					Rpc(nameof(HostSentUseItem), (byte)Item.ItemType,suItem.Amount);
-				}else if(Item != null){
-					Rpc(nameof(HostSentUseItem), (byte)Item.ItemType);
-				}
-			}else{
-				GD.PrintErr(OnlineErrorMessages.ClientSpoofErrorMessage(OwnerId));
-			}
-		}else{
-			GD.PrintErr(OnlineErrorMessages.NonHostCallErrorMessage());
-		}
-	}
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void HostSentUseItem(byte itemEnum){
-		if(Item.ItemType == (Item.ItemEnum)itemEnum){
-			Item.UseItem();
-		}else{
-			GD.PrintErr("Item desync from host");
-			SetItemFromEnum(itemEnum);
-			Item.UseItem();
-		}
-	}
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void HostSentUseItem(byte itemEnum, byte amount){
-		if(Item.ItemType == (Item.ItemEnum)itemEnum && (Item as SingleUseItem).Amount == amount){
-			Item.UseItem();
-		}else{
-			GD.PrintErr("Item desync from host");
-			SetItemFromEnum(itemEnum,amount);
-			Item.UseItem();
-		}
-	}
+    [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void SetItemFromEnum(byte itemEnum, byte amount){
+        Inventory.SetItemFromEnum(itemEnum, amount);
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.Item)]
+    public void ClientSendUseItem(){
+        Inventory.HandleClientSendUseItem();
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void HostSentUseItem(byte itemEnum){
+        Inventory.HandleHostSentUseItem(itemEnum);
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void HostSentUseItem(byte itemEnum, byte amount){
+        Inventory.HandleHostSentUseItem(itemEnum, amount);
+    }
 
 	private void Updates(float delta){
 
@@ -372,18 +332,7 @@ public partial class Player : Node2D{
 		//Regain Checks
 		Mode.ModeNode.PlayerRegainCheck(this, delta);
 
-		//Transformation Timer and special abilities
-		if(Item is TransformItem){
-			TransformItem tItem = (TransformItem)Item;
-			tItem.TransformItemTimer(delta);
-			if(tItem.Activated){
-				if(tItem is Wings) CanLaunch = true;
-				else if(tItem is Moon && Physics.AirTimer >= Mode.ModeNode.MoonAirTimeRequirement){
-					CanLaunch = true;
-					Physics.AirTimer = 0;
-				}
-			}
-		}
+		Inventory.UpdateInventory(delta);
 
 		//Invulnerability Timer
 		if(Invulnerable){
@@ -473,15 +422,6 @@ public partial class Player : Node2D{
 			}
 		}
 	}
-
-	public Item Item{
-		get{return item;}
-		set{
-			item = value;
-			//Visuals.SetItemSpriteVisibility(item != null);
-			Visuals.SetItemSpriteTexture();
-		}
-	}
 	
 	public bool Finished{
 		get{return finished;}
@@ -556,7 +496,6 @@ public partial class Player : Node2D{
 			else if (launchPower < 0) launchPower = 0;
 			LaunchPower = launchPower;
 			if(!CanLaunch){
-				//GD.PrintErr(Online.PlayerInfos[Id-1] + " launched when they shouldnt");
 				GD.PrintErr(OwnerId + " launched when they shouldnt");
 				CanLaunch = true;
 			}
@@ -578,7 +517,6 @@ public partial class Player : Node2D{
 			else if (launchPower < 0) launchPower = 0;
 			LaunchPower = launchPower;
 			if(!CanLaunch){
-				//GD.PrintErr(Online.PlayerInfos[Id-1] + " launched when they shouldnt");
 				GD.PrintErr(OwnerId + " launched when they shouldnt");
 				CanLaunch = true;
 			}

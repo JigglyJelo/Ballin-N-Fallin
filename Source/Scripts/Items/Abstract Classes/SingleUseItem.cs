@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public abstract class SingleUseItem : Item{
     public byte Amount;
 
@@ -14,7 +11,7 @@ public abstract class SingleUseItem : Item{
 		if(Amount > 0) Amount--;
         if(Amount > 1) Player.Visuals.ItemAmountText.Text = Amount.ToString();
         else Player.Visuals.ItemAmountText.Text = "";
-		if(Amount <= 0) Player.Item = null;
+		if(Amount <= 0) Player.Inventory.Item = null;
 	}
     public abstract void ItemAbility();
 }

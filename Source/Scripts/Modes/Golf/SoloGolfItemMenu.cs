@@ -49,7 +49,7 @@ public partial class SoloGolfItemMenu : Menu2D{
 		SoloGolfItemMenuOption selection = options[selectionX,selectionY];
 		if(selection.Price <= GolfCup.Juice){
 			GolfCup.Juice -= selection.Price;
-			Game.Players[0].Item = selection.Item;
+			Game.Players[0].Inventory.Item = selection.Item;
 			ResetItemDictionary();
 			MenuBack();
 			//SFX.Play("Item");

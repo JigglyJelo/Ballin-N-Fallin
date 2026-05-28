@@ -60,7 +60,7 @@ public partial class Race : Mode, ILevelLoadedEvent{
 
     public void OnLevelLoaded(){
         if(Game.TotalPlayers == 1)
-            Game.Players[0].Item = new Pepper(Game.Players[0],(byte)Level.LevelNode.LevelUnit);
+            Game.Players[0].Inventory.Item = new Pepper(Game.Players[0],(byte)Level.LevelNode.LevelUnit);
         else
             foreach(Player player in Game.Players) player.Invulnerable = true;
     }

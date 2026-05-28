@@ -153,7 +153,7 @@ public partial class PlayerVisuals : Node2D{
 				SetRouletteSpriteVisibility(false);
 				SetItemSpriteVisibility(true);
 				itemTriangle.Visible = true;
-				if(player.Item is TransformItem) TransformBar.Visible = true;
+				if(player.Inventory.Item is TransformItem) TransformBar.Visible = true;
 				itemRouletteTimer = 0;
 			}
 		}
@@ -323,8 +323,8 @@ public partial class PlayerVisuals : Node2D{
 	}
 
 	public void SetItemSpriteTexture(){
-		if(player.Item != null){
-			itemSprite.Texture = player.Item.Icon;
+		if(player.Inventory.Item != null){
+			itemSprite.Texture = player.Inventory.Item.Icon;
 		}else{
 			itemSprite.Texture = null;
 			itemTriangle.Visible = false;
@@ -338,9 +338,9 @@ public partial class PlayerVisuals : Node2D{
 			itemSprite.Texture = null;
 			itemTriangle.Visible = false;
 		}else{
-			itemSprite.Texture = player.Item.Icon;
+			itemSprite.Texture = player.Inventory.Item.Icon;
 			itemTriangle.Visible = true;
-			if(player.Item is SingleUseItem) ItemAmountText.Text = (player.Item as SingleUseItem).Amount.ToString();
+			if(player.Inventory.Item is SingleUseItem) ItemAmountText.Text = (player.Inventory.Item as SingleUseItem).Amount.ToString();
 		}
 	}
 
