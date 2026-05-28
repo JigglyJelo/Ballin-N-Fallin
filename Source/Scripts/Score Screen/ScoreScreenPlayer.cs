@@ -68,7 +68,7 @@ public partial class ScoreScreenPlayer : RigidBody2D{
 		if(true) pupilSprite.Position = inputVector * (6/PlayerVisuals.TextureScale); //OwnsPlayer
 		void slam(){
 			LinearVelocity = new Vector2(LinearVelocity.X, LinearVelocity.Y * 0.5f);
-			LinearVelocity += Vector2.Down * Player.SLAM_POWER * (GravityScale == 0 ? 1 : GravityScale/Player.GRAVITY);
+			LinearVelocity += Vector2.Down * PlayerPhysics.SLAM_POWER * (GravityScale == 0 ? 1 : GravityScale/PlayerPhysics.GRAVITY);
 			canSlam = false;
 		}
 	}

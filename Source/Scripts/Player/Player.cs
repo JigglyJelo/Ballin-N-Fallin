@@ -2,23 +2,6 @@ using Godot;
 using System;
 
 public partial class Player : Node2D{
-	//Constants
-	public const float MAX_LAUNCH_TIME = 1.25f; // Amount of time it takes to fully charge
-	public const float MAX_LAUNCH_POWER = 4000; // The maximum amount of power added onto a launch based on charge time (Plus the MIN_LAUNCH_POWER)
-	public const float MIN_LAUNCH_POWER = 500; // Amount of power always added onto a launch no matter time held
-	public const float SLAM_POWER = 2000;
-	public const float GRAVITY = 2;
-	public const float MASS = 1;
-	public const float LINEAR_DAMP = 0.2f;
-	public const float ANGULAR_DAMP = 0.125f;
-	public const float FRICTION = 1;
-	public const float BOUNCE = 0.65f; // The bounciness of the player
-	public const float RADIUS = 91; // The radius of the player
-	public const float SPEED_CAP = 10000; //The maximum velocity in any direction
-	private const float MIN_STRETCH_SPEED = 2300; //The minimum velocity before the squash n stretch effect starts
-	private const float BOUNCE_SFX_TIMEOUT = 0.15f;
-	private const float MIN_STOMP_SPEED = (float)(SLAM_POWER*0.5); //Minimum velocity downwards you must be going to stay in stomping state
-	private const float MIN_VEL_FOR_LAUNCH_PARTICLE = (float)(MAX_LAUNCH_POWER * 0.15); //The amount your launch needed to be charged for particle to spawn
 	//Controls Variables
 	public byte Id = 1; // Player #1-8
 	public int Index; //To be used as a short hand instead of doing Id-1 all the time for array access
@@ -27,15 +10,13 @@ public partial class Player : Node2D{
 	public bool IsRegaining = false;
 	public Vector2 InputVector, RawInputVector;
 	//Children
-	public PlayerVisuals Visuals;
-	public InterpolatedBody Rb;
 	public CollisionShape2D RbShape;
 	private CpuParticles2D flameParticles,blastParticles,popParticles;
 	public AudioStreamPlayer2D RouletteSound;
 	public AudioStreamPlayer2D BounceSound, FlameSound, ItemSound;
 	public Trail Trail;
 	private static PackedScene slamParticleScene;
-	
+	private Shadow shadow;
 	//Gameplay variables
 	public float LaunchPower = 0;
 	public float Score;
@@ -46,17 +27,17 @@ public partial class Player : Node2D{
 	private float playerScale = 1;
 	public Vector2 SpawnPoint;
 	private Emotion playerEmotion = Emotion.Neutral;
-	private float stompTimer = 0;
+	public float StompTimer = 0;
 	private bool isStomping = false;
 	public bool IsStomping{
 		get{return isStomping;}
 		set{
 			isStomping = value;
-			stompTimer = 0;
+			StompTimer = 0;
 		}
 	}
 	//Timers
-	public float BounceTimer, FrozenTimer, StillTimer, AirTimer, InvulnerabilityTimer;
+	public float BounceTimer, FrozenTimer, InvulnerabilityTimer;
 	private float itemRouletteTimer, vibrationTimer;
 	private float textTimer = 3;
 	//Vibration variables
@@ -64,12 +45,15 @@ public partial class Player : Node2D{
 	//Sync & Online Variables
 	public int OwnerId;
 	public int TicksToIgnore = 0;
-	private Shadow shadow;
-	//Input Manager
+	//Related and important nodes and classes
+	public PlayerPhysics Physics;
+	public InterpolatedBody Rb;
+	public PlayerVisuals Visuals;
 	public PlayerInput PlayerInput;
 	public PlayerData PlayerData;
 
 	public override void _Ready(){
+		Physics = new PlayerPhysics(this);
 		PlayerData = Game.PlayerDatas[Id-1];
 		PlayerInput = new PlayerInput(this);
 		PlayerColor = PlayerData.PlayerColor;
@@ -126,88 +110,14 @@ public partial class Player : Node2D{
 				}
 			}
 		}
-		float velocityMagnitudeSquared = Rb.LinearVelocity.LengthSquared();
-		if(Online.IsHost()){
-			if((Rb.GlobalPosition.Y>2500/Level.LevelNode.CameraZoom || (Rb.GlobalPosition.Y<-2500/Level.LevelNode.CameraZoom && Rb.GlobalPosition.Y>-10000/Level.LevelNode.CameraZoom) || (Rb.GlobalPosition.X<-4444/Level.LevelNode.CameraZoom && Rb.GlobalPosition.X>-17777/Level.LevelNode.CameraZoom) || (Rb.GlobalPosition.X>4444/Level.LevelNode.CameraZoom && Rb.GlobalPosition.X<17777/Level.LevelNode.CameraZoom)) && !Finished) 
-				Death.KillPlayer(this,Death.DeathCause.Pop);//RespawnPlayer(); //Incase you clip oob
-			if(velocityMagnitudeSquared > SPEED_CAP*SPEED_CAP){ //Speed cap
-				float angle = Rb.LinearVelocity.Angle();
-				Rb.LinearVelocity = Vector2.FromAngle(angle) * SPEED_CAP;
-			}
-		}
-		
-		if(velocityMagnitudeSquared >= (MIN_STRETCH_SPEED*MIN_STRETCH_SPEED)){//&& !isRegaining
-			Visuals.SquashNStretch(MathF.Sqrt(velocityMagnitudeSquared));
-			if(Rb.AngularDamp != 25 && (velocityMagnitudeSquared >= (MIN_STRETCH_SPEED*2 * MIN_STRETCH_SPEED*2) || Rb.AngularVelocity > 5 || Rb.AngularVelocity < -5)){
-				Rb.AngularDamp = 25;
-			}else{
-				Rb.AngularDamp = Mathf.Lerp(Rb.AngularDamp,ANGULAR_DAMP,0.5f);
-			}
-		}else{
-			//float lerpScale = 1-(velocityMagnitudeSquared / ((MIN_STRETCH_SPEED*MIN_STRETCH_SPEED)));
-			Rb.AngularDamp = Mathf.Lerp(Rb.AngularDamp,ANGULAR_DAMP,0.125f);
-			Visuals.ResetSquashNStretch();
-		}
-		
+		Physics.DoPlayerPhysics(fDelta);
 		Updates(fDelta);
 		FlameCharge();
 	}
 
 	//Collisions
 	public void _on_rigid_body_2d_body_entered(PhysicsBody2D body){
-		if(body.IsInGroup("NoRegain")){
-			BounceEffects();
-			if(body.IsInGroup("Bump")) PlayerEmotion = Emotion.Bumped;
-			if(IsStomping && Rb.LinearVelocity.Y <= MIN_STOMP_SPEED){
-				//IsStomping = false;
-			}
-		}else if(body.IsInGroup("Regain") || body.GetParent().IsInGroup("Regain")){
-			if(!IsRegaining) BounceEffects();
-			IsRegaining = true;
-			Mode.ModeNode.OnPlayerEnterRegain(this);
-			StillTimer = 0;
-			AirTimer = 0;
-			if(IsStomping && Rb.LinearVelocity.Y <= MIN_STOMP_SPEED){
-				//IsStomping = false;
-			}
-		}else if(body.IsInGroup("Bump")){
-			PlayerEmotion = Emotion.Bumped;
-			if(IsStomping && Rb.LinearVelocity.Y <= MIN_STOMP_SPEED){
-				//IsStomping = false;
-			}
-		}
-		if(body.GetParent().IsInGroup("Player")){
-			Player otherPlayer = body.GetParent() as Player;
-			if(isSuccessfulStomp()){ //Checks whether the player is being stomped on
-				if(Online.IsHost()){
-					//Stomp is successful
-					Mode.ModeNode.PlayerKilledPlayer(this, otherPlayer, Death.DeathCause.Stomp);
-					Death.KillPlayer(this,Death.DeathCause.Stomp);
-					otherPlayer.Rpc(nameof(PlayerStomped));
-					otherPlayer.Rb.LinearVelocity = new Vector2(otherPlayer.Rb.LinearVelocity.X,-2000f);
-				}
-			}else{
-				if(Online.IsHost()) Mode.ModeNode.PlayerBumpedPlayer(otherPlayer,this);
-				PlayerEmotion = Emotion.Bumped;
-        		otherPlayer.PlayerEmotion = Emotion.Bumped;
-			}
-
-			bool isSuccessfulStomp(){
-				return Game.StompSetting != Game.StompSettingEnum.Off && otherPlayer.IsStomping && //Make sure player is slaming
-				Rb.GlobalPosition.Y >= otherPlayer.Rb.GlobalPosition.Y && //Stomping player above stomped player
-				MathF.Abs(Rb.GlobalPosition.X-otherPlayer.Rb.GlobalPosition.X) <= 150f && //Stomping player is horizontally aligned with stomper
-				PlayerScale <= otherPlayer.PlayerScale && //Stomping player is bigger than or equal to stomped scale
-				!Level.IsPositionOffscreenOrDead(Rb.GlobalPosition) && //Can't stomp dead (or i guess offscreen) players
-				(Team.Equals("") || ((!Team.Equals("") && !Team.Equals(otherPlayer.Team)) || Game.StompSetting == Game.StompSettingEnum.TeamAttack)); //Stomping player is on another team or there are no teams
-			}
-
-			//Unfreeze frozen players on collision
-			if(otherPlayer.Rb.Freeze && !otherPlayer.Finished){
-				otherPlayer.Rb.SetDeferred("freeze",false);
-				GD.Print("Unfrozen");
-			}
-			Vibration();
-		}
+		Physics.OnRigidBodyEntered(body);
 	}
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable,TransferChannel = (int)Online.TransferChannelEnum.SuccessfulStomp)]
 	public void PlayerStomped(){
@@ -221,7 +131,7 @@ public partial class Player : Node2D{
 	}
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.BounceParticle)]
 	public void BounceEffects(Vector2 position,Vector2 velocity,byte preProcessTicks){
-		if(BounceTimer >= BOUNCE_SFX_TIMEOUT){
+		if(BounceTimer >= PlayerPhysics.BOUNCE_SFX_TIMEOUT){
 			float velSquared = velocity.LengthSquared();
 			if(velocity.Y > 100 || velocity.Y < -100){
 				BounceSound.PitchScale = Game.Random.Next(80,110)/100f;
@@ -272,15 +182,13 @@ public partial class Player : Node2D{
 	}
 
 	public void _on_rigid_body_2d_body_exited(PhysicsBody2D body){	
-		if(body.IsInGroup("Regain") || body.GetParent().IsInGroup("Regain")){
-			IsRegaining = false;
-		}
+		Physics.OnRigidBodyExited(body);
 	}
 
 	//Controls
 	private void FlameCharge(){
-		if(LaunchPower > MAX_LAUNCH_POWER || (LaunchPower == MAX_LAUNCH_POWER && !flameParticles.Emitting)){
-			LaunchPower = MAX_LAUNCH_POWER;
+		if(LaunchPower > PlayerPhysics.MAX_LAUNCH_POWER || (LaunchPower == PlayerPhysics.MAX_LAUNCH_POWER && !flameParticles.Emitting)){
+			LaunchPower = PlayerPhysics.MAX_LAUNCH_POWER;
 			flameParticles.Emitting = true;
 			FlameSound.Play();
 			if(PlayerData.VibrationEnabled && !Game.UsingMouse()){
@@ -288,7 +196,7 @@ public partial class Player : Node2D{
 				weakVibration = 0.05f;
 				Vibration();
 			}
-		}else if(LaunchPower != MAX_LAUNCH_POWER && flameParticles.Emitting){
+		}else if(LaunchPower != PlayerPhysics.MAX_LAUNCH_POWER && flameParticles.Emitting){
 			//STOP WEAK VIBRATION
 			weakVibration = 0;
 			Vibration();
@@ -307,11 +215,11 @@ public partial class Player : Node2D{
 			if(CanLaunch && InputVector != Vector2.Zero){
 				Rb.Freeze = false;
 				CanLaunch = false;
-				addVelocity();
+				Physics.ApplyLaunch();
 				if(OwnsPlayer()){
 					byte bAngle = (byte)(Rb.LinearVelocity.Angle()/(2*MathF.PI)*255);
-					byte bPower = (byte)((LaunchPower/MAX_LAUNCH_POWER) * 255);
-					if(LaunchPower >= MIN_VEL_FOR_LAUNCH_PARTICLE) Rpc(nameof(SpawnLaunchParticles),bAngle,bPower,Rb.GlobalPosition,0);
+					byte bPower = (byte)((LaunchPower/PlayerPhysics.MAX_LAUNCH_POWER) * 255);
+					if(LaunchPower >= PlayerPhysics.MIN_VEL_FOR_LAUNCH_PARTICLE) Rpc(nameof(SpawnLaunchParticles),bAngle,bPower,Rb.GlobalPosition,0);
 				}
 				//Flip player sprite if necessary
 				Visuals.Rpc(nameof(Visuals.Flip),InputVector.X < 0,InputVector.Angle() + (InputVector.X < 0 ? MathF.PI : 0));
@@ -344,7 +252,7 @@ public partial class Player : Node2D{
 				if(Online.Buffer != 1){
 					double timerTime = (ping / 1000.0) * Online.Buffer;
 					await ToSignal(GetTree().CreateTimer(timerTime,false,true), "timeout");
-					addVelocity();
+					Physics.ApplyLaunch();
 				}
 				
 				CanLaunch = false;
@@ -355,25 +263,11 @@ public partial class Player : Node2D{
 			LaunchPower = 0;
 		}
 
-		void addVelocity(){
-		    // If current velocity is opposite to launch direction, reduce velocity
-		    float diff = Rb.LinearVelocity.AngleTo(InputVector);
-
-		    //Normalize the angle difference to range -π to π
-		    diff = MathF.Atan2(MathF.Sin(diff), MathF.Cos(diff));
-
-		    if(MathF.Abs(diff) >= (float)(Math.PI/4)){
-		        Rb.LinearVelocity *= 0.5f; // Less aggressive reduction
-		    }
-
-		    //Apply launch force
-			//Rb.ApplyImpulse(InputVector * (LaunchPower + MIN_LAUNCH_POWER));
-		    Rb.LinearVelocity += InputVector * (LaunchPower + MIN_LAUNCH_POWER);
-		}
+		
 	}
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable,TransferChannel = (int)Online.TransferChannelEnum.LaunchParticle)]
 	public void SpawnLaunchParticles(byte angle,byte magnitude,Vector2 position,byte preProcessTicks){
-		ParticleManager.SpawnLaunchParticles((angle/255f)*(2*MathF.PI),(magnitude/255f) * MAX_LAUNCH_POWER,position,preProcessTicks/(float)Engine.PhysicsTicksPerSecond);
+		ParticleManager.SpawnLaunchParticles((angle/255f)*(2*MathF.PI),(magnitude/255f) * PlayerPhysics.MAX_LAUNCH_POWER,position,preProcessTicks/(float)Engine.PhysicsTicksPerSecond);
 	}
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable,TransferChannel = (int)Online.TransferChannelEnum.SlamParticle)]
 	public void SpawnSlamParticle(byte preProcessTicks){
@@ -388,8 +282,7 @@ public partial class Player : Node2D{
 			if(CanSlam){
 				Rb.Freeze = false;
 				CanSlam = false;
-				if(Rb.LinearVelocity.Y < 0) Rb.LinearVelocity = new Vector2(Rb.LinearVelocity.X, Rb.LinearVelocity.Y * 0.5f);
-				Rb.LinearVelocity += Vector2.Down * SLAM_POWER * (Rb.GravityScale == 0 ? 1 : Rb.GravityScale/GRAVITY);
+				Physics.ApplySlam();
 				if(OwnsPlayer()){
 					Rpc(nameof(SpawnSlamParticle),0);
 				}
@@ -410,8 +303,7 @@ public partial class Player : Node2D{
 			await ToSignal(GetTree().CreateTimer(timerTime,false,true), "timeout");
 			if(Online.Buffer >= 0.5f) TicksToIgnore = (int)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
 			CanSlam = false;
-			if(Rb.LinearVelocity.Y < 0) Rb.LinearVelocity = new Vector2(Rb.LinearVelocity.X, Rb.LinearVelocity.Y * 0.5f);
-			Rb.LinearVelocity += Vector2.Down * SLAM_POWER * (Rb.GravityScale == 0 ? 1 : Rb.GravityScale/GRAVITY);
+			Physics.ApplySlam();
 		}
 	}
 
@@ -487,25 +379,15 @@ public partial class Player : Node2D{
 		//Regain Checks
 		Mode.ModeNode.PlayerRegainCheck(this, delta);
 
-		//Gives player launch and slam back if stuck in air
-		if(!CanLaunch || !CanSlam){
-			if(AirTimer <= 10) AirTimer += delta;
-			else{
-				CanSlam = true;
-				CanLaunch = true;
-				AirTimer = 0;
-			}
-		}
-
 		//Transformation Timer and special abilities
 		if(Item is TransformItem){
 			TransformItem tItem = (TransformItem)Item;
 			tItem.TransformItemTimer(delta);
 			if(tItem.Activated){
 				if(tItem is Wings) CanLaunch = true;
-				else if(tItem is Moon && AirTimer >= Mode.ModeNode.MoonAirTimeRequirement){
+				else if(tItem is Moon && Physics.AirTimer >= Mode.ModeNode.MoonAirTimeRequirement){
 					CanLaunch = true;
-					AirTimer = 0;
+					Physics.AirTimer = 0;
 				}
 			}
 		}
@@ -531,13 +413,7 @@ public partial class Player : Node2D{
 			strongVibration = 0;
 			Vibration();
 		}
-		if(IsStomping){
-			stompTimer += delta;
-			const float MIN_STOMP_TIME = 0.25f;
-			if(Rb.LinearVelocity.Y <= MIN_STOMP_SPEED && stompTimer >= MIN_STOMP_TIME){
-				IsStomping = false;
-			}
-		}
+		
 	}
 
 	private void PlayerSpawned(){
@@ -587,21 +463,14 @@ public partial class Player : Node2D{
 	}
 
 	public void ResetTransformation(){
-		Rb.GravityScale = GRAVITY;
-		Rb.Mass = MASS;
-		Rb.LinearDamp = LINEAR_DAMP;
-		Rb.AngularDamp = ANGULAR_DAMP;
-		PhysicsMaterial physicsMaterial = new PhysicsMaterial();
-		physicsMaterial.Friction = FRICTION;
-		physicsMaterial.Bounce = BOUNCE;
-		Rb.PhysicsMaterialOverride = physicsMaterial;
+		Physics.ResetPhysicsTransformations();
 		Visuals.FlipV(false);
 		PlayerScale = 1;
 
 		Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,1);
 		Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate, 1);
 		Visuals.OutlineSprite.SelfModulate = new Color(Visuals.OutlineSprite.SelfModulate,1);
-		foreach(Player player in Game.Players) if(player != null) Rb.RemoveCollisionExceptionWith(player.Rb);
+		Physics.SetPlayerCollisionExceptions(false);
 	}
 
 	public bool OwnsPlayer(){
@@ -615,14 +484,13 @@ public partial class Player : Node2D{
 		get{return invulnerable;}
 		set{
 			invulnerable = value;
+			Physics.SetPlayerCollisionExceptions(invulnerable);
 			if(invulnerable){
-				foreach(Player player in Game.Players) Rb.AddCollisionExceptionWith(player.Rb);
 				InvulnerabilityTimer = 2;
 				Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,0.5f);
 				Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate,0);
 			}else{
 				InvulnerabilityTimer = 0;
-				foreach(Player player in Game.Players) Rb.RemoveCollisionExceptionWith(player.Rb);
 				Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,1);	
 				Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate,1);
 			}
@@ -658,9 +526,7 @@ public partial class Player : Node2D{
 		set{
 			playerScale = value;
 			Visuals.HUDNode.Scale = new Vector2(playerScale,playerScale);
-			CircleShape2D defaultCircle = new CircleShape2D();
-			defaultCircle.Radius = RADIUS * playerScale;
-			RbShape.Shape = defaultCircle;
+			Physics.UpdateRadius();
 			Visuals.ResetPlayerScale();
 		}
 	}
@@ -709,8 +575,8 @@ public partial class Player : Node2D{
 			Rb.GlobalPosition = rewindedPosition;
 			Rb.SkipInterpolation();
 			InputVector = Vector2.FromAngle(angle);
-			if(launchPower > MAX_LAUNCH_POWER + MIN_LAUNCH_POWER) launchPower = MAX_LAUNCH_POWER + MIN_LAUNCH_POWER;
-			else if(launchPower < MIN_LAUNCH_POWER) launchPower = MIN_LAUNCH_POWER;
+			if (launchPower > PlayerPhysics.MAX_LAUNCH_POWER) launchPower = PlayerPhysics.MAX_LAUNCH_POWER;
+			else if (launchPower < 0) launchPower = 0;
 			LaunchPower = launchPower;
 			if(!CanLaunch){
 				//GD.PrintErr(Online.PlayerInfos[Id-1] + " launched when they shouldnt");
@@ -720,8 +586,8 @@ public partial class Player : Node2D{
 			if(CanLaunch){
 				Launch();
 				byte bAngle = (byte)(angle/(2*MathF.PI) *255);
-				byte bPower = (byte)(((launchPower-MIN_LAUNCH_POWER)/MAX_LAUNCH_POWER) * 255);
-				if(LaunchPower >= MIN_VEL_FOR_LAUNCH_PARTICLE) Rpc(nameof(SpawnLaunchParticles),bAngle,bPower,Rb.GlobalPosition,ticks);
+				byte bPower = (byte)((launchPower / PlayerPhysics.MAX_LAUNCH_POWER) * 255);
+				if(LaunchPower >= PlayerPhysics.MIN_VEL_FOR_LAUNCH_PARTICLE) Rpc(nameof(SpawnLaunchParticles),bAngle,bPower,Rb.GlobalPosition,ticks);
 				Online.PredictPosition(Rb,ticks);
 			}
 		}
@@ -731,8 +597,8 @@ public partial class Player : Node2D{
 	private void SendLaunchToServer(float angle,float launchPower,byte ticks){
 		if(Online.IsHost() && IsRpcFromPlayerOwner()){
 			InputVector = Vector2.FromAngle(angle);
-			if(launchPower > MAX_LAUNCH_POWER + MIN_LAUNCH_POWER) launchPower = MAX_LAUNCH_POWER + MIN_LAUNCH_POWER;
-			else if(launchPower < MIN_LAUNCH_POWER) launchPower = MIN_LAUNCH_POWER;
+			if (launchPower > PlayerPhysics.MAX_LAUNCH_POWER) launchPower = PlayerPhysics.MAX_LAUNCH_POWER;
+			else if (launchPower < 0) launchPower = 0;
 			LaunchPower = launchPower;
 			if(!CanLaunch){
 				//GD.PrintErr(Online.PlayerInfos[Id-1] + " launched when they shouldnt");
@@ -742,8 +608,8 @@ public partial class Player : Node2D{
 			if(CanLaunch){
 				Launch();
 				byte bAngle = (byte)(angle/(2*MathF.PI) *255);
-				byte bPower = (byte)(((launchPower-MIN_LAUNCH_POWER)/MAX_LAUNCH_POWER) * 255);
-				if(LaunchPower >= MIN_VEL_FOR_LAUNCH_PARTICLE) Rpc(nameof(SpawnLaunchParticles),bAngle,bPower,Rb.GlobalPosition,ticks);
+				byte bPower = (byte)((launchPower / PlayerPhysics.MAX_LAUNCH_POWER) * 255);
+				if(LaunchPower >= PlayerPhysics.MIN_VEL_FOR_LAUNCH_PARTICLE) Rpc(nameof(SpawnLaunchParticles),bAngle,bPower,Rb.GlobalPosition,ticks);
 				Online.PredictPosition(Rb,ticks);
 			}
 		}

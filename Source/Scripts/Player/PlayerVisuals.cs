@@ -171,7 +171,7 @@ public partial class PlayerVisuals : Node2D{
 			else lerpAmount = player.OwnsPlayer() ? 1f : ONLINE_UPDATE_RATE; //When FPS is lower than tickrate eye and arrow freak out this tries to fix it but fails :skull:
 			Vector2 newArrowPosition = player.InputVector * 125;
 			float newArrowRotation = player.InputVector.Angle();
-			float arrowScale = (((player.LaunchPower + Player.MIN_LAUNCH_POWER) / Player.MAX_LAUNCH_POWER)*Player.MAX_LAUNCH_TIME) + 1;
+			float arrowScale = (((player.LaunchPower + PlayerPhysics.MIN_LAUNCH_POWER) / PlayerPhysics.MAX_LAUNCH_POWER)*PlayerPhysics.MAX_LAUNCH_TIME) + 1;
 			Vector2 newArrowScale = new Vector2(arrowScale, arrowScale);
 			//arrowSprite.Scale = arrowSprite.Scale.Lerp(new Vector2( (LaunchPower + MIN_LAUNCH_POWER)/ MAX_LAUNCH_POWER + 1 , (LaunchPower + MIN_LAUNCH_POWER)/MAX_LAUNCH_POWER + 1), arrowSprite.Scale.X < 1 ? 0.5f : lerpAmount);
 			if(player.OwnsPlayer()){ //Owner
@@ -211,7 +211,7 @@ public partial class PlayerVisuals : Node2D{
 			PupilsSprite.Position = PupilsSprite.Position.Lerp(eyePosition,lerpAmount);
 		}else PupilsSprite.Position = Vector2.Zero;
 		
-		if(player.LaunchPower == Player.MAX_LAUNCH_POWER){ //Move this elsewhere
+		if(player.LaunchPower == PlayerPhysics.MAX_LAUNCH_POWER){ //Move this elsewhere
 			player.PlayerEmotion = Player.Emotion.Angry;
 			emotionTimer = 1/3f;
 		}

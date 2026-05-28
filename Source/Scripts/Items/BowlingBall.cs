@@ -9,7 +9,7 @@ public class BowlingBall : TransformItem{
 	}
 
     public override void SetTransformation(){
-		if(Player.Rb.GravityScale == Player.GRAVITY && Player.Rb.PhysicsMaterialOverride.Bounce == Player.BOUNCE){
+		if(Player.Rb.GravityScale == PlayerPhysics.GRAVITY && Player.Rb.PhysicsMaterialOverride.Bounce == PlayerPhysics.BOUNCE){
 			Player.Rb.GravityScale = 3;
 			PhysicsMaterial physicsMaterial = new PhysicsMaterial();
 			physicsMaterial.Bounce = 0.1f;

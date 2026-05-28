@@ -55,7 +55,7 @@ public partial class PlayerSync : Node{
 					}
 
 					void sendArrowData(int size){
-						byte launchPower = (byte)(player.LaunchPower / Player.MAX_LAUNCH_POWER * byte.MaxValue);
+						byte launchPower = (byte)(player.LaunchPower / PlayerPhysics.MAX_LAUNCH_POWER * byte.MaxValue);
 						ushort chargeUpdate = UnreliableManager.GetChannelLastUpdate(UnreliableManager.ClientUnreliableChannel.PlayerArrow);
 						byte[] arrowData = new byte[size];
 						arrowData[0] = launchPower;
@@ -100,7 +100,7 @@ public partial class PlayerSync : Node{
 			xVelocities[i] = player.Rb.LinearVelocity.X;
 			yVelocities[i] = player.Rb.LinearVelocity.Y;
 			if(visualSyncTime){
-				chargeScales[i] = (byte)(player.LaunchPower / (Player.MAX_LAUNCH_POWER/255f));
+				chargeScales[i] = (byte)(player.LaunchPower / (PlayerPhysics.MAX_LAUNCH_POWER/255f));
 				canLaunches[i] = player.CanLaunch;
 			}
 		}
@@ -225,7 +225,7 @@ public partial class PlayerSync : Node{
 				for(int i = 0; i < chargeScales_canLaunches.Length-3; i++){
 					Player player = Game.Players[i];
 					if(!player.OwnsPlayer()){
-						player.LaunchPower = chargeScales_canLaunches[i]/255f * Player.MAX_LAUNCH_POWER;
+						player.LaunchPower = chargeScales_canLaunches[i]/255f * PlayerPhysics.MAX_LAUNCH_POWER;
 						player.CanLaunch = canLaunches[i];
 					}
 				}
@@ -264,7 +264,7 @@ public partial class PlayerSync : Node{
 				for(int i = 0; i < Game.PlayerDatas.Count; i++){
 					if(Game.PlayerDatas[i].UUID == id){
 						Player player = Game.Players[i];
-						player.LaunchPower = arrowData[0] / 255f * Player.MAX_LAUNCH_POWER; // Scale back to original range
+						player.LaunchPower = arrowData[0] / 255f * PlayerPhysics.MAX_LAUNCH_POWER; // Scale back to original range
 						switch(arrowData.Length){
 							case 3:
 								player.InputVector = Vector2.Zero;
