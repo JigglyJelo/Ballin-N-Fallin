@@ -5,6 +5,8 @@ public partial class PlayerInput{
 	private Player player;
 	private PlayerData.PlayerInputDevice InputDevice; // Player's Controller #0-7, 8 mouse, -1 None (Online player)
 	private int InputId;
+	private float strongVibration, weakVibration;
+	private float vibrationTimer;
 
 	public PlayerInput(Player player){
 		this.player = player;
@@ -34,6 +36,13 @@ public partial class PlayerInput{
 		if(Input.IsActionJustPressed("Start" + InputId)){
 			PauseMenu.Pauser = player.Id;
 			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/PauseMenu.tscn").Instantiate());
+		}
+
+		if(vibrationTimer > 0) vibrationTimer -= delta;
+		else if(vibrationTimer < 0){
+			vibrationTimer = 0;
+			strongVibration = 0;
+			ApplyVibration();
 		}
 	}
 	private void MouseControls(float delta){
@@ -100,4 +109,23 @@ public partial class PlayerInput{
 			player.RawInputVector = (player.GetGlobalMousePosition() - player.GlobalPosition).Normalized();
 		}
 	}
+
+	//Does Vibration only if enabled and not already vibrating from charge as it would get overwritten
+	public void ApplyVibration(){
+		if(!Mode.Finished && player.PlayerData.VibrationEnabled && !Game.UsingMouse() && player.OwnsPlayer()){
+			if(weakVibration == 0 && strongVibration == 0) Input.StopJoyVibration((int)player.PlayerData.InputDevice);
+			else Input.StartJoyVibration((int)player.PlayerData.InputDevice, weakVibration, strongVibration);
+		}
+	}
+
+	public void TriggerStrongVibration(float strength, float duration) {
+    	strongVibration = strength;
+    	vibrationTimer = duration;
+    	ApplyVibration();
+	}
+
+	public void SetWeakVibration(float strength) {
+    weakVibration = strength;
+    ApplyVibration();
+}
 }

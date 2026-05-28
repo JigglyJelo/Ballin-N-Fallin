@@ -38,10 +38,9 @@ public partial class Player : Node2D{
 	}
 	//Timers
 	public float BounceTimer, FrozenTimer, InvulnerabilityTimer;
-	private float itemRouletteTimer, vibrationTimer;
+	private float itemRouletteTimer;
 	private float textTimer = 3;
 	//Vibration variables
-	private float strongVibration, weakVibration;
 	//Sync & Online Variables
 	public int OwnerId;
 	public int TicksToIgnore = 0;
@@ -137,9 +136,7 @@ public partial class Player : Node2D{
 				BounceSound.PitchScale = Game.Random.Next(80,110)/100f;
 				BounceSound.Play(); 
 				float lerpWeight = MathF.Sqrt(velSquared)/6000;
-				strongVibration = Mathf.Lerp(0.1f,1,lerpWeight);
-				vibrationTimer = Mathf.Lerp(0.1f,0.25f,lerpWeight);
-				Vibration();
+				PlayerInput.TriggerStrongVibration(Mathf.Lerp(0.1f,1,lerpWeight),Mathf.Lerp(0.1f,0.25f,lerpWeight));
 				BounceTimer = 0;
 			}
 			if(velSquared > 1000*1000) ParticleManager.SpawnBounceParticle(position,velocity,this,preProcessTicks);
@@ -193,13 +190,11 @@ public partial class Player : Node2D{
 			FlameSound.Play();
 			if(PlayerData.VibrationEnabled && !Game.UsingMouse()){
 				//START WEAK VIBRATION
-				weakVibration = 0.05f;
-				Vibration();
+				PlayerInput.SetWeakVibration(0.05f);
 			}
 		}else if(LaunchPower != PlayerPhysics.MAX_LAUNCH_POWER && flameParticles.Emitting){
 			//STOP WEAK VIBRATION
-			weakVibration = 0;
-			Vibration();
+			PlayerInput.SetWeakVibration(0);
 			flameParticles.Emitting = false;
 		}
 	}
@@ -225,8 +220,7 @@ public partial class Player : Node2D{
 				Visuals.Rpc(nameof(Visuals.Flip),InputVector.X < 0,InputVector.Angle() + (InputVector.X < 0 ? MathF.PI : 0));
 				Mode.ModeNode.PlayerLaunched(this);
 			}
-			weakVibration = 0;
-			Vibration();
+			PlayerInput.SetWeakVibration(0);
 			flameParticles.Emitting = false;
 			LaunchPower = 0;
 		}else if(!Mode.Finished){
@@ -257,8 +251,7 @@ public partial class Player : Node2D{
 				
 				CanLaunch = false;
 			}
-			weakVibration = 0;
-			Vibration();
+			PlayerInput.SetWeakVibration(0);
 			flameParticles.Emitting = false;
 			LaunchPower = 0;
 		}
@@ -406,14 +399,6 @@ public partial class Player : Node2D{
 				FrozenTimer = 0;
 			}
 		}
-
-		if(vibrationTimer > 0) vibrationTimer -= delta;
-		else if(vibrationTimer < 0){
-			vibrationTimer = 0;
-			strongVibration = 0;
-			Vibration();
-		}
-		
 	}
 
 	private void PlayerSpawned(){
@@ -425,14 +410,6 @@ public partial class Player : Node2D{
 		Rb.SetDeferred("linear_velocity", Vector2.Zero);
 	}
 
-	
-	//Does Vibration only if enabled and not already vibrating from charge as it would get overwritten
-	public void Vibration(){
-		if(!Mode.Finished && PlayerData.VibrationEnabled && !Game.UsingMouse() && OwnsPlayer()){
-			if(weakVibration == 0 && strongVibration == 0) Input.StopJoyVibration((int)PlayerData.InputDevice);
-			else Input.StartJoyVibration((int)PlayerData.InputDevice, weakVibration, strongVibration);
-		}
-	}
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public async void RespawnPlayer(){
 		if(Online.IsHost()){
