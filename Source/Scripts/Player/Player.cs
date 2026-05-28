@@ -41,8 +41,8 @@ public partial class Player : Node2D{
 	public float Score;
 	private Item item = null;
 	public string Team = "";
-	public bool FlippedStart = false;
-	private bool finished, invulnerable, setNewPos = true;
+	public bool FlippedStart = false, SetNewPos = true;
+	private bool finished, invulnerable;
 	private float playerScale = 1;
 	public Vector2 SpawnPoint;
 	private Emotion playerEmotion = Emotion.Neutral;
@@ -56,8 +56,8 @@ public partial class Player : Node2D{
 		}
 	}
 	//Timers
-	public float BounceTimer, FrozenTimer;
-	private float itemRouletteTimer, stillTimer, airTimer, invulnerabilityTimer, vibrationTimer;
+	public float BounceTimer, FrozenTimer, StillTimer, AirTimer, InvulnerabilityTimer;
+	private float itemRouletteTimer, vibrationTimer;
 	private float textTimer = 3;
 	//Vibration variables
 	private float strongVibration, weakVibration;
@@ -164,12 +164,9 @@ public partial class Player : Node2D{
 		}else if(body.IsInGroup("Regain") || body.GetParent().IsInGroup("Regain")){
 			if(!IsRegaining) BounceEffects();
 			IsRegaining = true;
-			if(Game.CurrentMode != Mode.GameMode.Golf){
-				CanLaunch = true;
-				CanSlam = true;
-			} 
-			stillTimer = 0;
-			airTimer = 0;
+			Mode.ModeNode.OnPlayerEnterRegain(this);
+			StillTimer = 0;
+			AirTimer = 0;
 			if(IsStomping && Rb.LinearVelocity.Y <= MIN_STOMP_SPEED){
 				//IsStomping = false;
 			}
@@ -488,39 +485,15 @@ public partial class Player : Node2D{
 		//Timers n Stuff
 		
 		//Regain Checks
-		if(IsRegaining){
-			if(Game.CurrentMode != Mode.GameMode.Golf){
-				CanLaunch = true;
-				CanSlam = true;
-			}else if(Game.CurrentMode == Mode.GameMode.Golf){
-				if(stillTimer >= 2){
-					CanLaunch = true;
-					CanSlam = true;
-					setNewPos = false;
-					stillTimer = 0;
-					//Make this better
-				}else if(stillTimer >= 1 && stillTimer < 2 && Mathf.Abs(Rb.GlobalPosition.DistanceTo(SpawnPoint)) < 512 && Golf.PlayerStrokes[Id-1] != 0) 
-					PlayerEmotion = Emotion.Annoyed;
-				stillTimer += delta;
-			}
-		}
-		
-		//Set Golf respawn points && deal with initial invulnerability
-		if(Game.CurrentMode == Mode.GameMode.Golf){
-			if(Invulnerable && Golf.PlayerStrokes[Id-1] == 0 && Game.TotalPlayers != 1) invulnerabilityTimer = 0.5f;
-			if(!IsRegaining && !setNewPos && !Level.IsPositionOffscreenOrDead(Rb.GlobalPosition)){
-				setNewPos = true;
-				SpawnPoint = Rb.GlobalPosition;
-			}
-		}
-		
+		Mode.ModeNode.PlayerRegainCheck(this, delta);
+
 		//Gives player launch and slam back if stuck in air
 		if(!CanLaunch || !CanSlam){
-			if(airTimer <= 10) airTimer += delta;
+			if(AirTimer <= 10) AirTimer += delta;
 			else{
 				CanSlam = true;
 				CanLaunch = true;
-				airTimer = 0;
+				AirTimer = 0;
 			}
 		}
 
@@ -530,17 +503,17 @@ public partial class Player : Node2D{
 			tItem.TransformItemTimer(delta);
 			if(tItem.Activated){
 				if(tItem is Wings) CanLaunch = true;
-				else if(tItem is Moon && airTimer >= (Game.CurrentMode != Mode.GameMode.Golf ? 0.75f : 2)){
+				else if(tItem is Moon && AirTimer >= Mode.ModeNode.MoonAirTimeRequirement){
 					CanLaunch = true;
-					airTimer = 0;
+					AirTimer = 0;
 				}
 			}
 		}
 
 		//Invulnerability Timer
 		if(Invulnerable){
-			if(invulnerabilityTimer > 0) invulnerabilityTimer -= delta;
-			else if(invulnerabilityTimer <= 0) Invulnerable = false;
+			if(InvulnerabilityTimer > 0) InvulnerabilityTimer -= delta;
+			else if(InvulnerabilityTimer <= 0) Invulnerable = false;
 		}
 
 		//Frozen Timer
@@ -644,11 +617,11 @@ public partial class Player : Node2D{
 			invulnerable = value;
 			if(invulnerable){
 				foreach(Player player in Game.Players) Rb.AddCollisionExceptionWith(player.Rb);
-				invulnerabilityTimer = 2;
+				InvulnerabilityTimer = 2;
 				Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,0.5f);
 				Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate,0);
 			}else{
-				invulnerabilityTimer = 0;
+				InvulnerabilityTimer = 0;
 				foreach(Player player in Game.Players) Rb.RemoveCollisionExceptionWith(player.Rb);
 				Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,1);	
 				Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate,1);
@@ -699,7 +672,6 @@ public partial class Player : Node2D{
 	public Emotion PlayerEmotion{
 		get{return playerEmotion;}
 		set{
-			
 			playerEmotion = value;
 		}
 	}
