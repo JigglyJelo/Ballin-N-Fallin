@@ -31,20 +31,6 @@ public partial class Golf : Mode, ILevelLoadedEvent{
         TopStroke = int.MaxValue;
 	}
 
-    /*
-    public override void _PhysicsProcess(double delta){
-        float fDelta = (float)delta;
-        foreach(Player player in Game.Players){
-			if(player.Invulnerable && Golf.PlayerStrokes[Id-1] == 0 && Game.TotalPlayers != 1) player.invulnerabilityTimer = 0.5f;
-			if(!player.isRegaining && !player.setNewPos){
-				player.setNewPos = true;
-				player.SpawnPoint = player.Rb.GlobalPosition;
-			}
-		}
-    }
-    */
-
-
     public void OnLevelLoaded(){
         if(Game.TotalPlayers != 1)
             foreach(Player player in Game.Players) player.Invulnerable = true;
@@ -127,6 +113,33 @@ public partial class Golf : Mode, ILevelLoadedEvent{
         return "Stroke " + Golf.PlayerStrokes[player.Id-1];
     }
 
+    public override void OnPlayerEnterRegain(Player player) {
+        //Intentionally empty. Golf mode waits for the stillTimer.
+    }
+
+    public override void PlayerRegainCheck(Player player, float delta) {
+        if(player.IsRegaining){
+            if(player.StillTimer >= 2){
+                player.CanLaunch = true;
+                player.CanSlam = true;
+                player.SetNewPos = false;
+                player.StillTimer = 0;
+            }else if(player.StillTimer >= 1 && player.StillTimer < 2 && Mathf.Abs(player.Rb.GlobalPosition.DistanceTo(player.SpawnPoint)) < 512 && Golf.PlayerStrokes[player.Index] != 0){
+                player.PlayerEmotion = Player.Emotion.Annoyed;
+            }
+            player.StillTimer += delta;
+        }
+
+        if(player.Invulnerable && Golf.PlayerStrokes[player.Index] == 0 && Game.TotalPlayers != 1){
+            player.InvulnerabilityTimer = 0.5f;
+        }
+
+        if(!player.IsRegaining && !player.SetNewPos && !Level.IsPositionOffscreenOrDead(player.Rb.GlobalPosition)){
+            player.SetNewPos = true;
+            player.SpawnPoint = player.Rb.GlobalPosition;
+        }
+    }
+    public override float MoonAirTimeRequirement => 2.0f;
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     private void GolfPlayerRespawned(byte playerId){
         Player player = Game.Players[playerId-1];
