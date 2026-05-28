@@ -118,7 +118,7 @@ public class PlayerPhysics{
 				otherPlayer.Rb.SetDeferred("freeze",false);
 				GD.Print("Unfrozen");
 			}
-			player.Vibration();
+			player.PlayerInput.ApplyVibration();
 		}
 	}
 
