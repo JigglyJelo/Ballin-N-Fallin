@@ -48,7 +48,7 @@ public partial class Survival : Mode{
 
     public override void PlayerRespawned(Player player){
         base.PlayerRespawned(player);
-        player.ShowPlayerText();
+        player.Visuals.ShowPlayerText();
     }
 
     public static void PlayerLost(Player player,float playersTime){

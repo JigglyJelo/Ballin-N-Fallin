@@ -47,7 +47,7 @@ public partial class Deathmatch : Mode{
 
     public override void PlayerRespawned(Player player){
         base.PlayerRespawned(player);
-        player.ShowPlayerText();
+        player.Visuals.ShowPlayerText();
         //if(Online.IsHost()) player.Rpc(nameof(player.ShowPlayerText));
     }
 

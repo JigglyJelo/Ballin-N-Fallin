@@ -14,7 +14,6 @@ public partial class Player : Node2D{
 	public const float FRICTION = 1;
 	public const float BOUNCE = 0.65f; // The bounciness of the player
 	public const float RADIUS = 91; // The radius of the player
-	public const int DEFAULT_TEXTURE_SIZE = 190; //The size of the default resolution (2160p) player sprites
 	public const float SPEED_CAP = 10000; //The maximum velocity in any direction
 	private const float MIN_STRETCH_SPEED = 2300; //The minimum velocity before the squash n stretch effect starts
 	private const float BOUNCE_SFX_TIMEOUT = 0.15f;
@@ -25,33 +24,18 @@ public partial class Player : Node2D{
 	public int Index; //To be used as a short hand instead of doing Id-1 all the time for array access
 	public Color PlayerColor;
 	public bool CanLaunch = true, CanSlam = true;
-	private bool isRegaining = false;
+	public bool IsRegaining = false;
 	public Vector2 InputVector, RawInputVector;
 	//Children
-	private Sprite2D itemSprite, arrowSprite;
-	public Sprite2D BallSprite, LinesSprite, OutlineSprite, EyesSprite, PupilsSprite, ShadingSprite;
-	public AnimatedSprite2D ItemRouletteAnimation;
-	public static Texture2D BasketBallTexture, LinesTexture,OutlineTexture;
-	private static Texture2D neutralEye, neutralPupil,happyEye,sadEye,angryEye,annoyedEye,shockedEye,shockedPupil,bumpedEye;
-	private static Texture2D bigLinesTexture, bigNeutralEye, bigNeutralPupil,bigHappyEye,bigSadEye,bigAngryEye,bigAnnoyedEye,bigShockedEye,bigShockedPupil,bigBumpedEye;
-	public static Texture2D BigBasketBall, BigOutlineTexture;
-	public static float TextureScale = 1;
-	public static int BallSize;
-	private static int bigBallSize;
-	private float playerScale = 1;
-	public Label ItemAmountText;
-	private Label playerText, usernameText;
-	private CanvasGroup usernameGroup;
+	public PlayerVisuals Visuals;
 	public InterpolatedBody Rb;
 	public CollisionShape2D RbShape;
-	public TextureProgressBar TransformBar;
-	public Node2D VisualsNode, SpritesNode, RotationsNode, HUDNode;
 	private CpuParticles2D flameParticles,blastParticles,popParticles;
 	public AudioStreamPlayer2D RouletteSound;
-	private AudioStreamPlayer2D bounceSound, flameSound, itemSound;
+	public AudioStreamPlayer2D BounceSound, FlameSound, ItemSound;
 	public Trail Trail;
 	private static PackedScene slamParticleScene;
-	private Polygon2D itemTriangle;
+	
 	//Gameplay variables
 	public float LaunchPower = 0;
 	public float Score;
@@ -59,6 +43,7 @@ public partial class Player : Node2D{
 	public string Team = "";
 	public bool FlippedStart = false;
 	private bool finished, invulnerable, setNewPos = true;
+	private float playerScale = 1;
 	public Vector2 SpawnPoint;
 	private Emotion playerEmotion = Emotion.Neutral;
 	private float stompTimer = 0;
@@ -72,7 +57,7 @@ public partial class Player : Node2D{
 	}
 	//Timers
 	public float BounceTimer, FrozenTimer;
-	private float itemRouletteTimer, stillTimer, airTimer, invulnerabilityTimer, emotionTimer, vibrationTimer;
+	private float itemRouletteTimer, stillTimer, airTimer, invulnerabilityTimer, vibrationTimer;
 	private float textTimer = 3;
 	//Vibration variables
 	private float strongVibration, weakVibration;
@@ -91,111 +76,21 @@ public partial class Player : Node2D{
 		Index = Id-1;
 		//Nodes
 		Rb = GetNode<InterpolatedBody>("RigidBody2D");
-		VisualsNode = GetNode<Node2D>("Visuals");
+		Visuals = GetNode<PlayerVisuals>("Visuals");
 		shadow = GetNode<Shadow>("Shadow");
-		SpritesNode = VisualsNode.GetNode<Node2D>("Sprites");
-		RotationsNode = SpritesNode.GetNode<Node2D>("Rotation");
-		HUDNode = VisualsNode.GetNode<Node2D>("HUD");
-		ShadingSprite = RotationsNode.GetNode<Sprite2D>("Shading");
-		playerText = HUDNode.GetNode<Label>("ModeText");
-		usernameText = HUDNode.GetNode<Label>("UsernameGroup/UsernameText");
-		usernameGroup = HUDNode.GetNode<CanvasGroup>("UsernameGroup");
-		BallSprite = RotationsNode.GetNode<Sprite2D>("BallSprite");
-		LinesSprite = RotationsNode.GetNode<Sprite2D>("LinesSprite");
-		OutlineSprite = RotationsNode.GetNode<Sprite2D>("OutlineSprite");
-		EyesSprite = LinesSprite.GetNode<Sprite2D>("EyesSprite");
-		PupilsSprite = EyesSprite.GetNode<Sprite2D>("PupilsSprite");
-		arrowSprite = HUDNode.GetNode<Sprite2D>("ArrowSprite");
-		itemSprite = HUDNode.GetNode<Sprite2D>("ItemSprite");
-		ItemAmountText = itemSprite.GetNode<Label>("ItemAmountLabel");
-		itemTriangle = HUDNode.GetNode<Polygon2D>("ItemTriangle");
-		TransformBar = HUDNode.GetNode<TextureProgressBar>("Item Bar");
-		ItemRouletteAnimation = HUDNode.GetNode<AnimatedSprite2D>("RouletteAnimation");
-		ItemRouletteAnimation.Pause();
-		ItemRouletteAnimation.Visible = false;
-		HUDNode.TopLevel = true;
-		bounceSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/BounceSound");
-		flameSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/FlameSound");
+		
+		BounceSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/BounceSound");
+		FlameSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/FlameSound");
 		RouletteSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/RouletteSound");
-		itemSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/ItemSound");
-		flameParticles = VisualsNode.GetNode<CpuParticles2D>("HUD/FlameParticles");
+		ItemSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/ItemSound");
+		flameParticles = Visuals.GetNode<CpuParticles2D>("HUD/FlameParticles");
 		blastParticles = GetNode<CpuParticles2D>("Particles/BlastZoneParticles");
 		popParticles = GetNode<CpuParticles2D>("Particles/PopParticles");
 		if(slamParticleScene == null) slamParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Particles/SlamParticles.tscn");
 		flameParticles.ZIndex = 1;
 		RbShape = GetNode<CollisionShape2D>("RigidBody2D/CollisionShape2D");
 
-		if(Game.Resolution >= 4320) BallSize = DEFAULT_TEXTURE_SIZE * 2;
-		else if(Game.Resolution >= 2160) BallSize = DEFAULT_TEXTURE_SIZE;
-		else if(Game.Resolution >= 1440) BallSize = 127; //Math.Round(DEFAULT_TEXTURE_SIZE / 1.5f);
-		else if(Game.Resolution >= 1080) BallSize = 95; //Math.Round(DEFAULT_TEXTURE_SIZE / 2f);
-		else BallSize = 63; //Math.Round(DEFAULT_TEXTURE_SIZE / 3f);
-		TextureScale = (float)DEFAULT_TEXTURE_SIZE / BallSize;
-		if(LinesTexture == null || LinesTexture.GetSize().Y != BallSize){
-			BasketBallTexture = GD.Load<Texture2D>("res://Assets/Sprites/Player/Ball" + (BallSize >= 380 ? 63 : 31) + ".png");
-			neutralEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Eyes/NeutralEyes.png");
-			neutralPupil = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Pupils/NeutralPupils.png");
-			happyEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Eyes/HappyEyes.png");
-			sadEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Eyes/SadEyes.png");
-			angryEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Eyes/AngryEyes.png");
-			annoyedEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Eyes/AnnoyedEyes.png");
-			shockedEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Eyes/ShockedEyes.png");
-			shockedPupil = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Pupils/ShockedPupils.png");
-			bumpedEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Eyes/BumpedEyes.png");
-			OutlineTexture = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/Outline.png");
-			LinesTexture = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + BallSize + "/BallLines.png");
-		}
-		if(Game.Resolution >= 4320) bigBallSize = 500;
-		else if(Game.Resolution >= 2160) bigBallSize = 380;
-		else if(Game.Resolution >= 1440) bigBallSize = 380;
-		else if(Game.Resolution >= 1080) bigBallSize = 190;
-		else if(Game.Resolution >= 720) bigBallSize = 127;
-		else if(Game.Resolution >= 486) bigBallSize = 95;
-		else bigBallSize = 63;
-		if(bigLinesTexture == null|| bigLinesTexture.GetSize().Y != bigBallSize){
-			BigBasketBall = GD.Load<Texture2D>("res://Assets/Sprites/Player/Ball" + (bigBallSize >= 380 ? 63 : 31) + ".png");
-			bigNeutralEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Eyes/NeutralEyes.png");
-			bigNeutralPupil = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Pupils/NeutralPupils.png");
-			bigHappyEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Eyes/HappyEyes.png");
-			bigSadEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Eyes/SadEyes.png");
-			bigAngryEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Eyes/AngryEyes.png");
-			bigAnnoyedEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Eyes/AnnoyedEyes.png");
-			bigShockedEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Eyes/ShockedEyes.png");
-			bigShockedPupil = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Pupils/ShockedPupils.png");
-			bigBumpedEye = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Eyes/BumpedEyes.png");
-			BigOutlineTexture = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/Outline.png");
-			bigLinesTexture = GD.Load<Texture2D>("res://Assets/Sprites/Player/" + bigBallSize + "/BallLines.png");
-		}	
-		
-		if(BallSize != DEFAULT_TEXTURE_SIZE){
-			float ballSpriteScale = (BallSize/(float)(BasketBallTexture.GetHeight()*2)) * TextureScale;
-			Vector2 textureScale = new Vector2(TextureScale,TextureScale);
-			LinesSprite.Scale = textureScale;
-			BallSprite.Texture = BasketBallTexture;
-			BallSprite.Scale = new Vector2(ballSpriteScale,ballSpriteScale);
-			BallSprite.RegionRect = new Rect2(0,0,BallSprite.Texture.GetWidth()*2,BallSprite.Texture.GetHeight()*2);
-			EyesSprite.Texture = neutralEye;
-			PupilsSprite.Texture = neutralPupil;
-			OutlineSprite.Texture = OutlineTexture;
-			LinesSprite.Texture = LinesTexture;
-			OutlineSprite.Scale = textureScale;
-		}
-		
-		BallSprite.SelfModulate = PlayerColor;
-		arrowSprite.SelfModulate = PlayerColor;
-		playerText.SelfModulate = PlayerColor;
-		TransformBar.SelfModulate = PlayerColor;
-		itemTriangle.Color = PlayerColor;
-		ShadingSprite.SelfModulate = PlayerColor;
-		arrowSprite.ZIndex = 1;
-		if(Game.TotalPlayers != 2){
-			switch(Team){
-				case "A": OutlineSprite.SelfModulate = Game.TeamColors[0]; arrowSprite.SelfModulate = Game.TeamColors[0]; break;
-				case "B": OutlineSprite.SelfModulate = Game.TeamColors[1]; arrowSprite.SelfModulate = Game.TeamColors[1]; break;
-				case "C": OutlineSprite.SelfModulate = Game.TeamColors[2]; arrowSprite.SelfModulate = Game.TeamColors[2]; break;
-				case "D":  OutlineSprite.SelfModulate = Game.TeamColors[3]; arrowSprite.SelfModulate = Game.TeamColors[3]; break;
-			}
-		}
+		Visuals.VisualsReady(this);
 		//if(Online.IsOnline) OwnerId = Online.PlayerInfos[Id-1].UUID;
 		//else OwnerId = 1;
 		OwnerId = PlayerData.UUID;
@@ -205,17 +100,10 @@ public partial class Player : Node2D{
 		Trail.PlayerRb = Rb;
 		Trail.GetNode<Line2D>("TrailLine").SelfModulate = PlayerColor;
 		float zoomScale = 1 + (1-Level.LevelNode.CameraZoom);
-		bounceSound.MaxDistance = 2304*zoomScale;
-		itemSound.MaxDistance = 2304*zoomScale;
-		flameSound.MaxDistance = 2304*zoomScale;
+		BounceSound.MaxDistance = 2304*zoomScale;
+		ItemSound.MaxDistance = 2304*zoomScale;
+		FlameSound.MaxDistance = 2304*zoomScale;
 		RouletteSound.MaxDistance = 2304*zoomScale;
-		usernameText.Text = Game.GetUsername(Id);
-		ShowUsernameText();
-		if(!AccessibilityMenu.AlwaysShowNames){
-			Tween usernameTween = CreateTween();
-			usernameTween.TweenProperty(usernameGroup,"self_modulate",new Color(PlayerColor,0),3);
-			usernameTween.TweenCallback(Callable.From(HideUsernameText));
-		}
 	}
 
 	public override void _PhysicsProcess(double delta){
@@ -249,7 +137,7 @@ public partial class Player : Node2D{
 		}
 		
 		if(velocityMagnitudeSquared >= (MIN_STRETCH_SPEED*MIN_STRETCH_SPEED)){//&& !isRegaining
-			SquashNStretch(MathF.Sqrt(velocityMagnitudeSquared));
+			Visuals.SquashNStretch(MathF.Sqrt(velocityMagnitudeSquared));
 			if(Rb.AngularDamp != 25 && (velocityMagnitudeSquared >= (MIN_STRETCH_SPEED*2 * MIN_STRETCH_SPEED*2) || Rb.AngularVelocity > 5 || Rb.AngularVelocity < -5)){
 				Rb.AngularDamp = 25;
 			}else{
@@ -258,63 +146,11 @@ public partial class Player : Node2D{
 		}else{
 			//float lerpScale = 1-(velocityMagnitudeSquared / ((MIN_STRETCH_SPEED*MIN_STRETCH_SPEED)));
 			Rb.AngularDamp = Mathf.Lerp(Rb.AngularDamp,ANGULAR_DAMP,0.125f);
-			SpritesNode.Scale = SpritesNode.Scale.Lerp(Vector2.One,0.125f);
-			SpritesNode.Skew = Mathf.Lerp(SpritesNode.Skew,0,0.125f);
+			Visuals.ResetSquashNStretch();
 		}
 		
 		Updates(fDelta);
 		FlameCharge();
-	}
-
-	public override void _Process(double delta){
-		EyeAndArrowUpdate((float)delta);
-		ShadingSprite.GlobalRotation = 0;
-    }
-
-    private void SquashNStretch(float velocityMagnitude){
-		const float LERP_AMOUNT = 0.125f;
-		//Modify scale and skew based off velocity and rotation to give illusion of stretching in direction of velocity
-		float angle = Rb.ToLocal(Rb.GlobalPosition + Rb.LinearVelocity).Angle();
-		const float TWO_PI = (float)(2*Math.PI);
-		angle = angle % TWO_PI; // Ensure angle is within [0, 2π)
-		if(angle < 0) angle += TWO_PI; // Adjust negative angles
-		angle = TWO_PI - angle; //Convert angle from clockwise unit circle to counterclockwise unit circle
-		//If sign in quadrant 1 or 3 sign is positive if sign in quadrant 2 or 4 its negative
-		const float HALF_PI = (float)(Math.PI / 2);
-		int quadrant = (int)(angle / HALF_PI) + 1; //Get quadrant of angle
-		//int quadrant = ((int)(angle / HALF_PI) & 3) + 1; //Addresses the possibility of getting quadrant 5
-		//if(quadrant == 5) GD.Print("Quadrant 5 lol");
-		//int sign = quadrant % 2 == 1 ? 1 : -1;
-		int sign = 2 * (quadrant & 1) - 1; // Odd Positive Even Negative
-		float convertedAngle = angle % HALF_PI; // Cut angle into first quarter of unit circle [0,π/2)
-		const float Q1_MIDPOINT = (float)(Math.PI / 4);
-		float difference = MathF.Abs(convertedAngle-Q1_MIDPOINT); //Get the difference between cut angle and midpoint of first quarter to get dif [0,π/4]
-		//Skew
-		float skewAngle = MathF.Abs(difference-Q1_MIDPOINT) * sign;//Get the angle to skew at by subtracting our dif from the midpoint and setting its sign//((difference/(MathF.PI / 4))*MathF.PI/2) * sign;
-		SpritesNode.GlobalSkew = Mathf.Lerp(SpritesNode.GlobalSkew,skewAngle,LERP_AMOUNT);
-		//Scaling
-		float scale = 1-((difference / Q1_MIDPOINT) * 0.5f);///Set the scale of whichever axis will be squished by the dif / by the midpoint * the multiplier
-		float speedScale = (velocityMagnitude-MIN_STRETCH_SPEED) / (8000-MIN_STRETCH_SPEED); //Slower speed equals less squished faster speed equals more squished
-		if(speedScale > 1) speedScale = 1;
-		float bonusScale = Mathf.Lerp(0.2f,-0.125f,speedScale);
-		scale += bonusScale; //Add how much less or more the player should be squished by to the scale
-		switch(quadrant){
-			case 1:
-			case 3:
-				if(convertedAngle > Q1_MIDPOINT) //X squished
-					SpritesNode.Scale = new Vector2(Mathf.Lerp(SpritesNode.Scale.X,scale,LERP_AMOUNT),1);
-				else //Y squished
-					SpritesNode.Scale = new Vector2(1,Mathf.Lerp(SpritesNode.Scale.Y,scale,LERP_AMOUNT));
-				break;
-			case 2:
-			case 4:
-			case 5: //If angle is exactly 2π it will return in quadrant 5
-				if(convertedAngle > Q1_MIDPOINT) //Y squished
-					SpritesNode.Scale = new Vector2(1,Mathf.Lerp(SpritesNode.Scale.Y,scale,LERP_AMOUNT));
-				else //X squished
-					SpritesNode.Scale = new Vector2(Mathf.Lerp(SpritesNode.Scale.X,scale,LERP_AMOUNT),1);
-				break;
-		}
 	}
 
 	//Collisions
@@ -326,8 +162,8 @@ public partial class Player : Node2D{
 				//IsStomping = false;
 			}
 		}else if(body.IsInGroup("Regain") || body.GetParent().IsInGroup("Regain")){
-			if(!isRegaining) BounceEffects();
-			isRegaining = true;
+			if(!IsRegaining) BounceEffects();
+			IsRegaining = true;
 			if(Game.CurrentMode != Mode.GameMode.Golf){
 				CanLaunch = true;
 				CanSlam = true;
@@ -384,15 +220,15 @@ public partial class Player : Node2D{
 	}
 	//Particle effects
 	public void BounceEffects(){
-		BounceEffects(LinesSprite.GlobalPosition,Rb.LinearVelocity,0);
+		BounceEffects(Visuals.GlobalPosition,Rb.LinearVelocity,0);
 	}
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.BounceParticle)]
 	public void BounceEffects(Vector2 position,Vector2 velocity,byte preProcessTicks){
 		if(BounceTimer >= BOUNCE_SFX_TIMEOUT){
 			float velSquared = velocity.LengthSquared();
 			if(velocity.Y > 100 || velocity.Y < -100){
-				bounceSound.PitchScale = Game.Random.Next(80,110)/100f;
-				bounceSound.Play(); 
+				BounceSound.PitchScale = Game.Random.Next(80,110)/100f;
+				BounceSound.Play(); 
 				float lerpWeight = MathF.Sqrt(velSquared)/6000;
 				strongVibration = Mathf.Lerp(0.1f,1,lerpWeight);
 				vibrationTimer = Mathf.Lerp(0.1f,0.25f,lerpWeight);
@@ -433,14 +269,14 @@ public partial class Player : Node2D{
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable,TransferChannel = (int)Online.TransferChannelEnum.PopParticle)]
 	public void SpawnPopParticles(){
 		popParticles.SelfModulate = PlayerColor;
-		popParticles.GlobalPosition = LinesSprite.GlobalPosition;
+		popParticles.GlobalPosition = Visuals.GlobalPosition;
 		popParticles.Emitting = true;
 		SFX.Play("Pop",popParticles.GlobalPosition);
 	}
 
 	public void _on_rigid_body_2d_body_exited(PhysicsBody2D body){	
 		if(body.IsInGroup("Regain") || body.GetParent().IsInGroup("Regain")){
-			isRegaining = false;
+			IsRegaining = false;
 		}
 	}
 
@@ -449,7 +285,7 @@ public partial class Player : Node2D{
 		if(LaunchPower > MAX_LAUNCH_POWER || (LaunchPower == MAX_LAUNCH_POWER && !flameParticles.Emitting)){
 			LaunchPower = MAX_LAUNCH_POWER;
 			flameParticles.Emitting = true;
-			flameSound.Play();
+			FlameSound.Play();
 			if(PlayerData.VibrationEnabled && !Game.UsingMouse()){
 				//START WEAK VIBRATION
 				weakVibration = 0.05f;
@@ -481,7 +317,7 @@ public partial class Player : Node2D{
 					if(LaunchPower >= MIN_VEL_FOR_LAUNCH_PARTICLE) Rpc(nameof(SpawnLaunchParticles),bAngle,bPower,Rb.GlobalPosition,0);
 				}
 				//Flip player sprite if necessary
-				Rpc(nameof(Flip),InputVector.X < 0,InputVector.Angle() + (InputVector.X < 0 ? MathF.PI : 0));
+				Visuals.Rpc(nameof(Visuals.Flip),InputVector.X < 0,InputVector.Angle() + (InputVector.X < 0 ? MathF.PI : 0));
 				Mode.ModeNode.PlayerLaunched(this);
 			}
 			weakVibration = 0;
@@ -494,16 +330,16 @@ public partial class Player : Node2D{
 				if(Online.Buffer >= 0.5f){
 					byte ticks = (byte)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
 					if(!Mode.Finished) RpcId(1,nameof(SendLaunchToServer),InputVector.Angle(),LaunchPower,ticks);
-					if(InputVector.X < 0) Flip(true,InputVector.Angle() + MathF.PI);
-					else Flip(false,InputVector.Angle());
+					if(InputVector.X < 0) Visuals.Flip(true,InputVector.Angle() + MathF.PI);
+					else Visuals.Flip(false,InputVector.Angle());
 					TicksToIgnore = (int)Math.Ceiling((1-Online.Buffer)*(ping / (1000.0/Engine.PhysicsTicksPerSecond)));
 				}else{
 					GD.Print("Ping: " + ping);
 					if(!Level.IsPositionOffscreen(Rb.GlobalPosition)){
 						TicksToIgnore = PingGetter.PingToTicks(ping);
 						if (!Mode.Finished) RpcId(1, nameof(SendLaunchToServerNRewind), InputVector.Angle(), LaunchPower, (byte)TicksToIgnore);
-						if (InputVector.X < 0) Flip(true, InputVector.Angle() + MathF.PI);
-						else Flip(false, InputVector.Angle());
+						if (InputVector.X < 0) Visuals.Flip(true, InputVector.Angle() + MathF.PI);
+						else Visuals.Flip(false, InputVector.Angle());
 						TicksToIgnore++;
 					}
 				}
@@ -582,83 +418,8 @@ public partial class Player : Node2D{
 		}
 	}
 
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable,TransferChannel = (int)Online.TransferChannelEnum.PlayerText)]
-	public void ShowPlayerText(){
-		if(GetTree().GetMultiplayer().GetRemoteSenderId() == 0 || Online.IsRpcFromHost() || IsRpcFromPlayerOwner()){
-			textTimer = 0;
-			playerText.ZIndex = Rb.ZIndex + 1;
-			string newPlayerText = Mode.ModeNode.GetPlayerText(this);
-			if(!newPlayerText.Equals(playerText.Text)){
-				playerText.Text = newPlayerText;
-			}
-		}
-	}
-	private void ShowUsernameText(){
-		usernameText.SelfModulate = PlayerColor;
-		usernameText.Visible = true;
-	}
-	private void HideUsernameText(){
-		usernameGroup.Visible = false;
-	}
-
-	private static readonly float ONLINE_UPDATE_RATE = (float)PlayerSync.VISUAL_SYNC_INTERVAL / Engine.PhysicsTicksPerSecond;
-	private static readonly float LOCAL_UPDATE_RATE = (float)1 / Engine.PhysicsTicksPerSecond;
-	private void EyeAndArrowUpdate(float fDelta){
-		//Update Arrow and eye positions & scale
-		float lerpAmount;
-		if(InputVector != Vector2.Zero && CanLaunch){
-			if(fDelta <= ONLINE_UPDATE_RATE) lerpAmount = fDelta/(float)Engine.TimeScale / (OwnsPlayer() ? LOCAL_UPDATE_RATE : ONLINE_UPDATE_RATE);
-			else lerpAmount = OwnsPlayer() ? 1f : ONLINE_UPDATE_RATE; //When FPS is lower than tickrate eye and arrow freak out this tries to fix it but fails :skull:
-			Vector2 newArrowPosition = InputVector * 125;
-			float newArrowRotation = InputVector.Angle();
-			float arrowScale = (((LaunchPower + MIN_LAUNCH_POWER) / MAX_LAUNCH_POWER)*MAX_LAUNCH_TIME) + 1;
-			Vector2 newArrowScale = new Vector2(arrowScale, arrowScale);
-			//arrowSprite.Scale = arrowSprite.Scale.Lerp(new Vector2( (LaunchPower + MIN_LAUNCH_POWER)/ MAX_LAUNCH_POWER + 1 , (LaunchPower + MIN_LAUNCH_POWER)/MAX_LAUNCH_POWER + 1), arrowSprite.Scale.X < 1 ? 0.5f : lerpAmount);
-			if(OwnsPlayer()){ //Owner
-				arrowSprite.Scale = newArrowScale;
-				bool bigAngDiff = MathF.Abs(arrowSprite.Rotation - newArrowRotation) > (float)(Math.PI/2.0) || arrowSprite.Scale == Vector2.Zero;
-				if(bigAngDiff){
-					//arrowSprite.Rotation = newArrowRotation;
-					arrowSprite.Position = newArrowPosition;
-				}else{
-					arrowSprite.Position = arrowSprite.Position.Lerp(newArrowPosition,lerpAmount);
-					//arrowSprite.Rotation = bigAngDiff ? newArrowRotation : Mathf.LerpAngle(arrowSprite.Rotation,newArrowRotation,lerpAmount);
-				}
-			}else{ //Non owner if there isn't a big angle difference it lerps
-				if(arrowScale >= arrowSprite.Scale.X){
-					arrowSprite.Scale = arrowSprite.Scale.Lerp(newArrowScale,lerpAmount);
-				}else{
-					arrowSprite.Scale = newArrowScale;
-				}
-				
-				bool bigAngDiff = MathF.Abs(arrowSprite.Rotation - newArrowRotation) > (float)(5.0*Math.PI/6.0) || arrowSprite.Scale == Vector2.Zero;
-				if(bigAngDiff){
-					arrowSprite.Position = newArrowPosition;
-				}else{
-					float lerpedAngle = Mathf.LerpAngle(arrowSprite.Position.Angle(),newArrowPosition.Angle(),lerpAmount);
-					arrowSprite.Position = Vector2.FromAngle(lerpedAngle)*newArrowPosition.Length();
-				}
-			}
-			arrowSprite.Rotation = arrowSprite.Position.Angle();
-		}else{
-			arrowSprite.Scale = Vector2.Zero;
-			lerpAmount = 1;
-		}
-		//Eyes
-		if(PlayerEmotion != Emotion.Bumped){
-			Vector2 eyePosition = RawInputVector * (6/TextureScale);
-			eyePosition = eyePosition.Rotated(-(Rb.Rotation+RotationsNode.Rotation));
-			PupilsSprite.Position = PupilsSprite.Position.Lerp(eyePosition,lerpAmount);
-		}else PupilsSprite.Position = Vector2.Zero;
-		
-		if(LaunchPower == MAX_LAUNCH_POWER){ //Move this elsewhere
-			PlayerEmotion = Emotion.Angry;
-			emotionTimer = 1/3f;
-		}
-	}
-
 	public void ItemButtonPressed(){
-		if(Item != null && !ItemRouletteAnimation.Visible){
+		if(Item != null && !Visuals.ItemRouletteAnimation.Visible){
 			RpcId(1,nameof(ClientSendUseItem));
 		}
 	}
@@ -720,35 +481,14 @@ public partial class Player : Node2D{
 		}
 	}
 
-	private void Timers(float delta){
-		if(textTimer >= 3) playerText.Text = "";
-		else textTimer += delta;
-	}
-
 	private void Updates(float delta){
-
-		if(textTimer >= 3) playerText.Text = "";
-		else textTimer += delta;
 
 		BounceTimer += delta;
 
 		//Timers n Stuff
-		//Item Roulette
-		if(ItemRouletteAnimation.Visible){
-			itemRouletteTimer += delta;
-			if(itemRouletteTimer >= 2){
-				itemSound.Play();
-				ItemRouletteAnimation.Pause();
-				SetRouletteSpriteVisibility(false);
-				SetItemSpriteVisibility(true);
-				itemTriangle.Visible = true;
-				if(Item is TransformItem) TransformBar.Visible = true;
-				itemRouletteTimer = 0;
-			}
-		}
 		
 		//Regain Checks
-		if(isRegaining){
+		if(IsRegaining){
 			if(Game.CurrentMode != Mode.GameMode.Golf){
 				CanLaunch = true;
 				CanSlam = true;
@@ -768,7 +508,7 @@ public partial class Player : Node2D{
 		//Set Golf respawn points && deal with initial invulnerability
 		if(Game.CurrentMode == Mode.GameMode.Golf){
 			if(Invulnerable && Golf.PlayerStrokes[Id-1] == 0 && Game.TotalPlayers != 1) invulnerabilityTimer = 0.5f;
-			if(!isRegaining && !setNewPos && !Level.IsPositionOffscreenOrDead(Rb.GlobalPosition)){
+			if(!IsRegaining && !setNewPos && !Level.IsPositionOffscreenOrDead(Rb.GlobalPosition)){
 				setNewPos = true;
 				SpawnPoint = Rb.GlobalPosition;
 			}
@@ -803,10 +543,6 @@ public partial class Player : Node2D{
 			else if(invulnerabilityTimer <= 0) Invulnerable = false;
 		}
 
-		//Emotion Timer
-		if(emotionTimer > 0) emotionTimer -= delta;
-		else if(PlayerEmotion != Emotion.Neutral) PlayerEmotion = Emotion.Neutral;
-
 		//Frozen Timer
 		if(Rb.Freeze && !Finished){
 			FrozenTimer += delta;
@@ -832,7 +568,7 @@ public partial class Player : Node2D{
 	}
 
 	private void PlayerSpawned(){
-		Flip(FlippedStart);
+		Visuals.Flip(FlippedStart);
 		Rb.SetDeferred("global_position", SpawnPoint);
 		Rb.SetDeferred("linear_velocity", Vector2.Zero);
 		Rb.SkipInterpolation();
@@ -840,36 +576,7 @@ public partial class Player : Node2D{
 		Rb.SetDeferred("linear_velocity", Vector2.Zero);
 	}
 
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.PlayerFlip)]
-	public void Flip(bool flipped){
-		if(Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId() == 0 || IsRpcFromPlayerOwner() || Online.IsRpcFromHost()){
-			LinesSprite.FlipH = flipped;
-			EyesSprite.FlipH = flipped;
-			PupilsSprite.FlipH = flipped;
-			if(Game.CurrentMode == Mode.GameMode.CrownTheKing){
-				Sprite2D crownSprite = SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
-				if(crownSprite != null){
-					crownSprite.FlipH = flipped;
-					int sign = flipped ? 1 : -1;
-					crownSprite.Position = new Vector2(10*sign,-100)* playerScale;
-					crownSprite.Rotation = CTK.CROWN_ANGLE * sign;
-				}
-			}
-		}
-	}
-	public void FlipV(bool flipped){
-		LinesSprite.FlipV = flipped;
-		EyesSprite.FlipV = flipped;
-		PupilsSprite.FlipV = flipped;
-	}
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.PlayerFlip)]
-	public void Flip(bool flipped,float rotation){
-		int senderId = Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
-		if(senderId == 0 || IsRpcFromPlayerOwner() || Online.IsRpcFromHost()){
-			if(senderId == 0 || !OwnsPlayer() || (Online.IsHost() && !isRegaining)) RotationsNode.GlobalRotation = rotation; //Rb.SetDeferred("global_rotation", rotation);
-			CallDeferred(nameof(Flip), flipped);
-		}
-	}
+	
 	//Does Vibration only if enabled and not already vibrating from charge as it would get overwritten
 	public void Vibration(){
 		if(!Mode.Finished && PlayerData.VibrationEnabled && !Game.UsingMouse() && OwnsPlayer()){
@@ -886,10 +593,10 @@ public partial class Player : Node2D{
 			Rb.SetDeferred("angular_velocity",0);
 			Rb.SkipInterpolation();
 		}
-		Vector2 ogScale = SpritesNode.Scale;
-		SpritesNode.Scale = Vector2.Zero;
+		Vector2 ogScale = Visuals.SpritesNode.Scale;
+		Visuals.SpritesNode.Scale = Vector2.Zero;
 		Tween scaleTween = CreateTween();
-		scaleTween.TweenProperty(SpritesNode,"scale",ogScale,0.125f);
+		scaleTween.TweenProperty(Visuals.SpritesNode,"scale",ogScale,0.125f);
 		CanLaunch = true;
 		CanSlam = true;
 		Trail.ResetTrail();
@@ -915,24 +622,13 @@ public partial class Player : Node2D{
 		physicsMaterial.Friction = FRICTION;
 		physicsMaterial.Bounce = BOUNCE;
 		Rb.PhysicsMaterialOverride = physicsMaterial;
-		FlipV(false);
+		Visuals.FlipV(false);
 		PlayerScale = 1;
 
-		BallSprite.SelfModulate = new Color(BallSprite.SelfModulate,1);
-		ShadingSprite.SelfModulate = new Color(ShadingSprite.SelfModulate, 1);
-		OutlineSprite.SelfModulate = new Color(OutlineSprite.SelfModulate,1);
+		Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,1);
+		Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate, 1);
+		Visuals.OutlineSprite.SelfModulate = new Color(Visuals.OutlineSprite.SelfModulate,1);
 		foreach(Player player in Game.Players) if(player != null) Rb.RemoveCollisionExceptionWith(player.Rb);
-	}
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void StartItemRoulette(){
-		if(Online.IsRpcFromHost()){
-			ItemRouletteAnimation.Play();
-			SetItemSpriteVisibility(false);
-			SetRouletteSpriteVisibility(true);
-			itemTriangle.Visible = true;
-			TransformBar.Visible = false;
-			RouletteSound.Play();
-		}
 	}
 
 	public bool OwnsPlayer(){
@@ -949,13 +645,13 @@ public partial class Player : Node2D{
 			if(invulnerable){
 				foreach(Player player in Game.Players) Rb.AddCollisionExceptionWith(player.Rb);
 				invulnerabilityTimer = 2;
-				BallSprite.SelfModulate = new Color(BallSprite.SelfModulate,0.5f);
-				ShadingSprite.SelfModulate = new Color(ShadingSprite.SelfModulate,0);
+				Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,0.5f);
+				Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate,0);
 			}else{
 				invulnerabilityTimer = 0;
 				foreach(Player player in Game.Players) Rb.RemoveCollisionExceptionWith(player.Rb);
-				BallSprite.SelfModulate = new Color(BallSprite.SelfModulate,1);	
-				ShadingSprite.SelfModulate = new Color(ShadingSprite.SelfModulate,1);
+				Visuals.BallSprite.SelfModulate = new Color(Visuals.BallSprite.SelfModulate,1);	
+				Visuals.ShadingSprite.SelfModulate = new Color(Visuals.ShadingSprite.SelfModulate,1);
 			}
 		}
 	}
@@ -964,27 +660,9 @@ public partial class Player : Node2D{
 		get{return item;}
 		set{
 			item = value;
-			if(item != null){
-				itemSprite.Texture = item.Icon;
-				itemTriangle.Visible = true;
-				if(item is SingleUseItem) ItemAmountText.Text = (item as SingleUseItem).Amount.ToString();
-			} 
-			else{
-				itemSprite.Texture = null;
-				SetItemSpriteVisibility(false);
-				itemTriangle.Visible = false;
-			}
+			//Visuals.SetItemSpriteVisibility(item != null);
+			Visuals.SetItemSpriteTexture();
 		}
-	}
-
-	private void SetItemSpriteVisibility(bool visible){
-		itemSprite.Visible = visible;
-		usernameGroup.Position = visible ? new Vector2(0, -96) : Vector2.Zero;
-	}
-
-	private void SetRouletteSpriteVisibility(bool visible){
-		ItemRouletteAnimation.Visible = visible;
-		usernameGroup.Position = visible ? new Vector2(0, -96) : Vector2.Zero;
 	}
 	
 	public bool Finished{
@@ -1006,38 +684,11 @@ public partial class Player : Node2D{
 		get{return playerScale;}
 		set{
 			playerScale = value;
-			HUDNode.Scale = new Vector2(playerScale,playerScale);
+			Visuals.HUDNode.Scale = new Vector2(playerScale,playerScale);
 			CircleShape2D defaultCircle = new CircleShape2D();
 			defaultCircle.Radius = RADIUS * playerScale;
 			RbShape.Shape = defaultCircle;
-			bool isBig = playerScale >= 1.99f;
-			Vector2 newTextureScaleVector;
-			if(isBig){
-				float newTextureScale = (float)(DEFAULT_TEXTURE_SIZE * 2f) / (float)bigBallSize;
-				newTextureScaleVector = new Vector2(newTextureScale,newTextureScale) * (playerScale/2f);
-			}else{
-				newTextureScaleVector = new Vector2(TextureScale,TextureScale) * playerScale;
-			}
-			LinesSprite.Scale = newTextureScaleVector;
-			OutlineSprite.Scale = newTextureScaleVector;
-			BallSprite.Texture = isBig ? BigBasketBall : BasketBallTexture;
-			float ballSpriteScale;
-			bool sameTexture = BigBasketBall.GetHeight() == BasketBallTexture.GetHeight();
-			ballSpriteScale = (BallSize / (float)((isBig ? BigBasketBall : BasketBallTexture).GetHeight() * 2)) * TextureScale * playerScale;
-			BallSprite.RegionRect = new Rect2(0,0,BallSprite.Texture.GetWidth()*2,BallSprite.Texture.GetHeight()*2);
-			BallSprite.Scale = new Vector2(ballSpriteScale,ballSpriteScale);
-			LinesSprite.Texture = isBig ? bigLinesTexture : LinesTexture;
-			OutlineSprite.Texture = isBig ? BigOutlineTexture : OutlineTexture;
-			ShadingSprite.Scale = new Vector2(0.38f * playerScale, 0.38f * playerScale);
-			PlayerEmotion = PlayerEmotion;
-			if(Game.CurrentMode == Mode.GameMode.CrownTheKing){
-				Sprite2D crownSprite = SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
-				if(crownSprite != null){
-					float crownScale = 114f/crownSprite.Texture.GetHeight();
-					crownSprite.Scale = new Vector2(crownScale,crownScale) * playerScale;
-					crownSprite.Position = new Vector2(10*(crownSprite.FlipH ? 1 : -1),-100)*playerScale;
-				}
-			}
+			Visuals.ResetPlayerScale();
 		}
 	}
 
@@ -1048,66 +699,8 @@ public partial class Player : Node2D{
 	public Emotion PlayerEmotion{
 		get{return playerEmotion;}
 		set{
-			bool isBig = PlayerScale >= 1.99f;
-			float emotionTime = Game.Random.NextSingle() + 2;
+			
 			playerEmotion = value;
-			switch(playerEmotion){
-				case Emotion.Happy:
-					EyesSprite.Texture = isBig ? bigHappyEye : happyEye;
-					PupilsSprite.Texture = isBig ? bigNeutralPupil : neutralPupil;
-					emotionTimer = emotionTime;
-					break;
-				case Emotion.Sad:
-					EyesSprite.Texture = isBig ? bigSadEye : sadEye;
-					PupilsSprite.Texture = isBig ? bigNeutralPupil : neutralPupil;
-					emotionTimer = emotionTime;
-					break;
-				case Emotion.Angry:
-					EyesSprite.Texture = isBig ? bigAngryEye : angryEye;
-					PupilsSprite.Texture = isBig ? bigNeutralPupil : neutralPupil;
-					emotionTimer = emotionTime;
-					break;
-				case Emotion.Annoyed:
-					EyesSprite.Texture = isBig ? bigAnnoyedEye : annoyedEye;
-					PupilsSprite.Texture = isBig ? bigNeutralPupil : neutralPupil;
-					emotionTimer = emotionTime;
-					break;
-				case Emotion.Shocked:
-					EyesSprite.Texture = isBig ? bigShockedEye : shockedEye;
-					PupilsSprite.Texture = isBig ? bigShockedPupil : shockedPupil;
-					emotionTimer = emotionTime;
-					break;
-				case Emotion.Bumped:
-					EyesSprite.Texture = isBig ? bigBumpedEye : bumpedEye;
-					PupilsSprite.Texture = null;
-					emotionTimer = 0.5f;
-					break;
-				default:
-					EyesSprite.Texture = isBig ? bigNeutralEye : neutralEye;
-					PupilsSprite.Texture = isBig ? bigNeutralPupil : neutralPupil;
-					emotionTimer = 0;
-					break;
-			}
-		}
-	}
-
-	public static Texture2D GetEyeTexture(Emotion emotion, bool isBig){
-		switch(emotion){
-			case Emotion.Happy: return isBig ? bigHappyEye : happyEye;
-			case Emotion.Sad: return isBig ? bigSadEye : sadEye;
-			case Emotion.Angry: return isBig ? bigAngryEye : angryEye;
-			case Emotion.Annoyed: return isBig ? bigAnnoyedEye : annoyedEye;
-			case Emotion.Shocked: return isBig ? bigShockedEye : shockedEye;
-			case Emotion.Bumped: return isBig ? bigBumpedEye : bumpedEye;
-			default: return isBig ? bigNeutralEye : neutralEye;
-		}
-	}
-
-	public static Texture2D GetPupilTexture(Emotion emotion, bool isBig){
-		switch(emotion){
-			case Emotion.Shocked: return isBig ? bigShockedPupil : shockedPupil;
-			case Emotion.Bumped: return null;
-			default: return isBig ? bigNeutralPupil : neutralPupil;
 		}
 	}
 

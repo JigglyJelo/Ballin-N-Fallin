@@ -90,7 +90,7 @@ public partial class ScoreScreen : CanvasLayer{
 					//Add crown
 					ScoreScreenPlayer player = playerResults[winnerIndex].ScorePlayer;
 					player.AddChild(CTK.GetCrownSprite(player.EyeSprite.FlipH));
-					player.EyeSprite.Texture = Player.GetEyeTexture(Player.Emotion.Happy,false);
+					player.EyeSprite.Texture = PlayerVisuals.GetEyeTexture(Player.Emotion.Happy,false);
 				}else{
 					StringBuilder winTextBuilder = new StringBuilder();
 					winTextBuilder.Append(Game.GetUsername(winners[0]));
@@ -104,7 +104,7 @@ public partial class ScoreScreen : CanvasLayer{
 						//Add crown
 						player = playerResults[winners[i]-1].ScorePlayer;
 						player.AddChild(CTK.GetCrownSprite(player.EyeSprite.FlipH));
-						player.EyeSprite.Texture = Player.GetEyeTexture(Player.Emotion.Happy,false);
+						player.EyeSprite.Texture = PlayerVisuals.GetEyeTexture(Player.Emotion.Happy,false);
 					}
 					winTextBuilder.Append(" are Ballin!");
 					winnerText.Text = winTextBuilder.ToString();

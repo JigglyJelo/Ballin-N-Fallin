@@ -11,10 +11,10 @@ public class Booll : TransformItem{
 	}
 
     public override void SetTransformation(){
-		if(Player.BallSprite.SelfModulate.A == 1 && !Player.Invulnerable){
+		if(Player.Visuals.BallSprite.SelfModulate.A == 1 && !Player.Invulnerable){
 			foreach(Player player in Game.Players) Player.Rb.AddCollisionExceptionWith(player.Rb);
-			Player.BallSprite.SelfModulate = new Color(Player.BallSprite.SelfModulate,0.5f);
-			Player.ShadingSprite.SelfModulate = new Color(Player.ShadingSprite.SelfModulate,0);
+			Player.Visuals.BallSprite.SelfModulate = new Color(Player.Visuals.BallSprite.SelfModulate,0.5f);
+			Player.Visuals.ShadingSprite.SelfModulate = new Color(Player.Visuals.ShadingSprite.SelfModulate,0);
 			Player.ZIndex = Player.ZIndex;
 		}else if(!Player.Invulnerable){
 			Player.ResetTransformation();

@@ -12,8 +12,8 @@ public abstract class SingleUseItem : Item{
     public override void UseItem(){
 		ItemAbility();
 		if(Amount > 0) Amount--;
-        if(Amount > 1) Player.ItemAmountText.Text = Amount.ToString();
-        else Player.ItemAmountText.Text = "";
+        if(Amount > 1) Player.Visuals.ItemAmountText.Text = Amount.ToString();
+        else Player.Visuals.ItemAmountText.Text = "";
 		if(Amount <= 0) Player.Item = null;
 	}
     public abstract void ItemAbility();

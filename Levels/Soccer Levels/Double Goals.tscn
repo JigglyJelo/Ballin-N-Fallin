@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://c4vcvxbsdtfxf"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_skv26"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_skv26"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_pifyw"]
 [ext_resource type="PackedScene" uid="uid://b2ydssn5bu2oi" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/Cutouts.tscn" id="2_x7r8m"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_miall"]
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/DeathTile.cs" id="4_c2p2w"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="4_c2p2w"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_6yxn6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mh51p"]

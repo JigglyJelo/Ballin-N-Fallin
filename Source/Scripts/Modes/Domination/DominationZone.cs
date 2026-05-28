@@ -24,7 +24,7 @@ public partial class DominationZone : Polygon2D{
 				MusicPlayer.SetPitch(Domination.FAST_MUSIC_SPEED);
 			}
 			if(lastDisplayedScore != (int)Domination.Scores[ControllingPlayer.Id-1]){
-				ControllingPlayer.ShowPlayerText();
+				ControllingPlayer.Visuals.ShowPlayerText();
 			}
 			if(Online.IsHost() && Domination.Scores[ControllingPlayer.Id-1] >= Domination.TotalScore){
 				Domination.GameFinished();

@@ -19,16 +19,16 @@ public partial class HotPotato : Mode, ILevelLoadedEvent{
             HotPotato modeNode = Mode.ModeNode as HotPotato;
             //Remove bomb from old potato holder
             if(modeNode.potatoHolder != null){
-                modeNode.potatoHolder.BallSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.BallSprite.SelfModulate.A);
-                modeNode.potatoHolder.LinesSprite.SelfModulate = new Color(Colors.Black,modeNode.potatoHolder.LinesSprite.SelfModulate.A);
-                modeNode.potatoHolder.ShadingSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.ShadingSprite.SelfModulate.A);
+                modeNode.potatoHolder.Visuals.BallSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.Visuals.BallSprite.SelfModulate.A);
+                modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate = new Color(Colors.Black,modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate.A);
+                modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate.A);
 				modeNode.potatoHolder.PlayerEmotion = Player.Emotion.Neutral;
             }
             modeNode.potatoHolder = value;
             if(value != null){
-                modeNode.potatoHolder.BallSprite.SelfModulate = new Color(Color.Color8(15,15,15),modeNode.potatoHolder.BallSprite.SelfModulate.A);
-                modeNode.potatoHolder.LinesSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.LinesSprite.SelfModulate.A);
-                modeNode.potatoHolder.ShadingSprite.SelfModulate = new Color(Colors.Black,modeNode.potatoHolder.ShadingSprite.SelfModulate.A);
+                modeNode.potatoHolder.Visuals.BallSprite.SelfModulate = new Color(Color.Color8(15,15,15),modeNode.potatoHolder.Visuals.BallSprite.SelfModulate.A);
+                modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate.A);
+                modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate = new Color(Colors.Black,modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate.A);
 				modeNode.potatoHolder.PlayerEmotion = Player.Emotion.Shocked;
             }
         }

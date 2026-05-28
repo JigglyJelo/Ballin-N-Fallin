@@ -29,7 +29,7 @@ public partial class TargetTest : Mode, IModeStartEvent{
 
     public override void PlayerRespawned(Player player){
         base.PlayerRespawned(player);
-        player.ShowPlayerText();
+        player.Visuals.ShowPlayerText();
     }
     
     public void OnModeStart(){

@@ -92,7 +92,7 @@ public partial class Piggy : Node2D{
 			if(BTTB.HeldPlayerMoney[player.Id-1] >= 1){
 				BTTB.HeldPlayerMoney[player.Id-1]--;
 				BTTB.DepositedMoney[player.Id-1]++;
-				player.ShowPlayerText();
+				player.Visuals.ShowPlayerText();
 				UpdateMoneyText(Game.Players[playerIndex]);
 				if(MusicPlayer.GetPitch() != BTTB.FAST_MUSIC_SPEED && BTTB.DepositedMoney[player.Id-1] > BTTB.MoneyToWin*0.75f){
 					MusicPlayer.SetPitch(BTTB.FAST_MUSIC_SPEED);

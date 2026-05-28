@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://blvbwis3142q8"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_2tfso"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_2tfso"]
 [ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="2_22bmg"]
 [ext_resource type="PackedScene" uid="uid://b2ydssn5bu2oi" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/Cutouts.tscn" id="2_ays8c"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_e34q5"]

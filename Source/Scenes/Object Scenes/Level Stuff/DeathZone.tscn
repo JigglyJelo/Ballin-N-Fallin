@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5rrbsu37fsgt"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/DeathTile.cs" id="1_53snq"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="1_53snq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yan60"]
 size = Vector2(128, 128)

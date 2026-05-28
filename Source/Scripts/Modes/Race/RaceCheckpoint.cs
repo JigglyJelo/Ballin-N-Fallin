@@ -74,7 +74,7 @@ public partial class RaceCheckpoint : Area2D{
 	private void ClientCrossedFinishLine(byte playerId,byte lap,bool lapCompleted){
 		Player player = Game.Players[playerId-1];
 		if(!Online.IsHost()) Race.PlayerLaps[player.Id-1] = lap;
-		player.ShowPlayerText();
+		player.Visuals.ShowPlayerText();
 		if(lapCompleted){
 			if(lap >= Race.TotalLaps){
 				SFX.Play("Finish");

@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://diiubx4uq8sv2"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_8ccy0"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_8ccy0"]
 [ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="2_cgyws"]
 [ext_resource type="PackedScene" uid="uid://rncu3w882iba" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/DenseForest.tscn" id="2_cmal5"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_3smvq"]

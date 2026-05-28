@@ -43,7 +43,7 @@ public partial class ItemBox : Node{
 			Player player = body.GetParent() as Player;
 			if(Online.IsHost()){
 				if(player.Item == null){
-					player.Rpc(nameof(player.StartItemRoulette));
+					player.Visuals.Rpc(nameof(player.Visuals.StartItemRoulette));
 					//Calculates Item on host and sends result
 					Creator.SendItemToPlayer(player.Id);
 				}

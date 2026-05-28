@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://de4is5ecax1w1"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_bxaac"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_bxaac"]
 [ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_tvh6x"]
 [ext_resource type="PackedScene" uid="uid://baf3theg36lvb" path="res://Source/Scenes/Object Scenes/Mode Stuff/King of the Hill/KothZone.tscn" id="3_xelj5"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="5_hyq4w"]

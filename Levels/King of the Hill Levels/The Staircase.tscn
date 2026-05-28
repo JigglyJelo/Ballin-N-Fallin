@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://85ejwr2ywqf5"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_18oms"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_18oms"]
 [ext_resource type="PackedScene" uid="uid://cqdnd2vlvyawg" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/ForestBackground.tscn" id="2_n777l"]
 [ext_resource type="PackedScene" uid="uid://baf3theg36lvb" path="res://Source/Scenes/Object Scenes/Mode Stuff/King of the Hill/KothZone.tscn" id="2_p6o3e"]
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/DeathTile.cs" id="3_dfj7a"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="3_dfj7a"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_v32io"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_1xrar"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="6_3wilk"]

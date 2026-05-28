@@ -25,27 +25,27 @@ public partial class ScoreScreenPlayer : RigidBody2D{
 			EyeSprite.FlipH = true;
 			pupilSprite.FlipH = true;
 		}
-		Vector2 textureScale = new Vector2(Player.TextureScale,Player.TextureScale);
-        ballSprite.Texture = Player.BasketBallTexture;
-		float ballSpriteScale = (Player.BallSize/(float)(Player.BasketBallTexture.GetHeight()*2) * Player.TextureScale);
+		Vector2 textureScale = new Vector2(PlayerVisuals.TextureScale,PlayerVisuals.TextureScale);
+        ballSprite.Texture = PlayerVisuals.BasketBallTexture;
+		float ballSpriteScale = (PlayerVisuals.BallSize/(float)(PlayerVisuals.BasketBallTexture.GetHeight()*2) * PlayerVisuals.TextureScale);
 		ballSprite.Scale = new Vector2(ballSpriteScale,ballSpriteScale);
 		ballSprite.RegionRect = new Rect2(0,0,ballSprite.Texture.GetWidth()*2,ballSprite.Texture.GetHeight()*2);
 		ballSprite.SelfModulate = color;
 		shadingSprite.SelfModulate = color;
-		lineSprite.Texture = Player.LinesTexture;
+		lineSprite.Texture = PlayerVisuals.LinesTexture;
 		lineSprite.SelfModulate = Colors.Black;
 		lineSprite.Scale = textureScale;
-		EyeSprite.Texture = Player.GetEyeTexture(Player.Emotion.Neutral,false);
+		EyeSprite.Texture = PlayerVisuals.GetEyeTexture(Player.Emotion.Neutral,false);
 		EyeSprite.Scale = textureScale;
-		pupilSprite.Texture = Player.GetPupilTexture(Player.Emotion.Neutral,false);
-		outlineSprite.Texture = Player.OutlineTexture;
+		pupilSprite.Texture = PlayerVisuals.GetPupilTexture(Player.Emotion.Neutral,false);
+		outlineSprite.Texture = PlayerVisuals.OutlineTexture;
 		outlineSprite.SelfModulate = Colors.Black;
 		outlineSprite.Scale = textureScale;
 		if(Tour.IsTour){
 			int playerScore = Tour.PlayerScores[Id-1];
 			if(playerScore == 0){
-				EyeSprite.Texture = Player.GetEyeTexture(Player.Emotion.Shocked,false);
-				pupilSprite.Texture = Player.GetPupilTexture(Player.Emotion.Shocked,false);
+				EyeSprite.Texture = PlayerVisuals.GetEyeTexture(Player.Emotion.Shocked,false);
+				pupilSprite.Texture = PlayerVisuals.GetPupilTexture(Player.Emotion.Shocked,false);
 			}
 		}
 	}
@@ -65,7 +65,7 @@ public partial class ScoreScreenPlayer : RigidBody2D{
         }
 		
 
-		if(true) pupilSprite.Position = inputVector * (6/Player.TextureScale); //OwnsPlayer
+		if(true) pupilSprite.Position = inputVector * (6/PlayerVisuals.TextureScale); //OwnsPlayer
 		void slam(){
 			LinearVelocity = new Vector2(LinearVelocity.X, LinearVelocity.Y * 0.5f);
 			LinearVelocity += Vector2.Down * Player.SLAM_POWER * (GravityScale == 0 ? 1 : GravityScale/Player.GRAVITY);

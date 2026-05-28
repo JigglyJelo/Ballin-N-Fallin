@@ -1,11 +1,12 @@
-[gd_scene load_steps=37 format=3 uid="uid://b78ro40qrxhlk"]
+[gd_scene load_steps=38 format=3 uid="uid://b78ro40qrxhlk"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Player.cs" id="1_5nebf"]
+[ext_resource type="Script" path="res://Source/Scripts/Player/Player.cs" id="1_5nebf"]
 [ext_resource type="PhysicsMaterial" uid="uid://cl78t0kopdgd6" path="res://Source/Materials/PlayerPhysicsMaterial.tres" id="1_xiy12"]
 [ext_resource type="Shape2D" uid="uid://mmicm5qifgge" path="res://Source/Materials/PlayerShape.tres" id="2_4c1gn"]
 [ext_resource type="PackedScene" uid="uid://3j2q7w1qlu5t" path="res://Source/Scenes/Object Scenes/Particles/Trail.tscn" id="2_pxjd3"]
 [ext_resource type="Texture2D" uid="uid://cj8th7x6xkja0" path="res://Assets/Sprites/Player/63/Ball.png" id="3_gdt3x"]
 [ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Source/Scenes/Object Scenes/Particles/Shadow.tscn" id="3_urjuj"]
+[ext_resource type="Script" path="res://Source/Scripts/Player/PlayerVisuals.cs" id="4_5gtjh"]
 [ext_resource type="Texture2D" uid="uid://dlm0ki33nhb7f" path="res://Assets/Sprites/Player/Ball31.png" id="5_mmhx2"]
 [ext_resource type="Texture2D" uid="uid://2n6tbh4lhy5d" path="res://Assets/Sprites/Player/190/BallLines.png" id="6_khj8r"]
 [ext_resource type="Texture2D" uid="uid://t6tm52yejvsb" path="res://Assets/Sprites/Player/190/Eyes/NeutralEyes.png" id="6_qw1l1"]
@@ -87,6 +88,7 @@ script = ExtResource("1_5nebf")
 [node name="Shadow" parent="." instance=ExtResource("3_urjuj")]
 
 [node name="Visuals" type="Node2D" parent="."]
+script = ExtResource("4_5gtjh")
 
 [node name="HUDNoRotate" type="RemoteTransform2D" parent="Visuals"]
 remote_path = NodePath("../HUD")

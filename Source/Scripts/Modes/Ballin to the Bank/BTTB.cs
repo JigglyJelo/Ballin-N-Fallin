@@ -180,7 +180,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 		SFX.Play("Coin");
 		Player player = Game.Players[playerId-1];
 		HeldPlayerMoney[player.Id-1]++;
-		player.ShowPlayerText();
+		player.Visuals.ShowPlayerText();
 		Coin coin = SpawnedCoins[coinId];
         SpawnedCoins.Remove(coinId);
         coin.QueueFree();
@@ -228,7 +228,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 		SFX.Play("Coin");
 		Player player = Game.Players[playerId-1];
 		HeldPlayerMoney[player.Id-1]++;
-		player.ShowPlayerText();
+		player.Visuals.ShowPlayerText();
 		RemoveDroppedCoin(coinId);
 	}
 	public static void RemoveDroppedCoin(byte coinId){

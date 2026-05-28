@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://ds48donenr3e7"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_7addi"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_7addi"]
 [ext_resource type="PackedScene" uid="uid://c67evamjga26g" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/MountainsBackground.tscn" id="2_daudn"]
 [ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Source/Scenes/Object Scenes/Mode Stuff/Race/FinishLine.tscn" id="2_uq2om"]
 [ext_resource type="Script" path="res://Source/Scripts/Modes/Race/RaceCheckpoint.cs" id="3_y67s4"]

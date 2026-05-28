@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://1388bpo3io0t"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Sand.cs" id="1_rcv83"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Sand.cs" id="1_rcv83"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvu1i"]
 size = Vector2(128, 128)

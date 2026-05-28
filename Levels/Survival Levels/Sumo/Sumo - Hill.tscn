@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ccj4ns5ys26cp"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_1v5xd"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_1v5xd"]
 [ext_resource type="Texture2D" uid="uid://b2ghjmgfs5uoe" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Volleyball Tile.png" id="2_wu6n2"]
 [ext_resource type="PackedScene" uid="uid://dy6i607ryxmxm" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/BlankBackground.tscn" id="3_qq0is"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_0hodw"]

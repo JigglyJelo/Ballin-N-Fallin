@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://v0l5a5qvxqg6"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_jt4cu"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_jt4cu"]
 [ext_resource type="PackedScene" uid="uid://c0pmfvhnbqpni" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/CastleBackground.tscn" id="2_1usdm"]
 [ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Source/Scenes/Object Scenes/Mode Stuff/Golf/GolfHole.tscn" id="2_juykk"]
 [ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="4_ljy0i"]

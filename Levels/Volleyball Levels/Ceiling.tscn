@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dn30xc6ejukxn"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_x88xx"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_x88xx"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_c7ggn"]
 [ext_resource type="PackedScene" uid="uid://c05oo6dcae5po" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackground.tscn" id="2_l1rda"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_5nxlw"]

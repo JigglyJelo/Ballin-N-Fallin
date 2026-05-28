@@ -23,18 +23,18 @@ public partial class BallScript : SpawnableItemScript{
         if (Online.IsHost()) Rb.CallDeferred("apply_impulse", Player.InputVector * 2000);
         Rb.AddCollisionExceptionWith(Player.Rb);
         
-        if(Player.BallSize != 190){
+        if(PlayerVisuals.BallSize != 190){
             Sprite2D ballSprite = GetNode<Sprite2D>("Smoothing2D/BallSprite");
-            ballSprite.Texture = Player.BasketBallTexture;
-            float ballSpriteScale = (Player.BallSize/(float)(Player.BasketBallTexture.GetHeight()*2)) * Player.TextureScale;
+            ballSprite.Texture = PlayerVisuals.BasketBallTexture;
+            float ballSpriteScale = (PlayerVisuals.BallSize/(float)(PlayerVisuals.BasketBallTexture.GetHeight()*2)) * PlayerVisuals.TextureScale;
             ballSprite.Scale = new Vector2(ballSpriteScale,ballSpriteScale);
             ballSprite.RegionRect = new Rect2(0,0,ballSprite.Texture.GetWidth()*2,ballSprite.Texture.GetHeight()*2);
             Sprite2D lineSprite = GetNode<Sprite2D>("Smoothing2D/LinesSprite");
-            Vector2 textureScale = new Vector2(Player.TextureScale,Player.TextureScale);
+            Vector2 textureScale = new Vector2(PlayerVisuals.TextureScale,PlayerVisuals.TextureScale);
             lineSprite.Scale = textureScale;
-            lineSprite.Texture = Player.LinesTexture;
+            lineSprite.Texture = PlayerVisuals.LinesTexture;
             Sprite2D outlineSprite = GetNode<Sprite2D>("Smoothing2D/OutlineSprite");
-            outlineSprite.Texture = Player.OutlineTexture;
+            outlineSprite.Texture = PlayerVisuals.OutlineTexture;
             outlineSprite.Scale = textureScale;
         }
     }

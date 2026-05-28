@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cryhqyifcuaju"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/EmotionZone.cs" id="1_afnnl"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/EmotionZone.cs" id="1_afnnl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6s3hm"]
 size = Vector2(128, 128)

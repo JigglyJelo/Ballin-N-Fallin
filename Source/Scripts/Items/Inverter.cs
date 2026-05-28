@@ -10,6 +10,6 @@ public class Inverter : TransformItem{
     public override void SetTransformation(){
 		Player.Rb.Sleeping = false;
         Player.Rb.GravityScale *= -1;
-		Player.FlipV(!Player.LinesSprite.FlipV);
+		Player.Visuals.FlipV(!Player.Visuals.LinesSprite.FlipV);
     }
 }

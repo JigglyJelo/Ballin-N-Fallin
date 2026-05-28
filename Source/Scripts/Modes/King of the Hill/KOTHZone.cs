@@ -71,7 +71,7 @@ public partial class KOTHZone : Area2D{
 			}else player.PlayerEmotion = Player.Emotion.Annoyed;
 
 
-			player.ShowPlayerText();
+			player.Visuals.ShowPlayerText();
 			if(MusicPlayer.GetPitch() == KOTH.FAST_MUSIC_SPEED && !KOTH.Finished){
 				bool resetPitch = true;
 				foreach(Player otherPlayer in Game.Players){
@@ -100,7 +100,7 @@ public partial class KOTHZone : Area2D{
 					Mode.GameFinished();
 				}else{
 					player.Score += (float)delta;
-					player.ShowPlayerText();
+					player.Visuals.ShowPlayerText();
 					if(player.Score > KOTH.TopScore) KOTH.TopScore = player.Score;
 					if(player.Score >= KOTH.TotalScore*0.75f && MusicPlayer.GetPitch() != KOTH.FAST_MUSIC_SPEED){
 						MusicPlayer.SetPitch(KOTH.FAST_MUSIC_SPEED);

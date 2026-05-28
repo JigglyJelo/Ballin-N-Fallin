@@ -61,7 +61,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
 
     public override void PlayerRespawned(Player player){
         base.PlayerRespawned(player);
-        player.ShowPlayerText();
+        player.Visuals.ShowPlayerText();
         //if(Online.IsHost()) Rpc(nameof(GolfPlayerRespawned),player.Id);
     }
 
@@ -81,7 +81,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
         Player player = Game.Players[id-1];
         
 		Golf.PlayerStrokes[player.Index]++;
-		player.ShowPlayerText();
+		player.Visuals.ShowPlayerText();
 		
 		//Set Top Score
 		//Create scores array
@@ -130,7 +130,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     private void GolfPlayerRespawned(byte playerId){
         Player player = Game.Players[playerId-1];
-        player.ShowPlayerText();
+        player.Visuals.ShowPlayerText();
         player.PlayerEmotion = Player.Emotion.Annoyed;
     }
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cqtl18v02yv8p"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Stuff/Level.cs" id="1_2cuga"]
+[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_2cuga"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="2_p64it"]
 [ext_resource type="PackedScene" uid="uid://bhywldkplxcw3" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/DiagonalCheckerboard.tscn" id="2_p4773"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="3_6kb6w"]

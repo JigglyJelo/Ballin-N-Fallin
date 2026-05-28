@@ -185,7 +185,7 @@ public partial class EndscreenResult : Node2D{
 					if(finalPlacement == 1){
 
 					}else if(finalPlacement == Game.TotalPlayers){
-						ScorePlayer.EyeSprite.Texture = Player.GetEyeTexture(Player.Emotion.Sad,false);
+						ScorePlayer.EyeSprite.Texture = PlayerVisuals.GetEyeTexture(Player.Emotion.Sad,false);
 					}
 				}
 				scoreText.Text = "Score: " + Tour.PlayerScores[scoreIndex] + "\n"+Game.GetUsername(Id);

@@ -24,7 +24,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
             CTK modeNode = Mode.ModeNode as CTK;
             if(modeNode.king != null){
                 //Remove old king's crown and points
-                Sprite2D crownSprite = modeNode.king.SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
+                Sprite2D crownSprite = modeNode.king.Visuals.SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
                 crownSprite.Visible = false;
 				float timeToLose;
 				switch(Game.TotalPlayers){
@@ -50,13 +50,13 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
 				if(modeNode.king.Score >= CTK.TotalScore - timeToLose){
 					modeNode.king.Score = CTK.TotalScore - timeToLose;
 					modeNode.king.PlayerEmotion = Player.Emotion.Angry;
-					modeNode.king.ShowPlayerText();
+					modeNode.king.Visuals.ShowPlayerText();
 				}else modeNode.king.PlayerEmotion = Player.Emotion.Sad;
             }
             //Set new King
             modeNode.king = value;
             if(value != null){
-                Sprite2D crownSprite = modeNode.king.SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
+                Sprite2D crownSprite = modeNode.king.Visuals.SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
                 crownSprite.Visible = true;
 				modeNode.king.PlayerEmotion = Player.Emotion.Happy;
                 if(modeNode.king.Score >= TotalScore*(2.0/3.0)) MusicPlayer.SetPitch(FAST_MUSIC_SPEED);
@@ -99,7 +99,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
         if(King != null){
             if(King.Score <= CTK.TotalScore) King.Score += fDelta;
 			if(King.Score >= CTK.TotalScore * (2.0/3.0) && MusicPlayer.GetPitch() != CTK.FAST_MUSIC_SPEED) MusicPlayer.SetPitch(CTK.FAST_MUSIC_SPEED);
-			King.ShowPlayerText();
+			King.Visuals.ShowPlayerText();
 			if(Online.IsHost() && King.Score >= CTK.TotalScore && !Mode.Finished) Mode.GameFinished();
         }
     }
@@ -113,7 +113,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
         foreach(Player player in Game.Players){
             Sprite2D crownSprite = CTK.GetCrownSprite(false);
 			crownSprite.Visible = false;
-			player.SpritesNode.AddChild(crownSprite);
+			player.Visuals.SpritesNode.AddChild(crownSprite);
         }
     }
 
