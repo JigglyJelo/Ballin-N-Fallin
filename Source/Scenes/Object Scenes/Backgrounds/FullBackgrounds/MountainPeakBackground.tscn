@@ -6,7 +6,12 @@
 
 [node name="Background" instance=ExtResource("1_bdfev")]
 
-[node name="Mount" type="Node2D" parent="BackgroundLayers" index="0"]
+[node name="Mount" type="Parallax2D" parent="BackgroundLayers" index="0"]
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(3840, 0)
+repeat_times = 2
+follow_viewport = false
+screen_offset = Vector2(384, 0)
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Mount" index="0"]
 position = Vector2(0, 239)
@@ -18,4 +23,7 @@ centered = false
 color = Color(0.631373, 0.631373, 0.631373, 1)
 polygon = PackedVector2Array(0, 1281, 3840, 1281, 3840, 1696, 0, 1696)
 
-[node name="GroundClouds" parent="." index="2" instance=ExtResource("3_7ckj2")]
+[node name="Parallax2D" type="Parallax2D" parent="BackgroundLayers" index="1"]
+follow_viewport = false
+
+[node name="GroundClouds" parent="BackgroundLayers/Parallax2D" index="0" instance=ExtResource("3_7ckj2")]
