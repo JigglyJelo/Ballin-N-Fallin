@@ -146,32 +146,42 @@ public partial class OnlineLobby : Node{
 	}
 
     private void HostLobby(){
-		PingGetter.LastPing = 0;
-		PingGetter.Pings[0] = 0;
-		GD.Print("Host");
-		if(!Game.IsDedicatedServer){
-			switch(Online.Network){
-				case Online.NetworkType.Direct: SendPlayerInfoDirect(Online.Username,(byte)Online.InputId,1); break;
-			}
-		}
-		switch(Online.Network){
-			case Online.NetworkType.Direct:
-				if(EnetSetup.EnetHost()){
-					Online.IsOnline = true;
-					Online.BannedIps = new List<string>();
-					CreatePingGetter();
-				}else{
-					Online.IsOnline = false;
-					Game.PlayerDatas = new List<PlayerData>();
-				}
-				break;
-			case Online.NetworkType.Steam:
-				Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
-				AddChild(steamSetupNode);
-				steamSetupNode.Call("host_lobby");
-				CreatePingGetter();
-				break;
-		}
+	   PingGetter.LastPing = 0;
+	   PingGetter.Pings[0] = 0;
+	   GD.Print("Host");
+	   if(!Game.IsDedicatedServer){
+	       switch(Online.Network){
+	           case Online.NetworkType.Direct: 
+	           case Online.NetworkType.Noray: // Added Noray
+	               SendPlayerInfoDirect(Online.Username,(byte)Online.InputId,1); 
+	               break;
+	       }
+	   }
+	   switch(Online.Network){
+	       case Online.NetworkType.Direct:
+	           if(EnetSetup.EnetHost()){
+	               Online.IsOnline = true;
+	               Online.BannedIps = new List<string>();
+	               CreatePingGetter();
+	           }else{
+	               Online.IsOnline = false;
+	               Game.PlayerDatas = new List<PlayerData>();
+	           }
+	           break;
+	       case Online.NetworkType.Noray: // Added Noray Block
+	           if(NoraySetup.NorayHost()){
+	               Online.IsOnline = true;
+	               Online.BannedIps = new List<string>();
+	               // Do not create PingGetter for Noray to avoid UDP side-channel conflicts
+	           }else{
+	               Online.IsOnline = false;
+	               Game.PlayerDatas = new List<PlayerData>();
+	           }
+	           break;
+	       case Online.NetworkType.Steam:
+	           // ... Your steam logic
+	           break;
+	   }
 	}
 
 	public void JoinedLobby(){
@@ -188,27 +198,35 @@ public partial class OnlineLobby : Node{
 	}
 
 	private void JoinLobby(){
-		switch(Online.Network){
-			case Online.NetworkType.Direct:
-				if(EnetSetup.EnetJoin()){
-					Online.IsOnline = true;
-				}else{
-					Online.IsOnline = false;
-					SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
-				}
-				break;
-			case Online.NetworkType.Steam:
-				Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
-				AddChild(steamSetupNode);
-				steamSetupNode.Call("join_lobby",LobbyID);
-				break;
-		}
+	    switch(Online.Network){
+	        case Online.NetworkType.Direct:
+	            if(EnetSetup.EnetJoin()){
+	                Online.IsOnline = true;
+	            }else{
+	                Online.IsOnline = false;
+	                SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
+	            }
+	            break;
+	        case Online.NetworkType.Noray: // Added Noray Block
+	            if(NoraySetup.NorayJoin()){
+	                Online.IsOnline = true;
+	            }else{
+	                Online.IsOnline = false;
+	                SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
+	            }
+	            break;
+	        case Online.NetworkType.Steam:
+	            // ... Your steam logic
+	            break;
+	    }
 	}
 
 	private void ConnectedToServer(){
-		GD.Print("Connected");
-		if(Online.Network == Online.NetworkType.Direct) RpcId(1,nameof(SendPlayerInfoDirect),Online.Username,(byte)Online.InputId,Game.GameNode.Multiplayer.GetUniqueId());
-		CreatePingGetter(); //if(Online.Network == Online.NetworkType.Direct) 
+	    GD.Print("Connected");
+	    if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray) {
+	        RpcId(1, nameof(SendPlayerInfoDirect), Online.Username, (byte)Online.InputId, Game.GameNode.Multiplayer.GetUniqueId());
+	    }
+	    if (Online.Network != Online.NetworkType.Noray) CreatePingGetter(); // Prevent UDP collision
 	}
 
 	private void PeerConnected(long id){
@@ -216,9 +234,13 @@ public partial class OnlineLobby : Node{
 		if(Online.IsHost() && id != 1){
 			//Don't let Banned players connect
 			if(Online.Network == Online.NetworkType.Direct && Online.BannedIps.Contains(Online.GetIp((int)id))){
-				(Game.GameNode.Multiplayer.MultiplayerPeer as ENetMultiplayerPeer).GetPeer((int)id).PeerDisconnectNow();
-				return;
-			}
+        	    (Game.GameNode.Multiplayer.MultiplayerPeer as ENetMultiplayerPeer).GetPeer((int)id).PeerDisconnectNow();
+        	    return;
+        	} else if (Online.Network == Online.NetworkType.Noray && Online.BannedIps.Contains(Online.GetIp((int)id))) {
+        	    // Noray GDScript peer handles disconnects natively via MultiplayerPeer API
+        	    Game.GameNode.Multiplayer.MultiplayerPeer.DisconnectPeer((int)id);
+        	    return;
+        	}
 			Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
 			Color playerColor = Colors.White;
 			foreach(Color color in ColorMenu.DefaultColorOrder){
@@ -236,56 +258,58 @@ public partial class OnlineLobby : Node{
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void SendPlayerInfoDirect(string username,byte inputId, int uuid){
-		if(Online.Network == Online.NetworkType.Direct){
-			if(Online.IsHost() && GetTree().GetMultiplayer().GetRemoteSenderId() != 0){
-				uuid = GetTree().GetMultiplayer().GetRemoteSenderId();
-			}
-			if(Online.IsHost() || GetTree().GetMultiplayer().GetRemoteSenderId() == 0){
-				username = Regex.Replace(username, "[^a-zA-Z0-9 ]", "");
-				username = BadNameCheck(username,uuid);
-				PlayerData playerInfo = new PlayerData(username,(PlayerData.PlayerInputDevice)inputId,uuid);
-				if(!Game.PlayerDatas.Contains(playerInfo)){
-				   foreach(Color color in ColorMenu.DefaultColorOrder){
-				       if(!Game.PlayerDatas.Any(p => p.PlayerColor == color)){
-				           playerInfo.PlayerColor = color;
-				           break;
-				       }
-				   }
-				   Game.PlayerDatas.Add(playerInfo);
-				   Game.TotalPlayers = Game.PlayerDatas.Count;
-				}
-			}
+	    // ADDED || Online.Network == Online.NetworkType.Noray here:
+	    if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray){
+	        if(Online.IsHost() && GetTree().GetMultiplayer().GetRemoteSenderId() != 0){
+	            uuid = GetTree().GetMultiplayer().GetRemoteSenderId();
+	    	}
+	        if(Online.IsHost() || GetTree().GetMultiplayer().GetRemoteSenderId() == 0){
+	            username = Regex.Replace(username, "[^a-zA-Z0-9 ]", "");
+	            username = BadNameCheck(username,uuid);
+	            PlayerData playerInfo = new PlayerData(username,(PlayerData.PlayerInputDevice)inputId,uuid);
+	            if(!Game.PlayerDatas.Contains(playerInfo)){
+	                foreach(Color color in ColorMenu.DefaultColorOrder){
+	                    if(!Game.PlayerDatas.Any(p => p.PlayerColor == color)){
+	                        playerInfo.PlayerColor = color;
+	                        break;
+	                    }
+	                }
+	                Game.PlayerDatas.Add(playerInfo);
+	                Game.TotalPlayers = Game.PlayerDatas.Count;
+	            }
+	        }
 
-			if(Game.GameNode.Multiplayer.IsServer()){
-				string[] usernames = new string[Game.PlayerDatas.Count];
-				byte[] inputIds = new byte[Game.PlayerDatas.Count];
-				int[] uuids = new int[Game.PlayerDatas.Count];
-				Color[] colors = new Color[Game.PlayerDatas.Count];
-				for(int i = 0; i < Game.PlayerDatas.Count; i++){
-					usernames[i] = Game.PlayerDatas[i].Username;
-					inputIds[i] = (byte)Game.PlayerDatas[i].InputDevice;
-					uuids[i] = Game.PlayerDatas[i].UUID;
-					colors[i] = Game.PlayerDatas[i].PlayerColor;
-				}
-				Rpc(nameof(SyncPlayerInfosDirect),usernames,inputIds,uuids,colors);
-			}
-			UpdatePlayerTexts();
-		}else{
-			GD.PrintErr("Wrong SendPlayerInfo Rpc is being called this is the Direct function");
-		}
+	        if(Game.GameNode.Multiplayer.IsServer()){
+	            string[] usernames = new string[Game.PlayerDatas.Count];
+	            byte[] inputIds = new byte[Game.PlayerDatas.Count];
+	            int[] uuids = new int[Game.PlayerDatas.Count];
+	            Color[] colors = new Color[Game.PlayerDatas.Count];
+	            for(int i = 0; i < Game.PlayerDatas.Count; i++){
+	                usernames[i] = Game.PlayerDatas[i].Username;
+	                inputIds[i] = (byte)Game.PlayerDatas[i].InputDevice;
+	                uuids[i] = Game.PlayerDatas[i].UUID;
+	                colors[i] = Game.PlayerDatas[i].PlayerColor;
+	            }
+	            Rpc(nameof(SyncPlayerInfosDirect),usernames,inputIds,uuids,colors);
+	        }
+	        UpdatePlayerTexts();
+	    }else{
+	        GD.PrintErr("Wrong SendPlayerInfo Rpc is being called this is the Direct function");
+	    }
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void SyncPlayerInfosDirect(string[] usernames, byte[] inputIds, int[] uuids, Color[] colors){
-		if(Online.Network == Online.NetworkType.Direct){
-			Game.PlayerDatas = new List<PlayerData>();
-			for(int i = 0; i < inputIds.Length; i++){
-				PlayerData playerInfo = new PlayerData(usernames[i],(PlayerData.PlayerInputDevice)inputIds[i],uuids[i]);
-				playerInfo.PlayerColor = colors[i];
-				Game.PlayerDatas.Add(playerInfo);
-			}
-			UpdatePlayerTexts();
-		}
+	    // ADDED || Online.Network == Online.NetworkType.Noray here:
+	    if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray){
+	        Game.PlayerDatas = new List<PlayerData>();
+	        for(int i = 0; i < inputIds.Length; i++){
+	            PlayerData playerInfo = new PlayerData(usernames[i],(PlayerData.PlayerInputDevice)inputIds[i],uuids[i]);
+	            playerInfo.PlayerColor = colors[i];
+	            Game.PlayerDatas.Add(playerInfo);
+	        }
+	        UpdatePlayerTexts();
+	    }
 	}
 
 	private string BadNameCheck(string username,int uuid){

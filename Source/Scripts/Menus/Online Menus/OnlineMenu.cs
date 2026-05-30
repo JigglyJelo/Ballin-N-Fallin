@@ -23,7 +23,7 @@ public partial class OnlineMenu : VerticalMenu{
 		defaultFontSize = 2;
 		UpdateSelectionVisual();
 		if(Game.IsDedicatedServer) MenuChoose(1);
-		Online.Network = Online.NetworkType.Direct;
+		Online.Network = Online.NetworkType.Noray;
 	}
 
 	public override void _Process(double delta){
@@ -47,13 +47,22 @@ public partial class OnlineMenu : VerticalMenu{
 	}
 
 	private void JoinLobby(){
-		if(!ipInput.InputString.Equals("")) Online.Address = ipInput.InputString;
-		Online.Username = ParseUsername();
-		ParsePort();
-		OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
-		lobby.IsHost = false;
-		GetParent().AddChild(lobby);
-		QueueFree();
+	    Online.Username = ParseUsername();
+	
+	    if (Online.Network == Online.NetworkType.Noray) {
+	        // For Noray, parse the OID instead of IP/Port
+	        if(ipInput != null && !ipInput.InputString.Equals("")) {
+	            Online.NorayHostOid = ipInput.InputString;
+	        }
+	    } else {
+	        if(!ipInput.InputString.Equals("")) Online.Address = ipInput.InputString;
+	        ParsePort();
+	    }
+	
+	    OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
+	    lobby.IsHost = false;
+	    GetParent().AddChild(lobby);
+	    QueueFree();
 	}
 
 	private string ParseUsername(){

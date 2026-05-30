@@ -41,7 +41,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 						int inputId = (int)Game.PlayerDatas[0].InputDevice;
 						InputChecks(delta,inputId);
 						if(!InColorMenu){
-							if(Game.UsingMouse()){
+							if(Game.UsingMouse() || inputId == (int)PlayerData.PlayerInputDevice.Mouse){
 								if(Input.IsActionJustReleased("Charge N Launch Mouse") && hoveredOverColorText()) createColorMenu();
 							}else{
 								if(Input.IsActionJustReleased("Slam" + inputId)) createColorMenu();

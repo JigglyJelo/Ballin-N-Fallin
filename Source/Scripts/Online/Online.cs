@@ -287,27 +287,20 @@ public partial class Online{
 		//Host shut down Enet server
 
 		if(Game.GameNode.Multiplayer.MultiplayerPeer.GetConnectionStatus() == MultiplayerPeer.ConnectionStatus.Connected){
-			if(Game.GameNode.Multiplayer.MultiplayerPeer != null){
-				switch(Game.GameNode.Multiplayer.MultiplayerPeer){
-					case ENetMultiplayerPeer:
-						ENetMultiplayerPeer peerToDispose = Game.GameNode.Multiplayer.MultiplayerPeer as ENetMultiplayerPeer;
-						Game.GameNode.Multiplayer.MultiplayerPeer = new OfflineMultiplayerPeer();
-						ENetConnection host = peerToDispose.Host;
-						if(peerToDispose != null){
-							peerToDispose.Dispose();
-							peerToDispose = null;
-						}
-						if(host != null){
-							host.Destroy();
-						}
-						break;
-					case OfflineMultiplayerPeer: break;
-					default: //SteamMultiplayerPeer
-						//Steam.SteamManagerNode.Call("leave_steam_lobby");
-						//Game.GameNode.Multiplayer.MultiplayerPeer = new OfflineMultiplayerPeer();
-						break;
-				}
-			}
+		    if(Game.GameNode.Multiplayer.MultiplayerPeer != null){
+		        if (Game.GameNode.Multiplayer.MultiplayerPeer is ENetMultiplayerPeer enetPeer) {
+		            Game.GameNode.Multiplayer.MultiplayerPeer = new OfflineMultiplayerPeer();
+		            ENetConnection host = enetPeer.Host;
+		            if(enetPeer != null) enetPeer.Dispose();
+		            if(host != null) host.Destroy();
+		        } else if (Game.GameNode.Multiplayer.MultiplayerPeer is not OfflineMultiplayerPeer) {
+		            // Catches Noray and Steam
+		            MultiplayerPeer peerToDispose = Game.GameNode.Multiplayer.MultiplayerPeer;
+		            Game.GameNode.Multiplayer.MultiplayerPeer = new OfflineMultiplayerPeer();
+		            peerToDispose.Close();
+		            peerToDispose.Dispose();
+		        }
+		    }
 		}
 		Game.GameNode.Multiplayer.MultiplayerPeer = new OfflineMultiplayerPeer();
 		//Game.GameNode.Multiplayer.MultiplayerPeer = null;
@@ -373,7 +366,11 @@ public partial class Online{
 	}
 
 	public static string GetIp(int uuid){
-		return (Game.GameNode.Multiplayer.MultiplayerPeer as ENetMultiplayerPeer).GetPeer(uuid).GetRemoteAddress();
+    	if (Game.GameNode.Multiplayer.MultiplayerPeer is ENetMultiplayerPeer enetPeer) {
+    	    return enetPeer.GetPeer(uuid).GetRemoteAddress();
+    	}
+    	// Noray masks IPs behind the proxy. Return a dummy string so bans don't crash.
+    	return "Masked-Noray-IP-" + uuid.ToString(); 
 	}
 
 	public static bool IsOnlinePeer(){
@@ -413,7 +410,9 @@ public partial class Online{
 		PingGetter,SendHostPing,
 	}
 
+	public static string NorayHostOid = ""; // Add this to store the Noray ID
+
 	public enum NetworkType{
-		Offline,Direct,Steam
+	    Offline, Direct, Steam, Noray
 	}
 }
