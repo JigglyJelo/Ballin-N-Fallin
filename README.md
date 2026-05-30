@@ -25,5 +25,6 @@ To ensure the game can be distributed on PC storefronts, this project includes a
 
 Media and creative files located in this repository are strictly excluded from the AGPL code license. 
 
-* **Proprietary Assets:** Unless otherwise specified, all original game art, images, sprites, branding, and level files (despite being constructed as Godot scenes) are classified as proprietary assets (All Rights Reserved).
+* **Proprietary Assets:** Unless otherwise specified, all original game art, images, sprites, and branding are classified as proprietary assets (All Rights Reserved).
+* **Level Files:** All game levels located in the `Levels` directory (despite being constructed as Godot scene files) are licensed under the [Mozilla Public License 2.0 (MPL-2.0)](https://www.mozilla.org/en-US/MPL/2.0/).
 * **Third-Party Assets:** Specific media elements, such as fonts, audio, and certain images, are utilized under their respective open-source or commercial licenses (CC-BY, CC0, OFL, etc). For exact terms and conditions, please refer to the `ATTRIBUTIONS.txt` file or the local credit files within the individual asset folders.
