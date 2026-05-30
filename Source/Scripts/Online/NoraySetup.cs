@@ -5,8 +5,12 @@ public partial class NoraySetup : Node {
 
     public static void InitializeBridge() {
         if (BridgeNode == null) {
-            // *** MAKE SURE THIS PATH MATCHES WHERE YOU SAVED NorayBridge.gd ***
             GDScript bridgeScript = GD.Load<GDScript>("res://Source/Scripts/NorayBridge.gd");
+            if (bridgeScript == null) {
+                GD.PrintErr("NorayBridge.gd could not be found!");
+                return;
+            }
+            
             BridgeNode = (Node)bridgeScript.New();
             Game.GameNode.AddChild(BridgeNode);
             
@@ -16,6 +20,7 @@ public partial class NoraySetup : Node {
             }));
             
             BridgeNode.Connect("host_failed", Callable.From<string>((err) => {
+                GD.PrintErr("Noray Host Error: " + err);
                 Online.FailedToStart(new OfflineMultiplayerPeer(), Error.CantCreate);
             }));
             
@@ -24,6 +29,7 @@ public partial class NoraySetup : Node {
             }));
 
             BridgeNode.Connect("client_failed", Callable.From<string>((err) => {
+                GD.PrintErr("Noray Client Error: " + err);
                 Online.FailedToStart(new OfflineMultiplayerPeer(), Error.CantConnect);
             }));
         }
@@ -31,13 +37,13 @@ public partial class NoraySetup : Node {
 
     public static bool NorayHost() {
         InitializeBridge();
-        BridgeNode.Call("start_host", Game.MAX_PLAYERS);
+        BridgeNode?.Call("start_host", Game.MAX_PLAYERS);
         return true; 
     }
 
     public static bool NorayJoin() {
         InitializeBridge();
-        BridgeNode.Call("start_client", Online.NorayHostOid);
+        BridgeNode?.Call("start_client", Online.NorayHostOid);
         return true; 
     }
 }
