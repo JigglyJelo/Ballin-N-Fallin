@@ -10,7 +10,11 @@
 
 [node name="Clouds" parent="." index="1" instance=ExtResource("2_o5u3f")]
 
-[node name="MidHills" type="Node2D" parent="BackgroundLayers" index="0"]
+[node name="MidHills" type="Parallax2D" parent="BackgroundLayers" index="0"]
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(3840, 0)
+repeat_times = 2
+follow_viewport = false
 
 [node name="Back" type="Sprite2D" parent="BackgroundLayers/MidHills" index="0"]
 self_modulate = Color(0.392157, 0.392157, 0.392157, 1)
@@ -25,7 +29,7 @@ region_rect = Rect2(775, 1, 1920, 73)
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/MidHills" index="1"]
 self_modulate = Color(0.666667, 0.666667, 0.666667, 1)
 texture_repeat = 2
-position = Vector2(0, 900)
+position = Vector2(0, 901)
 scale = Vector2(2, 2)
 texture = ExtResource("3_4iyqk")
 centered = false
@@ -34,30 +38,37 @@ region_rect = Rect2(1514, 1, 1920, 73)
 
 [node name="Bot" type="Polygon2D" parent="BackgroundLayers/MidHills" index="2"]
 color = Color(0.666667, 0.666667, 0.666667, 1)
-polygon = PackedVector2Array(0, 1043, 0, 1441, 3840, 1441, 3840, 1043)
+polygon = PackedVector2Array(0, 1043, 0, 2160, 3840, 2160, 3840, 1043)
 
-[node name="Mountains" type="Node2D" parent="BackgroundLayers" index="1"]
+[node name="Mountains" type="Parallax2D" parent="BackgroundLayers" index="1"]
 modulate = Color(0.784314, 0.784314, 0.784314, 1)
+scroll_scale = Vector2(0.2, 0.2)
+follow_viewport = false
 
 [node name="1" type="Sprite2D" parent="BackgroundLayers/Mountains" index="0"]
-position = Vector2(425, 1133)
+position = Vector2(425, 1231)
 rotation = -0.120428
 scale = Vector2(1.667, 1.667)
 texture = ExtResource("4_71upk")
 
 [node name="1F" type="Sprite2D" parent="BackgroundLayers/Mountains" index="1"]
-position = Vector2(1644, 1154)
+position = Vector2(1644, 1252)
 rotation = 0.10472
+scale = Vector2(1, 1)
 texture = ExtResource("4_71upk")
 flip_h = true
 
 [node name="1T" type="Sprite2D" parent="BackgroundLayers/Mountains" index="2"]
-position = Vector2(3098.06, 887.983)
+position = Vector2(3098.06, 985.983)
 rotation = 0.120428
 scale = Vector2(1.667, 2.22624)
 texture = ExtResource("4_71upk")
 
-[node name="Castle" type="Node2D" parent="BackgroundLayers" index="2"]
+[node name="Castle" type="Parallax2D" parent="BackgroundLayers" index="2"]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(3840, 0)
+repeat_times = 3
+follow_viewport = false
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Castle" index="0"]
 position = Vector2(0, 796)
