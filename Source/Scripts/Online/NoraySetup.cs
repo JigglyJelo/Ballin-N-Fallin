@@ -5,7 +5,7 @@ public partial class NoraySetup : Node {
 
     public static void InitializeBridge() {
         if (BridgeNode == null) {
-            GDScript bridgeScript = GD.Load<GDScript>("res://Source/Scripts/NorayBridge.gd");
+            GDScript bridgeScript = GD.Load<GDScript>("res://Source/Scripts/Online/NorayBridge.gd");
             if (bridgeScript == null) {
                 GD.PrintErr("NorayBridge.gd could not be found!");
                 return;
