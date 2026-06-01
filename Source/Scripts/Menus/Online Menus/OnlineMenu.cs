@@ -1,59 +1,124 @@
 using Godot;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public partial class OnlineMenu : VerticalMenu{
-	private Label joinLabel,hostLabel;
-	private TextInput usernameInput, ipInput, portInput;
-
+public partial class OnlineMenu : Menu2D{
+	private TextInput usernameInput;
+	private Label hostText,joinText,directText;
+	private Polygon2D hostButton,joinButton,directButton;
 	public override void _Ready(){
 		base._Ready();
-		Online.IsOnline = false;
-		Game.PlayerDatas = new List<PlayerData>();
-		Game.SpectatorDatas = new List<PlayerData>();
-		hostLabel = GetNode<Label>("Selections/Host200");
-		joinLabel = GetNode<Label>("Selections/Join200");
-		ipInput = GetNode<TextInput>("IpEntry");
-		portInput = GetNode<TextInput>("PortEntry");
 		usernameInput = GetNode<TextInput>("UsernameEntry");
-		ipInput.InputString = Online.Address;
-		portInput.InputString = Online.Port.ToString();
+		hostText = GetNode<Label>("Selections/HostButton/HostText");
+		hostButton = GetNode<Polygon2D>("Selections/HostButton");
+		joinText = GetNode<Label>("Selections/JoinButton/JoinText");
+		joinButton = GetNode<Polygon2D>("Selections/JoinButton");
+		directText = GetNode<Label>("Selections/DirectButton/DirectText");
+		directButton = GetNode<Polygon2D>("Selections/DirectButton");
 		usernameInput.InputString = Online.Username.Equals("Player") ? "" : Online.Username;
-		totalSelections = 2;
-		defaultFontSize = 2;
 		UpdateSelectionVisual();
-		if(Game.IsDedicatedServer) MenuChoose(1);
-		Online.Network = Online.NetworkType.Direct;
 	}
 
 	public override void _Process(double delta){
-		//InputChecks(delta);
-		for(byte i = 0; i < Game.MAX_PLAYERS; i++){
+		for(int i = 0; i < Game.MAX_PLAYERS; i++){
 			if(Input.IsActionJustReleased("Charge N Launch" + i)) Online.InputId = (PlayerData.PlayerInputDevice)i;
-		}
-		if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-			Online.InputId = PlayerData.PlayerInputDevice.Mouse;
 		}
 		InputChecks(delta);
 	}
 
-	private void HostLobby(){
-		//if(!ipInput.InputString.Equals("")) Online.Address = ipInput.InputString;
+	protected override void MenuChoose(int choice){
+		SFX.Play("Confirm");
 		Online.Username = ParseUsername();
+		switch(choice){
+			case 1:
+				Online.Network = Online.NetworkType.Noray;
+				HostLobby();
+				break;
+			case 2:
+				MenuScene.LoadMenu("Online/LobbyBrowserMenu");
+				QueueFree();
+				break;
+			default:
+				Online.Network = Online.NetworkType.Direct;
+				MenuScene.LoadMenu("Online/DirectConnectMenu");
+				QueueFree();
+				break;
+		}
+	}
+
+	private void HostLobby(){
 		OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
 		lobby.IsHost = true;
 		GetParent().AddChild(lobby);
 		QueueFree();
 	}
 
-	private void JoinLobby(){
-		if(!ipInput.InputString.Equals("")) Online.Address = ipInput.InputString;
-		Online.Username = ParseUsername();
-		ParsePort();
-		OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
-		lobby.IsHost = false;
-		GetParent().AddChild(lobby);
+	public override void MenuBack(){
+		SFX.Play("Back");
+		MenuScene.LoadMenu("MainMenu");
 		QueueFree();
+	}
+
+	protected override void MenuRight(){
+		SFX.Play("Move",Game.Random.Next(80,110)/100f);
+		if(Selection == 1 || Selection == 3) Selection++;
+		else if(Selection == 2) Selection = 1;
+		else Selection = 3;
+		UpdateSelectionVisual();
+	}
+
+	protected override void MenuLeft(){
+		SFX.Play("Move",Game.Random.Next(80,110)/100f);
+		if(Selection == 2 || Selection == 3) Selection--;
+		else if(Selection == 1) Selection = 2;
+		else Selection = 3;
+		UpdateSelectionVisual();
+	}
+
+	protected override void MenuUp(){
+		SFX.Play("Move",Game.Random.Next(80,110)/100f);
+		if(Selection > 2) Selection -= 2;
+		UpdateSelectionVisual();
+	}
+
+	protected override void MenuDown(){
+		SFX.Play("Move",Game.Random.Next(80,110)/100f);
+		if(Selection <= 2) Selection += 2;
+		UpdateSelectionVisual();
+	}
+
+	protected override void UpdateSelectionVisual(){
+		switch(Selection){
+			case 1:
+				//Selected
+				hostText.SelfModulate = SELECTED_COLOR;
+				hostButton.Color = SELECTED_BUTTON_COLOR;
+				//Non-Selected
+				joinText.SelfModulate = Colors.White;
+				joinButton.Color = BUTTON_COLOR;
+				directText.SelfModulate = Colors.White;
+				directButton.Color = BUTTON_COLOR;
+				break;
+			case 2:
+				//Selected
+				joinText.SelfModulate = SELECTED_COLOR;
+				joinButton.Color = SELECTED_BUTTON_COLOR;
+				//Non-Selected
+				hostText.SelfModulate = Colors.White;
+				hostButton.Color = BUTTON_COLOR;
+				directText.SelfModulate = Colors.White;
+				directButton.Color = BUTTON_COLOR;
+				break;
+			default:
+				//Selected
+				directText.SelfModulate = SELECTED_COLOR;
+				directButton.Color = SELECTED_BUTTON_COLOR;
+				//Non-Selected
+				hostText.SelfModulate = Colors.White;
+				hostButton.Color = BUTTON_COLOR;
+				joinText.SelfModulate = Colors.White;
+				joinButton.Color = BUTTON_COLOR;
+				break;
+		}
 	}
 
 	private string ParseUsername(){
@@ -67,30 +132,4 @@ public partial class OnlineMenu : VerticalMenu{
 		}
 		return "Player";
 	}
-
-	private bool ParsePort(){
-		if(!portInput.InputString.Equals("")){
-			try{
-				Online.Port = ushort.Parse(portInput.InputString);
-				return true;
-			}catch{
-				return false;
-			}
-		}
-		Online.Port = Online.DEFAULT_PORT;
-		return true;
-	}
-
-    protected override void MenuChoose(int choice){
-		SFX.Play("Confirm");
-		if(choice == 1) HostLobby();
-		else JoinLobby();
-	}
-
-    public override void MenuBack(){
-		SFX.Play("Back");
-		Online.IsOnline = false;
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "MainMenu.tscn").Instantiate());
-        QueueFree();
-    }
 }

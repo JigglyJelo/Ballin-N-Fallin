@@ -9,7 +9,7 @@ public partial class InterpolatedBody : RigidBody2D{
     public Vector2 NetworkVelocity = Vector2.Inf;
     public float NetworkAngularVelocity = Mathf.Inf;
     private const float NETWORK_LERP_WEIGHT = 0.5f;
-    private const float MIN_NET_INTERPOLATE_DISTANCE = 30;
+    private const float MIN_NET_INTERPOLATE_DISTANCE = 1;
 
     // Variables to track physics frames
     private Vector2 previousPosition;
