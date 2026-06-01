@@ -5,439 +5,439 @@ using System.Text.RegularExpressions;
 using System.Linq;
 
 public partial class OnlineLobby : Node{
-	private List<string> bannedSubstrings = new List<string>();
-	private List<string> bannedFullWords = new List<string>();
-	private List<string> trolledWords = new List<string>();
-	private PackedScene mainMenu;
-	public bool IsHost;
-	private Label connectedPlayersText;
-	private OnlinePlayerText[] playerTexts = new OnlinePlayerText[Game.MAX_PLAYERS];
-	public static OnlineLobby Lobby;
-	public static LobbySettingsMenu LobbySettingsMenu;
-	public bool LobbyShown = true;
-	private float startTimer = 0;
-	private bool starting = false;
-	private static Gradient pingGradient = GD.Load<Gradient>("res://Assets/Gradients/Ping.tres");
-	private Sprite2D banButton;
-	public long LobbyID = -1;
-	private bool inLobby = false;
+    private List<string> bannedSubstrings = new List<string>();
+    private List<string> bannedFullWords = new List<string>();
+    private List<string> trolledWords = new List<string>();
+    private PackedScene mainMenu;
+    public bool IsHost;
+    private Label connectedPlayersText;
+    private OnlinePlayerText[] playerTexts = new OnlinePlayerText[Game.MAX_PLAYERS];
+    public static OnlineLobby Lobby;
+    public static LobbySettingsMenu LobbySettingsMenu;
+    public bool LobbyShown = true;
+    private float startTimer = 0;
+    private bool starting = false;
+    private static Gradient pingGradient = GD.Load<Gradient>("res://Assets/Gradients/Ping.tres");
+    private Sprite2D banButton;
+    public long LobbyID = -1;
+    private bool inLobby = false;
 
-	public override void _Ready(){
-		Lobby = this;
-		if(!Online.IsOnline) Game.PlayerDatas = new List<PlayerData>();
-		else if(IsHost){
-			Game.PlayerDatas = new List<PlayerData>();
-    		PlayerData hostData = new PlayerData(Online.Username, Online.InputId, 1);
-    		hostData.PlayerColor = ColorMenu.DefaultColorOrder[0]; // Give host the first color
-    		Game.PlayerDatas.Add(hostData);
-		}
-		if(IsHost){
-			const string PATH = "res://Assets/Text/";
-			string textPath = PATH + "Banned Substrings.txt";
-			if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
-			
-			FileAccess file = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
-			
-			while(!file.EofReached()){
-				bannedSubstrings.Add(file.GetLine());
-			}
+    public override void _Ready(){
+        Lobby = this;
+        if(!Online.IsOnline) Game.PlayerDatas = new List<PlayerData>();
+        else if(IsHost){
+            Game.PlayerDatas = new List<PlayerData>();
+            PlayerData hostData = new PlayerData(Online.Username, Online.InputId, 1);
+            hostData.PlayerColor = ColorMenu.DefaultColorOrder[0]; // Give host the first color
+            Game.PlayerDatas.Add(hostData);
+        }
+        if(IsHost){
+            const string PATH = "res://Assets/Text/";
+            string textPath = PATH + "Banned Substrings.txt";
+            if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
+            
+            using var fileSub = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
+            if(fileSub != null) {
+                while(!fileSub.EofReached()) bannedSubstrings.Add(fileSub.GetLine());
+            }
 
-			textPath = PATH + "Punishment Names.txt";
-			if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
-			file = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
-			while(!file.EofReached()){
-				trolledWords.Add(file.GetLine());
-			}
+            textPath = PATH + "Punishment Names.txt";
+            if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
+            using var fileNames = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
+            if(fileNames != null){
+                while(!fileNames.EofReached()) trolledWords.Add(fileNames.GetLine());
+            }
 
-			textPath = PATH + "Banned Full Words.txt";
-			if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
-			file = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
-			while(!file.EofReached()){
-				bannedFullWords.Add(file.GetLine());
-			}
-		}
-		
-		mainMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/MainMenu.tscn");
-		Game.GameNode.Multiplayer.PeerConnected += PeerConnected;
-		Game.GameNode.Multiplayer.PeerDisconnected += PeerDisconnected;
-		Game.GameNode.Multiplayer.ConnectedToServer += ConnectedToServer;
-		PackedScene playerTextScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/OnlinePlayerText.tscn");
-		for(int i = 0; i < playerTexts.Length; i++){
-			OnlinePlayerText playerText = playerTextScene.Instantiate<OnlinePlayerText>();
-			playerText.Name = "Player " + (i+1) + " Text";
-			playerText.Position = new Vector2(450,(200*i) - 750);
-			GetNode("PlayerTexts").AddChild(playerText);
-			playerTexts[i] = playerText;
-			playerText.Id = i;
-			playerText.Visible = false;
-		}
-		GD.Print(Online.IsOnline);
-		if(!Online.IsOnline){
-			if(IsHost){
-				//Online.PlayerColors = new List<Color>{
-				//	Game.Colors["Orange"],
-				//};
-				HostLobby();
-			}else JoinLobby();
-		}else if(Online.IsHost()) Multiplayer.MultiplayerPeer.RefuseNewConnections = false;
-		if(Online.Network != Online.NetworkType.Steam || Online.Network == Online.NetworkType.Steam && Online.IsOnline){
-			JoinedLobby();
-		}
-	}
-
-	public override void _Process(double delta){
-		if(starting){
-			startTimer += (float)delta;
-			if(startTimer >= 1){
-				MenuScene.MenuBackgroundFadeout();
-				GetTree().Paused = true;
-				SceneTransitioner.SwitchToScene(Game.SceneType.Game);
-			}
-		}
-	}
-
-	private float unableToJoinLobbyTimer = 0;
-    public override void _PhysicsProcess(double delta){
-		if(Online.IsHost() && Online.IsOnlinePeer() && inLobby){
-			KickBanPlayerButtons();
-		}else if(!inLobby){
-			unableToJoinLobbyTimer += (float)delta;
-			if(unableToJoinLobbyTimer >= 5){
-				Online.Disconnect("Failed to connect to lobby");
-			}
-		}
+            textPath = PATH + "Banned Full Words.txt";
+            if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
+            using var fileWords = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
+            if(fileWords != null){
+                while(!fileWords.EofReached()) bannedFullWords.Add(fileWords.GetLine());
+            }
+        }
+        
+        mainMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/MainMenu.tscn");
+        Game.GameNode.Multiplayer.PeerConnected += PeerConnected;
+        Game.GameNode.Multiplayer.PeerDisconnected += PeerDisconnected;
+        Game.GameNode.Multiplayer.ConnectedToServer += ConnectedToServer;
+        PackedScene playerTextScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/OnlinePlayerText.tscn");
+        for(int i = 0; i < playerTexts.Length; i++){
+            OnlinePlayerText playerText = playerTextScene.Instantiate<OnlinePlayerText>();
+            playerText.Name = "Player " + (i+1) + " Text";
+            playerText.Position = new Vector2(450,(200*i) - 750);
+            GetNode("PlayerTexts").AddChild(playerText);
+            playerTexts[i] = playerText;
+            playerText.Id = i;
+            playerText.Visible = false;
+        }
+        
+        GD.Print(Online.IsOnline);
+        if(!Online.IsOnline){
+            if(IsHost) HostLobby();
+            else JoinLobby();
+        }else if(Online.IsHost()) Multiplayer.MultiplayerPeer.RefuseNewConnections = false;
+        
+        if(Online.Network != Online.NetworkType.Steam || (Online.Network == Online.NetworkType.Steam && Online.IsOnline)){
+            JoinedLobby();
+        }
     }
 
-	private void KickBanPlayerButtons(){
-		Vector2 globalMousePosition = banButton.GetGlobalMousePosition();
+    public override void _Process(double delta){
+        if(starting){
+            startTimer += (float)delta;
+            if(startTimer >= 1){
+                MenuScene.MenuBackgroundFadeout();
+                GetTree().Paused = true;
+                SceneTransitioner.SwitchToScene(Game.SceneType.Game);
+            }
+        }
+    }
+
+    private float unableToJoinLobbyTimer = 0;
+    public override void _PhysicsProcess(double delta){
+        if(Online.IsHost() && Online.IsOnlinePeer() && inLobby){
+            KickBanPlayerButtons();
+        }else if(!inLobby){
+            unableToJoinLobbyTimer += (float)delta;
+            if(unableToJoinLobbyTimer >= 5){
+                Online.Disconnect("Failed to connect to lobby");
+            }
+        }
+    }
+
+    private void KickBanPlayerButtons(){
+        Vector2 globalMousePosition = banButton.GetGlobalMousePosition();
         if(globalMousePosition.X > 192 + 450 && globalMousePosition.X < 1920){
-			//Check each player text to see if any are hovered over
-			for(int i = 0; i < Game.PlayerDatas.Count; i++){
-				//Player text is hovered
-				if(globalMousePosition.Y > playerTexts[i].GlobalPosition.Y && globalMousePosition.Y < playerTexts[i].GlobalPosition.Y + 128){
-					banButton.GlobalPosition = new Vector2(banButton.GlobalPosition.X, playerTexts[i].GlobalPosition.Y);
-					banButton.Visible = true;
-					//Ban button hovered over
-					if(globalMousePosition.X > banButton.GlobalPosition.X && globalMousePosition.X < banButton.GlobalPosition.X + 128){
-						banButton.SelfModulate = new Color(0.8f,0,0);
-						//Click button
-						if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-							int banUUID = Game.PlayerDatas[i].UUID;
-							GD.Print("Banned " + Game.PlayerDatas[i].Username);
-							Online.BanPlayer(banUUID);
-							Rpc(nameof(UpdatePlayerTexts));
-						}else if(Input.IsActionJustReleased("Slam Mouse")){
-							int kickUUID = Game.PlayerDatas[i].UUID;
-							GD.Print("Kicked " + Game.PlayerDatas[i].Username);
-							Online.KickPlayer(kickUUID);
-							Rpc(nameof(UpdatePlayerTexts));
-						}
-					}else{
-						banButton.SelfModulate = new Color(1,0,0);
-					}
-					break;
-				}
-				//None are hovered hide ban button
-				banButton.Visible = false;
-			}
-		}else{
-			banButton.Visible = false;
-		}
-	}
+            for(int i = 0; i < Game.PlayerDatas.Count; i++){
+                if(globalMousePosition.Y > playerTexts[i].GlobalPosition.Y && globalMousePosition.Y < playerTexts[i].GlobalPosition.Y + 128){
+                    banButton.GlobalPosition = new Vector2(banButton.GlobalPosition.X, playerTexts[i].GlobalPosition.Y);
+                    banButton.Visible = true;
+                    if(globalMousePosition.X > banButton.GlobalPosition.X && globalMousePosition.X < banButton.GlobalPosition.X + 128){
+                        banButton.SelfModulate = new Color(0.8f,0,0);
+                        if(Input.IsActionJustReleased("Charge N Launch Mouse")){
+                            int banUUID = Game.PlayerDatas[i].UUID;
+                            GD.Print("Banned " + Game.PlayerDatas[i].Username);
+                            Online.BanPlayer(banUUID);
+                            Rpc(nameof(UpdatePlayerTexts));
+                        }else if(Input.IsActionJustReleased("Slam Mouse")){
+                            int kickUUID = Game.PlayerDatas[i].UUID;
+                            GD.Print("Kicked " + Game.PlayerDatas[i].Username);
+                            Online.KickPlayer(kickUUID);
+                            Rpc(nameof(UpdatePlayerTexts));
+                        }
+                    }else{
+                        banButton.SelfModulate = new Color(1,0,0);
+                    }
+                    return;
+                }
+            }
+        }
+        banButton.Visible = false;
+    }
 
-    private void HostLobby(){
-		PingGetter.LastPing = 0;
-		PingGetter.Pings[0] = 0;
-		GD.Print("Host");
-		if(!Game.IsDedicatedServer){
-			switch(Online.Network){
-				case Online.NetworkType.Direct: SendPlayerInfoDirect(Online.Username,(byte)Online.InputId,1); break;
-			}
-		}
-		switch(Online.Network){
-			case Online.NetworkType.Direct:
-				if(EnetSetup.EnetHost()){
-					Online.IsOnline = true;
-					Online.BannedIps = new List<string>();
-					CreatePingGetter();
-				}else{
-					Online.IsOnline = false;
-					Game.PlayerDatas = new List<PlayerData>();
-				}
-				break;
-			case Online.NetworkType.Steam:
-				Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
-				AddChild(steamSetupNode);
-				steamSetupNode.Call("host_lobby");
-				CreatePingGetter();
-				break;
-		}
-	}
+    private void HostLobby() {
+        PingGetter.LastPing = 0;
+        PingGetter.Pings[0] = 0;
+        GD.Print("Host");
+        
+        if (!Game.IsDedicatedServer && (Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray)) {
+            SendPlayerInfoDirect(Online.Username, (byte)Online.InputId, 1);
+        }
 
-	public void JoinedLobby(){
-		AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/LobbySettingsMenu.tscn").Instantiate<LobbySettingsMenu>());
-		LobbySettingsMenu = GetNode<LobbySettingsMenu>("LobbySettingsMenu");
-		banButton = GetNode<Sprite2D>("PlayerTexts/HostPlayerOptions/BanButton");
-		UpdatePlayerTexts();
-		inLobby = true;
-	}
+        switch (Online.Network) {
+            case Online.NetworkType.Direct:
+                if (EnetSetup.EnetHost()) InitializeSuccessfulHost();
+                else FailHostSetup();
+                break;
+            case Online.NetworkType.Noray:
+                if (NoraySetup.NorayHost()) InitializeSuccessfulHost();
+                else FailHostSetup();
+                break;
+            case Online.NetworkType.Steam:
+                Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
+                AddChild(steamSetupNode);
+                steamSetupNode.Call("host_lobby");
+                CreatePingGetter();
+                break;
+        }
 
-	public void FailedToConnectSteamLobby(MultiplayerPeer peer, int condition){
-		GD.Print("Steam Lobby Fail: " + condition);
-		Online.FailedToStart(peer,Error.PrinterOnFire);
-	}
+        void InitializeSuccessfulHost() {
+            Online.IsOnline = true;
+            Online.BannedIps = new List<string>();
+            CreatePingGetter();
+        }
 
-	private void JoinLobby(){
-		switch(Online.Network){
-			case Online.NetworkType.Direct:
-				if(EnetSetup.EnetJoin()){
-					Online.IsOnline = true;
-				}else{
-					Online.IsOnline = false;
-					SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
-				}
-				break;
-			case Online.NetworkType.Steam:
-				Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
-				AddChild(steamSetupNode);
-				steamSetupNode.Call("join_lobby",LobbyID);
-				break;
-		}
-	}
+        void FailHostSetup() {
+            Online.IsOnline = false;
+            Game.PlayerDatas = new List<PlayerData>();
+        }
+    }
 
-	private void ConnectedToServer(){
-		GD.Print("Connected");
-		if(Online.Network == Online.NetworkType.Direct) RpcId(1,nameof(SendPlayerInfoDirect),Online.Username,(byte)Online.InputId,Game.GameNode.Multiplayer.GetUniqueId());
-		CreatePingGetter(); //if(Online.Network == Online.NetworkType.Direct) 
-	}
+    public void JoinedLobby(){
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/LobbySettingsMenu.tscn").Instantiate<LobbySettingsMenu>());
+        LobbySettingsMenu = GetNode<LobbySettingsMenu>("LobbySettingsMenu");
+        banButton = GetNode<Sprite2D>("PlayerTexts/HostPlayerOptions/BanButton");
+        UpdatePlayerTexts();
+        inLobby = true;
+    }
 
-	private void PeerConnected(long id){
-		//If host & new player joined
-		if(Online.IsHost() && id != 1){
-			//Don't let Banned players connect
-			if(Online.Network == Online.NetworkType.Direct && Online.BannedIps.Contains(Online.GetIp((int)id))){
-				(Game.GameNode.Multiplayer.MultiplayerPeer as ENetMultiplayerPeer).GetPeer((int)id).PeerDisconnectNow();
-				return;
-			}
-			Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
-			Color playerColor = Colors.White;
-			foreach(Color color in ColorMenu.DefaultColorOrder){
-				if(!Game.PlayerDatas.Any(player => player.PlayerColor == color)){
-					playerColor = color;
-					break;
-				}
-			}
-		}
-	}
+    public void FailedToConnectSteamLobby(MultiplayerPeer peer, int condition){
+        GD.Print("Steam Lobby Fail: " + condition);
+        Online.FailedToStart(peer,Error.PrinterOnFire);
+    }
 
-	private void PeerDisconnected(long id){
-		if(Online.IsHost()) Rpc(nameof(UpdatePlayerTexts));
-	}
+    private void JoinLobby() {
+        bool joinSuccess = false;
+        
+        switch (Online.Network) {
+            case Online.NetworkType.Direct:
+                joinSuccess = EnetSetup.EnetJoin();
+                break;
+            case Online.NetworkType.Noray:
+                joinSuccess = NoraySetup.NorayJoin();
+                break;
+            case Online.NetworkType.Steam:
+                Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
+                AddChild(steamSetupNode);
+                steamSetupNode.Call("join_lobby", LobbyID);
+                return;
+        }
 
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void SendPlayerInfoDirect(string username,byte inputId, int uuid){
-		if(Online.Network == Online.NetworkType.Direct){
-			if(Online.IsHost() && GetTree().GetMultiplayer().GetRemoteSenderId() != 0){
-				uuid = GetTree().GetMultiplayer().GetRemoteSenderId();
-			}
-			if(Online.IsHost() || GetTree().GetMultiplayer().GetRemoteSenderId() == 0){
-				username = Regex.Replace(username, "[^a-zA-Z0-9 ]", "");
-				username = BadNameCheck(username,uuid);
-				PlayerData playerInfo = new PlayerData(username,(PlayerData.PlayerInputDevice)inputId,uuid);
-				if(!Game.PlayerDatas.Contains(playerInfo)){
-				   foreach(Color color in ColorMenu.DefaultColorOrder){
-				       if(!Game.PlayerDatas.Any(p => p.PlayerColor == color)){
-				           playerInfo.PlayerColor = color;
-				           break;
-				       }
-				   }
-				   Game.PlayerDatas.Add(playerInfo);
-				   Game.TotalPlayers = Game.PlayerDatas.Count;
-				}
-			}
+        if(joinSuccess){
+            Online.IsOnline = true;
+        }else{
+            Online.IsOnline = false;
+            SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
+        }
+    }
 
-			if(Game.GameNode.Multiplayer.IsServer()){
-				string[] usernames = new string[Game.PlayerDatas.Count];
-				byte[] inputIds = new byte[Game.PlayerDatas.Count];
-				int[] uuids = new int[Game.PlayerDatas.Count];
-				Color[] colors = new Color[Game.PlayerDatas.Count];
-				for(int i = 0; i < Game.PlayerDatas.Count; i++){
-					usernames[i] = Game.PlayerDatas[i].Username;
-					inputIds[i] = (byte)Game.PlayerDatas[i].InputDevice;
-					uuids[i] = Game.PlayerDatas[i].UUID;
-					colors[i] = Game.PlayerDatas[i].PlayerColor;
-				}
-				Rpc(nameof(SyncPlayerInfosDirect),usernames,inputIds,uuids,colors);
-			}
-			UpdatePlayerTexts();
-		}else{
-			GD.PrintErr("Wrong SendPlayerInfo Rpc is being called this is the Direct function");
-		}
-	}
+    private void ConnectedToServer(){
+        GD.Print("Connected");
+        if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray) {
+            RpcId(1, nameof(SendPlayerInfoDirect), Online.Username, (byte)Online.InputId, Game.GameNode.Multiplayer.GetUniqueId());
+        }
+        CreatePingGetter();
+    }
 
-	[Rpc(MultiplayerApi.RpcMode.Authority,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void SyncPlayerInfosDirect(string[] usernames, byte[] inputIds, int[] uuids, Color[] colors){
-		if(Online.Network == Online.NetworkType.Direct){
-			Game.PlayerDatas = new List<PlayerData>();
-			for(int i = 0; i < inputIds.Length; i++){
-				PlayerData playerInfo = new PlayerData(usernames[i],(PlayerData.PlayerInputDevice)inputIds[i],uuids[i]);
-				playerInfo.PlayerColor = colors[i];
-				Game.PlayerDatas.Add(playerInfo);
-			}
-			UpdatePlayerTexts();
-		}
-	}
+    private void PeerConnected(long id) {
+        if (Online.IsHost() && id != 1) {
+            if (Online.BannedIps.Contains(Online.GetIp((int)id))) {
+                Game.GameNode.Multiplayer.MultiplayerPeer.DisconnectPeer((int)id);
+                return;
+            }
+            
+            Rpc(nameof(UpdateLobbySettings), Tour.IsTour, Tour.TotalScore, Tour.CurrentTour.ItemsEnabled, (byte)Game.StompSetting, Online.Buffer);
+            
+            Color playerColor = Colors.White;
+            foreach (Color color in ColorMenu.DefaultColorOrder) {
+                if (!Game.PlayerDatas.Any(player => player.PlayerColor == color)) {
+                    playerColor = color;
+                    break;
+                }
+            }
+        }
+    }
 
-	private string BadNameCheck(string username,int uuid){
-		string simplifiedUsername = username.ToUpper().Replace(" ","");
-		bool bad = false;
-		foreach(string badWord in bannedSubstrings){
-			if(simplifiedUsername.Contains(badWord.ToUpper())){
-				GD.Print(username);
-				username = getTrollName();
-				RpcId(uuid,nameof(NamePunishment));
-				bad = true;
-				break;
-			}
-		}
-		if(!bad){
-			foreach(string badName in bannedFullWords){
-				if(simplifiedUsername.Equals(badName.ToUpper())){
-					username = getTrollName();
-					RpcId(uuid,nameof(NamePunishment));
-					break;
-				}
-			}
-		}
-		return username;
-		string getTrollName(){
-			switch(uuid){
-				case 1: 
-					return trolledWords[Game.Random.Next(0,trolledWords.Count)];
-				default:
-					int bitsToKeep = (int)MathF.Ceiling(MathF.Log2(trolledWords.Count));
-        			// Create a mask with the lower bitsToKeep bits set to 1
-        			int mask = (1 << bitsToKeep) - 1;
-        			// Apply the mask to trim the bits
-        			int trimmedUuid = uuid & mask;
-        			// Use modulus operation to get the index
-        			int index = trimmedUuid % trolledWords.Count;
-					return trolledWords[index];
-			}
-			/*
-			if(OS.HasEnvironment("USERNAME")){
-				return OS.GetEnvironment("USERNAME");
-			}else{
-				
-			}
-			*/
-		}
-	}
+    private void PeerDisconnected(long id){
+        if(Online.IsHost()) Rpc(nameof(UpdatePlayerTexts));
+    }
 
-	private void ShutdownLobby(){
-		GD.PrintErr("Host Disconnected");
-	}
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void SendPlayerInfoDirect(string username,byte inputId, int uuid){
+        if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray){
+            if(Online.IsHost() && GetTree().GetMultiplayer().GetRemoteSenderId() != 0){
+                uuid = GetTree().GetMultiplayer().GetRemoteSenderId();
+            }
+            if(Online.IsHost() || GetTree().GetMultiplayer().GetRemoteSenderId() == 0){
+                username = Regex.Replace(username, "[^a-zA-Z0-9 ]", "");
+                username = BadNameCheck(username,uuid);
+                PlayerData playerInfo = new PlayerData(username,(PlayerData.PlayerInputDevice)inputId,uuid);
+                if(!Game.PlayerDatas.Contains(playerInfo)){
+                    foreach(Color color in ColorMenu.DefaultColorOrder){
+                        if(!Game.PlayerDatas.Any(p => p.PlayerColor == color)){
+                            playerInfo.PlayerColor = color;
+                            break;
+                        }
+                    }
+                    Game.PlayerDatas.Add(playerInfo);
+                    Game.TotalPlayers = Game.PlayerDatas.Count;
+                }
+            }
 
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void UpdatePlayerTexts(){
-		for(int i = 0; i < playerTexts.Length; i++){
-			OnlinePlayerText playerText = playerTexts[i];
-			try{
-				playerText.UUID = Game.PlayerDatas[i].UUID;
-			}catch{
-				playerText.UUID = 0;
-			}
-			playerText.ResetPlayerText();
-		}
-	}
+            if(Game.GameNode.Multiplayer.IsServer()){
+                string[] usernames = new string[Game.PlayerDatas.Count];
+                byte[] inputIds = new byte[Game.PlayerDatas.Count];
+                int[] uuids = new int[Game.PlayerDatas.Count];
+                Color[] colors = new Color[Game.PlayerDatas.Count];
+                for(int i = 0; i < Game.PlayerDatas.Count; i++){
+                    usernames[i] = Game.PlayerDatas[i].Username;
+                    inputIds[i] = (byte)Game.PlayerDatas[i].InputDevice;
+                    uuids[i] = Game.PlayerDatas[i].UUID;
+                    colors[i] = Game.PlayerDatas[i].PlayerColor;
+                }
+                Rpc(nameof(SyncPlayerInfosDirect),usernames,inputIds,uuids,colors);
+            }
+            UpdatePlayerTexts();
+        }else{
+            GD.PrintErr("Wrong SendPlayerInfo Rpc is being called this is the Direct function");
+        }
+    }
 
-	public static Color GetPingTextColor(int ping){
-		return pingGradient.Sample((float)ping/500);
-	}
+    [Rpc(MultiplayerApi.RpcMode.Authority,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void SyncPlayerInfosDirect(string[] usernames, byte[] inputIds, int[] uuids, Color[] colors){
+        if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray){
+            Game.PlayerDatas = new List<PlayerData>();
+            for(int i = 0; i < inputIds.Length; i++){
+                PlayerData playerInfo = new PlayerData(usernames[i],(PlayerData.PlayerInputDevice)inputIds[i],uuids[i]);
+                playerInfo.PlayerColor = colors[i];
+                Game.PlayerDatas.Add(playerInfo);
+            }
+            UpdatePlayerTexts();
+        }
+    }
 
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = false,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void SyncPlayerColors(Color[] playerColors){
-		for(int i = 0; i < playerColors.Length; i++){
-			Game.PlayerDatas[i].PlayerColor = playerColors[i];
-		}
-		UpdatePlayerTexts();
-	}
+    private string BadNameCheck(string username,int uuid){
+        string simplifiedUsername = username.ToUpper().Replace(" ","");
+        bool bad = false;
+        foreach(string badWord in bannedSubstrings){
+            if(simplifiedUsername.Contains(badWord.ToUpper())){
+                GD.Print(username);
+                username = getTrollName();
+                RpcId(uuid,nameof(NamePunishment));
+                bad = true;
+                break;
+            }
+        }
+        if(!bad){
+            foreach(string badName in bannedFullWords){
+                if(simplifiedUsername.Equals(badName.ToUpper())){
+                    username = getTrollName();
+                    RpcId(uuid,nameof(NamePunishment));
+                    break;
+                }
+            }
+        }
+        return username;
+        
+        string getTrollName(){
+            switch(uuid){
+                case 1: 
+                    return trolledWords[Game.Random.Next(0,trolledWords.Count)];
+                default:
+                    int bitsToKeep = (int)MathF.Ceiling(MathF.Log2(trolledWords.Count));
+                    int mask = (1 << bitsToKeep) - 1;
+                    int trimmedUuid = uuid & mask;
+                    int index = trimmedUuid % trolledWords.Count;
+                    return trolledWords[index];
+            }
+        }
+    }
 
-	public static void ShowLobby(bool isShown){
-		Lobby.LobbyShown = isShown;
-		LobbySettingsMenu.Visible = isShown;
-		foreach(Node node in LobbySettingsMenu.GetNode("Selections").GetChildren()){
-			if(node is Label label){
-				label.Visible = isShown;
-			}
-		}
-		Lobby.GetNode<Node2D>("PlayerTexts").Visible = isShown;
-		if(Game.UsingMouse()) Lobby.GetNode<Node2D>("LobbySettingsMenu/MenuBackButton").Visible = isShown;
-	}
+    private void ShutdownLobby(){
+        GD.PrintErr("Host Disconnected");
+    }
 
-	private void CreatePingGetter(){
-		if(Game.GameNode.GetNodeOrNull("PingGetter") == null){
-			PingGetter pingNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/PingGetter.tscn").Instantiate<PingGetter>();
-			Game.GameNode.AddChild(pingNode);
-			Game.GameNode.MoveChild(pingNode,0);
-		}
-	}
+    [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void UpdatePlayerTexts(){
+        for(int i = 0; i < playerTexts.Length; i++){
+            OnlinePlayerText playerText = playerTexts[i];
+            try{
+                playerText.UUID = Game.PlayerDatas[i].UUID;
+            }catch{
+                playerText.UUID = 0;
+            }
+            playerText.ResetPlayerText();
+        }
+    }
 
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void UpdateLobbySettings(bool isTour,int points, bool itemsOn,byte stompSetting, float buffer){
-		Tour.IsTour = isTour;
-		Tour.TotalScore = points;
-		Tour.CurrentTour.ItemsEnabled = itemsOn;
-		Game.StompSetting = (Game.StompSettingEnum)stompSetting;
-		Online.Buffer = buffer;
-		if(LobbySettingsMenu != null) LobbySettingsMenu.UpdateTexts();
-	}
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void StartingGame(Mode.GameMode mode,string level,string folderPath){
-		GD.Print("Start");
-		Online.IsOnline = true;
-		Tour.ResetPlayerScores();
-		Game.TotalPlayers = Game.PlayerDatas.Count;
-		Game.CurrentMode = mode;
-		Game.SetLevel(Game.CurrentMode,level,folderPath);
-		starting = true;
-	}
+    public static Color GetPingTextColor(int ping){
+        return pingGradient.Sample((float)ping/500);
+    }
 
-	public void StartGame(){
-		Game.GameNode.Multiplayer.MultiplayerPeer.RefuseNewConnections = true;
-		Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
-		Rpc(nameof(StartingGame),(byte)Game.CurrentMode,Game.CurrentLevelName,Game.CurrentFolderPath);
-	}
+    [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = false,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void SyncPlayerColors(Color[] playerColors){
+        for(int i = 0; i < playerColors.Length; i++){
+            Game.PlayerDatas[i].PlayerColor = playerColors[i];
+        }
+        UpdatePlayerTexts();
+    }
 
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SwitchColor(Color color){
-		if(Online.IsHost()){
-			int senderId = GetTree().GetMultiplayer().GetRemoteSenderId();
-			for(int i = 0; i < Game.PlayerDatas.Count; i++){
-				if(Game.PlayerDatas[i].UUID == senderId){
-					for(int j = 0; j < Game.PlayerDatas.Count; j++){
-						if(color.Equals(Game.PlayerDatas[j].PlayerColor)){
-							return;
-						}
-					}
-					Game.PlayerDatas[i].PlayerColor = color;
-					Color[] playerColors = new Color[Game.PlayerDatas.Count];
-					for(int j = 0; j < playerColors.Length; j++){
-						playerColors[j] = Game.PlayerDatas[j].PlayerColor;
-					}
-					Rpc(nameof(SyncPlayerColors),playerColors);
-					UpdatePlayerTexts();
-					break;
-				}
-			}
-		}else{
-			GD.PrintErr(OnlineErrorMessages.NonHostCallErrorMessage());
-		}
-	}
+    public static void ShowLobby(bool isShown){
+        Lobby.LobbyShown = isShown;
+        LobbySettingsMenu.Visible = isShown;
+        foreach(Node node in LobbySettingsMenu.GetNode("Selections").GetChildren()){
+            if(node is Label label){
+                label.Visible = isShown;
+            }
+        }
+        Lobby.GetNode<Node2D>("PlayerTexts").Visible = isShown;
+        if(Game.UsingMouse()) Lobby.GetNode<Node2D>("LobbySettingsMenu/MenuBackButton").Visible = isShown;
+    }
 
-	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void NamePunishment(){
-		OS.ShellOpen("https://youtu.be/kcvxMGnptvw?si=xGOOLr9WjdSb5fw_");
-		GD.Print("Naugthy");
-	}
+    private void CreatePingGetter(){
+        if(Game.GameNode.GetNodeOrNull("PingGetter") == null){
+            PingGetter pingNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/PingGetter.tscn").Instantiate<PingGetter>();
+            Game.GameNode.AddChild(pingNode);
+            Game.GameNode.MoveChild(pingNode,0);
+        }
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void UpdateLobbySettings(bool isTour,int points, bool itemsOn,byte stompSetting, float buffer){
+        Tour.IsTour = isTour;
+        Tour.TotalScore = points;
+        Tour.CurrentTour.ItemsEnabled = itemsOn;
+        Game.StompSetting = (Game.StompSettingEnum)stompSetting;
+        Online.Buffer = buffer;
+        if(LobbySettingsMenu != null) LobbySettingsMenu.UpdateTexts();
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void StartingGame(Mode.GameMode mode,string level,string folderPath){
+        GD.Print("Start");
+        Online.IsOnline = true;
+        Tour.ResetPlayerScores();
+        Game.TotalPlayers = Game.PlayerDatas.Count;
+        Game.CurrentMode = mode;
+        Game.SetLevel(Game.CurrentMode,level,folderPath);
+        starting = true;
+    }
+
+    public void StartGame(){
+        Game.GameNode.Multiplayer.MultiplayerPeer.RefuseNewConnections = true;
+        Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
+        Rpc(nameof(StartingGame),(byte)Game.CurrentMode,Game.CurrentLevelName,Game.CurrentFolderPath);
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void SwitchColor(Color color){
+        if(Online.IsHost()){
+            int senderId = GetTree().GetMultiplayer().GetRemoteSenderId();
+            for(int i = 0; i < Game.PlayerDatas.Count; i++){
+                if(Game.PlayerDatas[i].UUID == senderId){
+                    for(int j = 0; j < Game.PlayerDatas.Count; j++){
+                        if(color.Equals(Game.PlayerDatas[j].PlayerColor)){
+                            return;
+                        }
+                    }
+                    Game.PlayerDatas[i].PlayerColor = color;
+                    Color[] playerColors = new Color[Game.PlayerDatas.Count];
+                    for(int j = 0; j < playerColors.Length; j++){
+                        playerColors[j] = Game.PlayerDatas[j].PlayerColor;
+                    }
+                    Rpc(nameof(SyncPlayerColors),playerColors);
+                    UpdatePlayerTexts();
+                    break;
+                }
+            }
+        }else{
+            GD.PrintErr(OnlineErrorMessages.NonHostCallErrorMessage());
+        }
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void NamePunishment(){
+        OS.ShellOpen("https://youtu.be/kcvxMGnptvw?si=xGOOLr9WjdSb5fw_");
+        GD.Print("Naugthy");
+    }
 }

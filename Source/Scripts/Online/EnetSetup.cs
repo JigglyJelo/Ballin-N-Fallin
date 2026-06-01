@@ -1,7 +1,7 @@
 using Godot;
-using System.Collections.Generic;
 
 public partial class EnetSetup{
+	private const bool ADD_TO_SERVER_LIST = true;
 	public static bool EnetHost(){
 		ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
 		Error enetError;
@@ -19,17 +19,14 @@ public partial class EnetSetup{
 			peer.Host.ChannelLimit((int)Online.TransferChannelEnum.SendHostPing + 3);
 			Game.GameNode.Multiplayer.MultiplayerPeer.RefuseNewConnections = false;
 			GD.Print("Hosting");
-			Online.PingServer = new UdpServer();
-			Error udpError = Online.PingServer.Listen((ushort)(Online.Port+1));
-			if(udpError != Error.Ok){
-				Online.PingServer.Stop();
-				Online.FailedToStart(peer,udpError);
-				return false;
-			}else{
-				return true;
-			}
+			if(ADD_TO_SERVER_LIST){
+                NohubHostManager hostManager = new NohubHostManager();
+                string enetAddress = $"enet://{Online.Address}:{Online.Port}";
+                hostManager.Initialize(enetAddress, Online.Username + "'s Game");
+                Game.GameNode.AddChild(hostManager);
+            }
+			return true;
 		}
-
 	}
 
 	public static bool EnetJoin(){
@@ -42,12 +39,6 @@ public partial class EnetSetup{
 			Game.GameNode.Multiplayer.MultiplayerPeer = peer;
 			peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 			GD.Print("Joining...");
-		}
-		Online.PingClient = new PacketPeerUdp();
-		Error pingError = Online.PingClient.ConnectToHost(Online.Address,Online.Port+1);
-		if(pingError != Error.Ok){
-			Online.FailedToStart(peer,pingError);
-			return false;
 		}
 		return true;
 	}

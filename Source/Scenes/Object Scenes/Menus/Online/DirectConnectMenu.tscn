@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://db6t7s74qmr61"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/DirectConnectMenu.cs" id="1_7ghss"]
+[ext_resource type="PackedScene" uid="uid://benlioo3kdhb3" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/TextInput.tscn" id="2_22kqc"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_rl4n2"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_mxl7y"]
+
+[node name="Online Menu" type="Node2D"]
+script = ExtResource("1_7ghss")
+
+[node name="IpEntry" parent="." instance=ExtResource("2_22kqc")]
+position = Vector2(-1008, 432)
+color = Color(0, 0, 0, 0.501961)
+polygon = PackedVector2Array(-64, 56, 2088, 56, 2088, 312, -64, 312)
+allowedKeys = 3
+startingString = "127.0.0.1"
+placeholderText = "Enter IP Address"
+maxLength = 50
+
+[node name="PortEntry" parent="." instance=ExtResource("2_22kqc")]
+position = Vector2(-1008, 720)
+color = Color(0, 0, 0, 0.501961)
+polygon = PackedVector2Array(-64, 56, 2088, 56, 2088, 312, -64, 312)
+allowedKeys = 1
+startingString = "8411"
+placeholderText = "Enter Port"
+maxLength = 5
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="Host200" type="Label" parent="Selections"]
+offset_left = -251.0
+offset_top = -483.0
+offset_right = 255.0
+offset_bottom = -249.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(253, 117)
+text = "Host"
+label_settings = ExtResource("3_rl4n2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Join200" type="Label" parent="Selections"]
+offset_left = -236.0
+offset_top = 75.0
+offset_right = 232.0
+offset_bottom = 309.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(234, 117)
+text = "Join"
+label_settings = ExtResource("3_rl4n2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_mxl7y")]
+position = Vector2(1750, 970)
