@@ -1,0 +1,229 @@
+using Godot;
+using System.Collections.Generic;
+
+public partial class LobbyBrowserMenu : ScrollableMenu{
+    private List<string> lobbyIds = new List<string>();
+    private Label statusLabel;
+    private int inputId = 0;
+    private GodotObject nohubClient; 
+    private GodotObject nohubConnection;
+    private short yPos = -600;
+    private GDScript asyncBridgeScript;
+
+    public override void _Ready(){
+        base._Ready();
+        statusLabel = GetNodeOrNull<Label>("StatusLabel");
+        inputId = 0;//(int)Game.PlayerDatas[0].InputDevice;
+
+        asyncBridgeScript = new GDScript();
+        asyncBridgeScript.SourceCode = @"
+extends RefCounted
+signal task_completed(result)
+func call_async(target: Object, method: String, args: Array = []):
+    var result = await target.callv(method, args)
+    task_completed.emit(result)
+        ";
+        asyncBridgeScript.Reload();
+
+        UpdateStatus("Connecting to Nohub...");
+        InitializeNohub();
+    }
+
+    public override void _Process(double delta){
+        InputChecks(delta,inputId);
+
+        if(nohubConnection != null && GodotObject.IsInstanceValid(nohubConnection)){
+            nohubConnection.Call("poll");
+        }
+        if(nohubClient != null && GodotObject.IsInstanceValid(nohubClient)){
+            nohubClient.Call("poll");
+        }
+    }
+
+    private async void InitializeNohub(){
+        string host = "foxssake.studio"; 
+        int port = 12980;
+
+        nohubConnection = (GodotObject)ClassDB.Instantiate("StreamPeerTCP");
+        Error err = (Error)(int)nohubConnection.Call("connect_to_host",host,port);
+
+        if(err != Error.Ok){
+            UpdateStatus("Failed to connect to matchmaking server.");
+            return;
+        }
+
+        int status = (int)nohubConnection.Call("get_status");
+        while(status == 1){ 
+            await ToSignal(GetTree(),"process_frame");
+            status = (int)nohubConnection.Call("get_status");
+        }
+
+        if(status != 2){ 
+            UpdateStatus("Connection timed out.");
+            return;
+        }
+
+        GDScript clientScript = GD.Load<GDScript>("res://addons/nohub.gd/nohub_client.gd");
+        nohubClient = (GodotObject)clientScript.New(nohubConnection);
+
+        // --- NEW: Set the Session Game ID ---
+        UpdateStatus("Setting Game ID...");
+        GodotObject bridge = (GodotObject)asyncBridgeScript.New();
+        bridge.Call("call_async",nohubClient,"set_game",new Godot.Collections.Array{NohubHostManager.GAME_ID});
+        
+        Variant[] signalArgs = await ToSignal(bridge,"task_completed");
+        GodotObject result = signalArgs[0].As<GodotObject>();
+        bool isSuccess = (bool)result.Call("is_success");
+
+        if(!isSuccess){
+            UpdateStatus("Server rejected Game ID.");
+            return;
+        }
+
+        // ------------------------------------
+
+        UpdateStatus("Fetching Lobbies...");
+        FetchLobbies();
+    }
+
+    private async void FetchLobbies(){
+        if(nohubClient == null) return;
+
+        GodotObject bridge = (GodotObject)asyncBridgeScript.New();
+        bridge.Call("call_async",nohubClient,"list_lobbies",new Godot.Collections.Array());
+        
+        Variant[] signalArgs = await ToSignal(bridge,"task_completed");
+        GodotObject result = signalArgs[0].As<GodotObject>();
+        bool isSuccess = (bool)result.Call("is_success");
+
+        if(!isSuccess){
+            UpdateStatus("Failed to fetch lobbies.");
+            return;
+        }
+
+        Godot.Collections.Array lobbies = (Godot.Collections.Array)result.Call("value");
+
+        foreach(Node child in selectionsContainer.GetChildren()){
+            child.QueueFree();
+        }
+        selectionsContainer.GetChildren().Clear();
+        lobbyIds.Clear();
+
+        await ToSignal(GetTree(),"process_frame"); 
+
+        int index = 0;
+        yPos = 0; 
+
+        // Always add the Refresh option first
+        lobbyIds.Add("REFRESH");
+        Label refreshLbl = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
+        refreshLbl.Text = "Refresh List";
+        refreshLbl.Name = "Lobby" + index; 
+        refreshLbl.Position = new Vector2(0,yPos);
+        refreshLbl.Scale = Vector2.One;
+        selectionsContainer.AddChild(refreshLbl);
+        yPos += 200;
+        index++;
+
+        if(lobbies.Count == 0){
+            UpdateStatus("No active games found.");
+        }else{
+            UpdateStatus("Select a Match to Join");
+
+            foreach(GodotObject lobby in lobbies){
+                string id = (string)lobby.Get("id");
+                Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)lobby.Get("data");
+                
+                string lobbyName = data.ContainsKey("name") ? (string)data["name"] : $"Lobby {id}";
+                lobbyIds.Add(id);
+
+                Label lbl = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
+                
+                lbl.Text = lobbyName;
+                lbl.Name = "Lobby" + index; 
+                lbl.Position = new Vector2(0,yPos);
+                lbl.Scale = Vector2.One;
+                
+                selectionsContainer.AddChild(lbl);
+                yPos += 200;
+                index++;
+            }
+        }
+
+        Selections = selectionsContainer.GetChildren();
+        totalSelections = Selections.Count;
+        Selection = 1;
+        
+        UpdateSelectionVisual();
+    }
+
+    protected override async void MenuChoose(int choice){
+        if(lobbyIds.Count == 0) return;
+
+        SFX.Play("Confirm");
+        int index = choice - 1; 
+        string selectedLobbyId = lobbyIds[index];
+
+        if(selectedLobbyId == "REFRESH"){
+            UpdateStatus("Refreshing...");
+            FetchLobbies();
+            return;
+        }
+
+        UpdateStatus($"Joining {selectedLobbyId}...");
+
+        GodotObject bridge = (GodotObject)asyncBridgeScript.New();
+        bridge.Call("call_async",nohubClient,"join_lobby",new Godot.Collections.Array{selectedLobbyId});
+        
+        Variant[] signalArgs = await ToSignal(bridge,"task_completed");
+        GodotObject result = signalArgs[0].As<GodotObject>();
+        bool isSuccess = (bool)result.Call("is_success");
+
+        if(isSuccess){
+            string address = (string)result.Call("value");
+            UpdateStatus("Connected! Launching...");
+            
+            // --- NEW: Parse the address and launch the Lobby! ---
+            if(address.StartsWith("noray://")){
+                Online.Network = Online.NetworkType.Noray;
+                Online.NorayHostOid = address.Replace("noray://", "");
+            }else if(address.StartsWith("enet://")){
+                Online.Network = Online.NetworkType.Direct;
+                string ipAndPort = address.Replace("enet://", "");
+                string[] split = ipAndPort.Split(':');
+                Online.Address = split[0];
+                if(split.Length > 1) Online.Port = ushort.Parse(split[1]);
+            }
+
+            // Disconnect from Nohub cleanly before leaving
+            if(nohubConnection != null && GodotObject.IsInstanceValid(nohubConnection)){
+                nohubConnection.Call("disconnect_from_host");
+            }
+
+            // Spawn OnlineLobby as a client (exactly like OnlineMenu did)
+            OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
+            lobby.IsHost = false;
+            GetParent().AddChild(lobby);
+            QueueFree();
+            // ----------------------------------------------------
+        }else{
+            UpdateStatus("Failed to join lobby.");
+        }
+    }
+
+    public override void MenuBack(){
+        SFX.Play("Back");
+
+        if(nohubConnection != null && GodotObject.IsInstanceValid(nohubConnection)){
+            nohubConnection.Call("disconnect_from_host");
+        }
+        MenuScene.LoadMenu("Online/OnlineMenu");
+        QueueFree();
+    }
+
+    private void UpdateStatus(string message){
+        if(statusLabel != null){
+            statusLabel.Text = message;
+        }
+    }
+}

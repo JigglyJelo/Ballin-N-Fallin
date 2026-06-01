@@ -50,6 +50,7 @@ public partial class Online{
     }
 
     public static void Disconnect(string reason) {
+        Game.GameNode.GetNodeOrNull("NohubHostManager")?.QueueFree();
         Game.GameNode.GetNodeOrNull("PingGetter")?.QueueFree();
         MenuScene.MenuToLoad = "Online/OnlineMenu";
         IsOnline = false;

@@ -21,7 +21,7 @@ public abstract partial class Menu2D : Menu{
         float fDelta = (float)delta;
         MouseInputs(fDelta);
         //Controllers
-        for(int i = 1; i <= Game.MAX_PLAYERS; i++){
+        for(int i = 0; i < Game.MAX_PLAYERS; i++){
             joystickTimer +=  fDelta / Game.MAX_PLAYERS;
             if(joystickTimer >= TIMEOUT){
                 switch(GetInputDirection(i)){

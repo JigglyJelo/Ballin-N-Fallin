@@ -17,6 +17,9 @@ public partial class NoraySetup : Node{
             BridgeNode.Connect("host_ready", Callable.From<string>((oid) => {
                 Online.NorayHostOid = oid;
                 GD.Print("Hosting on Noray with OID: " + oid);
+                NohubHostManager hostManager = new NohubHostManager();
+                hostManager.Initialize($"noray://{oid}", Online.Username + "'s Game");
+                Game.GameNode.AddChild(hostManager);
             }));
             
             BridgeNode.Connect("host_failed", Callable.From<string>((err) => {

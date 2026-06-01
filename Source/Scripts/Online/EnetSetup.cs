@@ -1,6 +1,7 @@
 using Godot;
 
 public partial class EnetSetup{
+	private const bool ADD_TO_SERVER_LIST = true;
 	public static bool EnetHost(){
 		ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
 		Error enetError;
@@ -18,6 +19,12 @@ public partial class EnetSetup{
 			peer.Host.ChannelLimit((int)Online.TransferChannelEnum.SendHostPing + 3);
 			Game.GameNode.Multiplayer.MultiplayerPeer.RefuseNewConnections = false;
 			GD.Print("Hosting");
+			if(ADD_TO_SERVER_LIST){
+                NohubHostManager hostManager = new NohubHostManager();
+                string enetAddress = $"enet://{Online.Address}:{Online.Port}";
+                hostManager.Initialize(enetAddress, Online.Username + "'s Game");
+                Game.GameNode.AddChild(hostManager);
+            }
 			return true;
 		}
 	}
