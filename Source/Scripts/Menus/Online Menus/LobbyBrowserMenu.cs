@@ -7,7 +7,8 @@ public partial class LobbyBrowserMenu : ScrollableMenu{
     private int inputId = 0;
     private GodotObject nohubClient; 
     private GodotObject nohubConnection;
-    private short yPos = -600;
+    private const float X_POS = -1875;
+    private float yPos = -800;
     private GDScript asyncBridgeScript;
 
     public override void _Ready(){
@@ -45,9 +46,9 @@ func call_async(target: Object, method: String, args: Array = []):
         int port = 12980;
 
         nohubConnection = (GodotObject)ClassDB.Instantiate("StreamPeerTCP");
-        Error err = (Error)(int)nohubConnection.Call("connect_to_host",host,port);
+        Error error = (Error)(int)nohubConnection.Call("connect_to_host",host,port);
 
-        if(err != Error.Ok){
+        if(error != Error.Ok){
             UpdateStatus("Failed to connect to matchmaking server.");
             return;
         }
@@ -66,7 +67,7 @@ func call_async(target: Object, method: String, args: Array = []):
         GDScript clientScript = GD.Load<GDScript>("res://addons/nohub.gd/nohub_client.gd");
         nohubClient = (GodotObject)clientScript.New(nohubConnection);
 
-        // --- NEW: Set the Session Game ID ---
+        //Set the Session Game ID
         UpdateStatus("Setting Game ID...");
         GodotObject bridge = (GodotObject)asyncBridgeScript.New();
         bridge.Call("call_async",nohubClient,"set_game",new Godot.Collections.Array{NohubHostManager.GAME_ID});
@@ -79,8 +80,6 @@ func call_async(target: Object, method: String, args: Array = []):
             UpdateStatus("Server rejected Game ID.");
             return;
         }
-
-        // ------------------------------------
 
         UpdateStatus("Fetching Lobbies...");
         FetchLobbies();
@@ -114,12 +113,12 @@ func call_async(target: Object, method: String, args: Array = []):
         int index = 0;
         yPos = 0; 
 
-        // Always add the Refresh option first
+        //Always add the Refresh option first
         lobbyIds.Add("REFRESH");
         Label refreshLbl = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
         refreshLbl.Text = "Refresh List";
         refreshLbl.Name = "Lobby" + index; 
-        refreshLbl.Position = new Vector2(0,yPos);
+        refreshLbl.Position = new Vector2(X_POS,yPos);
         refreshLbl.Scale = Vector2.One;
         selectionsContainer.AddChild(refreshLbl);
         yPos += 200;
@@ -137,14 +136,12 @@ func call_async(target: Object, method: String, args: Array = []):
                 string lobbyName = data.ContainsKey("name") ? (string)data["name"] : $"Lobby {id}";
                 lobbyIds.Add(id);
 
-                Label lbl = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
-                
-                lbl.Text = lobbyName;
-                lbl.Name = "Lobby" + index; 
-                lbl.Position = new Vector2(0,yPos);
-                lbl.Scale = Vector2.One;
-                
-                selectionsContainer.AddChild(lbl);
+                Label lobbyLabel = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
+                lobbyLabel.Text = lobbyName;
+                lobbyLabel.Name = "Lobby" + index; 
+                lobbyLabel.Position = new Vector2(X_POS,yPos);
+                lobbyLabel.Scale = Vector2.One;
+                selectionsContainer.AddChild(lobbyLabel);
                 yPos += 200;
                 index++;
             }
@@ -183,7 +180,7 @@ func call_async(target: Object, method: String, args: Array = []):
             string address = (string)result.Call("value");
             UpdateStatus("Connected! Launching...");
             
-            // --- NEW: Parse the address and launch the Lobby! ---
+            //Parse the address and launch the Lobby
             if(address.StartsWith("noray://")){
                 Online.Network = Online.NetworkType.Noray;
                 Online.NorayHostOid = address.Replace("noray://", "");
@@ -195,17 +192,16 @@ func call_async(target: Object, method: String, args: Array = []):
                 if(split.Length > 1) Online.Port = ushort.Parse(split[1]);
             }
 
-            // Disconnect from Nohub cleanly before leaving
+            //Disconnect from Nohub cleanly before leaving
             if(nohubConnection != null && GodotObject.IsInstanceValid(nohubConnection)){
                 nohubConnection.Call("disconnect_from_host");
             }
 
-            // Spawn OnlineLobby as a client (exactly like OnlineMenu did)
+            //Spawn OnlineLobby as a client
             OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
             lobby.IsHost = false;
             GetParent().AddChild(lobby);
             QueueFree();
-            // ----------------------------------------------------
         }else{
             UpdateStatus("Failed to join lobby.");
         }

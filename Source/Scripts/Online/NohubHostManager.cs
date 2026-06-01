@@ -7,7 +7,7 @@ public partial class NohubHostManager : Node{
     private string lobbyAddress;
     private string lobbyName;
     public const string GAME_ID = "BALL";
-    private string myLobbyId = ""; // Track the lobby ID for cleanup
+    private string myLobbyId = ""; //Track the lobby ID for cleanup
 
     public void Initialize(string address, string name){
         lobbyAddress = address;
@@ -64,12 +64,12 @@ func call_async(target: Object, method: String, args: Array = []):
         GDScript clientScript = GD.Load<GDScript>("res://addons/nohub.gd/nohub_client.gd");
         nohubClient = (GodotObject)clientScript.New(nohubConnection);
 
-        // 1. Set the Session Game ID
+        //Set the Session Game ID
         GodotObject bridge = (GodotObject)asyncBridgeScript.New();
         bridge.Call("call_async",nohubClient,"set_game",new Godot.Collections.Array{GAME_ID});
         await ToSignal(bridge,"task_completed");
 
-        // 2. Create the Lobby
+        //Create the Lobby
         Godot.Collections.Dictionary data = new Godot.Collections.Dictionary();
         data.Add("name", lobbyName);
 

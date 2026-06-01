@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://2884gt6enh1c"]
 
-[ext_resource type="Texture2D" uid="uid://w65xjcgk63y4" path="res://Assets/Sprites/Mode Stuff/Trash/Tire.png" id="1_5jcdt"]
+[ext_resource type="Texture2D" uid="uid://w65xjcgk63y4" path="res://Assets/Sprites/Mode Stuff/Trash/tire.png" id="1_5jcdt"]
 [ext_resource type="Script" path="res://Source/Scripts/Modes/Survival/Trash.cs" id="1_61i3u"]
 [ext_resource type="Script" path="res://Source/Scripts/InterpolatedBody.cs" id="2_k8olj"]
 

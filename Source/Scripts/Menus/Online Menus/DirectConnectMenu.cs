@@ -7,6 +7,7 @@ public partial class DirectConnectMenu : VerticalMenu{
 
 	public override void _Ready(){
 		base._Ready();
+		Online.Network = Online.NetworkType.Direct;
 		Online.IsOnline = false;
 		Game.PlayerDatas = new List<PlayerData>();
 		Game.SpectatorDatas = new List<PlayerData>();
@@ -21,11 +22,9 @@ public partial class DirectConnectMenu : VerticalMenu{
 		defaultFontSize = 2;
 		UpdateSelectionVisual();
 		if(Game.IsDedicatedServer) MenuChoose(1);
-		Online.Network = Online.NetworkType.Direct;
 	}
 
 	public override void _Process(double delta){
-		//InputChecks(delta);
 		for(byte i = 0; i < Game.MAX_PLAYERS; i++){
 			if(Input.IsActionJustReleased("Charge N Launch" + i)) Online.InputId = (PlayerData.PlayerInputDevice)i;
 		}
@@ -44,16 +43,8 @@ public partial class DirectConnectMenu : VerticalMenu{
 	}
 
 	private void JoinLobby(){
-	    if (Online.Network == Online.NetworkType.Noray) {
-	        // For Noray, parse the OID instead of IP/Port
-	        if(ipInput != null && !ipInput.InputString.Equals("")) {
-	            Online.NorayHostOid = ipInput.InputString;
-	        }
-	    } else {
-	        if(!ipInput.InputString.Equals("")) Online.Address = ipInput.InputString;
-	        ParsePort();
-	    }
-	
+	    if(!ipInput.InputString.Equals("")) Online.Address = ipInput.InputString;
+	    ParsePort();
 	    OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
 	    lobby.IsHost = false;
 	    GetParent().AddChild(lobby);
