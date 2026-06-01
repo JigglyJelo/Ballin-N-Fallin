@@ -1,9 +1,9 @@
 using Godot;
 
-public partial class NoraySetup : Node {
+public partial class NoraySetup : Node{
     public static Node BridgeNode;
 
-    public static void InitializeBridge() {
+    public static void InitializeBridge(){
         if (BridgeNode == null) {
             GDScript bridgeScript = GD.Load<GDScript>("res://Source/Scripts/Online/NorayBridge.gd");
             if (bridgeScript == null) {
@@ -35,15 +35,15 @@ public partial class NoraySetup : Node {
         }
     }
 
-    public static bool NorayHost() {
+    public static bool NorayHost(){
         InitializeBridge();
-        BridgeNode?.Call("start_host", Game.MAX_PLAYERS);
-        return true; 
+        BridgeNode.Call("start_host", Game.MAX_PLAYERS);
+        return true;
     }
 
-    public static bool NorayJoin() {
+    public static bool NorayJoin(){
         InitializeBridge();
-        BridgeNode?.Call("start_client", Online.NorayHostOid);
-        return true; 
+        BridgeNode.Call("start_client", Online.NorayHostOid);
+        return true;
     }
 }

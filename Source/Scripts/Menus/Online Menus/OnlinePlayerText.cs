@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 public partial class OnlinePlayerText : Node2D{
@@ -16,13 +15,8 @@ public partial class OnlinePlayerText : Node2D{
 			pingTimer += (float)delta;
 			if(pingTimer >= 0.1){
 				pingTimer = 0;
-				if(UUID == Game.GameNode.Multiplayer.GetUniqueId()){
-					PingText.Text = PingGetter.LastPing.ToString();
-					PingText.SelfModulate = OnlineLobby.GetPingTextColor(PingGetter.LastPing);
-				}else{
-					PingText.Text = PingGetter.Pings[Id].ToString();
-					PingText.SelfModulate = OnlineLobby.GetPingTextColor(PingGetter.Pings[Id]);
-				}
+				PingText.Text = PingGetter.Pings[Id].ToString();
+				PingText.SelfModulate = OnlineLobby.GetPingTextColor(PingGetter.Pings[Id]);
 			}
 		}
     }

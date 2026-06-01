@@ -27,14 +27,139 @@ public partial class Online{
         get{return buffer;}
         set{buffer = Mathf.Clamp(value, 0f, 1f);} 
     }
-    
-    public static UdpServer PingServer;
-    public static PacketPeerUdp PingClient;
 
+    public static bool IsHost(){
+        if(!IsOnlinePeer()) return true;
+        else if(PeerIsActive()) return Game.GameNode.Multiplayer.GetUniqueId() == 1;
+        else return false;
+    }
+
+    public static bool IsRpcFromHost(){
+        int id = Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
+        if(id == 0) GD.PrintErr("IsRpcFromHost() called in Non-Rpc method");
+        return id == 1;
+    }
+
+    public static bool IsConnected(){
+        return Game.GameNode.Multiplayer.MultiplayerPeer?.GetConnectionStatus() == MultiplayerPeer.ConnectionStatus.Connected;
+    }
+    
+    public static bool HasDisconnected(){
+        return Game.GameNode.Multiplayer.MultiplayerPeer == null || 
+               Game.GameNode.Multiplayer.MultiplayerPeer.GetConnectionStatus() == MultiplayerPeer.ConnectionStatus.Disconnected;
+    }
+
+    public static void Disconnect(string reason) {
+        Game.GameNode.GetNodeOrNull("PingGetter")?.QueueFree();
+        MenuScene.MenuToLoad = "Online/OnlineMenu";
+        IsOnline = false;
+
+        MultiplayerPeer peer = Game.GameNode.Multiplayer.MultiplayerPeer;
+        if (peer != null && peer is not OfflineMultiplayerPeer) {
+            peer.Close();
+            peer.Dispose();
+        }
+        
+        Game.GameNode.Multiplayer.MultiplayerPeer = new OfflineMultiplayerPeer();
+        Game.PlayerDatas = new List<PlayerData>();
+        
+        GD.Print(reason);
+        Game.GameNode.GetTree().Paused = false;
+        Engine.TimeScale = 1;
+        Game.Paused = false;
+        PingGetter.LastPing = 0;
+        SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
+    }
+
+    public static void Disconnect() => Disconnect("Disconnected");
+
+    public static void PlayerDisconnected(long id){
+        if(IsHost()){
+            bool removePlayer = Game.Players == null || Game.Players.Length == 0;
+            Game.TellClientsWhatToDoAboutDisconnectedPlayer(removePlayer, (int)id);
+        }
+    }
+
+
+    public static void RemoveDisconnectedPlayerInfos(){
+        if(IsOnline && Game.DisconnectedDatas.Count > 0){
+            foreach(PlayerData playerInfo in Game.DisconnectedDatas){
+                int index = Game.PlayerDatas.IndexOf(playerInfo);
+                Game.PlayerDatas.Remove(playerInfo);
+                
+                List<int> scores = new List<int>(Tour.PlayerScores);
+                if(index != -1) scores.RemoveAt(index);
+                for(int i = 0; i < scores.Count; i++){
+                    Tour.PlayerScores[i] = scores[i];
+                }
+            }
+            Game.DisconnectedDatas = new List<PlayerData>();
+            Game.TotalPlayers = (byte)Game.PlayerDatas.Count;
+            if(Game.CurrentScene == Game.SceneType.Game && IsHost()){
+                Game.GameNode.GetNode<PlayerSync>("Scene/PlayerSynchronizer").ResetSyncArrayLengths();
+            }
+        }
+    }
+
+    public static bool PeerIsActive(){
+        return Game.GameNode.Multiplayer.MultiplayerPeer != null && 
+               Game.GameNode.Multiplayer.MultiplayerPeer.GetConnectionStatus() == MultiplayerPeer.ConnectionStatus.Connected && 
+               IsOnlinePeer();
+    }
+
+    public static void KickPlayer(int uuid){
+        if(IsHost() && uuid != 1){
+            (Game.GameNode.Multiplayer as SceneMultiplayer).DisconnectPeer(uuid);
+            PlayerDisconnected(uuid);
+        }
+    }
+
+    public static void BanPlayer(int uuid){
+        if(IsHost() && uuid != 1){
+            BannedIps.Add(GetIp(uuid));
+            (Game.GameNode.Multiplayer as SceneMultiplayer).DisconnectPeer(uuid);
+            PlayerDisconnected(uuid);
+        }
+    }
+
+    public static string GetIp(int uuid){
+        // PREVENTS BANNING NORAY RELAY SERVERS
+        if (Network == NetworkType.Noray) return "Noray-Peer-" + uuid.ToString();
+
+        if (Game.GameNode.Multiplayer.MultiplayerPeer is ENetMultiplayerPeer enetPeer) {
+            return enetPeer.GetPeer(uuid).GetRemoteAddress();
+        }
+        return "Unknown-IP-" + uuid.ToString(); 
+    }
+
+    public static bool IsOnlinePeer() => Game.GameNode.Multiplayer.MultiplayerPeer is not OfflineMultiplayerPeer;
+
+    public void ReturnToLobby(){
+        Game.GameNode.GetTree().Paused = false;
+        RemoveDisconnectedPlayerInfos();
+        if(IsOnline) Game.TotalPlayers = Game.PlayerDatas.Count;
+        MenuScene.MenuToLoad = "Online/OnlineLobby";
+        SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
+    }
+
+    public static void FailedToStart(MultiplayerPeer peer, Error error){
+        Disconnect("Failed to start: " + error);
+    }
+
+    public enum TransferChannelEnum : int{
+        Default = 0, SendLaunch, SendSlam, SuccessfulStomp, Item, PlayerText,
+        PlayerFlip, SportBall, LaunchParticle, SlamParticle, PopParticle, DeathParticle, BounceParticle, Trail,
+        PingGetter,SendHostPing,
+    }
+
+    public enum NetworkType{
+        Offline, Direct, Steam, Noray
+    }
+
+    //Probably going to remove these at some point and maybe try limited Netfox rollback instead
     public static void PredictPosition(RigidBody2D rb, byte physicsTicks){
         PredictPosition(rb,physicsTicks,null);
     }
-    
     public static void PredictPosition(RigidBody2D rb, byte physicsTicks,Vector2? hostOriginalPosition){
         if(physicsTicks == 0) return;
         bool playerPrediction = rb.IsInGroup("Player");
@@ -212,143 +337,5 @@ public partial class Online{
             if(currentNode is Area2D) areasInScene.Add(currentNode as Area2D);
             foreach(Node child in currentNode.GetChildren()) getArea2DNodes(child);
         }
-    }
-
-    public static bool IsHost(){
-        if(!IsOnlinePeer()) return true;
-        else if(PeerIsActive()) return Game.GameNode.Multiplayer.GetUniqueId() == 1;
-        else return false;
-    }
-
-    public static bool IsRpcFromHost(){
-        int id = Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
-        if(id == 0) GD.PrintErr("IsRpcFromHost() called in Non-Rpc method");
-        return id == 1;
-    }
-
-    public static bool IsConnected(){
-        return Game.GameNode.Multiplayer.MultiplayerPeer?.GetConnectionStatus() == MultiplayerPeer.ConnectionStatus.Connected;
-    }
-    
-    public static bool HasDisconnected(){
-        return Game.GameNode.Multiplayer.MultiplayerPeer == null || 
-               Game.GameNode.Multiplayer.MultiplayerPeer.GetConnectionStatus() == MultiplayerPeer.ConnectionStatus.Disconnected;
-    }
-
-    public static void Disconnect(string reason) {
-        Game.GameNode.GetNodeOrNull("PingGetter")?.QueueFree();
-        MenuScene.MenuToLoad = "Online/OnlineMenu";
-        IsOnline = false;
-
-        PingGetter.StopPingThread();
-
-        if (PeerIsActive() && IsHost()) {
-            PingServer?.Stop();
-            PingServer = null;
-        } else {
-            PingClient?.Close();
-            PingClient = null;
-        }
-
-        // FIX: Let Godot's Close() method handle the C++ ENet cleanup automatically.
-        var peer = Game.GameNode.Multiplayer.MultiplayerPeer;
-        if (peer != null && peer is not OfflineMultiplayerPeer) {
-            peer.Close();
-            peer.Dispose();
-        }
-        
-        Game.GameNode.Multiplayer.MultiplayerPeer = new OfflineMultiplayerPeer();
-        Game.PlayerDatas = new List<PlayerData>();
-        
-        GD.Print(reason);
-        Game.GameNode.GetTree().Paused = false;
-        Engine.TimeScale = 1;
-        Game.Paused = false;
-        PingGetter.LastPing = 0;
-        SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
-    }
-
-    public static void Disconnect() => Disconnect("Disconnected");
-
-    public static void PlayerDisconnected(long id){
-        if(IsHost()){
-            bool removePlayer = Game.Players == null || Game.Players.Length == 0;
-            Game.TellClientsWhatToDoAboutDisconnectedPlayer(removePlayer, (int)id);
-        }
-    }
-
-
-    public static void RemoveDisconnectedPlayerInfos(){
-        if(Online.IsOnline && Game.DisconnectedDatas.Count > 0){
-            foreach(PlayerData playerInfo in Game.DisconnectedDatas){
-                int index = Game.PlayerDatas.IndexOf(playerInfo);
-                Game.PlayerDatas.Remove(playerInfo);
-                
-                List<int> scores = new List<int>(Tour.PlayerScores);
-                if(index != -1) scores.RemoveAt(index);
-                for(int i = 0; i < scores.Count; i++){
-                    Tour.PlayerScores[i] = scores[i];
-                }
-            }
-            Game.DisconnectedDatas = new List<PlayerData>();
-            Game.TotalPlayers = (byte)Game.PlayerDatas.Count;
-            if(Game.CurrentScene == Game.SceneType.Game && Online.IsHost()) 
-                Game.GameNode.GetNode<PlayerSync>("Scene/PlayerSynchronizer").ResetSyncArrayLengths();
-        }
-    }
-
-    public static bool PeerIsActive(){
-        return Game.GameNode.Multiplayer.MultiplayerPeer!= null && 
-               Game.GameNode.Multiplayer.MultiplayerPeer.GetConnectionStatus() == MultiplayerPeer.ConnectionStatus.Connected && 
-               IsOnlinePeer();
-    }
-
-    public static void KickPlayer(int uuid){
-        if(IsHost() && uuid != 1){
-            (Game.GameNode.Multiplayer as SceneMultiplayer).DisconnectPeer(uuid);
-            PlayerDisconnected(uuid);
-        }
-    }
-
-    public static void BanPlayer(int uuid){
-        if(IsHost() && uuid != 1){
-            BannedIps.Add(GetIp(uuid));
-            (Game.GameNode.Multiplayer as SceneMultiplayer).DisconnectPeer(uuid);
-            PlayerDisconnected(uuid);
-        }
-    }
-
-    public static string GetIp(int uuid){
-        // PREVENTS BANNING NORAY RELAY SERVERS
-        if (Network == NetworkType.Noray) return "Noray-Peer-" + uuid.ToString();
-
-        if (Game.GameNode.Multiplayer.MultiplayerPeer is ENetMultiplayerPeer enetPeer) {
-            return enetPeer.GetPeer(uuid).GetRemoteAddress();
-        }
-        return "Unknown-IP-" + uuid.ToString(); 
-    }
-
-    public static bool IsOnlinePeer() => Game.GameNode.Multiplayer.MultiplayerPeer is not OfflineMultiplayerPeer;
-
-    public void ReturnToLobby(){
-        Game.GameNode.GetTree().Paused = false;
-        RemoveDisconnectedPlayerInfos();
-        if(Online.IsOnline) Game.TotalPlayers = Game.PlayerDatas.Count;
-        MenuScene.MenuToLoad = "Online/OnlineLobby";
-        SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
-    }
-
-    public static void FailedToStart(MultiplayerPeer peer, Error error){
-        Disconnect($"Failed to start: {error}");
-    }
-
-    public enum TransferChannelEnum : int{
-        Default = 0, SendLaunch, SendSlam, SuccessfulStomp, Item, PlayerText,
-        PlayerFlip, SportBall, LaunchParticle, SlamParticle, PopParticle, DeathParticle, BounceParticle, Trail,
-        PingGetter,SendHostPing,
-    }
-
-    public enum NetworkType{
-        Offline, Direct, Steam, Noray
     }
 }

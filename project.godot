@@ -50,7 +50,7 @@ naming/scene_name_casing=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/antialiased_line2d/plugin.cfg", "res://addons/netfox.internals/plugin.cfg", "res://addons/netfox.noray/plugin.cfg", "res://addons/trimsock.gd/plugin.cfg", "res://addons/vest/plugin.cfg")
+enabled=PackedStringArray("res://addons/antialiased_line2d/plugin.cfg", "res://addons/netfox.internals/plugin.cfg", "res://addons/netfox.noray/plugin.cfg")
 
 [file_customization]
 
