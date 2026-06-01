@@ -146,11 +146,11 @@ public partial class OnlineLobby : Node{
 
         switch (Online.Network) {
             case Online.NetworkType.Direct:
-                if (EnetSetup.EnetHost()) InitializeSuccessfulHost(true);
+                if (EnetSetup.EnetHost()) InitializeSuccessfulHost();
                 else FailHostSetup();
                 break;
             case Online.NetworkType.Noray:
-                if (NoraySetup.NorayHost()) InitializeSuccessfulHost(false);
+                if (NoraySetup.NorayHost()) InitializeSuccessfulHost();
                 else FailHostSetup();
                 break;
             case Online.NetworkType.Steam:
@@ -161,10 +161,10 @@ public partial class OnlineLobby : Node{
                 break;
         }
 
-        void InitializeSuccessfulHost(bool createPing) {
+        void InitializeSuccessfulHost() {
             Online.IsOnline = true;
             Online.BannedIps = new List<string>();
-            if (createPing) CreatePingGetter();
+            CreatePingGetter();
         }
 
         void FailHostSetup() {
@@ -200,12 +200,12 @@ public partial class OnlineLobby : Node{
                 Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
                 AddChild(steamSetupNode);
                 steamSetupNode.Call("join_lobby", LobbyID);
-                return; 
+                return;
         }
 
-        if (joinSuccess) {
+        if(joinSuccess){
             Online.IsOnline = true;
-        } else {
+        }else{
             Online.IsOnline = false;
             SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
         }
@@ -216,7 +216,7 @@ public partial class OnlineLobby : Node{
         if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray) {
             RpcId(1, nameof(SendPlayerInfoDirect), Online.Username, (byte)Online.InputId, Game.GameNode.Multiplayer.GetUniqueId());
         }
-        if (Online.Network != Online.NetworkType.Noray) CreatePingGetter(); // Prevent UDP collision
+        CreatePingGetter();
     }
 
     private void PeerConnected(long id) {
