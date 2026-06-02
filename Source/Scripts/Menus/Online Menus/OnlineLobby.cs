@@ -5,9 +5,6 @@ using System.Text.RegularExpressions;
 using System.Linq;
 
 public partial class OnlineLobby : Node{
-    private List<string> bannedSubstrings = new List<string>();
-    private List<string> bannedFullWords = new List<string>();
-    private List<string> trolledWords = new List<string>();
     private PackedScene mainMenu;
     public bool IsHost;
     private Label connectedPlayersText;
@@ -31,30 +28,7 @@ public partial class OnlineLobby : Node{
             hostData.PlayerColor = ColorMenu.DefaultColorOrder[0]; // Give host the first color
             Game.PlayerDatas.Add(hostData);
         }
-        if(IsHost){
-            const string PATH = "res://Assets/Text/";
-            string textPath = PATH + "Banned Substrings.txt";
-            if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
-            
-            using var fileSub = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
-            if(fileSub != null) {
-                while(!fileSub.EofReached()) bannedSubstrings.Add(fileSub.GetLine());
-            }
-
-            textPath = PATH + "Punishment Names.txt";
-            if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
-            using var fileNames = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
-            if(fileNames != null){
-                while(!fileNames.EofReached()) trolledWords.Add(fileNames.GetLine());
-            }
-
-            textPath = PATH + "Banned Full Words.txt";
-            if(textPath.Contains(".remap")) textPath = textPath.Replace(".remap","");
-            using var fileWords = FileAccess.Open(textPath,FileAccess.ModeFlags.Read);
-            if(fileWords != null){
-                while(!fileWords.EofReached()) bannedFullWords.Add(fileWords.GetLine());
-            }
-        }
+        WordFilter.Initialize();
         
         mainMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/MainMenu.tscn");
         Game.GameNode.Multiplayer.PeerConnected += PeerConnected;
@@ -297,38 +271,23 @@ public partial class OnlineLobby : Node{
     }
 
     private string BadNameCheck(string username,int uuid){
-        string simplifiedUsername = username.ToUpper().Replace(" ","");
-        bool bad = false;
-        foreach(string badWord in bannedSubstrings){
-            if(simplifiedUsername.Contains(badWord.ToUpper())){
-                GD.Print(username);
-                username = getTrollName();
-                RpcId(uuid,nameof(NamePunishment));
-                bad = true;
-                break;
-            }
-        }
-        if(!bad){
-            foreach(string badName in bannedFullWords){
-                if(simplifiedUsername.Equals(badName.ToUpper())){
-                    username = getTrollName();
-                    RpcId(uuid,nameof(NamePunishment));
-                    break;
-                }
-            }
+        if(WordFilter.IsBadString(username)){
+            GD.Print(username);
+            username = getTrollName();
+            RpcId(uuid,nameof(NamePunishment));
         }
         return username;
         
         string getTrollName(){
             switch(uuid){
                 case 1: 
-                    return trolledWords[Game.Random.Next(0,trolledWords.Count)];
+                    return WordFilter.trolledWords[Game.Random.Next(0,WordFilter.trolledWords.Count)];
                 default:
-                    int bitsToKeep = (int)MathF.Ceiling(MathF.Log2(trolledWords.Count));
+                    int bitsToKeep = (int)MathF.Ceiling(MathF.Log2(WordFilter.trolledWords.Count));
                     int mask = (1 << bitsToKeep) - 1;
                     int trimmedUuid = uuid & mask;
-                    int index = trimmedUuid % trolledWords.Count;
-                    return trolledWords[index];
+                    int index = trimmedUuid % WordFilter.trolledWords.Count;
+                    return WordFilter.trolledWords[index];
             }
         }
     }

@@ -1,7 +1,7 @@
 using Godot;
 
 public partial class EnetSetup{
-	private const bool ADD_TO_SERVER_LIST = true;
+	private const bool ADD_TO_SERVER_LIST = false;
 	public static bool EnetHost(){
 		ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
 		Error enetError;

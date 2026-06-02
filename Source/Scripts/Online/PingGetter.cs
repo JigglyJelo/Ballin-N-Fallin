@@ -58,7 +58,7 @@ public partial class PingGetter : Node{
 			Godot.Collections.Array<ENetPacketPeer> peers = host.GetPeers();
 			for(int i = 0; i < peers.Count; i++){
 				Pings[i+1] = (int)peers[i].GetStatistic(ENetPacketPeer.PeerStatistic.RoundTripTime); //LastRoundTripTime
-				GD.Print(Pings[i+1]);
+				//GD.Print(Pings[i+1]);
 			}
 		}
 	}
