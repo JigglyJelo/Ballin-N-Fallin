@@ -28,6 +28,10 @@ public partial class Online{
         set{buffer = Mathf.Clamp(value, 0f, 1f);} 
     }
 
+    public static int GetUUID(){
+        return Game.GameNode.Multiplayer.GetUniqueId();
+    }
+
     public static bool IsHost(){
         if(!IsOnlinePeer()) return true;
         else if(PeerIsActive()) return Game.GameNode.Multiplayer.GetUniqueId() == 1;
