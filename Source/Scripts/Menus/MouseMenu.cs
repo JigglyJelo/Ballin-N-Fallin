@@ -139,6 +139,7 @@ public partial class MouseMenu : Polygon2D{
 
 		void loadNextMenu(){
 			SFX.Play("Confirm");
+			Online.InputId = PlayerData.PlayerInputDevice.Mouse;
 			GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + NextMenu + ".tscn").Instantiate());
 			QueueFree();
 		}

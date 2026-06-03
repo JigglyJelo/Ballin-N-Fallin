@@ -15,12 +15,17 @@ public partial class OnlineMenu : Menu2D{
 		directText = GetNode<Label>("Selections/DirectButton/DirectText");
 		directButton = GetNode<Polygon2D>("Selections/DirectButton");
 		usernameInput.InputString = Online.Username.Equals("Player") ? "" : Online.Username;
+		Online.InputId = PlayerData.PlayerInputDevice.None;
 		UpdateSelectionVisual();
 	}
 
 	public override void _Process(double delta){
 		for(int i = 0; i < Game.MAX_PLAYERS; i++){
 			if(Input.IsActionJustReleased("Charge N Launch" + i)) Online.InputId = (PlayerData.PlayerInputDevice)i;
+		}
+		if(Online.InputId == PlayerData.PlayerInputDevice.None && Input.IsActionJustReleased("Charge N Launch Mouse")){
+			if(Game.MouseMode == Game.MouseModeEnum.Off) Game.MouseMode = Game.MouseModeEnum.Cursor;
+			Online.InputId = PlayerData.PlayerInputDevice.Mouse;
 		}
 		InputChecks(delta);
 	}
