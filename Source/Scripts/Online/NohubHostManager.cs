@@ -11,7 +11,7 @@ public partial class NohubHostManager : Node{
 
     public void Initialize(string address, string name){
         lobbyAddress = address;
-        lobbyName = name;
+        lobbyName = WordFilter.IsBadString(Online.Username) ? "Player's Game" : name;
         Name = "NohubHostManager"; // Helps us find/delete it later
     }
 
