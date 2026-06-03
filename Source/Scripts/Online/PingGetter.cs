@@ -10,8 +10,8 @@ public partial class PingGetter : Node{
 	private static byte[] pingsData = new byte[Game.MAX_PLAYERS*2];
 	//private static Queue<int> yourPings = new Queue<int>();
 	private ENetConnection host;
+	private ENetPacketPeer yourPacketPeer;
 	private bool waitingForPing = false;
-
     //Disconnection thing
     private int disconnectTimer = 0;
 
@@ -57,6 +57,7 @@ public partial class PingGetter : Node{
 			}
 			Godot.Collections.Array<ENetPacketPeer> peers = host.GetPeers();
 			for(int i = 0; i < peers.Count; i++){
+				peers[i].PingInterval(16);
 				Pings[i+1] = (int)peers[i].GetStatistic(ENetPacketPeer.PeerStatistic.RoundTripTime); //LastRoundTripTime
 				//GD.Print(Pings[i+1]);
 			}
@@ -65,13 +66,22 @@ public partial class PingGetter : Node{
 
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]
 	private void SyncPings(byte[] pingsData){
+		int yourIndex = 0;
+		for(int i = 0; i < Game.PlayerDatas.Count; i++){
+			if(Game.PlayerDatas[i].UUID == Online.GetUUID()){
+				yourIndex = i;
+				break;
+			}
+		}
 		if(pingsData.Length == Pings.Length){
 			for(int i = 0; i < Pings.Length; i++){
 				Pings[i] = pingsData[i];
+				if(i == yourIndex) LastPing = Pings[i];
 			}
 		}else{
 			for(int i = 0; i < Pings.Length; i++){
 				Pings[i] = BitConverter.ToUInt16(pingsData, i * 2);
+				if(i == yourIndex) LastPing = Pings[i];
 			}
 		}
 	}
@@ -90,7 +100,7 @@ public partial class PingGetter : Node{
 			return (pingArray[middleIndex - 1] + pingArray[middleIndex]) / 2;
 		}
 		*/
-		return 0;
+		return LastPing;
 	}
 
 	public static int PingToTicks(int ping){
