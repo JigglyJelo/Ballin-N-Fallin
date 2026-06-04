@@ -1,20 +1,26 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class LobbyBrowserMenu : ScrollableMenu{
-    private List<string> lobbyIds = new List<string>();
+    private readonly Dictionary<string, Variant.Type> LOBBY_SCHEMA = new(){
+        {"name", Variant.Type.String},
+        {"player_count", Variant.Type.Int},
+        {"max_players", Variant.Type.Int},
+    };
+    // Key = Lobby ID, Value = JSON-Like Dictionary Key = string data name, Value = Variant typed data
+    private Dictionary<string, Dictionary<string, Variant>> lobbyIds = new Dictionary<string, Dictionary<string, Variant>>();
     private Label statusLabel;
-    private int inputId = 0;
-    private GodotObject nohubClient; 
+    private GodotObject nohubClient;
     private GodotObject nohubConnection;
     private const float X_POS = -1875;
-    private float yPos = -800;
+    private const float START_Y_POS = -800;
+    private float yPos = START_Y_POS;
     private GDScript asyncBridgeScript;
 
     public override void _Ready(){
         base._Ready();
         statusLabel = GetNodeOrNull<Label>("StatusLabel");
-        inputId = 0;//(int)Game.PlayerDatas[0].InputDevice;
 
         asyncBridgeScript = new GDScript();
         asyncBridgeScript.SourceCode = @"
@@ -31,7 +37,7 @@ func call_async(target: Object, method: String, args: Array = []):
     }
 
     public override void _Process(double delta){
-        InputChecks(delta,inputId);
+        InputChecks(delta,(int)Online.InputId);
 
         if(nohubConnection != null && GodotObject.IsInstanceValid(nohubConnection)){
             nohubConnection.Call("poll");
@@ -67,7 +73,6 @@ func call_async(target: Object, method: String, args: Array = []):
         GDScript clientScript = GD.Load<GDScript>("res://addons/nohub.gd/nohub_client.gd");
         nohubClient = (GodotObject)clientScript.New(nohubConnection);
 
-        //Set the Session Game ID
         UpdateStatus("Setting Game ID...");
         GodotObject bridge = (GodotObject)asyncBridgeScript.New();
         bridge.Call("call_async",nohubClient,"set_game",new Godot.Collections.Array{NohubHostManager.GAME_ID});
@@ -111,16 +116,15 @@ func call_async(target: Object, method: String, args: Array = []):
         await ToSignal(GetTree(),"process_frame"); 
 
         int index = 0;
-        yPos = 0; 
+        yPos = START_Y_POS; 
 
-        //Always add the Refresh option first
-        lobbyIds.Add("REFRESH");
-        Label refreshLbl = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
-        refreshLbl.Text = "Refresh List";
-        refreshLbl.Name = "Lobby" + index; 
-        refreshLbl.Position = new Vector2(X_POS,yPos);
-        refreshLbl.Scale = Vector2.One;
-        selectionsContainer.AddChild(refreshLbl);
+        lobbyIds.Add("REFRESH", null);
+        Label refreshLabel = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
+        refreshLabel.Text = "Refresh List";
+        refreshLabel.Name = "Lobby" + index; 
+        refreshLabel.Position = new Vector2(X_POS,yPos);
+        refreshLabel.Scale = Vector2.One;
+        selectionsContainer.AddChild(refreshLabel);
         yPos += 200;
         index++;
 
@@ -133,14 +137,28 @@ func call_async(target: Object, method: String, args: Array = []):
                 string id = (string)lobby.Get("id");
                 Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)lobby.Get("data");
                 
-                string lobbyName = data.ContainsKey("name") ? (string)data["name"] : $"Lobby {id}";
-                lobbyIds.Add(id);
+                // Parse the custom Schema items (Just "name" right now)
+                if(!TryParseLobbyData(data, id, out Dictionary<string, Variant> lobbyData)) continue;
 
+                // --- THE FIX ---
+                // Grab the server's NATIVE lock status instead of relying on custom data
+                // (Note: If this throws an error, change "is_locked" to "locked")
+                bool nativeLockStatus = (bool)lobby.Get("is_locked"); 
+                
+                // Add the native bool into our C# dictionary so your UpdateSelectionVisual logic works perfectly
+                lobbyData.Add("locked", nativeLockStatus); 
+
+                lobbyIds.Add(id, lobbyData);
+
+                string lobbyName = lobbyData["name"].AsString();
+                int currentPlayers = lobbyData["player_count"].AsInt32(); 
+                int maxPlayers = lobbyData["max_players"].AsInt32();
                 Label lobbyLabel = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
-                lobbyLabel.Text = lobbyName;
+                lobbyLabel.Text = $"{lobbyName} ({currentPlayers}/{maxPlayers})";
                 lobbyLabel.Name = "Lobby" + index; 
                 lobbyLabel.Position = new Vector2(X_POS,yPos);
                 lobbyLabel.Scale = Vector2.One;
+                lobbyLabel.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
                 selectionsContainer.AddChild(lobbyLabel);
                 yPos += 200;
                 index++;
@@ -154,16 +172,86 @@ func call_async(target: Object, method: String, args: Array = []):
         UpdateSelectionVisual();
     }
 
+    private bool TryParseLobbyData(Godot.Collections.Dictionary data, string id, out Dictionary<string, Variant> parsedData) {
+        parsedData = new Dictionary<string, Variant>();
+        foreach(var requirement in LOBBY_SCHEMA){
+            string expectedKey = requirement.Key;
+            Variant.Type expectedType = requirement.Value;
+            if(!data.ContainsKey(expectedKey)) return false; 
+
+            string rawValue = data[expectedKey].AsString();
+            switch(expectedType){
+                case Variant.Type.String:
+                    parsedData[expectedKey] = rawValue;
+                    break;
+                case Variant.Type.Bool:
+                    if(bool.TryParse(rawValue, out bool parsedBool)){
+                        parsedData[expectedKey] = parsedBool;
+                    }else{
+                        GD.PrintErr($"Lobby {id} rejected: '{expectedKey}' could not be parsed to Bool.");
+                        return false; 
+                    }
+                    break;
+                case Variant.Type.Int:
+                    if(int.TryParse(rawValue, out int parsedInt)){
+                        parsedData[expectedKey] = parsedInt;
+                    }else{
+                        GD.PrintErr($"Lobby {id} rejected: '{expectedKey}' could not be parsed to Int.");
+                        return false; 
+                    }
+                    break;
+            }
+        }
+        return true; 
+    }
+
+    protected override void UpdateSelectionVisual() {
+        base.UpdateSelectionVisual(); 
+
+        if(Selections == null || Selections.Count == 0) return;
+
+        for(int i = 0; i < Selections.Count; i++){
+            Label label = Selections[i] as Label;
+            if (label == null) continue;
+            
+            string key = lobbyIds.ElementAt(i).Key;
+            if (key == "REFRESH") continue;
+
+            bool isLocked = lobbyIds[key]["locked"].AsBool();
+            if(Selection == i + 1){
+                label.SelfModulate = isLocked ? Colors.Red : Colors.Green; 
+            }else{
+                label.SelfModulate = isLocked ? Colors.Gray : Colors.White; 
+            }
+        }
+    }
+
     protected override async void MenuChoose(int choice){
         if(lobbyIds.Count == 0) return;
 
         SFX.Play("Confirm");
         int index = choice - 1; 
-        string selectedLobbyId = lobbyIds[index];
+        
+        string selectedLobbyId = lobbyIds.ElementAt(index).Key;
 
         if(selectedLobbyId == "REFRESH"){
             UpdateStatus("Refreshing...");
             FetchLobbies();
+            return;
+        }
+
+        if(lobbyIds[selectedLobbyId]["locked"].AsBool()) {
+            //SFX.Play("Error"); 
+            UpdateStatus("That lobby is currently locked.");
+            return;
+        }
+
+        int players = lobbyIds[selectedLobbyId]["player_count"].AsInt32();
+        int max = lobbyIds[selectedLobbyId]["max_players"].AsInt32();
+
+        if(players >= max){
+            //SFX.Play("Error");
+            UpdateStatus("That lobby is currently full.");
             return;
         }
 
@@ -180,7 +268,6 @@ func call_async(target: Object, method: String, args: Array = []):
             string address = (string)result.Call("value");
             UpdateStatus("Connected! Launching...");
             
-            //Parse the address and launch the Lobby
             if(address.StartsWith("noray://")){
                 Online.Network = Online.NetworkType.Noray;
                 Online.NorayHostOid = address.Replace("noray://", "");
@@ -192,12 +279,10 @@ func call_async(target: Object, method: String, args: Array = []):
                 if(split.Length > 1) Online.Port = ushort.Parse(split[1]);
             }
 
-            //Disconnect from Nohub cleanly before leaving
             if(nohubConnection != null && GodotObject.IsInstanceValid(nohubConnection)){
                 nohubConnection.Call("disconnect_from_host");
             }
 
-            //Spawn OnlineLobby as a client
             OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
             lobby.IsHost = false;
             GetParent().AddChild(lobby);
