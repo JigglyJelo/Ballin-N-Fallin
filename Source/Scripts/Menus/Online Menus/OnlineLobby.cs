@@ -49,7 +49,10 @@ public partial class OnlineLobby : Node{
         if(!Online.IsOnline){
             if(IsHost) HostLobby();
             else JoinLobby();
-        }else if(Online.IsHost()) Multiplayer.MultiplayerPeer.RefuseNewConnections = false;
+        }else if(Online.IsHost()){
+            NohubHostManager.UnlockLobby();
+            Multiplayer.MultiplayerPeer.RefuseNewConnections = false;
+        }
         
         if(Online.Network != Online.NetworkType.Steam || (Online.Network == Online.NetworkType.Steam && Online.IsOnline)){
             JoinedLobby();
@@ -364,6 +367,7 @@ public partial class OnlineLobby : Node{
 
     public void StartGame(){
         Game.GameNode.Multiplayer.MultiplayerPeer.RefuseNewConnections = true;
+        NohubHostManager.LockLobby();
         Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
         Rpc(nameof(StartingGame),(byte)Game.CurrentMode,Game.CurrentLevelName,Game.CurrentFolderPath);
     }

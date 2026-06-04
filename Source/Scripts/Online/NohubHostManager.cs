@@ -1,6 +1,7 @@
 using Godot;
 
 public partial class NohubHostManager : Node{
+    public static NohubHostManager NohubManagerNode;
     private GodotObject nohubClient; 
     private GodotObject nohubConnection;
     private GDScript asyncBridgeScript;
@@ -10,6 +11,8 @@ public partial class NohubHostManager : Node{
     private string myLobbyId = ""; //Track the lobby ID for cleanup
 
     public void Initialize(string address, string name){
+        if(NohubManagerNode != null) NohubManagerNode.Free();
+        NohubManagerNode = this;
         lobbyAddress = address;
         lobbyName = WordFilter.IsBadString(Online.Username) ? "Player's Game" : name;
         Name = "NohubHostManager"; // Helps us find/delete it later
@@ -89,6 +92,46 @@ func call_async(target: Object, method: String, args: Array = []):
         }
     }
 
+    public static async void LockLobby(){
+		if(NohubManagerNode.nohubClient == null || !GodotObject.IsInstanceValid(NohubManagerNode.nohubClient) || string.IsNullOrEmpty(NohubManagerNode.myLobbyId)){
+			GD.PrintErr("NohubHostManager: Cannot lock lobby. Client invalid or lobby not created yet.");
+			return;
+		}
+
+		GodotObject bridge = (GodotObject)NohubManagerNode.asyncBridgeScript.New();
+		bridge.Call("call_async",NohubManagerNode.nohubClient,"lock_lobby",new Godot.Collections.Array{NohubManagerNode.myLobbyId});
+		Variant[] signalArgs = await NohubManagerNode.ToSignal(bridge,"task_completed");
+
+		GodotObject result = signalArgs[0].As<GodotObject>();
+		bool isSuccess = (bool)result.Call("is_success");
+
+		if(isSuccess){
+			GD.Print("NohubHostManager: Successfully locked the lobby.");
+		}else{
+			GD.PrintErr("NohubHostManager: Failed to lock the lobby.");
+		}
+	}
+
+	public static async void UnlockLobby(){
+		if(NohubManagerNode.nohubClient == null || !GodotObject.IsInstanceValid(NohubManagerNode.nohubClient) || string.IsNullOrEmpty(NohubManagerNode.myLobbyId)){
+			GD.PrintErr("NohubHostManager: Cannot unlock lobby. Client invalid or lobby not created yet.");
+			return;
+		}
+
+		GodotObject bridge = (GodotObject)NohubManagerNode.asyncBridgeScript.New();
+		bridge.Call("call_async",NohubManagerNode.nohubClient,"unlock_lobby",new Godot.Collections.Array{NohubManagerNode.myLobbyId});
+		Variant[] signalArgs = await NohubManagerNode.ToSignal(bridge,"task_completed");
+
+		GodotObject result = signalArgs[0].As<GodotObject>();
+		bool isSuccess = (bool)result.Call("is_success");
+
+		if(isSuccess){
+			GD.Print("NohubHostManager: Successfully unlocked the lobby.");
+		}else{
+			GD.PrintErr("NohubHostManager: Failed to unlock the lobby.");
+		}
+	}
+
     public override void _ExitTree(){
         if(nohubClient != null && GodotObject.IsInstanceValid(nohubClient) && !string.IsNullOrEmpty(myLobbyId)){
             GodotObject bridge = (GodotObject)asyncBridgeScript.New();
@@ -99,5 +142,6 @@ func call_async(target: Object, method: String, args: Array = []):
             nohubConnection.Call("disconnect_from_host");
             GD.Print("NohubHostManager: Disconnected and cleaned up lobby.");
         }
+        NohubManagerNode = null;
     }
 }
