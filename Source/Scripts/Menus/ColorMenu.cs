@@ -37,8 +37,9 @@ public partial class ColorMenu : Menu2D{
 	public override void _Ready(){
         //Set input id
         if(IsOnline()){
-            for(int i = 0; i < Game.PlayerDatas.Count; i++){
-                InputId = (int)Online.InputId;
+            InputId = (int)Online.InputId;
+            if(!Game.UsingMouse() && Online.InputId == PlayerData.PlayerInputDevice.Mouse){
+                Game.MouseMode = Game.MouseModeEnum.Cursor;
             }
         }else{
             if(!Game.UsingMouse()) InputId = (int)Game.PlayerDatas[Id-1].InputDevice;
