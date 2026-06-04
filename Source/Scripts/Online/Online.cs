@@ -82,6 +82,7 @@ public partial class Online{
         if(IsHost()){
             bool removePlayer = Game.Players == null || Game.Players.Length == 0;
             Game.TellClientsWhatToDoAboutDisconnectedPlayer(removePlayer, (int)id);
+            NohubHostManager.UpdateLobbyData();
         }
     }
 

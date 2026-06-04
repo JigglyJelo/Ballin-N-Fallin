@@ -310,6 +310,9 @@ public partial class OnlineLobby : Node{
             }
             playerText.ResetPlayerText();
         }
+        if(Online.IsHost()){
+            NohubHostManager.UpdateLobbyData();
+        }
     }
 
     public static Color GetPingTextColor(int ping){
