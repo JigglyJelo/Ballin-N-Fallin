@@ -1,6 +1,14 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class NohubHostManager : Node{
+    public static readonly Dictionary<string, Variant.Type> LOBBY_SCHEMA = new(){
+        {"name", Variant.Type.String},
+        {"player_count", Variant.Type.Int},
+        {"max_players", Variant.Type.Int},
+        {"points_to_win", Variant.Type.Int},
+        {"items_enabled", Variant.Type.Bool},
+    };
     public static NohubHostManager NohubManagerNode;
     private GodotObject nohubClient; 
     private GodotObject nohubConnection;
@@ -71,10 +79,7 @@ func call_async(target: Object, method: String, args: Array = []):
         bridge.Call("call_async",nohubClient,"set_game",new Godot.Collections.Array{GAME_ID});
         await ToSignal(bridge,"task_completed");
 
-        Godot.Collections.Dictionary data = new Godot.Collections.Dictionary();
-        data.Add("name", lobbyName);
-        data.Add("player_count", "1");
-        data.Add("max_players", Game.MAX_PLAYERS.ToString());
+        Godot.Collections.Dictionary data = GetLobbyData();
 
         bridge = (GodotObject)asyncBridgeScript.New();
         bridge.Call("call_async",nohubClient,"create_lobby",new Godot.Collections.Array{lobbyAddress, data});
@@ -95,20 +100,31 @@ func call_async(target: Object, method: String, args: Array = []):
     public static void UpdateLobbyData(){
         //Ensure the node and lobby actually exist before trying to update
         if (NohubManagerNode == null || NohubManagerNode.nohubClient == null || string.IsNullOrEmpty(NohubManagerNode.myLobbyId)) return;
-
         //Gather players and spectators, then subtract disconnected players
+        Godot.Collections.Dictionary updatedData = GetLobbyData();
+        GodotObject updateBridge = (GodotObject)NohubManagerNode.asyncBridgeScript.New();
+        updateBridge.Call("call_async", NohubManagerNode.nohubClient, "set_lobby_data", new Godot.Collections.Array{NohubManagerNode.myLobbyId, updatedData});
+    }
+
+    private static Godot.Collections.Dictionary GetLobbyData(){
         int playerCount = 0;
         if(Game.PlayerDatas != null) playerCount += Game.PlayerDatas.Count;
         if(Game.SpectatorDatas != null) playerCount += Game.SpectatorDatas.Count;
         if(Game.DisconnectedDatas != null) playerCount -= Game.DisconnectedDatas.Count;
-
-        Godot.Collections.Dictionary updatedData = new Godot.Collections.Dictionary();
-        updatedData.Add("name", NohubManagerNode.lobbyName);
-        updatedData.Add("player_count", playerCount.ToString());
-        updatedData.Add("max_players", Game.MAX_PLAYERS.ToString());
-
-        GodotObject updateBridge = (GodotObject)NohubManagerNode.asyncBridgeScript.New();
-        updateBridge.Call("call_async", NohubManagerNode.nohubClient, "set_lobby_data", new Godot.Collections.Array{NohubManagerNode.myLobbyId, updatedData});
+        Godot.Collections.Dictionary lobbyData = new Godot.Collections.Dictionary();
+        lobbyData.Add("name", NohubManagerNode.lobbyName);
+        lobbyData.Add("player_count", playerCount.ToString());
+        lobbyData.Add("max_players", Game.MAX_PLAYERS.ToString());
+        //Tour Settings
+        lobbyData.Add("points_to_win", Tour.CurrentTour.PointsToWin.ToString());
+        lobbyData.Add("items_enabled", Tour.CurrentTour.ItemsEnabled.ToString());
+        //HOST-SIDE VALIDATION CHECK
+        foreach(string requiredKey in LOBBY_SCHEMA.Keys) {
+            if(!lobbyData.ContainsKey(requiredKey)){
+                GD.PrintErr($"NohubHostManager forgot to include '{requiredKey}' in GetLobbyData()");
+            }
+        }
+        return lobbyData;
     }
 
     public static async void LockLobby(){

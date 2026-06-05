@@ -8,7 +8,7 @@ public partial class TrashCompactor : Node2D{
     public float TrashLaunchAngle = MathF.PI/2;
     private PackedScene[] Trash;
     private float spawnInterval = 2f;
-    public Random BallColorRandom = new Random(Game.TotalPlayers * Tour.TotalScore);
+    public Random BallColorRandom = new Random(Game.TotalPlayers * Tour.CurrentTour.PointsToWin);
     private readonly Tuple<float, float>[] SPAWN_TIMES = new Tuple<float, float>[]{
         new Tuple<float, float>(0.2f, 150),
         new Tuple<float, float>(0.25f, 120),

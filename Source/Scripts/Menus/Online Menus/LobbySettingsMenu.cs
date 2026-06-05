@@ -140,8 +140,8 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 				UpdateSelectionVisual();
 				break;
 			case 2:
-				if(Tour.TotalScore < 1000) Tour.TotalScore += 10;
-				else Tour.TotalScore = 10;
+				if(Tour.CurrentTour.PointsToWin < 1000) Tour.CurrentTour.PointsToWin += 10;
+				else Tour.CurrentTour.PointsToWin = 10;
 				break;
 			case 3: 
 				Tour.CurrentTour.ItemsEnabled = !Tour.CurrentTour.ItemsEnabled;
@@ -162,7 +162,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 				
 		}
 		joystickTimer = 0;
-		OnlineLobby.Lobby.Rpc(nameof(OnlineLobby.Lobby.UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
+		OnlineLobby.Lobby.Rpc(nameof(OnlineLobby.Lobby.UpdateLobbySettings),Tour.IsTour,Tour.CurrentTour.PointsToWin,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
 	}
 
 	public void MenuLeft(){
@@ -172,8 +172,8 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 				UpdateSelectionVisual();
 				break;
 			case 2:
-				if(Tour.TotalScore > 10) Tour.TotalScore -= 10;
-				else Tour.TotalScore = 1000;
+				if(Tour.CurrentTour.PointsToWin > 10) Tour.CurrentTour.PointsToWin -= 10;
+				else Tour.CurrentTour.PointsToWin = 1000;
 				break;
 			case 3: 
 				Tour.CurrentTour.ItemsEnabled = !Tour.CurrentTour.ItemsEnabled;
@@ -193,7 +193,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 				break;
 		}
 		joystickTimer = 0;
-		OnlineLobby.Lobby.Rpc(nameof(OnlineLobby.Lobby.UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
+		OnlineLobby.Lobby.Rpc(nameof(OnlineLobby.Lobby.UpdateLobbySettings),Tour.IsTour,Tour.CurrentTour.PointsToWin,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
 	}
 
 	protected override void MenuChoose(int choice){
@@ -221,7 +221,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 
 	public void UpdateTexts(){
 		modeText.Text = "Mode: " + (Tour.IsTour ? "Tour" : "Freeplay");
-		pointsText.Text = "Points to Win: " + Tour.TotalScore;
+		pointsText.Text = "Points to Win: " + Tour.CurrentTour.PointsToWin;
 		itemsText.Text = "Items: " + (Tour.CurrentTour.ItemsEnabled ? "On" : "Off");
 		stompText.Text = "Stomping: " + Game.StompEnumToString(Game.StompSetting);
 		bufferText.Text = "Buffer: " + BufferToString(Online.Buffer);

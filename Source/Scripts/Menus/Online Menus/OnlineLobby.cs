@@ -203,7 +203,7 @@ public partial class OnlineLobby : Node{
                 return;
             }
             
-            Rpc(nameof(UpdateLobbySettings), Tour.IsTour, Tour.TotalScore, Tour.CurrentTour.ItemsEnabled, (byte)Game.StompSetting, Online.Buffer);
+            Rpc(nameof(UpdateLobbySettings), Tour.IsTour, Tour.CurrentTour.PointsToWin, Tour.CurrentTour.ItemsEnabled, (byte)Game.StompSetting, Online.Buffer);
             
             Color playerColor = Colors.White;
             foreach (Color color in ColorMenu.DefaultColorOrder) {
@@ -350,11 +350,12 @@ public partial class OnlineLobby : Node{
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public void UpdateLobbySettings(bool isTour,int points, bool itemsOn,byte stompSetting, float buffer){
         Tour.IsTour = isTour;
-        Tour.TotalScore = points;
+        Tour.CurrentTour.PointsToWin = points;
         Tour.CurrentTour.ItemsEnabled = itemsOn;
         Game.StompSetting = (Game.StompSettingEnum)stompSetting;
         Online.Buffer = buffer;
         if(LobbySettingsMenu != null) LobbySettingsMenu.UpdateTexts();
+        if(Online.IsHost()) NohubHostManager.UpdateLobbyData();
     }
     
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -371,7 +372,7 @@ public partial class OnlineLobby : Node{
     public void StartGame(){
         Game.GameNode.Multiplayer.MultiplayerPeer.RefuseNewConnections = true;
         NohubHostManager.LockLobby();
-        Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.TotalScore,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
+        Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.CurrentTour.PointsToWin,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
         Rpc(nameof(StartingGame),(byte)Game.CurrentMode,Game.CurrentLevelName,Game.CurrentFolderPath);
     }
 

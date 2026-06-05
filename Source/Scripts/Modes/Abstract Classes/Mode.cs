@@ -71,7 +71,7 @@ public abstract partial class Mode : Node{
         }
         int comebackLuck = maxScore - playerScore;//Game.PlayerScores.Max()
         if((Game.TotalPlayers == 2) && comebackLuck == 10) comebackLuck = 5;
-        return comebackLuck / (float)Tour.TotalScore;
+        return comebackLuck / (float)Tour.CurrentTour.PointsToWin;
     }
 
     protected static float GetItemLuck(float modeDeficit,float playerComebackLuck){

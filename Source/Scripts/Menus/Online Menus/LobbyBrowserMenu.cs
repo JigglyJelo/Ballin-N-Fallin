@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 public partial class LobbyBrowserMenu : ScrollableMenu{
-    private readonly Dictionary<string, Variant.Type> LOBBY_SCHEMA = new(){
-        {"name", Variant.Type.String},
-        {"player_count", Variant.Type.Int},
-        {"max_players", Variant.Type.Int},
-    };
     // Key = Lobby ID, Value = JSON-Like Dictionary Key = string data name, Value = Variant typed data
     private Dictionary<string, Dictionary<string, Variant>> lobbyIds = new Dictionary<string, Dictionary<string, Variant>>();
     private Label statusLabel;
@@ -137,17 +132,12 @@ func call_async(target: Object, method: String, args: Array = []):
                 string id = (string)lobby.Get("id");
                 Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)lobby.Get("data");
                 
-                // Parse the custom Schema items (Just "name" right now)
+                //Parse the custom Schema items
                 if(!TryParseLobbyData(data, id, out Dictionary<string, Variant> lobbyData)) continue;
 
-                // --- THE FIX ---
-                // Grab the server's NATIVE lock status instead of relying on custom data
-                // (Note: If this throws an error, change "is_locked" to "locked")
-                bool nativeLockStatus = (bool)lobby.Get("is_locked"); 
-                
-                // Add the native bool into our C# dictionary so your UpdateSelectionVisual logic works perfectly
-                lobbyData.Add("locked", nativeLockStatus); 
+                bool lockStatus = (bool)lobby.Get("is_locked"); 
 
+                lobbyData.Add("locked", lockStatus);
                 lobbyIds.Add(id, lobbyData);
 
                 string lobbyName = lobbyData["name"].AsString();
@@ -174,7 +164,7 @@ func call_async(target: Object, method: String, args: Array = []):
 
     private bool TryParseLobbyData(Godot.Collections.Dictionary data, string id, out Dictionary<string, Variant> parsedData) {
         parsedData = new Dictionary<string, Variant>();
-        foreach(var requirement in LOBBY_SCHEMA){
+        foreach(var requirement in NohubHostManager.LOBBY_SCHEMA){
             string expectedKey = requirement.Key;
             Variant.Type expectedType = requirement.Value;
             if(!data.ContainsKey(expectedKey)) return false; 
