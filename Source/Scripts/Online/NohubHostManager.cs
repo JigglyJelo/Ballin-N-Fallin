@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class NohubHostManager : Node{
@@ -6,6 +7,7 @@ public partial class NohubHostManager : Node{
         {"name", Variant.Type.String},
         {"player_count", Variant.Type.Int},
         {"max_players", Variant.Type.Int},
+        {"is_tour", Variant.Type.Bool},
         {"points_to_win", Variant.Type.Int},
         {"items_enabled", Variant.Type.Bool},
     };
@@ -15,8 +17,8 @@ public partial class NohubHostManager : Node{
     private GDScript asyncBridgeScript;
     private string lobbyAddress;
     private string lobbyName;
-    public static readonly string GAME_ID = "Ballin N Fallin" + (string)ProjectSettings.GetSetting("application/config/version");
-    private string myLobbyId = ""; 
+    public static readonly string GAME_ID = Convert.ToHexString(System.Security.Cryptography.MD5.HashData(System.Text.Encoding.UTF8.GetBytes((string)ProjectSettings.GetSetting("application/config/name")+(string)ProjectSettings.GetSetting("application/config/version")+OS.HasFeature("editor"))));
+    private string myLobbyId = "";
 
     public void Initialize(string address, string name){
         if(NohubManagerNode != null) NohubManagerNode.Free();
@@ -116,8 +118,9 @@ func call_async(target: Object, method: String, args: Array = []):
         lobbyData.Add("player_count", playerCount.ToString());
         lobbyData.Add("max_players", Game.MAX_PLAYERS.ToString());
         //Tour Settings
-        lobbyData.Add("points_to_win", Tour.CurrentTour.PointsToWin.ToString());
         lobbyData.Add("items_enabled", Tour.CurrentTour.ItemsEnabled.ToString());
+        lobbyData.Add("is_tour", Tour.IsTour.ToString());
+        lobbyData.Add("points_to_win", Tour.CurrentTour.PointsToWin.ToString());
         //HOST-SIDE VALIDATION CHECK
         foreach(string requiredKey in LOBBY_SCHEMA.Keys) {
             if(!lobbyData.ContainsKey(requiredKey)){

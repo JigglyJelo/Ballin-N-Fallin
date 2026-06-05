@@ -1,22 +1,25 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 public partial class LobbyBrowserMenu : ScrollableMenu{
     // Key = Lobby ID, Value = JSON-Like Dictionary Key = string data name, Value = Variant typed data
     private Dictionary<string, Dictionary<string, Variant>> lobbyIds = new Dictionary<string, Dictionary<string, Variant>>();
-    private Label statusLabel;
+    private Label statusLabel, lobbyInfoLabel;
     private GodotObject nohubClient;
     private GodotObject nohubConnection;
+    private const string REFRESH_KEY = "REFRESH";
     private const float X_POS = -1875;
     private const float START_Y_POS = -800;
     private float yPos = START_Y_POS;
     private GDScript asyncBridgeScript;
+    private PackedScene lobbyLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LobbyLabel.tscn");
 
     public override void _Ready(){
         base._Ready();
-        statusLabel = GetNodeOrNull<Label>("StatusLabel");
-
+        statusLabel = GetNode<Label>("StatusLabel");
+        lobbyInfoLabel = GetNode<Label>("LobbyInfoLabel");
         asyncBridgeScript = new GDScript();
         asyncBridgeScript.SourceCode = @"
 extends RefCounted
@@ -113,8 +116,8 @@ func call_async(target: Object, method: String, args: Array = []):
         int index = 0;
         yPos = START_Y_POS; 
 
-        lobbyIds.Add("REFRESH", null);
-        Label refreshLabel = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
+        lobbyIds.Add(REFRESH_KEY, null);
+        Label refreshLabel = lobbyLabelScene.Instantiate<Label>();
         refreshLabel.Text = "Refresh List";
         refreshLabel.Name = "Lobby" + index; 
         refreshLabel.Position = new Vector2(X_POS,yPos);
@@ -143,7 +146,7 @@ func call_async(target: Object, method: String, args: Array = []):
                 string lobbyName = lobbyData["name"].AsString();
                 int currentPlayers = lobbyData["player_count"].AsInt32(); 
                 int maxPlayers = lobbyData["max_players"].AsInt32();
-                Label lobbyLabel = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
+                Label lobbyLabel = lobbyLabelScene.Instantiate<Label>();
                 lobbyLabel.Text = $"{lobbyName} ({currentPlayers}/{maxPlayers})";
                 lobbyLabel.Name = "Lobby" + index; 
                 lobbyLabel.Position = new Vector2(X_POS,yPos);
@@ -205,7 +208,7 @@ func call_async(target: Object, method: String, args: Array = []):
             if (label == null) continue;
             
             string key = lobbyIds.ElementAt(i).Key;
-            if (key == "REFRESH") continue;
+            if (key.Equals(REFRESH_KEY)) continue;
 
             bool isLocked = lobbyIds[key]["locked"].AsBool();
             if(Selection == i + 1){
@@ -213,6 +216,27 @@ func call_async(target: Object, method: String, args: Array = []):
             }else{
                 label.SelfModulate = isLocked ? Colors.Gray : Colors.White; 
             }
+        }
+        
+        lobbyInfoLabel.Text = CreateLobbyInfoString();
+    }
+
+    private string CreateLobbyInfoString(){
+        string selectedLobbyId = lobbyIds.ElementAt(Selection-1).Key;
+        if(selectedLobbyId.Equals(REFRESH_KEY)){
+            return "Refresh lobby list";
+        }else{
+            Dictionary<string,Variant> lobbyData = lobbyIds[selectedLobbyId];
+            StringBuilder stringBuilder = new StringBuilder(lobbyData["name"].AsString());
+            stringBuilder.Append($"\nPlayers: ({lobbyData["player_count"].AsString()}/{lobbyData["max_players"].AsString()})");
+            stringBuilder.Append($"\nItems: {(lobbyData["items_enabled"].AsBool() ? "On" : "Off")}");
+            bool isTour = lobbyData["is_tour"].AsBool();
+            if(isTour){
+                stringBuilder.Append($"\nTour\nPoints to Win: {lobbyData["points_to_win"].AsInt32()}");
+            }else{
+                stringBuilder.Append($"\nFreeplay");
+            }
+            return stringBuilder.ToString();
         }
     }
 
@@ -224,7 +248,7 @@ func call_async(target: Object, method: String, args: Array = []):
         
         string selectedLobbyId = lobbyIds.ElementAt(index).Key;
 
-        if(selectedLobbyId == "REFRESH"){
+        if(selectedLobbyId.Equals(REFRESH_KEY)){
             UpdateStatus("Refreshing...");
             FetchLobbies();
             return;
