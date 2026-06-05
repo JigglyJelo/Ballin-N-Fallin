@@ -3,7 +3,6 @@ using System.Collections.Generic;
 public class Tour{
 	public static bool IsTour = true;
 	public static TourSettings CurrentTour = new TourSettings();
-	public static int TotalScore = 50;
 	//Saves each Controller's Player Score
 	public static int[] PlayerScores = new int[Game.MAX_PLAYERS];
 	public static Dictionary<Mode.GameMode,bool> EnabledGameModes = new Dictionary<Mode.GameMode, bool>{

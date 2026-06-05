@@ -28,11 +28,11 @@ public partial class ScoreScreen : CanvasLayer{
 			nextMode = Tour.ChooseNextMode();
 			Game.GetRandomLevel(nextMode);
 		}
-		topText.Text = Tour.IsTour ? Tour.TotalScore + " Points to Win!" : "Results";
+		topText.Text = Tour.IsTour ? Tour.CurrentTour.PointsToWin + " Points to Win!" : "Results";
 
 		bool playVictoryMusic = false;
 		for(int i = 0; i < Game.TotalPlayers; i++){
-			if(Tour.PlayerScores[i] >= Tour.TotalScore){
+			if(Tour.PlayerScores[i] >= Tour.CurrentTour.PointsToWin){
 				playVictoryMusic = true;
 				TourFinished = true;
 				break;
@@ -70,7 +70,7 @@ public partial class ScoreScreen : CanvasLayer{
             	if(Tour.PlayerScores[i] > topScore) topScore = Tour.PlayerScores[i];
         	}
 			for(int i = 0; i < Game.TotalPlayers; i++){
-				if(Tour.PlayerScores[i] >= Tour.TotalScore && Tour.PlayerScores[i] == topScore){
+				if(Tour.PlayerScores[i] >= Tour.CurrentTour.PointsToWin && Tour.PlayerScores[i] == topScore){
 					TourFinished = true;
 					winners.Add(i + 1);
 				}

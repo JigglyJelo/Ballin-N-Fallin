@@ -10,7 +10,7 @@ public partial class ColorMenu : Menu2D{
 	public static int JoinedPlayers = 0;
 	public static int ReadyPlayers = 0;
     private bool isReady = false;
-	private Sprite2D playerBallSprite, playerShadingSprite, colorCursor, vibrationSprite;
+	private Sprite2D playerBallSprite, playerShadingSprite, colorCursor, vibrationSprite, disabledSprite;
     private Polygon2D colorBG;
     private Sprite2D[,] colorButtons = new Sprite2D[3,4];
 	private Label colorText;
@@ -52,6 +52,7 @@ public partial class ColorMenu : Menu2D{
 		colorBG = GetNode<Polygon2D>("ColorBackground");
         colorText = GetNode<Label>("Color Text");
         vibrationSprite = GetNode<Sprite2D>("ColorBackground/Vibration");
+        disabledSprite = GetNode<Sprite2D>("ColorBackground/Disabled");
         JoinedPlayers++;
 
         if(Game.UsingMouse()) colorText.HorizontalAlignment = HorizontalAlignment.Center;
@@ -63,7 +64,7 @@ public partial class ColorMenu : Menu2D{
         }
         //Controller
         if(!Game.UsingMouse()){
-            if(!Game.PlayerDatas[Id-1].VibrationEnabled) vibrationSprite.Texture = GD.Load<Texture2D>("res://Assets/Sprites/Input Prompts/Vibrations Off.png");
+            disabledSprite.Visible = !Game.PlayerDatas[Id-1].VibrationEnabled;
             //Sets player's initial color cursor position
 		    for(int i = 0; i < COLOR_ARRAY.GetLength(0); i++){
                 for(int j = 0; j < COLOR_ARRAY.GetLength(1);j++){
@@ -78,6 +79,7 @@ public partial class ColorMenu : Menu2D{
         }else if(Game.UsingMouse()){ //Mouse
             colorCursor.Visible = false;
             vibrationSprite.Visible = false;
+            disabledSprite.Visible = false;
             GetNode<Sprite2D>("ColorBackground/Y").Visible = false;
             //Instantiate buttons
             int index = 0;
@@ -249,10 +251,10 @@ public partial class ColorMenu : Menu2D{
     private void ToggleVibration(){
         GD.Print("Toggled");
         Game.PlayerDatas[Id-1].VibrationEnabled = !Game.PlayerDatas[Id-1].VibrationEnabled;
+        disabledSprite.Visible = !Game.PlayerDatas[Id-1].VibrationEnabled;
         if(Game.PlayerDatas[Id-1].VibrationEnabled){
-            Input.StartJoyVibration(InputId-1,1,1,0.25f);
-            vibrationSprite.Texture = GD.Load<Texture2D>("res://Assets/Sprites/Input Prompts/Vibrations On.png");
-        }else vibrationSprite.Texture = GD.Load<Texture2D>("res://Assets/Sprites/Input Prompts/Vibrations Off.png");
+            Input.StartJoyVibration((int)Game.PlayerDatas[Id-1].InputDevice,1,1,0.25f);
+        }
     }
 
     public void SetPosition(){

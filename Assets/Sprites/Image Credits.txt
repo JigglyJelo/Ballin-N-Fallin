@@ -1,5 +1,9 @@
 The majority of image assets were original creations by JigglyJello
+Unless specified here, in their respective folders, or else where those assets are proprietary
 Listed below are the third party assets used:
+
+Particle textures by Starry Skydancer: CC0
+https://opengameart.org/content/particle-textures
 
 Seamless HD landscape in parts by PWL: CC0
 https://opengameart.org/content/seamless-hd-landscape-in-parts

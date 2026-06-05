@@ -31,8 +31,8 @@ public partial class TourMenu : VerticalMenu, ILeftRightSelections{
 		SFX.Play("Move",Game.Random.Next(80,110)/100f);
 		switch(Selection){
 			case 1:
-				if(Tour.TotalScore < 1000) Tour.TotalScore += 10;
-				else Tour.TotalScore = 10;
+				if(Tour.CurrentTour.PointsToWin < 1000) Tour.CurrentTour.PointsToWin += 10;
+				else Tour.CurrentTour.PointsToWin = 10;
 				break;
 			case 2: 
 				Tour.CurrentTour.ItemsEnabled = !Tour.CurrentTour.ItemsEnabled;
@@ -53,8 +53,8 @@ public partial class TourMenu : VerticalMenu, ILeftRightSelections{
 		SFX.Play("Move",Game.Random.Next(80,110)/100f);
 		switch(Selection){
 			case 1:
-				if(Tour.TotalScore > 10) Tour.TotalScore -= 10;
-				else Tour.TotalScore = 1000;
+				if(Tour.CurrentTour.PointsToWin > 10) Tour.CurrentTour.PointsToWin -= 10;
+				else Tour.CurrentTour.PointsToWin = 1000;
 				break;
 			case 2: 
 				Tour.CurrentTour.ItemsEnabled = !Tour.CurrentTour.ItemsEnabled;
@@ -89,7 +89,7 @@ public partial class TourMenu : VerticalMenu, ILeftRightSelections{
 	}
 
 	private void UpdateTexts(){
-		pointsText.Text = "Points to Win: " + Tour.TotalScore;
+		pointsText.Text = "Points to Win: " + Tour.CurrentTour.PointsToWin;
 		itemsText.Text = Tour.CurrentTour.ItemsEnabled ? "Items: On" : "Items: Off";
 		eventsText.Text = Tour.CurrentTour.EventsEnabled ? "Events: On" : "Events: Off";
 		stompText.Text = "Stomping: " + Game.StompEnumToString(Game.StompSetting);

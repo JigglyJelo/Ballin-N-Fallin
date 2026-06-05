@@ -133,14 +133,14 @@ public partial class EndscreenResult : Node2D{
 	private async void BarHeightTween(float delta){
 		float endScale;
 		if(Tour.IsTour){
-			endScale = Tour.PlayerScores[scoreIndex]/(float)Tour.TotalScore;
+			endScale = Tour.PlayerScores[scoreIndex]/(float)Tour.CurrentTour.PointsToWin;
 		}else{
 			endScale = scoreIncreaseAmount/10f;
 		}
 		float tweenSpeed;
 		if(scoreIncreaseAmount != 0){
 			if(ScoreScreen.TourFinished){
-				tweenSpeed = (scoreIncreaseAmount / (float)Tour.TotalScore) * 3.225f;
+				tweenSpeed = (scoreIncreaseAmount / (float)Tour.CurrentTour.PointsToWin) * 3.225f;
 			}else{
 				tweenSpeed = scoreIncreaseAmount / (Tour.IsTour ? 10f : 30f);
 			}
@@ -160,7 +160,7 @@ public partial class EndscreenResult : Node2D{
 			points[1].Y += newHeight;
 			barOutline.Points = points;
 			//Increment Score Text if needed
-			int displayedScoreValue = (int)((visualPolygon.Polygon[0].Y/-768)*Tour.TotalScore);
+			int displayedScoreValue = (int)((visualPolygon.Polygon[0].Y/-768)*Tour.CurrentTour.PointsToWin);
         	if(Tour.IsTour && !scoreText.Text.Equals("Score: " + displayedScoreValue + "\n"+Game.GetUsername(Id))){
 				scoreText.Text = "Score: " + displayedScoreValue + "\n"+Game.GetUsername(Id);
 			}
@@ -207,7 +207,7 @@ public partial class EndscreenResult : Node2D{
 			barOutline.Visible = false;
 		}
 		
-		float startingHeight = BAR_FULL_HEIGHT*(startingScore/(float)Tour.TotalScore);
+		float startingHeight = BAR_FULL_HEIGHT*(startingScore/(float)Tour.CurrentTour.PointsToWin);
 		GD.Print(startingHeight);
 		Vector2[] polygon = visualPolygon.Polygon;
 		polygon[0].Y = startingHeight;
