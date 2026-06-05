@@ -13,7 +13,11 @@ public partial class EndBackgroundTransition : CanvasLayer{
 		Game.GameNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Backgrounds/MenuBackgroundLayer.tscn").Instantiate());
 		background = Game.GameNode.GetNode<Polygon2D>("BackgroundLayer/Background");
 		background.SelfModulate = Game.CLEAR;
-		background.GetParent<CanvasLayer>().Scale = new Vector2(1/Level.LevelNode.CameraZoom,1/Level.LevelNode.CameraZoom);
+		CanvasLayer bgLayer = background.GetParent<CanvasLayer>();
+		bgLayer.FollowViewportEnabled = false;
+		float expectedScale = Game.ContentScaleVector2.X;
+		bgLayer.Scale = new Vector2(expectedScale, expectedScale);
+		bgLayer.Offset = new Vector2(3840f*expectedScale/2,2160f*expectedScale/2);
 		Tween opacityTween = GetTree().CreateTween();
 		opacityTween.TweenProperty(background,"self_modulate",Colors.White,0.75);
 		opacityTween.TweenCallback(Callable.From(SwitchToScoreScreen));
