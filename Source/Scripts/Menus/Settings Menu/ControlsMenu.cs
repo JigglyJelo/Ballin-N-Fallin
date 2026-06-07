@@ -5,7 +5,7 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
     private Label[] actionLabels;
     private Label profileSelectorLabel;
     private Label vibrationLabel;
-    
+    private Label createProfileLabel;
     private int currentProfileIndex = 0;
     private bool isListening = false;
     private float remapCooldown = 0f;
@@ -13,11 +13,13 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
     public override void _Ready(){
         base._Ready();
         
-        totalSelections = ControlProfileManager.REMAP_ACTIONS.Length + 2; 
+        // 1 (Create) + 1 (Selector) + 4 (Actions) + 1 (Vibration)
+        totalSelections = ControlProfileManager.REMAP_ACTIONS.Length + 3; 
         Selection = 1;
         
         profileSelectorLabel = GetNode<Label>("Selections/ProfileSelector");
         vibrationLabel = GetNode<Label>("Selections/VibrationLabel");
+        createProfileLabel = GetNode<Label>("Selections/CreateProfileLabel");
         
         actionLabels = new Label[ControlProfileManager.REMAP_ACTIONS.Length];
         for(int i = 0; i < actionLabels.Length; i++){
@@ -39,18 +41,26 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
     }
 
     protected override void MenuChoose(int choice){
-        if(choice == 1){
+        if(choice == 2){ // 2 is now the Profile Selector
             SFX.Play("Error"); 
             return;
         }
 
         string activeProfile = ControlProfileManager.Profiles[currentProfileIndex];
+        if(choice == 1){ // 1 is CREATE NEW PROFILE
+            string newProfileName = ControlProfileManager.CreateAutoNamedProfile();
+            currentProfileIndex = ControlProfileManager.Profiles.IndexOf(newProfileName);
+            SFX.Play("Confirm");
+            UpdateTexts();
+            return;
+        }
+
         if(activeProfile == ControlProfileManager.DEFAULT_PROFILE){
             SFX.Play("Error");
             return;
         }
 
-        if(choice == totalSelections){
+        if(choice == totalSelections){ // totalSelections (7) is VIBRATION TOGGLE
             bool currentVibration = ControlProfileManager.GetVibration(activeProfile);
             ControlProfileManager.SetVibration(activeProfile, !currentVibration);
             SFX.Play("Confirm");
@@ -61,7 +71,8 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
         SFX.Play("Confirm");
         isListening = true;
         
-        int actionIndex = choice - 2; 
+        //Actions start at choice 3, so we subtract 3 to get index 0
+        int actionIndex = choice - 3;
         actionLabels[actionIndex].Text = ControlProfileManager.REMAP_ACTIONS[actionIndex] + ": [Press Button to Add]";
     }
 
@@ -74,13 +85,13 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
     public void MenuRight(){
         string activeProfile = ControlProfileManager.Profiles[currentProfileIndex];
 
-        if(Selection == 1){
+        if(Selection == 2){ // 2 is Profile Selector
             SFX.Play("Move", Game.Random.Next(80, 110) / 100f);
             if(currentProfileIndex < ControlProfileManager.Profiles.Count - 1) currentProfileIndex++;
             else currentProfileIndex = 0; 
             joystickTimer = 0;
             UpdateTexts();
-        }else if(Selection == totalSelections){
+        }else if(Selection == totalSelections){ // totalSelections is Vibration Toggle
             if(activeProfile == ControlProfileManager.DEFAULT_PROFILE){
                 SFX.Play("Error");
                 return;
@@ -96,13 +107,13 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
     public void MenuLeft(){
         string activeProfile = ControlProfileManager.Profiles[currentProfileIndex];
 
-        if(Selection == 1){
+        if(Selection == 2){ // 2 is Profile Selector
             SFX.Play("Move", Game.Random.Next(80, 110) / 100f);
             if(currentProfileIndex > 0) currentProfileIndex--;
             else currentProfileIndex = ControlProfileManager.Profiles.Count - 1; 
             joystickTimer = 0;
             UpdateTexts();
-        }else if(Selection == totalSelections){ 
+        }else if(Selection == totalSelections){ // totalSelections is Vibration Toggle
             if(activeProfile == ControlProfileManager.DEFAULT_PROFILE){
                 SFX.Play("Error");
                 return;
@@ -117,7 +128,8 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
 
     public override void _Input(InputEvent @event){
         if(!isListening){
-            if(Selection > 1 && Selection < totalSelections && @event is InputEventJoypadButton btnEvent && btnEvent.IsPressed()){
+            // Ensure we are strictly on the Actions (Selection 3, 4, 5, 6)
+            if(Selection > 2 && Selection < totalSelections && @event is InputEventJoypadButton btnEvent && btnEvent.IsPressed()){
                 string activeProfile = ControlProfileManager.Profiles[currentProfileIndex];
                 
                 if(activeProfile == ControlProfileManager.DEFAULT_PROFILE && (btnEvent.ButtonIndex == JoyButton.X || btnEvent.ButtonIndex == JoyButton.Y)){
@@ -126,7 +138,7 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
                     return;
                 }
 
-                int actionIndex = Selection - 2;
+                int actionIndex = Selection - 3;
                 string targetAction = ControlProfileManager.REMAP_ACTIONS[actionIndex];
 
                 if(btnEvent.ButtonIndex == JoyButton.X){
@@ -158,7 +170,7 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
     }
 
     private void AssignNewBind(InputEvent newEvent){
-        int actionIndex = Selection - 2;
+        int actionIndex = Selection - 3;
         string targetAction = ControlProfileManager.REMAP_ACTIONS[actionIndex];
         string activeProfile = ControlProfileManager.Profiles[currentProfileIndex];
 
@@ -222,6 +234,8 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
 
         bool vibrationEnabled = ControlProfileManager.GetVibration(activeProfile);
         vibrationLabel.Text = $"Vibration: {(vibrationEnabled ? "On" : "Off")}";
+        
+        createProfileLabel.Text = "+ Create New Profile";
     }
 
     private string FormatEventName(InputEvent @event){
