@@ -4,9 +4,25 @@ using System.Collections.Generic;
 public static class ControlProfileManager{
     public const string DEFAULT_PROFILE = "Default";
     public static readonly string[] REMAP_ACTIONS = {"Charge N Launch", "Slam", "Item", "Y"};
-    public static List<string> Profiles = new List<string>{DEFAULT_PROFILE, "Fortnite"};
+    public static List<string> Profiles = new List<string>{DEFAULT_PROFILE};
 
-    //Custom input save serialization
+    // --- NEW: AUTO-CREATE PROFILES ---
+    public static string CreateAutoNamedProfile(){
+        int counter = 1;
+        string newName = "Profile " + counter;
+        
+        // Keep counting up until we find a name that doesn't exist yet
+        while(Profiles.Contains(newName)){
+            counter++;
+            newName = "Profile " + counter;
+        }
+        
+        Profiles.Add(newName);
+        // Saving an empty dictionary registers it in the file and defaults it to factory controls
+        SaveProfileData(newName, new Godot.Collections.Dictionary()); 
+        return newName;
+    }
+
     public static string SerializeEvent(InputEvent @event){
         if(@event is InputEventJoypadButton btn){
             return $"JoyBtn:{(int)btn.ButtonIndex}";
@@ -44,13 +60,6 @@ public static class ControlProfileManager{
                     Profiles.Add(profile);
                 }
             }
-        }
-    }
-
-    public static void CreateNewProfile(string profileName){
-        if(!Profiles.Contains(profileName)){
-            Profiles.Add(profileName);
-            SaveProfileData(profileName, new Godot.Collections.Dictionary()); 
         }
     }
 
@@ -121,7 +130,7 @@ public static class ControlProfileManager{
 
             InputMap.ActionEraseEvents(fullActionName);
 
-            bool useDefault = profileName == DEFAULT_PROFILE || !profileData.ContainsKey(action);
+            bool useDefault = profileName == "Default" || !profileData.ContainsKey(action);
 
             if(!useDefault){
                 Variant savedData = profileData[action];
@@ -162,7 +171,7 @@ public static class ControlProfileManager{
         }
 
         string serializedEvent = SerializeEvent(@event);
-        if(serializedEvent == "Unknown") return; // Safety check
+        if(serializedEvent == "Unknown") return; 
         
         bool alreadyExists = false;
         foreach(Variant v in eventsArray){
@@ -194,7 +203,7 @@ public static class ControlProfileManager{
     }
 
     public static bool GetVibration(string profileName){
-        if(profileName == DEFAULT_PROFILE) return true; 
+        if(profileName == DEFAULT_PROFILE) return true;
         Godot.Collections.Dictionary profileData = GetProfileData(profileName);
         if(profileData.ContainsKey("VibrationEnabled")){
             return (bool)profileData["VibrationEnabled"];

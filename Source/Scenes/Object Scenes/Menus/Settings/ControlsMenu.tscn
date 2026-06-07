@@ -25,11 +25,22 @@ metadata/nonclickable = true
 [node name="Selections" type="Node2D" parent="."]
 position = Vector2(215, 0)
 
+[node name="CreateProfileLabel" type="Label" parent="Selections"]
+offset_left = -1886.0
+offset_top = -677.0
+offset_right = -635.0
+offset_bottom = -437.0
+text = "Create New"
+label_settings = ExtResource("3_k3j3p")
+vertical_alignment = 1
+metadata/setting = true
+metadata/Nonclickable = true
+
 [node name="ProfileSelector" type="Label" parent="Selections"]
 offset_left = -1886.0
-offset_top = -973.0
+offset_top = -474.0
 offset_right = -635.0
-offset_bottom = -733.0
+offset_bottom = -234.0
 text = "Profile"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -38,9 +49,9 @@ metadata/Nonclickable = true
 
 [node name="ActionLabel_0" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = -724.0
+offset_top = -225.0
 offset_right = 56.0
-offset_bottom = -484.0
+offset_bottom = 15.0
 text = "Charge"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -49,9 +60,9 @@ metadata/nonclickable = true
 
 [node name="ActionLabel_1" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = -490.0
+offset_top = 9.0
 offset_right = 56.0
-offset_bottom = -250.0
+offset_bottom = 249.0
 text = "Slam"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -60,9 +71,9 @@ metadata/nonclickable = true
 
 [node name="ActionLabel_2" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = -190.0
+offset_top = 309.0
 offset_right = -315.0
-offset_bottom = 50.0
+offset_bottom = 549.0
 text = "Item"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -71,9 +82,9 @@ metadata/nonclickable = true
 
 [node name="ActionLabel_3" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 110.0
+offset_top = 609.0
 offset_right = -483.0
-offset_bottom = 350.0
+offset_bottom = 849.0
 text = "Show Text"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -82,9 +93,9 @@ metadata/nonclickable = true
 
 [node name="VibrationLabel" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 352.0
+offset_top = 851.0
 offset_right = -483.0
-offset_bottom = 592.0
+offset_bottom = 1091.0
 text = "Vibration"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
