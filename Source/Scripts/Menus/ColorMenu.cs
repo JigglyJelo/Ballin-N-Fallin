@@ -10,7 +10,8 @@ public partial class ColorMenu : Menu2D{
 	public static int JoinedPlayers = 0;
 	public static int ReadyPlayers = 0;
     private bool isReady = false;
-	private Sprite2D playerBallSprite, playerShadingSprite, colorCursor, vibrationSprite, disabledSprite;
+	private Sprite2D playerBallSprite, playerShadingSprite, colorCursor;
+    private Label profileLabel;
     private Polygon2D colorBG;
     private Sprite2D[,] colorButtons = new Sprite2D[3,4];
 	private Label colorText;
@@ -51,11 +52,8 @@ public partial class ColorMenu : Menu2D{
 		colorCursor = GetNode<Sprite2D>("ColorBackground/ColorSelector");
 		colorBG = GetNode<Polygon2D>("ColorBackground");
         colorText = GetNode<Label>("Color Text");
-        vibrationSprite = GetNode<Sprite2D>("ColorBackground/Vibration");
-        disabledSprite = GetNode<Sprite2D>("ColorBackground/Disabled");
+        profileLabel = GetNode<Label>("ColorBackground/ProfileLabel");
         JoinedPlayers++;
-
-        if(Game.UsingMouse()) colorText.HorizontalAlignment = HorizontalAlignment.Center;
         
         //Sets default color if Controller's first time joining
         if(!Online.IsOnline) Game.PlayerDatas[Id-1].PlayerColor = DefaultColorOrder.First(color => !Game.PlayerDatas.Any(player => player.PlayerColor == color));
@@ -64,7 +62,7 @@ public partial class ColorMenu : Menu2D{
         }
         //Controller
         if(!Game.UsingMouse()){
-            disabledSprite.Visible = !Game.PlayerDatas[Id-1].VibrationEnabled;
+            profileLabel.Text = "Profile: " + Game.PlayerDatas[Id-1].ControlProfileName;
             //Sets player's initial color cursor position
 		    for(int i = 0; i < COLOR_ARRAY.GetLength(0); i++){
                 for(int j = 0; j < COLOR_ARRAY.GetLength(1);j++){
@@ -78,8 +76,7 @@ public partial class ColorMenu : Menu2D{
             }
         }else if(Game.UsingMouse()){ //Mouse
             colorCursor.Visible = false;
-            vibrationSprite.Visible = false;
-            disabledSprite.Visible = false;
+            profileLabel.Visible = false;
             GetNode<Sprite2D>("ColorBackground/Y").Visible = false;
             //Instantiate buttons
             int index = 0;
@@ -107,7 +104,7 @@ public partial class ColorMenu : Menu2D{
             //Moment where order of &'s matter (Game.InputIds.Count >= Id) Needed to prevent oob error
             //This still gets called once when being freed which would cause an error trying to access no longer existant Id in InputIds
             if((Game.PlayerDatas.Count >= Id || IsOnline()) && Input.IsActionJustReleased("Y" + InputId)){  //Game.InputIds[Id-1]
-		    	ToggleVibration();
+		    	SwitchProfile();
             }
         }else{
             //Mouse Controls
@@ -178,9 +175,6 @@ public partial class ColorMenu : Menu2D{
                 colorText.Text = "Ready";
 			    colorBG.Visible = false;
                 colorCursor.Visible = false;
-                colorText.HorizontalAlignment = HorizontalAlignment.Center;
-                colorText.Scale = Vector2.One;
-                colorText.Position = new Vector2(-907,-117);
                 
                 ReadyPlayers++;
                 isReady = true;
@@ -207,10 +201,7 @@ public partial class ColorMenu : Menu2D{
 			    colorBG.Visible = true;
                 if(!Game.UsingMouse()){
                     colorCursor.Visible = true;
-                    colorText.HorizontalAlignment = HorizontalAlignment.Left;
                 }
-                colorText.Scale = new Vector2(0.5f,0.5f);
-                colorText.Position = new Vector2(-454,354);
                 PlayerMenu.selectedColors.Remove(playerBallSprite.SelfModulate);
 		    }else{ 
                 Game.TotalPlayers--;
@@ -248,13 +239,22 @@ public partial class ColorMenu : Menu2D{
         }   
     }
 
-    private void ToggleVibration(){
-        GD.Print("Toggled");
-        Game.PlayerDatas[Id-1].VibrationEnabled = !Game.PlayerDatas[Id-1].VibrationEnabled;
-        disabledSprite.Visible = !Game.PlayerDatas[Id-1].VibrationEnabled;
-        if(Game.PlayerDatas[Id-1].VibrationEnabled){
-            Input.StartJoyVibration((int)Game.PlayerDatas[Id-1].InputDevice,1,1,0.25f);
+    private void SwitchProfile(){
+        if(isReady) return; 
+
+        string currentProfile = Game.PlayerDatas[Id-1].ControlProfileName;
+        int index = ControlProfileManager.Profiles.IndexOf(currentProfile);
+
+        if(index < ControlProfileManager.Profiles.Count - 1){
+            index++;
+        }else{
+            index = 0;
         }
+        string newProfile = ControlProfileManager.Profiles[index];
+        Game.PlayerDatas[Id-1].ControlProfileName = newProfile;
+        profileLabel.Text = "Profile: " + newProfile;
+
+        SFX.Play("Move"); 
     }
 
     public void SetPosition(){

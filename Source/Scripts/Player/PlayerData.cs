@@ -6,6 +6,7 @@ public partial class PlayerData{
     public bool VibrationEnabled;
 	public int UUID;
     public Color PlayerColor;
+    public string ControlProfileName = ControlProfileManager.DEFAULT_PROFILE;
 
     public PlayerData(string username, PlayerInputDevice inputId, int uuid){
         Username = username;

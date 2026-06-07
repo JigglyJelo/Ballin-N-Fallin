@@ -44,13 +44,13 @@ label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Online Text" type="Label" parent="Selections"]
+[node name="Controls Text" type="Label" parent="Selections"]
 offset_left = -1920.0
 offset_top = 101.0
 offset_right = 1920.0
 offset_bottom = 341.0
 pivot_offset = Vector2(1920, 120)
-text = "Online"
+text = "Controls"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
