@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvrkggycrj4wr"]
+[gd_scene load_steps=7 format=3 uid="uid://bvrkggycrj4wr"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/ColorMenu.cs" id="1_mock4"]
 [ext_resource type="Texture2D" uid="uid://dsqbjuon6kn2j" path="res://Assets/Sprites/Menus/Color/colorButton.png" id="3_3ys2e"]
 [ext_resource type="Texture2D" uid="uid://bcebx8kxnajhr" path="res://Assets/Sprites/Menus/Color/Circle.png" id="3_d7kdi"]
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Object Scenes/Players/StaticPlayer.tscn" id="4_yvtdx"]
-[ext_resource type="Texture2D" uid="uid://cjxi1f5bixufo" path="res://Assets/Sprites/Input Prompts/Vibrations On.png" id="5_dp1ux"]
 [ext_resource type="Texture2D" uid="uid://cbnguvlc7876c" path="res://Assets/Sprites/Input Prompts/FaceButton.png" id="5_h3o5p"]
-[ext_resource type="Texture2D" uid="uid://chvbwingq8db0" path="res://Assets/Sprites/Menus/No.png" id="5_k372x"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="8_2fx5h"]
 
 [node name="ColorMenu" type="Node2D"]
@@ -14,10 +12,10 @@ script = ExtResource("1_mock4")
 
 [node name="ColorBackground" type="Polygon2D" parent="."]
 color = Color(1, 0.639216, 0.290196, 1)
-polygon = PackedVector2Array(-450, -333, 450, -333, 450, 333, -450, 333)
+polygon = PackedVector2Array(-450, -383, 450, -383, 450, 333, -450, 333)
 
 [node name="Line2D" type="Line2D" parent="ColorBackground"]
-points = PackedVector2Array(-460, -343, 460, -343, 460, 343, -460, 343)
+points = PackedVector2Array(-460, -393, 460, -393, 460, 343, -460, 343)
 closed = true
 width = 20.0
 default_color = Color(0, 0, 0, 1)
@@ -125,18 +123,6 @@ texture = ExtResource("3_d7kdi")
 region_enabled = true
 region_rect = Rect2(0, 0, 156, 156)
 
-[node name="Vibration" type="Sprite2D" parent="ColorBackground"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(277, 421)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("5_dp1ux")
-
-[node name="Disabled" type="Sprite2D" parent="ColorBackground"]
-self_modulate = Color(1, 0, 0, 1)
-position = Vector2(277, 411)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("5_k372x")
-
 [node name="Y" type="Sprite2D" parent="ColorBackground"]
 texture_repeat = 3
 position = Vector2(422, 419)
@@ -145,17 +131,28 @@ texture = ExtResource("5_h3o5p")
 region_enabled = true
 region_rect = Rect2(0, 0, 98, 98)
 
-[node name="Player" parent="." instance=ExtResource("4_yvtdx")]
-position = Vector2(0, -625)
-
-[node name="Color Text" type="Label" parent="."]
+[node name="ProfileLabel" type="Label" parent="ColorBackground"]
 z_index = 1
 offset_left = -471.0
 offset_top = 356.0
 offset_right = 1377.0
 offset_bottom = 590.0
 scale = Vector2(0.5, 0.5)
+text = "Profile:"
+label_settings = ExtResource("8_2fx5h")
+
+[node name="Player" parent="." instance=ExtResource("4_yvtdx")]
+position = Vector2(0, -649)
+
+[node name="Color Text" type="Label" parent="."]
+z_index = 1
+offset_left = -471.0
+offset_top = -395.0
+offset_right = 1377.0
+offset_bottom = -161.0
+scale = Vector2(0.5, 0.5)
 text = "Choose Color"
 label_settings = ExtResource("8_2fx5h")
+horizontal_alignment = 1
 
 [node name="Selections" type="Node2D" parent="."]

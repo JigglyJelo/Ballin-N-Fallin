@@ -58,6 +58,10 @@ public partial class Player : Node2D{
 		Inventory = new PlayerInventory(this);
 		PlayerColor = PlayerData.PlayerColor;
 		Index = Id-1;
+		if(PlayerData.InputDevice >= PlayerData.PlayerInputDevice.None && PlayerData.InputDevice < PlayerData.PlayerInputDevice.Mouse){
+            PlayerData.VibrationEnabled = ControlProfileManager.GetVibration(PlayerData.ControlProfileName);
+			ControlProfileManager.ApplyProfileToDevice(PlayerData.ControlProfileName, (int)PlayerData.InputDevice);
+        }
 		//Nodes
 		Rb = GetNode<InterpolatedBody>("RigidBody2D");
 		Visuals = GetNode<PlayerVisuals>("Visuals");
