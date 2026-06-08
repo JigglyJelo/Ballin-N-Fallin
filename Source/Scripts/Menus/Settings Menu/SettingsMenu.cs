@@ -14,7 +14,7 @@ public partial class SettingsMenu : VerticalMenu{
         switch(Selection){
             case 1: MenuScene.LoadMenu("Settings/VideoMenu"); QueueFree(); break;
             case 2: MenuScene.LoadMenu("Settings/SoundMenu"); QueueFree(); break;
-            case 3: MenuScene.LoadMenu("Settings/ControlsMenu"); QueueFree(); break;
+            case 3: MenuScene.LoadMenu("Settings/ProfileMenu"); QueueFree(); break;
             case 4: MenuScene.LoadMenu("Settings/AccessibilityMenu"); QueueFree(); break;
         }
     }
