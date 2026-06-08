@@ -10,12 +10,12 @@ script = ExtResource("1_kjtbf")
 
 [node name="ArrowSelections" parent="." instance=ExtResource("2_narvi")]
 
-[node name="Controls Text" type="Label" parent="."]
+[node name="ProfileText" type="Label" parent="."]
 offset_left = -1920.0
 offset_top = -935.0
 offset_right = 1920.0
 offset_bottom = -695.0
-text = "Controls"
+text = "Editing "
 label_settings = ExtResource("3_k3j3p")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -25,33 +25,11 @@ metadata/nonclickable = true
 [node name="Selections" type="Node2D" parent="."]
 position = Vector2(215, 0)
 
-[node name="CreateProfileLabel" type="Label" parent="Selections"]
-offset_left = -1886.0
-offset_top = -677.0
-offset_right = -635.0
-offset_bottom = -437.0
-text = "Create New"
-label_settings = ExtResource("3_k3j3p")
-vertical_alignment = 1
-metadata/setting = true
-metadata/Nonclickable = true
-
-[node name="ProfileSelector" type="Label" parent="Selections"]
-offset_left = -1886.0
-offset_top = -474.0
-offset_right = -635.0
-offset_bottom = -234.0
-text = "Profile"
-label_settings = ExtResource("3_k3j3p")
-vertical_alignment = 1
-metadata/setting = true
-metadata/Nonclickable = true
-
 [node name="ActionLabel_0" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = -225.0
+offset_top = -668.0
 offset_right = 56.0
-offset_bottom = 15.0
+offset_bottom = -428.0
 text = "Charge"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -60,9 +38,9 @@ metadata/nonclickable = true
 
 [node name="ActionLabel_1" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 9.0
+offset_top = -434.0
 offset_right = 56.0
-offset_bottom = 249.0
+offset_bottom = -194.0
 text = "Slam"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -71,9 +49,9 @@ metadata/nonclickable = true
 
 [node name="ActionLabel_2" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 309.0
+offset_top = -134.0
 offset_right = -315.0
-offset_bottom = 549.0
+offset_bottom = 106.0
 text = "Item"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -82,9 +60,9 @@ metadata/nonclickable = true
 
 [node name="ActionLabel_3" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 609.0
+offset_top = 166.0
 offset_right = -483.0
-offset_bottom = 849.0
+offset_bottom = 406.0
 text = "Show Text"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1
@@ -93,9 +71,9 @@ metadata/nonclickable = true
 
 [node name="VibrationLabel" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 851.0
+offset_top = 408.0
 offset_right = -483.0
-offset_bottom = 1091.0
+offset_bottom = 648.0
 text = "Vibration"
 label_settings = ExtResource("3_k3j3p")
 vertical_alignment = 1

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bstlwlprbdcm4"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/Settings Menu/ProfileMenu.cs" id="1_mpifo"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_wb2t2"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="3_r5v6g"]
+
+[node name="ProfileMenu" type="Node2D"]
+script = ExtResource("1_mpifo")
+VisibleItems = 7
+
+[node name="InfoLabel" type="Label" parent="."]
+offset_left = -2330.0
+offset_top = -1097.0
+offset_right = 3495.0
+offset_bottom = -863.0
+scale = Vector2(0.8, 0.8)
+text = "Choose a Profile to edit"
+label_settings = ExtResource("2_wb2t2")
+horizontal_alignment = 1
+
+[node name="MenuBackButton" parent="." instance=ExtResource("3_r5v6g")]
+position = Vector2(1750, 970)
+
+[node name="Selections" type="Node2D" parent="."]

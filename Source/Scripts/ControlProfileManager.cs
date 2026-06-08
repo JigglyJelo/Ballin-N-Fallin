@@ -75,6 +75,20 @@ public static class ControlProfileManager{
         Game.Save.Save(Game.SAVE_PATH);
     }
 
+    public static void DeleteProfile(string profileName){
+        if(profileName == DEFAULT_PROFILE) return;
+
+        if(Profiles.Contains(profileName)){
+            Profiles.Remove(profileName);
+        }
+
+        //Erase the data from the save file
+        if(Game.Save.HasSectionKey("Controls", profileName)){
+            Game.Save.EraseSectionKey("Controls", profileName);
+            Game.Save.Save(Game.SAVE_PATH);
+        }
+    }
+
     public static Godot.Collections.Array<InputEvent> GetHardcodedDefaults(string action){
         Godot.Collections.Array<InputEvent> events = new Godot.Collections.Array<InputEvent>();
         switch(action){
