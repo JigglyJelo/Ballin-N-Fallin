@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ddgbtxy1y78xq"]
+[gd_scene load_steps=10 format=3 uid="uid://ddgbtxy1y78xq"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/MenuScene.cs" id="1_5y6bx"]
 [ext_resource type="AudioStream" uid="uid://dd2u0alxwq5w4" path="res://Assets/Music/Menu.ogg" id="3_xo7lv"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://c4dupxxcy32up" path="res://Assets/SFX/Menu/keypress-017.ogg" id="7_pywyu"]
 [ext_resource type="PackedScene" uid="uid://s1fupi1cythv" path="res://Source/Scenes/Object Scenes/Backgrounds/MenuBackground.tscn" id="8_8odrv"]
 [ext_resource type="AudioStream" uid="uid://byp56obcr85mg" path="res://Assets/SFX/Menu/gun_cocking.ogg" id="8_eprgt"]
+[ext_resource type="AudioStream" uid="uid://cf7uht76mpgh7" path="res://Assets/SFX/bad.ogg" id="8_xtfaq"]
 
 [node name="Scene" type="Node"]
 script = ExtResource("1_5y6bx")
@@ -38,6 +39,12 @@ bus = &"SFX"
 [node name="PlayerEnter" type="AudioStreamPlayer2D" parent="SFX"]
 process_mode = 3
 stream = ExtResource("8_eprgt")
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="Error" type="AudioStreamPlayer2D" parent="SFX"]
+process_mode = 3
+stream = ExtResource("8_xtfaq")
 max_polyphony = 8
 bus = &"SFX"
 
