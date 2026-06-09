@@ -255,7 +255,7 @@ func call_async(target: Object, method: String, args: Array = []):
         }
 
         if(lobbyIds[selectedLobbyId]["locked"].AsBool()) {
-            //SFX.Play("Error"); 
+            SFX.Play("Error"); 
             UpdateStatus("That lobby is currently locked.");
             return;
         }
@@ -264,7 +264,7 @@ func call_async(target: Object, method: String, args: Array = []):
         int max = lobbyIds[selectedLobbyId]["max_players"].AsInt32();
 
         if(players >= max){
-            //SFX.Play("Error");
+            SFX.Play("Error");
             UpdateStatus("That lobby is currently full.");
             return;
         }
