@@ -2,7 +2,7 @@ using Godot;
 
 public partial class CreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
-	private Label headerLabel, musicLabel,sfxLabel,miscLabel;
+	private Label headerLabel, subheaderLabel, musicLabel,sfxLabel,miscLabel;
 	private const string MUSIC_CREDITS_TEXT = @"
 		Menu: The Gallant Seventh - US Marine Band
 		Score Screen: Semper Fidelis - US Marine Band
@@ -32,6 +32,7 @@ public partial class CreditsMenu : VerticalMenu{
 	public override void _Ready(){
 		base._Ready();
 		headerLabel = GetNode<Label>("CreditsHeader");
+		subheaderLabel = GetNode<Label>("LinkSubheader");
 		musicLabel = GetNode<Label>("MusicCredits");
 		sfxLabel = GetNode<Label>("SFXCredits");
 		miscLabel = GetNode<Label>("MiscCredits");
@@ -91,6 +92,7 @@ public partial class CreditsMenu : VerticalMenu{
 				label.Visible = !displayingSubCredits;
 			}
 		}
+		subheaderLabel.Visible = !displayingSubCredits;
 		musicLabel.Visible = subCredits == 1;
 		sfxLabel.Visible = subCredits == 2;
 		miscLabel.Visible = subCredits == 3;
