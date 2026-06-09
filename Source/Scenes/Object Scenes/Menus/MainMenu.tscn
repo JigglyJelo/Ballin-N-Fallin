@@ -87,9 +87,9 @@ metadata/_edit_use_anchors_ = true
 [node name="Copyright" type="Label" parent="."]
 self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
 offset_left = -1920.0
-offset_top = 1010.0
-offset_right = -605.0
-offset_bottom = 1244.0
+offset_top = 1008.0
+offset_right = -391.0
+offset_bottom = 1242.0
 scale = Vector2(0.333, 0.333)
-text = "© 2026 JigglyJello"
+text = "© 2026 JigglyJello. Some rights reserved"
 label_settings = ExtResource("3_45pv8")
