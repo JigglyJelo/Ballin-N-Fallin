@@ -264,7 +264,10 @@ public partial class Game : Node{
             if(username.Length <= Online.USERNAME_LENGTH) return username;
 			return username.Substring(0,Online.USERNAME_LENGTH)+"...";
         }else{
-            return (Game.CurrentScene == SceneType.Game ? "P" : "Player ") + id;
+            if(PlayerDatas[id-1].ControlProfileName == ControlProfileManager.DEFAULT_PROFILE)
+                return (Game.CurrentScene == SceneType.Game ? "P" : "Player ") + id;
+            else
+                return PlayerDatas[id-1].ControlProfileName;
         }
     }
     

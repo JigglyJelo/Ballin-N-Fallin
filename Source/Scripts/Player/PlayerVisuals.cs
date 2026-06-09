@@ -328,12 +328,13 @@ public partial class PlayerVisuals : Node2D{
 		}else{
 			itemSprite.Texture = null;
 			itemTriangle.Visible = false;
+			SetItemSpriteVisibility(false);
 		}
+		AdjustUsernamePosition();
 	}
 
 	public void SetItemSpriteVisibility(bool visible){
 		itemSprite.Visible = visible;
-		usernameGroup.Position = visible ? new Vector2(0, -96) : Vector2.Zero;
 		if(!visible){
 			itemSprite.Texture = null;
 			itemTriangle.Visible = false;
@@ -342,15 +343,20 @@ public partial class PlayerVisuals : Node2D{
 			itemTriangle.Visible = true;
 			if(player.Inventory.Item is SingleUseItem) ItemAmountText.Text = (player.Inventory.Item as SingleUseItem).Amount.ToString();
 		}
+		AdjustUsernamePosition();
 	}
 
 	public void SetRouletteSpriteVisibility(bool visible){
 		ItemRouletteAnimation.Visible = visible;
-		usernameGroup.Position = visible ? new Vector2(0, -96) : Vector2.Zero;
 		if(visible){
 			itemSprite.Visible = false;
 			itemTriangle.Visible = true;
 		}
+		AdjustUsernamePosition();
+	}
+
+	private void AdjustUsernamePosition(){
+		usernameGroup.Position = ItemRouletteAnimation.Visible || itemSprite.Visible ? new Vector2(0, -96) : Vector2.Zero;
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

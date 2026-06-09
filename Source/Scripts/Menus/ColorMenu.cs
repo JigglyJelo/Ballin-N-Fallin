@@ -97,7 +97,7 @@ public partial class ColorMenu : Menu2D{
 	}
 
 	public override void _Process(double delta){
-        if(!Game.UsingMouse()){
+        if(!Game.UsingMouse() && InputId != (int)PlayerData.PlayerInputDevice.Mouse){
             //Controller controls
             InputChecks(delta,InputId);
             //Vibration Toggle
