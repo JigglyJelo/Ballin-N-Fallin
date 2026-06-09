@@ -23,7 +23,12 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
         UpdateTexts();
     }
 
-    protected override void MenuChoose(int choice){}
+    protected override void MenuChoose(int choice){
+        if(choice == 4){
+            ToggleFullscreen();
+            UpdateTexts();
+        }
+    }
 
     public override void MenuBack(){
         SFX.Play("Back");
@@ -45,10 +50,6 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
             case 3: 
                 vSyncEnabled = !vSyncEnabled;
                 break;
-            case 4: 
-                if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.ExclusiveFullscreen) DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
-                else DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-                break;
         }
         joystickTimer = 0;
         UpdateTexts();
@@ -67,13 +68,14 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
             case 3: 
                 vSyncEnabled = !vSyncEnabled;
                 break;
-            case 4: 
-                if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.ExclusiveFullscreen) DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
-                else DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-                break;
         }
         joystickTimer = 0;
         UpdateTexts();
+    }
+
+    private void ToggleFullscreen(){
+        if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.ExclusiveFullscreen) DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+        else DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
     }
 
     private void UpdateTexts(){
