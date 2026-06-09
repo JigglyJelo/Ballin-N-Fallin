@@ -2,7 +2,7 @@ using Godot;
 
 public partial class CreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
-	private Label headerLabel, subheaderLabel, musicLabel,sfxLabel,miscLabel;
+	private Label headerLabel, subheaderLabel, codeLabel, musicLabel,sfxLabel,miscLabel;
 	private const string MUSIC_CREDITS_TEXT = @"
 		Menu: The Gallant Seventh - US Marine Band
 		Score Screen: Semper Fidelis - US Marine Band
@@ -33,10 +33,11 @@ public partial class CreditsMenu : VerticalMenu{
 		base._Ready();
 		headerLabel = GetNode<Label>("CreditsHeader");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
+		codeLabel = GetNode<Label>("CodeCredits");
 		musicLabel = GetNode<Label>("MusicCredits");
 		sfxLabel = GetNode<Label>("SFXCredits");
 		miscLabel = GetNode<Label>("MiscCredits");
-		totalSelections = 3;
+		totalSelections = 4;
 	}
 
     public override void _Process(double delta){
@@ -93,9 +94,10 @@ public partial class CreditsMenu : VerticalMenu{
 			}
 		}
 		subheaderLabel.Visible = !displayingSubCredits;
-		musicLabel.Visible = subCredits == 1;
-		sfxLabel.Visible = subCredits == 2;
-		miscLabel.Visible = subCredits == 3;
+		codeLabel.Visible = subCredits == 1;
+		musicLabel.Visible = subCredits == 2;
+		sfxLabel.Visible = subCredits == 3;
+		miscLabel.Visible = subCredits == 4;
 		switch(subCredits){
 			case 0: headerLabel.Text = "Ballin N Fallin by JigglyJello"; break;
 			case 1:

@@ -31,6 +31,19 @@ label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="CodeCredits" type="Label" parent="."]
+visible = false
+offset_left = -1920.0
+offset_top = -838.0
+offset_right = 1915.0
+offset_bottom = 1432.0
+text = "Source code, scenes, and other Godot data in the Source folder are available under the AGPL 3 or later
+Levels are available under the MPL 2.0"
+label_settings = ExtResource("1_xubh5")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="MusicCredits" type="Label" parent="."]
 visible = false
 offset_left = -1920.0
@@ -89,6 +102,17 @@ vertical_alignment = 1
 position = Vector2(1750, 970)
 
 [node name="Selections" type="Node" parent="."]
+
+[node name="CodeText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -480.0
+offset_right = 1920.0
+offset_bottom = -246.0
+pivot_offset = Vector2(1920, 117)
+text = "Code Credits"
+label_settings = ExtResource("1_xubh5")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MusicText" type="Label" parent="Selections"]
 offset_left = -1920.0
