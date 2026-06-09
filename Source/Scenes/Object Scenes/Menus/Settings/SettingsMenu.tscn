@@ -31,7 +31,6 @@ text = "Video"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/nonclickable = true
 
 [node name="Sound Text" type="Label" parent="Selections"]
 offset_left = -1920.0
