@@ -12,17 +12,16 @@ public partial class SettingsMenu : VerticalMenu{
     protected override void MenuChoose(int choice){
         SFX.Play("Confirm");
         switch(Selection){
-            case 1: MenuScene.LoadMenu("Settings/VideoMenu"); QueueFree(); break;
-            case 2: MenuScene.LoadMenu("Settings/SoundMenu"); QueueFree(); break;
-            case 3: MenuScene.LoadMenu("Settings/ProfileMenu"); QueueFree(); break;
-            case 4: MenuScene.LoadMenu("Settings/AccessibilityMenu"); QueueFree(); break;
+            case 1: MenuScene.LoadMenu("Settings/VideoMenu"); break;
+            case 2: MenuScene.LoadMenu("Settings/SoundMenu"); break;
+            case 3: MenuScene.LoadMenu("Settings/ProfileMenu"); break;
+            case 4: MenuScene.LoadMenu("Settings/AccessibilityMenu"); break;
         }
     }
 
     public override void MenuBack(){
         SFX.Play("Back");
         MenuScene.LoadMenu("MainMenu");
-        QueueFree();
     }
 
     public static void LoadData(){

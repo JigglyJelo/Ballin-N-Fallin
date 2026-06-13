@@ -61,14 +61,12 @@ public partial class ProfileMenu : ScrollableMenu{
             
             SFX.Play("Confirm");
             MenuScene.LoadMenu("Settings/ControlsMenu"); 
-            QueueFree();
         }
     }
 
     public override void MenuBack(){
         SFX.Play("Back");
         MenuScene.LoadMenu("Settings/SettingsMenu");
-        QueueFree();
     }
 
     public override void _Input(InputEvent @event){

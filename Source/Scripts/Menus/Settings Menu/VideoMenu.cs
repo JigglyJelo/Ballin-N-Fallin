@@ -34,7 +34,6 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
         SFX.Play("Back");
         SaveData();
         MenuScene.LoadMenu("Settings/SettingsMenu");
-        QueueFree();
     }
 
     public void MenuRight(){

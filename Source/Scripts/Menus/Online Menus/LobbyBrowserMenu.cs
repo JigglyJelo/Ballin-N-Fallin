@@ -313,7 +313,6 @@ func call_async(target: Object, method: String, args: Array = []):
             nohubConnection.Call("disconnect_from_host");
         }
         MenuScene.LoadMenu("Online/OnlineMenu");
-        QueueFree();
     }
 
     private void UpdateStatus(string message){

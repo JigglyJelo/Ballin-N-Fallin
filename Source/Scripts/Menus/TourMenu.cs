@@ -24,7 +24,6 @@ public partial class TourMenu : VerticalMenu, ILeftRightSelections{
 	public override void MenuBack(){
 		SFX.Play("Back");
 		MenuScene.LoadMenu("VsMenu");
-		QueueFree();
 	}
 
 	public void MenuRight(){

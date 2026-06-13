@@ -29,7 +29,6 @@ public partial class AccessibilityMenu : VerticalMenu{
         SFX.Play("Back");
         SaveData();
         MenuScene.LoadMenu("Settings/SettingsMenu");
-        QueueFree();
     }
 
     private void UpdateTexts(){

@@ -6,6 +6,7 @@ public partial class MenuScene : Node{
 	public AudioStreamPlayer Music;
 	public const string MENU_PATH = "res://Source/Scenes/Object Scenes/Menus/";
 	public static string MenuToLoad = "";
+	public static Node CurrentMenuNode = null;
 	public override void _Ready(){
 		Game.DisableProcesses(this);
 		GD.Print("Menu");
@@ -52,6 +53,11 @@ public partial class MenuScene : Node{
 	}
 
 	public static void LoadMenu(string menuToLoad){
-		MenuNode.AddChild(GD.Load<PackedScene>(MENU_PATH + menuToLoad + ".tscn").Instantiate());
+		Node newMenu = GD.Load<PackedScene>(MENU_PATH + menuToLoad + ".tscn").Instantiate<Node>();
+		MenuNode.AddChild(newMenu);
+		if(CurrentMenuNode != null){
+			CurrentMenuNode.QueueFree();
+			CurrentMenuNode = newMenu;
+		}
 	}
 }
