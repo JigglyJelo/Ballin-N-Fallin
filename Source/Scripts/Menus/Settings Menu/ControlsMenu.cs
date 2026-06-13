@@ -63,7 +63,6 @@ public partial class ControlsMenu : VerticalMenu, ILeftRightSelections{
     public override void MenuBack(){
         SFX.Play("Back");
         MenuScene.LoadMenu("Settings/ProfileMenu");
-        QueueFree();
     }
 
     public void MenuRight(){ ToggleVibration(); }

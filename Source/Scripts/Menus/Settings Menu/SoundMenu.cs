@@ -3,7 +3,7 @@ using System;
 
 public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
     private Label masterText, musicText, sfxText, soundtrackText;
-    public static bool InMusicSelection = false;
+    public bool InMusicSelection = false;
 
     public override void _Ready(){
         base._Ready();
@@ -28,10 +28,8 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
         SFX.Play("Confirm");
         switch(Selection){
             case 4:
-                MenuScene.LoadMenu("Settings/SoundtrackMenu");
-                //AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Settings/SoundtrackDialog.tscn").Instantiate<SoundtrackDialog>());
-                //GD.Print("Opened");
-                QueueFree();
+                AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Settings/SoundtrackDialog.tscn").Instantiate<SoundtrackDialog>());
+                GD.Print("Opened");
                 break;
         }
     }
@@ -40,7 +38,6 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
         SFX.Play("Back");
         SaveData();
         MenuScene.LoadMenu("Settings/SettingsMenu");
-        QueueFree();
     }
 
     public void MenuRight(){

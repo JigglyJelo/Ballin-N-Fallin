@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1s2tsouukwmc"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/Settings Menu/SoundtrackDialog.cs" id="1_s541f"]
+
+[node name="SoundtrackDialog" type="FileDialog"]
+auto_translate_mode = 1
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(720, 640)
+visible = true
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("1_s541f")
+
+[connection signal="canceled" from="." to="." method="ClosedDialog"]
+[connection signal="close_requested" from="." to="." method="ClosedDialog"]
+[connection signal="dir_selected" from="." to="." method="FolderChosen"]

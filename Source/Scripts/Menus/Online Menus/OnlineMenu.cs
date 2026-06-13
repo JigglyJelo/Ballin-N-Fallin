@@ -40,12 +40,10 @@ public partial class OnlineMenu : Menu2D{
 				break;
 			case 2:
 				MenuScene.LoadMenu("Online/LobbyBrowserMenu");
-				QueueFree();
 				break;
 			default:
 				Online.Network = Online.NetworkType.Direct;
 				MenuScene.LoadMenu("Online/DirectConnectMenu");
-				QueueFree();
 				break;
 		}
 	}
@@ -60,7 +58,6 @@ public partial class OnlineMenu : Menu2D{
 	public override void MenuBack(){
 		SFX.Play("Back");
 		MenuScene.LoadMenu("MainMenu");
-		QueueFree();
 	}
 
 	protected override void MenuRight(){

@@ -50,21 +50,6 @@ public partial class MainMenu : VerticalMenu{
 		QueueFree();
 	}
 
-	private void LoadPlayerMenu(){
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "PlayerMenu.tscn").Instantiate());
-		QueueFree();
-	}
-
-	private void LoadOnlineMenu(){
-		MenuScene.LoadMenu("Online/OnlineMenu");
-		QueueFree();
-	}
-
-	private void LoadSettingsMenu(){
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Settings/SettingsMenu.tscn").Instantiate());
-		QueueFree();
-	}
-
 	private void QuitGame(){
 		GetTree().Quit();
 	}
@@ -76,17 +61,17 @@ public partial class MainMenu : VerticalMenu{
 				if(Input.IsActionJustReleased("Charge N Launch Mouse")){
 					LoadMouseMenu("PlayerMenu");
 				}else{
-					LoadPlayerMenu();
+					MenuScene.LoadMenu("PlayerMenu");
 				}
 				break;
 			case 2:
 				if(Input.IsActionJustReleased("Charge N Launch Mouse")){
 					LoadMouseMenu("Online/OnlineMenu");
 				}else{
-					LoadOnlineMenu();
+					MenuScene.LoadMenu("Online/OnlineMenu");
 				}
 				break;
-			case 3: LoadSettingsMenu(); break;
+			case 3: MenuScene.LoadMenu("Settings/SettingsMenu"); break;
 			case 4: QuitGame(); break;
 		}
 		QueueFree();

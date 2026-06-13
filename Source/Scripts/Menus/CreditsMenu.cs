@@ -80,7 +80,6 @@ public partial class CreditsMenu : VerticalMenu{
 			ShowSubCredits(0);
 		}else{
 			MenuScene.LoadMenu("MainMenu");
-			QueueFree();
 		}
 		SFX.Play("Back");
 	}
