@@ -25,13 +25,11 @@ public partial class VsMenu : Menu2D{
 		switch(choice){
 			case 1:
 				Tour.IsTour = true;
-				GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "TourMenu.tscn").Instantiate());
-				QueueFree();
+				MenuScene.LoadMenu("TourMenu");
 				break;
 			case 2:
 				Tour.IsTour = false;
-				GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "ModeMenu.tscn").Instantiate());
-				QueueFree();
+				MenuScene.LoadMenu("ModeMenu");
 				break;
 			default:
 				Tour.IsTour = false;
@@ -47,8 +45,7 @@ public partial class VsMenu : Menu2D{
 
 	public override void MenuBack(){
 		SFX.Play("Back");
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "PlayerMenu.tscn").Instantiate());
-		QueueFree();
+		MenuScene.LoadMenu("PlayerMenu");
 	}
 
 	protected override void MenuRight(){

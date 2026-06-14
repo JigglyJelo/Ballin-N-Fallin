@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public partial class LevelMenu : VerticalMenu{
     private static List<string> optionNames;
 	public static List<string> FoldersOpened;
-	private PackedScene lastMenu;
+	private string lastMenu;
 	private Node selectionsNode;
 	private short yPos = -600;
 	private int inputId = (int)Game.PlayerDatas[0].InputDevice; //Online.IsOnline ? Online.PlayerInfos[0].InputId : Game.InputIds[0];
@@ -15,8 +15,8 @@ public partial class LevelMenu : VerticalMenu{
 		Tour.ResetPlayerScores();
 		if(FoldersOpened == null) FoldersOpened = FoldersOpened = new List<string> {""};
 		optionNames = new List<string>();
-		if(Game.TotalPlayers > 1 || Online.IsOnline) lastMenu = GD.Load<PackedScene>(MenuScene.MENU_PATH + "ModeMenu.tscn");
-		else lastMenu = GD.Load<PackedScene>(MenuScene.MENU_PATH + "SoloMenu.tscn");
+		if(Game.TotalPlayers > 1 || Online.IsOnline) lastMenu = "ModeMenu";
+		else lastMenu = "SoloMenu";
 		selectionsNode = GetNode<Node>("Selections");
 		GetNode<Label>("Label").Text = Mode.EnumToString(Game.CurrentMode) + " Levels";
 		int index = 0;
@@ -97,8 +97,7 @@ public partial class LevelMenu : VerticalMenu{
 	public override void MenuBack(){
 		SFX.Play("Back");
 		if(FoldersOpened.Count <= 1){
-			GetParent().AddChild(lastMenu.Instantiate());
-			QueueFree();
+			MenuScene.LoadMenu(lastMenu);
 		}else{
 			FolderNavigation(false);
 		}
@@ -124,7 +123,6 @@ public partial class LevelMenu : VerticalMenu{
 	private void FolderNavigation(bool opening){
 		if(opening) FoldersOpened.Add(optionNames[Selection - 1]);
 		else FoldersOpened.RemoveAt(FoldersOpened.Count - 1);
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelMenu.tscn").Instantiate());
-		QueueFree();
+		MenuScene.LoadMenu("LevelMenu");
 	}
 }

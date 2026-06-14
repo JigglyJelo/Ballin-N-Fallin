@@ -19,15 +19,11 @@ public partial class MenuScene : Node{
 			AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Music"),(float)(20 * Math.Log10(Game.MusicVolume / 100.0)));
 			AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("SFX"),(float)(20 * Math.Log10(Game.SFXVolume / 100.0)));
 			Game.FirstBoot = false;
-			AddChild(GD.Load<PackedScene>(MENU_PATH + "MainMenu.tscn").Instantiate());
+			LoadMenu("MainMenu");
 			Game.SetResolution();
 		}else{
 			Game.SetResolution();
-			if(!string.IsNullOrEmpty(MenuToLoad)){
-				AddChild(GD.Load<PackedScene>(MENU_PATH + MenuToLoad + ".tscn").Instantiate());
-			}else{
-				AddChild(GD.Load<PackedScene>(MENU_PATH + "MainMenu.tscn").Instantiate());
-			}
+			LoadMenu(!string.IsNullOrEmpty(MenuToLoad) ? MenuToLoad : "MainMenu");
 		}
 		GD.Print(Game.CustomSoundtrack);
 		AudioStream stream = MusicPlayer.GetCustomSong("Menu");
@@ -53,11 +49,11 @@ public partial class MenuScene : Node{
 	}
 
 	public static void LoadMenu(string menuToLoad){
-		Node newMenu = GD.Load<PackedScene>(MENU_PATH + menuToLoad + ".tscn").Instantiate<Node>();
-		MenuNode.AddChild(newMenu);
-		if(CurrentMenuNode != null){
-			CurrentMenuNode.QueueFree();
-			CurrentMenuNode = newMenu;
+		Node oldNode = CurrentMenuNode;
+		CurrentMenuNode = GD.Load<PackedScene>(MENU_PATH + menuToLoad + ".tscn").Instantiate<Node>();
+		MenuNode.AddChild(CurrentMenuNode);
+		if(oldNode != null && !oldNode.IsQueuedForDeletion()){
+			oldNode.QueueFree();
 		}
 	}
 }

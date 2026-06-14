@@ -75,8 +75,7 @@ public partial class TourMenu : VerticalMenu, ILeftRightSelections{
 			case 4:
 				SFX.Play("Confirm");
 				ModeMenu.ModeToggleMenu = true;
-				GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "ModeMenu.tscn").Instantiate());
-				QueueFree();
+				MenuScene.LoadMenu("ModeMenu");
 				break;
 			case 5:
 				SFX.Play("Confirm");

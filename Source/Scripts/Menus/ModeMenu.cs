@@ -76,29 +76,24 @@ public partial class ModeMenu : ScrollableMenu{
         }else{
             LevelMenu.FoldersOpened = new List<string> {""};
             Game.CurrentMode = modes[index]; //Set the selected game mode
-            GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelMenu.tscn").Instantiate());
-            QueueFree();
+            MenuScene.LoadMenu("LevelMenu");
         }
     }
 
     public override void MenuBack(){
-        if(ModeToggleMenu){
-            if(IsOnline()){
-                OnlineLobby.ShowLobby(true);
-            }else{
-                GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "TourMenu.tscn").Instantiate());
-            }
+        SFX.Play("Back");
+        if(IsOnline()){
+            OnlineLobby.ShowLobby(true);
+            QueueFree();
         }else{
-            if(IsOnline()){
-                OnlineLobby.ShowLobby(true);
-            }else{
+            if(ModeToggleMenu){
                 Game.CurrentMode = Mode.GameMode.None;
-                GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "VsMenu.tscn").Instantiate());
+                MenuScene.LoadMenu("TourMenu");
+            }else{
+                MenuScene.LoadMenu("VsMenu");
             }
         }
         ModeToggleMenu = false;
-        SFX.Play("Back");
-        QueueFree();
     }
 
     protected override void UpdateSelectionVisual(){

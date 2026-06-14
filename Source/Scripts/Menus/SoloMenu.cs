@@ -27,8 +27,7 @@ public partial class SoloMenu : VerticalMenu{
 
 	public override void MenuBack(){
 		SFX.Play("Back");
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "MainMenu.tscn").Instantiate());
-		QueueFree();
+		MenuScene.LoadMenu("MainMenu");
 	}
 
 	protected override void MenuChoose(int choice){
@@ -49,7 +48,6 @@ public partial class SoloMenu : VerticalMenu{
 				SceneTransitioner.SwitchToScene(Game.SceneType.Game);
 				break;
 		}
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelMenu.tscn").Instantiate());
-        QueueFree();
+		MenuScene.LoadMenu("LevelMenu");
 	}
 }

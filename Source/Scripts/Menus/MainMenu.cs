@@ -16,7 +16,6 @@ public partial class MainMenu : VerticalMenu{
 		copyrightText = GetNode<Label>("Copyright");
 		UpdateSelectionVisual();
 		Input.MouseMode = Input.MouseModeEnum.Visible;
-		//foreach(byte id in Game.InputIds) Input.StopJoyVibration(id-1);
 		foreach(PlayerData playerData in Game.PlayerDatas){
 			Input.StopJoyVibration((int)playerData.InputDevice);
 		}
@@ -30,8 +29,7 @@ public partial class MainMenu : VerticalMenu{
 		if(IsMouseOverLabel(copyrightText)){
 			Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
 			if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-				MenuScene.MenuNode.AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "CreditsMenu.tscn").Instantiate());
-				QueueFree();
+				MenuScene.LoadMenu("CreditsMenu");
 				SFX.Play("Confirm");
 			}
 			if(copyrightText.SelfModulate != COPYRIGHT_COLOR_HOVERED){
@@ -44,10 +42,8 @@ public partial class MainMenu : VerticalMenu{
     }
 
     private void LoadMouseMenu(string nextMenu){
-		MouseMenu mouseMenu = GD.Load<PackedScene>(MenuScene.MENU_PATH + "MouseMenu.tscn").Instantiate<MouseMenu>();
-		mouseMenu.NextMenu = nextMenu;
-		GetParent().AddChild(mouseMenu);
-		QueueFree();
+		MouseMenu.NextMenu = nextMenu;
+		MenuScene.LoadMenu("MouseMenu");
 	}
 
 	private void QuitGame(){
@@ -74,7 +70,6 @@ public partial class MainMenu : VerticalMenu{
 			case 3: MenuScene.LoadMenu("Settings/SettingsMenu"); break;
 			case 4: QuitGame(); break;
 		}
-		QueueFree();
 	}
 
 	public override void MenuBack(){

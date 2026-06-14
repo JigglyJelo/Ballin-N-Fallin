@@ -93,7 +93,6 @@ public partial class Game : Node{
             GD.Print("Ballin N Fallin Server");
         }
         SceneTransitioner.SwitchToScene(SceneType.Menu);
-        
     }
 
     public enum SceneType{

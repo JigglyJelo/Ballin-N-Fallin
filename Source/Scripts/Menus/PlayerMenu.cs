@@ -35,8 +35,7 @@ public partial class PlayerMenu : Node2D{
 				if(Input.IsActionJustReleased("Start" + (int)Game.PlayerDatas[i].InputDevice)) MenuStart();
 				//Get to Vs Menu in 1 Player for testing
 				if(Input.IsActionJustReleased("Slam" + (int)Game.PlayerDatas[i].InputDevice)){
-					GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "VsMenu.tscn").Instantiate());
-					QueueFree();
+					MenuScene.LoadMenu("VsMenu");
 				}
 			}
 		}else if(Game.TotalPlayers == 1 && Game.UsingMouse() && Input.IsActionJustReleased("Start Keyboard")){
@@ -125,16 +124,14 @@ public partial class PlayerMenu : Node2D{
 		SFX.Play("Confirm");
 		if(ColorMenu.ReadyPlayers == ColorMenu.JoinedPlayers){
 			foreach(Node node in GetChildren()) QueueFree();
-			if(Game.TotalPlayers == 1) GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "SoloMenu.tscn").Instantiate());
-			else GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "VsMenu.tscn").Instantiate());
-			QueueFree();
+			if(Game.TotalPlayers == 1) MenuScene.LoadMenu("SoloMenu");
+			else MenuScene.LoadMenu("VsMenu");
 		}
     }
 
 	private void MenuBack(){
 		SFX.Play("Back");
 		Game.MouseMode = Game.MouseModeEnum.Off;
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "MainMenu.tscn").Instantiate());
-		QueueFree();
+		MenuScene.LoadMenu("MainMenu");
 	}
 }

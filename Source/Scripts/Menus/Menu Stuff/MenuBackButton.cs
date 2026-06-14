@@ -1,15 +1,12 @@
 using Godot;
 
 public partial class MenuBackButton : Node2D{
-	private Menu menu;
 	public const int LEFT = -380;
 	public const int RIGHT = 280;
 	public const int TOP = -70;
 	public const int BOTTOM = 70;
 	private bool hovered;
-    public override void _Ready(){
-        menu = GetParent<Menu>();
-    }
+
     public override void _PhysicsProcess(double delta){
 		if(Visible){
 			Vector2 mousePosition = GetLocalMousePosition();
@@ -22,7 +19,9 @@ public partial class MenuBackButton : Node2D{
 				if(hovered){
 					Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
 				}
-				if(Input.IsActionJustReleased("Charge N Launch Mouse")) menu.MenuBack();
+				if(Input.IsActionJustReleased("Charge N Launch Mouse") && GetParent() is Menu menu){
+					menu.MenuBack();
+				}
 			}else{
 				if(hovered){
 					hovered = false;

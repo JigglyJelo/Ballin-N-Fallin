@@ -2,19 +2,19 @@ using Godot;
 using System.Text.RegularExpressions;
 
 public partial class OnlineMenu : Menu2D{
-	private TextInput usernameInput;
+	private LineEdit usernameInput;
 	private Label hostText,joinText,directText;
 	private Polygon2D hostButton,joinButton,directButton;
 	public override void _Ready(){
 		base._Ready();
-		usernameInput = GetNode<TextInput>("UsernameEntry");
+		usernameInput = GetNode<LineEdit>("UsernameEntry");
 		hostText = GetNode<Label>("Selections/HostButton/HostText");
 		hostButton = GetNode<Polygon2D>("Selections/HostButton");
 		joinText = GetNode<Label>("Selections/JoinButton/JoinText");
 		joinButton = GetNode<Polygon2D>("Selections/JoinButton");
 		directText = GetNode<Label>("Selections/DirectButton/DirectText");
 		directButton = GetNode<Polygon2D>("Selections/DirectButton");
-		usernameInput.InputString = Online.Username.Equals("Player") ? "" : Online.Username;
+		usernameInput.Text = Online.Username.Equals("Player") ? "" : Online.Username;
 		Online.InputId = PlayerData.PlayerInputDevice.None;
 		UpdateSelectionVisual();
 	}
@@ -51,6 +51,7 @@ public partial class OnlineMenu : Menu2D{
 	private void HostLobby(){
 		OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
 		lobby.IsHost = true;
+		MenuScene.CurrentMenuNode = lobby; //Manually deal with menu stuff here
 		GetParent().AddChild(lobby);
 		QueueFree();
 	}
@@ -124,8 +125,8 @@ public partial class OnlineMenu : Menu2D{
 	}
 
 	private string ParseUsername(){
-		if(!usernameInput.InputString.Equals("")){
-			string text = Regex.Replace(usernameInput.InputString, "[^a-zA-Z0-9 ]", "");
+		if(!usernameInput.Text.Equals("")){
+			string text = Regex.Replace(usernameInput.Text, "[^a-zA-Z0-9 ]", "");
 			try{
 				return text.Substring(0,Online.USERNAME_LENGTH);
 			}catch{
