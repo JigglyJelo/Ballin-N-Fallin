@@ -23,6 +23,7 @@ public partial class SceneTransitioner : Node{
 		MusicPlayer.SetPitch(1);
 		//Load next scene
         PackedScene newPackedScene;
+		MenuScene.CurrentMenuNode = null;
 		switch(scene){
 			case Game.SceneType.Game:
 				newPackedScene = gameScene;

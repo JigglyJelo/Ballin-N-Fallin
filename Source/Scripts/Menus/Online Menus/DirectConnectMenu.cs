@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class DirectConnectMenu : VerticalMenu{
 	private Label joinLabel,hostLabel;
-	private TextInput ipInput, portInput;
+	private LineEdit ipInput, portInput;
 
 	public override void _Ready(){
 		base._Ready();
@@ -13,10 +13,10 @@ public partial class DirectConnectMenu : VerticalMenu{
 		Game.SpectatorDatas = new List<PlayerData>();
 		hostLabel = GetNode<Label>("Selections/Host200");
 		joinLabel = GetNode<Label>("Selections/Join200");
-		ipInput = GetNode<TextInput>("IpEntry");
-		portInput = GetNode<TextInput>("PortEntry");
-		ipInput.InputString = Online.Address;
-		portInput.InputString = Online.Port.ToString();
+		ipInput = GetNode<LineEdit>("IPEntry");
+		portInput = GetNode<LineEdit>("PortEntry");
+		ipInput.Text = Online.Address;
+		portInput.Text = Online.Port.ToString();
 		
 		totalSelections = 2;
 		defaultFontSize = 2;
@@ -43,7 +43,7 @@ public partial class DirectConnectMenu : VerticalMenu{
 	}
 
 	private void JoinLobby(){
-	    if(!ipInput.InputString.Equals("")) Online.Address = ipInput.InputString;
+	    if(!ipInput.Text.Equals("")) Online.Address = ipInput.Text;
 	    ParsePort();
 	    OnlineLobby lobby = GD.Load<PackedScene>(MenuScene.MENU_PATH + "Online/OnlineLobby.tscn").Instantiate<OnlineLobby>();
 	    lobby.IsHost = false;
@@ -52,9 +52,9 @@ public partial class DirectConnectMenu : VerticalMenu{
 	}
 
 	private bool ParsePort(){
-		if(!portInput.InputString.Equals("")){
+		if(!portInput.Text.Equals("")){
 			try{
-				Online.Port = ushort.Parse(portInput.InputString);
+				Online.Port = ushort.Parse(portInput.Text);
 				return true;
 			}catch{
 				return false;

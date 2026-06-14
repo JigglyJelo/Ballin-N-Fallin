@@ -7,7 +7,7 @@ public partial class MouseMenu : Polygon2D{
 	private int selection = 0;
 	private Sprite2D cursorPupils, cursorArrow, directionPupils, directionArrow;
 	private Vector2 lastMousePosition;
-	public string NextMenu;
+	public static string NextMenu;
 	private static readonly Color BUTTON_COLOR = Color.Color8(243,114,47);
     private static readonly Color SELECTED_BUTTON_COLOR = Color.Color8(251,148,100);
 	public override void _Ready(){
@@ -117,8 +117,7 @@ public partial class MouseMenu : Polygon2D{
 
 	private void MenuBack(){
 		SFX.Play("Back");
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "MainMenu.tscn").Instantiate());
-		QueueFree();
+		MenuScene.LoadMenu("MainMenu");
 	}
 
 	private void MenuChoose(int selection){
@@ -140,8 +139,7 @@ public partial class MouseMenu : Polygon2D{
 		void loadNextMenu(){
 			SFX.Play("Confirm");
 			Online.InputId = PlayerData.PlayerInputDevice.Mouse;
-			GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + NextMenu + ".tscn").Instantiate());
-			QueueFree();
+			MenuScene.LoadMenu(NextMenu);
 		}
 	}
 }

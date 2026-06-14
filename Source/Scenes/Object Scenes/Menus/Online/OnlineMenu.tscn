@@ -3,19 +3,21 @@
 [ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/OnlineMenu.cs" id="1_sh81n"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_5jqju"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_t7sip"]
-[ext_resource type="PackedScene" uid="uid://benlioo3kdhb3" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/TextInput.tscn" id="5_q5wax"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="5_hx7j2"]
 
 [node name="OnlineMenu" type="Node2D"]
 position = Vector2(-480, -270)
 script = ExtResource("1_sh81n")
 
-[node name="UsernameEntry" parent="." instance=ExtResource("5_q5wax")]
-position = Vector2(-532, -781)
-color = Color(0, 0, 0, 0.501961)
-polygon = PackedVector2Array(-64, 56, 2088, 56, 2088, 312, -64, 312)
-allowedKeys = 2
-placeholderText = "Enter Username"
-maxLength = 15
+[node name="UsernameEntry" type="LineEdit" parent="."]
+offset_left = -588.0
+offset_top = -721.0
+offset_right = 1556.0
+offset_bottom = -447.0
+theme = ExtResource("5_hx7j2")
+placeholder_text = "Enter Username"
+alignment = 1
+max_length = 15
 
 [node name="MenuBackButton" parent="." instance=ExtResource("4_t7sip")]
 position = Vector2(2230, 1240)

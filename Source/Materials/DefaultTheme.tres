@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://b3rgpxcpctcs5"]
+
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="1_0ylt7"]
+[ext_resource type="StyleBox" uid="uid://c2j26a5ic6j61" path="res://Source/Materials/LineEditStyleBox.tres" id="2_dfnc6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xfmdo"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 0.501961)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0, 0, 0, 1)
+anti_aliasing = false
+
+[resource]
+LineEdit/font_sizes/font_size = 200
+LineEdit/fonts/font = ExtResource("1_0ylt7")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_xfmdo")
+LineEdit/styles/normal = ExtResource("2_dfnc6")

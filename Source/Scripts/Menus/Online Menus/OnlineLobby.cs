@@ -5,14 +5,14 @@ using System.Text.RegularExpressions;
 using System.Linq;
 
 public partial class OnlineLobby : Node{
-    private PackedScene mainMenu;
     public bool IsHost;
     private Label connectedPlayersText;
     private OnlinePlayerText[] playerTexts = new OnlinePlayerText[Game.MAX_PLAYERS];
     public static OnlineLobby Lobby;
     public static LobbySettingsMenu LobbySettingsMenu;
     public bool LobbyShown = true;
-    private float startTimer = 0;
+    private float startTimer, unableToJoinLobbyTimer;
+    private const float CONNECT_TIMEOUT = 10;
     private bool starting = false;
     private static Gradient pingGradient = GD.Load<Gradient>("res://Assets/Gradients/Ping.tres");
     private Sprite2D banButton;
@@ -29,8 +29,6 @@ public partial class OnlineLobby : Node{
             Game.PlayerDatas.Add(hostData);
         }
         WordFilter.Initialize();
-        
-        mainMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/MainMenu.tscn");
         Game.GameNode.Multiplayer.PeerConnected += PeerConnected;
         Game.GameNode.Multiplayer.PeerDisconnected += PeerDisconnected;
         Game.GameNode.Multiplayer.ConnectedToServer += ConnectedToServer;
@@ -70,13 +68,13 @@ public partial class OnlineLobby : Node{
         }
     }
 
-    private float unableToJoinLobbyTimer = 0;
     public override void _PhysicsProcess(double delta){
         if(Online.IsHost() && Online.IsOnlinePeer() && inLobby){
             KickBanPlayerButtons();
-        }else if(!inLobby){
+        }
+        if(!Online.IsHost() && !inLobby){
             unableToJoinLobbyTimer += (float)delta;
-            if(unableToJoinLobbyTimer >= 5){
+            if(unableToJoinLobbyTimer >= CONNECT_TIMEOUT){
                 Online.Disconnect("Failed to connect to lobby");
             }
         }
@@ -137,7 +135,7 @@ public partial class OnlineLobby : Node{
                 CreatePingGetter();
                 break;
         }
-
+        inLobby = true;
         void InitializeSuccessfulHost() {
             Online.IsOnline = true;
             Online.BannedIps = new List<string>();
@@ -155,7 +153,6 @@ public partial class OnlineLobby : Node{
         LobbySettingsMenu = GetNode<LobbySettingsMenu>("LobbySettingsMenu");
         banButton = GetNode<Sprite2D>("PlayerTexts/HostPlayerOptions/BanButton");
         UpdatePlayerTexts();
-        inLobby = true;
     }
 
     public void FailedToConnectSteamLobby(MultiplayerPeer peer, int condition){
@@ -190,6 +187,7 @@ public partial class OnlineLobby : Node{
 
     private void ConnectedToServer(){
         GD.Print("Connected");
+        inLobby = true;
         if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray) {
             RpcId(1, nameof(SendPlayerInfoDirect), Online.Username, (byte)Online.InputId, Game.GameNode.Multiplayer.GetUniqueId());
         }
@@ -277,7 +275,6 @@ public partial class OnlineLobby : Node{
         if(WordFilter.IsBadString(username)){
             GD.Print(username);
             username = getTrollName();
-            RpcId(uuid,nameof(NamePunishment));
         }
         return username;
         
@@ -400,11 +397,5 @@ public partial class OnlineLobby : Node{
         }else{
             GD.PrintErr(OnlineErrorMessages.NonHostCallErrorMessage());
         }
-    }
-
-    [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    private void NamePunishment(){
-        OS.ShellOpen("https://youtu.be/kcvxMGnptvw?si=xGOOLr9WjdSb5fw_");
-        GD.Print("Naugthy");
     }
 }
