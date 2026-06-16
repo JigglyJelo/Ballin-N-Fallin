@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://6khvvot1hckv"]
+
+[node name="GameHUD" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 3840.0
+offset_bottom = 2160.0
