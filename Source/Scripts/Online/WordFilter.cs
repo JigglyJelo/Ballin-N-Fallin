@@ -68,12 +68,12 @@ public static class WordFilter{
         }
     }
 
-    public static bool IsBadString(string message){
+    public static bool IsBadString(string message, string replacementText = ""){
         if(string.IsNullOrWhiteSpace(message)) return false;
         if(chatFilterRegex == null) return false;
 
         // Instantly strips out all spaces and symbols using the compiled regex
-        string strippedMessage = stripRegex.Replace(message, "");
+        string strippedMessage = stripRegex.Replace(message, replacementText);
 
         if(chatFilterRegex.IsMatch(strippedMessage)){
             return true;

@@ -155,7 +155,7 @@ public partial class Online{
     public enum TransferChannelEnum : int{
         Default = 0, SendLaunch, SendSlam, SuccessfulStomp, Item, PlayerText,
         PlayerFlip, SportBall, LaunchParticle, SlamParticle, PopParticle, DeathParticle, BounceParticle, Trail,
-        PingGetter,SendHostPing,
+        PingGetter,SendHostPing, Chat
     }
 
     public enum NetworkType{
