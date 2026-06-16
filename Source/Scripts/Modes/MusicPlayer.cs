@@ -60,7 +60,7 @@ public partial class MusicPlayer : AudioStreamPlayer{
 						AudioStreamOggVorbis oggStream = AudioStreamOggVorbis.LoadFromFile(fileNameAndPath);
 						oggStream.Loop = true;
 						return oggStream;
-					case ".wav":
+					case ".wav": // This is somewhat broken but not going to fix it until I update to 4.4+ because it has built in support for .wav
        					FileAccess wavFile = FileAccess.Open(fileNameAndPath, FileAccess.ModeFlags.Read);
         				byte[] wavByteArray = wavFile.GetBuffer((int)wavFile.GetLength());
 						AudioStreamWav wavStream = new AudioStreamWav();
