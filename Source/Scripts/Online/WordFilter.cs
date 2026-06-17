@@ -2,7 +2,10 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+/// <summary>
+/// A static utility class that loads banned words from local text files and compiles them into a high-performance Regular Expression.
+/// Used to sanitize player names and chat messages.
+/// </summary>
 public static class WordFilter{
     // The bad word lists are gone from here! Only trolledWords remains.
     public static List<string> trolledWords;
@@ -11,6 +14,13 @@ public static class WordFilter{
     private static Regex chatFilterRegex;
     private static Regex stripRegex = new Regex(@"[^a-zA-Z0-9]", RegexOptions.Compiled);
 
+    /// <summary>
+    /// Loads banned substrings and full words from the game's Assets folder and compiles them into a single Regex.
+    /// </summary>
+    /// <remarks>
+    /// Must be called at least once before <see cref="IsBadString"/> can be used.
+    /// Automatically handles Godot's .remap file extension swapping in exported builds.
+    /// </remarks>
     public static void Initialize(){
         // Check if regex is already built instead of checking the old lists
         if(chatFilterRegex != null) return; 
@@ -68,6 +78,15 @@ public static class WordFilter{
         }
     }
 
+    /// <summary>
+    /// Evaluates a message against the compiled banned word list.
+    /// </summary>
+    /// <param name="message">The raw input string to check.</param>
+    /// <param name="replacementText">The string used to replace stripped characters. Defaults to empty (squishing the string).</param>
+    /// <returns>True if the string triggers the filter; otherwise, false.</returns>
+    /// <remarks>
+    /// Strips out all non-alphanumeric characters before checking to prevent players from bypassing the filter with symbols (e.g., 'b@d w0rd').
+    /// </remarks>
     public static bool IsBadString(string message, string replacementText = ""){
         if(string.IsNullOrWhiteSpace(message)) return false;
         if(chatFilterRegex == null) return false;

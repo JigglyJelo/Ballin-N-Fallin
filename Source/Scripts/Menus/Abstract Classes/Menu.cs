@@ -1,16 +1,23 @@
 using Godot;
-
+/// <summary>
+/// Abstract base class for UI menus. Handles switching between controller and mouse input, 
+/// managing selection states, and calculating custom mouse hitboxes for standard Godot nodes.
+/// </summary>
 public abstract partial class Menu : Node2D{
     public static readonly Color SELECTED_COLOR = new Color(0,1,0);
     public static readonly Color SELECTED_BUTTON_COLOR = Color.Color8(255,216,134);
     public static readonly Color BUTTON_COLOR = Color.Color8(255,163,74);
     protected float defaultFontSize = 1;
     protected Vector2 joystickInput;
+    /// <summary>The time in seconds to wait between accepting rapid mouse or stick inputs.</summary>
     public const float TIMEOUT = 0.2f;
+    /// <summary>The deadzone threshold the joystick must pass to register a directional input.</summary>
     public const float STICK_THRESHOLD = 0.5f;
 	protected float joystickTimer = TIMEOUT;
     private float mouseTimer = 0;
+    /// <summary>The currently highlighted selection. Note: This is 1-indexed.</summary>
     public int Selection = 1;
+    /// <summary>The interactive child nodes (Selections/Menu options) in this menu.</summary>
     public Godot.Collections.Array<Node> Selections = null;
     protected abstract void InputChecks(double delta);
     protected abstract void InputChecks(double delta, int id);

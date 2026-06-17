@@ -18,17 +18,26 @@ public partial class SFX : Node{
 	}
 
 	//Plays the sound effect by the Name of the SFX child node in Game Scene
-	public static void Play(string sound){
-		Play(sound,1);
-	}
-	public static void Play(string sound,float pitch){
+	/// <summary>Plays a sound effect.</summary>
+	/// <param name="sound">The exact name of the SFX child node.</param>
+	/// <param name="pitch">The pitch multiplier. Defaults to 1.0.</param>
+	public static void Play(string sound,float pitch = 1){
 		sounds[sound].Position = Vector2.Zero;
 		sounds[sound].PitchScale = pitch;
 		sounds[sound].Play();
 	}
+
+	/// <summary>Plays a sound effect at a specific global position.</summary>
+	/// <param name="sound">The exact name of the SFX child node.</param>
+	/// <param name="position">The global position where the sound should originate.</param>
 	public static void Play(string sound,Vector2 position){
 		Play(sound,1,position);
 	}
+
+	/// <summary>Plays a sound effect at a specific global position with a modified pitch.</summary>
+	/// <param name="sound">The exact name of the SFX child node.</param>
+	/// <param name="pitch">The pitch multiplier.</param>
+	/// <param name="position">The global position where the sound should originate.</param>
 	public static void Play(string sound,float pitch, Vector2 position){
 		AudioStreamPlayer2D soundEffect = sounds[sound];
 		soundEffect.GlobalPosition = position;

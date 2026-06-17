@@ -118,14 +118,14 @@ public partial class PlayerInput{
 		}
 	}
 
-	public void TriggerStrongVibration(float strength, float duration) {
+	public void TriggerStrongVibration(float strength, float duration){
     	strongVibration = strength;
     	vibrationTimer = duration;
     	ApplyVibration();
 	}
 
-	public void SetWeakVibration(float strength) {
-    weakVibration = strength;
-    ApplyVibration();
-}
+	public void SetWeakVibration(float strength){
+    	weakVibration = strength;
+    	ApplyVibration();
+	}
 }

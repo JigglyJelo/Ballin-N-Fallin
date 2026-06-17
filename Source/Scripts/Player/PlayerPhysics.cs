@@ -42,7 +42,6 @@ public class PlayerPhysics{
 				player.Rb.AngularDamp = Mathf.Lerp(player.Rb.AngularDamp,ANGULAR_DAMP,0.5f);
 			}
 		}else{
-			//float lerpScale = 1-(velocityMagnitudeSquared / ((MIN_STRETCH_SPEED*MIN_STRETCH_SPEED)));
 			player.Rb.AngularDamp = Mathf.Lerp(player.Rb.AngularDamp,ANGULAR_DAMP,0.125f);
 			player.Visuals.ResetSquashNStretch();
 		}
@@ -128,6 +127,7 @@ public class PlayerPhysics{
 		}
 	}
 
+	///<summary>Applies the Physics (Linear Velocity) of the Player's Launch</summary>
 	public void ApplyLaunch(){
 	    // If current velocity is opposite to launch direction, reduce velocity
 	    float diff = player.Rb.LinearVelocity.AngleTo(player.InputVector);
@@ -141,6 +141,7 @@ public class PlayerPhysics{
 	    player.Rb.LinearVelocity += player.InputVector * (player.LaunchPower + MIN_LAUNCH_POWER);
 	}
 
+	///<summary>Applies the Physics (Linear Velocity) of the Player's Slam</summary>
 	public void ApplySlam(){
 		if(player.Rb.LinearVelocity.Y < 0) player.Rb.LinearVelocity = new Vector2(player.Rb.LinearVelocity.X, player.Rb.LinearVelocity.Y * 0.5f);
 		player.Rb.LinearVelocity += Vector2.Down * SLAM_POWER * (player.Rb.GravityScale == 0 ? 1 : player.Rb.GravityScale/GRAVITY);
@@ -152,6 +153,7 @@ public class PlayerPhysics{
 		player.RbShape.Shape = defaultCircle;
 	}
 
+	///<summary>Resets the Player's Physics Stats to their defaults (No item transformation)</summary>
 	public void ResetPhysicsTransformations(){
 		player.Rb.GravityScale = GRAVITY;
 		player.Rb.Mass = MASS;
@@ -163,6 +165,7 @@ public class PlayerPhysics{
 		player.Rb.PhysicsMaterialOverride = physicsMaterial;
 	}
 
+	///<summary>Set whether the Player should ignore collisions with other Players</summary>
 	public void SetPlayerCollisionExceptions(bool ignore){
     	foreach(Player otherPlayer in Game.Players){
     	    if(otherPlayer != null && otherPlayer != player){

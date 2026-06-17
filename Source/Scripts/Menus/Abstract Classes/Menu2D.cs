@@ -1,5 +1,8 @@
 using Godot;
-
+/// <summary>
+/// An abstract extension of the base Menu class designed specifically for 2-dimensional (grid or list) navigation.
+/// Maps standardized inputs into directional movements (Up, Down, Left, Right).
+/// </summary>
 public abstract partial class Menu2D : Menu{
     protected override void InputChecks(double delta,int id){
         float fDelta = (float)delta;

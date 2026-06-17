@@ -91,7 +91,7 @@ public partial class InterpolatedBody : RigidBody2D{
             NetworkAngularVelocity = Mathf.Inf;
         }
 
-        // FIX 2: Always capture the current state first!
+        // Always capture the current state first!
         previousPosition = currentPosition;
         currentPosition = state.Transform.Origin;
         previousRotation = currentRotation;
