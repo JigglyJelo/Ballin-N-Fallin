@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+/// <summary>The Master/Main class that acts as the root node</summary>
 public partial class Game : Node{
     public static Game GameNode;
     public static SceneType CurrentScene;

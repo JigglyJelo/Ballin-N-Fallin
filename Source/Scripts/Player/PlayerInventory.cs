@@ -1,6 +1,6 @@
 using Godot;
 
-public class PlayerInventory {
+public class PlayerInventory{
     private Player player;
     private Item item = null;
     public float ItemRouletteTimer;

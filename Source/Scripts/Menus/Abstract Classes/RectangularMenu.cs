@@ -1,5 +1,8 @@
 using Godot;
-
+/// <summary>
+/// An abstract menu class designed for grid-based layouts.
+/// Automatically handles 2D wrapping so the selection loops around edges.
+/// </summary>
 public abstract partial class RectangularMenu : Menu{
     protected int rowCount = 3;  // Default row count
     protected int colCount = 3;  // Default column count

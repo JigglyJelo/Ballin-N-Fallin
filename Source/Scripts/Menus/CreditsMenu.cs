@@ -99,13 +99,13 @@ public partial class CreditsMenu : VerticalMenu{
 		miscLabel.Visible = subCredits == 4;
 		switch(subCredits){
 			case 0: headerLabel.Text = "Ballin N Fallin by JigglyJello"; break;
-			case 1:
+			case 2:
 				headerLabel.Text = "Music Used";
 				musicLabel.Text = MUSIC_CREDITS_TEXT;
 				musicLabel.Position = new Vector2(-1920, -838);
 				break;
-			case 2: headerLabel.Text = "SFX Used"; break;
-			case 3: headerLabel.Text = "Misc Credits"; break;
+			case 3: headerLabel.Text = "SFX Used"; break;
+			case 4: headerLabel.Text = "Misc Credits"; break;
 		}
 	}
 }

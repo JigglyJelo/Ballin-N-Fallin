@@ -3,12 +3,17 @@ using System;
 
 public partial class Player : Node2D{
 	//Controls Variables
-	public byte Id = 1; // Player #1-8
-	public int Index; //To be used as a short hand instead of doing Id-1 all the time for array access
+	///<summary>The Player's Id #1-8</summary>
+	public byte Id = 1;
+	///<summary>Short hand instead of doing Id-1 all the time for array access</summary>
+	public int Index;
 	public Color PlayerColor;
 	public bool CanLaunch = true, CanSlam = true;
 	public bool IsRegaining = false;
-	public Vector2 InputVector, RawInputVector;
+	///<summary>The Normalized Vector from the Player's Input</summary>
+	public Vector2 InputVector;
+	///<summary>The Raw Unmodified Vector from the Player's Input</summary>
+	public Vector2 RawInputVector;
 	//Children
 	public CollisionShape2D RbShape;
 	private CpuParticles2D flameParticles,blastParticles,popParticles;
@@ -18,7 +23,9 @@ public partial class Player : Node2D{
 	private static PackedScene slamParticleScene;
 	private Shadow shadow;
 	//Gameplay variables
+	///<summary>The Charged Power of the Player's upcoming Launch</summary>
 	public float LaunchPower = 0;
+	///<summary>Optionally stores a stat for a Mode</summary>
 	public float Score;
 	
 	public string Team = "";

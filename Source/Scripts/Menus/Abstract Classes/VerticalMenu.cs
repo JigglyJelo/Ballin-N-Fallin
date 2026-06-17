@@ -1,5 +1,8 @@
 using Godot;
-
+/// <summary>
+/// An abstract menu class designed for standard vertical list navigation.
+/// Automatically supports horizontal adjustments (like sliders or toggles) if the derived class implements <see cref="ILeftRightSelections"/>.
+/// </summary>
 public abstract partial class VerticalMenu : Menu{
     protected int totalSelections;
     private bool hasLeftRight = false;

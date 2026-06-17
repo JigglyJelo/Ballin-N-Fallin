@@ -371,11 +371,26 @@ public partial class PlayerVisuals : Node2D{
 		}
 	}
 
+	/// <summary>
+	/// Smoothly transitions the player's sprite back to its default, unstretched state.
+	/// </summary>
+	/// <remarks>
+	/// This incrementally lerps the scale back to (1,1) and the skew back to 0. 
+	/// It must be called continuously (every frame) while the player's speed is below the stretching threshold.
+	/// </remarks>
 	public void ResetSquashNStretch(){
 		SpritesNode.Scale = SpritesNode.Scale.Lerp(Vector2.One,0.125f);
 		SpritesNode.Skew = Mathf.Lerp(SpritesNode.Skew,0,0.125f);
 	}
 
+	/// <summary>
+	/// Applies procedural "squash and stretch" deformation to the player's sprite to visually emphasize movement and momentum.
+	/// </summary>
+	/// <param name="velocityMagnitude">The current speed of the player. Higher speeds result in a more intense stretching effect.</param>
+	/// <remarks>
+	/// This dynamically adjusts the global skew and scale of the SpritesNode based on the direction of the linear velocity.
+	/// Transitions are smoothed using linear interpolation to prevent jarring visual snaps.
+	/// </remarks>
 	public void SquashNStretch(float velocityMagnitude){
 		const float LERP_AMOUNT = 0.125f;
 		//Modify scale and skew based off velocity and rotation to give illusion of stretching in direction of velocity

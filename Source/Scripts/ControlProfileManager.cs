@@ -6,7 +6,7 @@ public static class ControlProfileManager{
     public static readonly string[] REMAP_ACTIONS = {"Charge N Launch", "Slam", "Item", "Y"};
     public static List<string> Profiles = new List<string>{DEFAULT_PROFILE};
 
-    // --- NEW: AUTO-CREATE PROFILES ---
+    // AUTO-CREATE PROFILES
     public static string CreateAutoNamedProfile(){
         int counter = 1;
         string newName = "Profile " + counter;

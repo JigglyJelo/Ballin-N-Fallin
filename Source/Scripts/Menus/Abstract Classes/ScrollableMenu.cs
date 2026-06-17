@@ -1,10 +1,12 @@
 using Godot;
-
+/// <summary>
+/// An abstract menu class that extends <see cref="VerticalMenu"/> to support automatic vertical scrolling.
+/// Ideal for long lists like inventories, leaderboards, or expansive options menus.
+/// </summary>
 public abstract partial class ScrollableMenu : VerticalMenu{
-    //Determine how many items fit on the screen before needing to scroll.
-    //Exporting this lets you tweak it per menu in the Godot Inspector.
+    /// <summary>The maximum number of items visible on the screen at once before the menu needs to scroll.</summary>
     [Export] public int VisibleItems = 5;
-
+    /// <summary>The parent node containing all selectable items. This node physically moves to simulate scrolling.</summary>
     protected Node2D selectionsContainer;
     private float baseContainerY;
     private int visibleWindowStart = 0;
@@ -36,7 +38,7 @@ public abstract partial class ScrollableMenu : VerticalMenu{
 
         //Moving UP past the top of the window
         if(currentIndex < visibleWindowStart) visibleWindowStart = currentIndex;
-        //2. Moving DOWN past the bottom of the window
+        //Moving DOWN past the bottom of the window
         else if(currentIndex >= visibleWindowStart + VisibleItems) visibleWindowStart = currentIndex - VisibleItems + 1;
 
         //--- SCROLLING LOGIC ---
@@ -52,7 +54,7 @@ public abstract partial class ScrollableMenu : VerticalMenu{
         if(scrollTween != null && scrollTween.IsValid()) scrollTween.Kill(); //Prevent tweens from fighting if the user scrolls very fast
         
         scrollTween = CreateTween();
-        //Matching the 0.15f duration from your VerticalMenu visual scale tween
+        //Matching the 0.15f duration from the VerticalMenu visual scale tween
         scrollTween.TweenProperty(selectionsContainer,"position:y",targetContainerY,0.15f); 
     }
 
