@@ -12,12 +12,12 @@ public partial class Keypad : Menu2D{
     private bool isLowercase = false;
 
     private float multiTapTimer = 0f;
-    private const float MULTI_TAP_TIMEOUT = 1;
+    private const float MULTI_TAP_TIMEOUT = 0.75f;
     private int multiTapIndex = 0;
     private int lastPressX = -1;
     private int lastPressY = -1;
     
-    private float inputCooldown = 0f; // Prevents the open button press from bleeding through
+    private float inputCooldown = 0f;
 
     private Label tagLabel;
     private Label[,] keyLabels = new Label[4, 3];
@@ -48,7 +48,6 @@ public partial class Keypad : Menu2D{
     public override void _Process(double delta){
         if(!Visible) return;
 
-        // Block inputs for a split second after opening
         if(inputCooldown > 0){
             inputCooldown -= (float)delta;
             return;
@@ -66,16 +65,14 @@ public partial class Keypad : Menu2D{
         }
     }
 
-    // NEW: Listen for physical keyboard input
     public override void _Input(InputEvent @event){
-        if (!Visible || inputCooldown > 0) return;
+        if(!Visible || inputCooldown > 0) return;
 
-        if (@event is InputEventKey keyEvent && keyEvent.Pressed){
+        if(@event is InputEventKey keyEvent && keyEvent.Pressed){
             
-            // Handle Backspace
-            if (keyEvent.Keycode == Key.Backspace){
-                if (currentTag.Length > 0){
-                    currentTag = currentTag.Substring(0, currentTag.Length - 1);
+            if(keyEvent.Keycode == Key.Backspace){
+                if(currentTag.Length > 0){
+                    currentTag = currentTag.Remove(currentTag.Length - 1);
                     ResetMultiTap();
                     UpdateSelectionVisual();
                     SFX.Play("Move");
@@ -84,24 +81,20 @@ public partial class Keypad : Menu2D{
                 return;
             }
 
-            // Handle Enter/Return to confirm
-            if (keyEvent.Keycode == Key.Enter || keyEvent.Keycode == Key.KpEnter){
+            if(keyEvent.Keycode == Key.Enter || keyEvent.Keycode == Key.KpEnter){
                 ConfirmTag();
                 GetViewport().SetInputAsHandled();
                 return;
             }
 
-            // Handle typing standard characters via Unicode
-            if (keyEvent.Unicode != 0){
+            if(keyEvent.Unicode != 0){
                 char typedChar = (char)keyEvent.Unicode;
-
-                // Ensure the character is valid (alphanumeric or space)
-                if (char.IsLetterOrDigit(typedChar) || typedChar == ' '){
-                    if (currentTag.Length < Online.USERNAME_LENGTH){
+                if(char.IsLetterOrDigit(typedChar) || typedChar == ' '){
+                    if(currentTag.Length < Online.USERNAME_LENGTH){
                         currentTag += typedChar;
-                        ResetMultiTap(); // Stop multi-tap interference if they start typing physically
+                        ResetMultiTap(); 
                         UpdateSelectionVisual();
-                        SFX.Play("Confirm"); // Using Confirm SFX for typing stroke, adjust as needed
+                        SFX.Play("Confirm"); 
                     }else{
                         SFX.Play("Error");
                     }
@@ -118,7 +111,7 @@ public partial class Keypad : Menu2D{
         selectionX = 0;
         selectionY = 0;
         isLowercase = false;
-        inputCooldown = 0.1f; // Set a 0.1 second delay before accepting inputs
+        inputCooldown = 0.1f;
         ResetMultiTap();
         UpdateLabels();
         UpdateSelectionVisual();
@@ -133,8 +126,7 @@ public partial class Keypad : Menu2D{
 
         if(multiTapTimer > 0 && currentTag.Length > 0){
             char lastChar = currentTag[currentTag.Length - 1];
-            string toggledChar = isLowercase ? lastChar.ToString().ToLower() : lastChar.ToString().ToUpper();
-            currentTag = currentTag.Substring(0, currentTag.Length - 1) + toggledChar;
+            currentTag = currentTag.Remove(currentTag.Length - 1) + (isLowercase ? char.ToLower(lastChar) : char.ToUpper(lastChar));
         }
 
         UpdateLabels();
@@ -153,9 +145,7 @@ public partial class Keypad : Menu2D{
 
     protected override void MenuLeft(){
         if(selectionY == 4) return; 
-
-        if(selectionX > 0) selectionX--;
-        else selectionX = 2;
+        selectionX = (selectionX > 0) ? selectionX - 1 : 2;
         ResetMultiTap(); 
         UpdateSelectionVisual();
         SFX.Play("Move");
@@ -163,25 +153,21 @@ public partial class Keypad : Menu2D{
 
     protected override void MenuRight(){
         if(selectionY == 4) return; 
-
-        if(selectionX < 2) selectionX++;
-        else selectionX = 0; 
+        selectionX = (selectionX < 2) ? selectionX + 1 : 0;
         ResetMultiTap();
         UpdateSelectionVisual();
         SFX.Play("Move");
     }
 
     protected override void MenuUp(){
-        if(selectionY > 0) selectionY--;
-        else selectionY = 4; 
+        selectionY = (selectionY > 0) ? selectionY - 1 : 4;
         ResetMultiTap();
         UpdateSelectionVisual();
         SFX.Play("Move");
     }
 
     protected override void MenuDown(){
-        if(selectionY < 4) selectionY++;
-        else selectionY = 0; 
+        selectionY = (selectionY < 4) ? selectionY + 1 : 0;
         ResetMultiTap();
         UpdateSelectionVisual();
         SFX.Play("Move");
@@ -189,16 +175,14 @@ public partial class Keypad : Menu2D{
 
     protected override void MenuChoose(int selection){
         if(selectionY == 4){
-            ConfirmTag(); // UPDATED: Calls the extracted method
+            ConfirmTag(); 
             return;
         }
 
         string key = KEYPAD_CHARS[selectionY, selectionX];
 
         if(key == "DEL"){
-            if(currentTag.Length > 0){
-                currentTag = currentTag.Substring(0, currentTag.Length - 1);
-            }
+            if(currentTag.Length > 0) currentTag = currentTag.Remove(currentTag.Length - 1);
             ResetMultiTap();
             UpdateSelectionVisual();
             SFX.Play("Move");
@@ -207,22 +191,21 @@ public partial class Keypad : Menu2D{
 
         if(selectionX == lastPressX && selectionY == lastPressY && multiTapTimer > 0){
             multiTapIndex = (multiTapIndex + 1) % key.Length;
-            string newChar = isLowercase ? key[multiTapIndex].ToString().ToLower() : key[multiTapIndex].ToString();
-            currentTag = currentTag.Substring(0, currentTag.Length - 1) + newChar;
-            multiTapTimer = MULTI_TAP_TIMEOUT; 
+            currentTag = currentTag.Remove(currentTag.Length - 1); 
         }else{
-            if(currentTag.Length < Online.USERNAME_LENGTH){
-                multiTapIndex = 0;
-                string newChar = isLowercase ? key[multiTapIndex].ToString().ToLower() : key[multiTapIndex].ToString();
-                currentTag += newChar;
-                lastPressX = selectionX;
-                lastPressY = selectionY;
-                multiTapTimer = MULTI_TAP_TIMEOUT;
-            }else{
+            if(currentTag.Length >= Online.USERNAME_LENGTH){
                 SFX.Play("Error");
                 return;
             }
+            multiTapIndex = 0;
+            lastPressX = selectionX;
+            lastPressY = selectionY;
         }
+
+        char newChar = key[multiTapIndex];
+        currentTag += isLowercase ? char.ToLower(newChar) : newChar;
+        multiTapTimer = MULTI_TAP_TIMEOUT;
+        
         SFX.Play("Confirm");
         UpdateSelectionVisual();
     }
@@ -231,18 +214,18 @@ public partial class Keypad : Menu2D{
         OnCanceled?.Invoke();
     }
 
-    // NEW: Extracted confirmation logic so both Virtual Keypad and Physical Enter key can use it
     private void ConfirmTag(){
-        if(currentTag.Length > 0){
-            if(ControlProfileManager.Profiles.Contains(currentTag)){
-                SFX.Play("Error"); // Reject the input, name is taken
-                return;
-            }
-            
-            OnTagConfirmed?.Invoke(currentTag);
-        }else{
-            SFX.Play("Error"); // Reject empty strings
+        if(currentTag.Length == 0){
+            SFX.Play("Error"); 
+            return;
         }
+
+        if(ControlProfileManager.Profiles.Contains(currentTag)){
+            SFX.Play("Error"); 
+            return;
+        }
+        
+        OnTagConfirmed?.Invoke(currentTag);
     }
 
     private void ResetMultiTap(){
@@ -252,20 +235,15 @@ public partial class Keypad : Menu2D{
     }
 
     protected override void UpdateSelectionVisual(){
-        tagLabel.Text = currentTag;
-        if(multiTapTimer > 0) tagLabel.Text += "_";
+        tagLabel.Text = multiTapTimer > 0 ? currentTag + "_" : currentTag;
 
         for(int y = 0; y < 4; y++){
             for(int x = 0; x < 3; x++){
-                if(selectionY == y && selectionX == x && selectionY != 4){
-                    keyLabels[y, x].SelfModulate = Colors.Green;
-                }else{
-                    keyLabels[y, x].SelfModulate = Colors.White;
-                }
+                bool isSelected = (selectionY == y && selectionX == x && selectionY != 4);
+                keyLabels[y, x].SelfModulate = isSelected ? Colors.Green : Colors.White;
             }
         }
 
-        if(selectionY == 4) confirmLabel.SelfModulate = Colors.Green;
-        else confirmLabel.SelfModulate = Colors.White;
+        confirmLabel.SelfModulate = (selectionY == 4) ? Colors.Green : Colors.White;
     }
 }

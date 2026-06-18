@@ -6,15 +6,15 @@ public partial class PlayerMenu : Node2D{
 	private Label topText,backButtonText;
 	private Polygon2D backPolygon;
 	public static List<Color> selectedColors; //Keeps track of what colors are currently selected so no repeats
-	public static List<ColorMenu> ColorMenus = new List<ColorMenu>();
+	public static List<PlayerSettingsMenu> SettingMenus = new List<PlayerSettingsMenu>();
 
     public override void _Ready(){
 		//Game.InputIds = new List<byte>();
 		Game.PlayerDatas = new List<PlayerData>();
-		ColorMenus = new List<ColorMenu>();
+		SettingMenus = new List<PlayerSettingsMenu>();
 		selectedColors = new List<Color>();
-		ColorMenu.JoinedPlayers = 0;
-		ColorMenu.ReadyPlayers = 0;
+		PlayerSettingsMenu.JoinedPlayers = 0;
+		PlayerSettingsMenu.ReadyPlayers = 0;
 		topText = GetNode<Label>("Label");
 		backButtonText = GetNode<Label>("MenuBackButton/BackText");
 		backPolygon = GetNode<Polygon2D>("MenuBackButton/BackArrow");
@@ -34,7 +34,7 @@ public partial class PlayerMenu : Node2D{
 			for(int i = 0; i < Game.TotalPlayers; i++){
 				if(Input.IsActionJustReleased("Start" + (int)Game.PlayerDatas[i].InputDevice)) MenuStart();
 				//Get to Vs Menu in 1 Player for testing
-				if(Input.IsActionJustReleased("Slam" + (int)Game.PlayerDatas[i].InputDevice)){
+				if(Input.IsActionJustReleased("Item" + (int)Game.PlayerDatas[i].InputDevice)){
 					MenuScene.LoadMenu("VsMenu");
 				}
 			}
@@ -46,7 +46,7 @@ public partial class PlayerMenu : Node2D{
 		float ySize = Mathf.Abs(topText.Size.Y/2f);
 		float xDist = Mathf.Abs((topText.GlobalPosition.X + xSize) - GetGlobalMousePosition().X);
 		float yDist = Mathf.Abs((topText.GlobalPosition.Y + ySize) - GetGlobalMousePosition().Y);
-		if(xDist < xSize && yDist < ySize && ColorMenu.ReadyPlayers == 1){
+		if(xDist < xSize && yDist < ySize && PlayerSettingsMenu.ReadyPlayers == 1){
 			Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
 			topText.SelfModulate = new Color(0,1,0);
 			if(Game.UsingMouse() && Input.IsActionJustReleased("Charge N Launch Mouse")){
@@ -69,30 +69,30 @@ public partial class PlayerMenu : Node2D{
 		}
 
 		if(Game.UsingMouse()){
-			if(ColorMenu.JoinedPlayers == 0){
+			if(PlayerSettingsMenu.JoinedPlayers == 0){
 				topText.Text = "Click to Join";
-			}else if(ColorMenu.ReadyPlayers != ColorMenu.JoinedPlayers){
+			}else if(PlayerSettingsMenu.ReadyPlayers != PlayerSettingsMenu.JoinedPlayers){
 				topText.Text = "Choose a Color!";
 			}else{
 				topText.Text = "Click here to Start!";
 			}
 		}else{
-			if(ColorMenu.ReadyPlayers != ColorMenu.JoinedPlayers || ColorMenu.JoinedPlayers == 0 && ColorMenu.JoinedPlayers != Game.MAX_PLAYERS) topText.Text = "Press A to Join";
-			else if(ColorMenu.JoinedPlayers == Game.MAX_PLAYERS) topText.Text = "Choose Colors!";
-			else if(ColorMenu.JoinedPlayers == 1) topText.Text = "Ready: Press Start to play Solo!";
+			if(PlayerSettingsMenu.ReadyPlayers != PlayerSettingsMenu.JoinedPlayers || PlayerSettingsMenu.JoinedPlayers == 0 && PlayerSettingsMenu.JoinedPlayers != Game.MAX_PLAYERS) topText.Text = "Press A to Join";
+			else if(PlayerSettingsMenu.JoinedPlayers == Game.MAX_PLAYERS) topText.Text = "Choose Colors!";
+			else if(PlayerSettingsMenu.JoinedPlayers == 1) topText.Text = "Ready: Press Start to play Solo!";
 			else topText.Text = "Ready: Press Start!";
 		}
 		//Join Mouse
 		if(Game.TotalPlayers == 0 && Input.IsActionJustPressed("Charge N Launch Mouse")){
 			SFX.Play("PlayerEnter");
 			Game.TotalPlayers++;
-			ColorMenu newMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/ColorMenu.tscn").Instantiate<ColorMenu>();
+			PlayerSettingsMenu newMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/PlayerSettingsMenu.tscn").Instantiate<PlayerSettingsMenu>();
 			//Game.InputIds.Add(1);
 			Game.PlayerDatas.Add(new PlayerData("PM",PlayerData.PlayerInputDevice.Mouse,1));
 			newMenu.Id = 1;
-			ColorMenus.Add(newMenu);
+			SettingMenus.Add(newMenu);
 			AddChild(newMenu);
-			foreach(ColorMenu menu in ColorMenus) menu.SetPosition();
+			foreach(PlayerSettingsMenu menu in SettingMenus) menu.SetPosition();
 		}
 		//Join Controllers
 		for(int i = 0; i < Game.MAX_PLAYERS; i++){
@@ -101,16 +101,16 @@ public partial class PlayerMenu : Node2D{
 				Game.TotalPlayers++;
 				//Game.InputIds.Add((byte)i);
 				Game.PlayerDatas.Add(new PlayerData("P"+(i+1),(PlayerData.PlayerInputDevice)i,1));
-				ColorMenu newMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/ColorMenu.tscn").Instantiate<ColorMenu>();
+				PlayerSettingsMenu newMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/PlayerSettingsMenu.tscn").Instantiate<PlayerSettingsMenu>();
 				//newMenu.Id = (byte)Game.InputIds.Count;
 				newMenu.Id = Game.PlayerDatas.Count;
-				ColorMenus.Add(newMenu);
+				SettingMenus.Add(newMenu);
 				AddChild(newMenu);
-				foreach(ColorMenu menu in ColorMenus) menu.SetPosition();
+				foreach(PlayerSettingsMenu menu in SettingMenus) menu.SetPosition();
 			}
 		}
 
-		if(ColorMenu.JoinedPlayers == 0){
+		if(PlayerSettingsMenu.JoinedPlayers == 0){
 			for(int i = 0; i < Game.MAX_PLAYERS; i++){
 				if(Input.IsActionJustReleased("B" + i)){
 					MenuBack();
@@ -122,7 +122,7 @@ public partial class PlayerMenu : Node2D{
 
 	public void MenuStart(){
 		SFX.Play("Confirm");
-		if(ColorMenu.ReadyPlayers == ColorMenu.JoinedPlayers){
+		if(PlayerSettingsMenu.ReadyPlayers == PlayerSettingsMenu.JoinedPlayers){
 			foreach(Node node in GetChildren()) QueueFree();
 			if(Game.TotalPlayers == 1) MenuScene.LoadMenu("SoloMenu");
 			else MenuScene.LoadMenu("VsMenu");

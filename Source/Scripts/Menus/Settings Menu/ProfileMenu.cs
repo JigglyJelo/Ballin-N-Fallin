@@ -20,7 +20,6 @@ public partial class ProfileMenu : ScrollableMenu{
     }
 
     public override void _Process(double delta){
-        // Halt ProfileMenu input checks while the keypad is open!
         if(isKeypadOpen) return;
         base._Process(delta);
     }
@@ -60,7 +59,7 @@ public partial class ProfileMenu : ScrollableMenu{
     protected override void MenuChoose(int choice){
         if(choice == 1){ 
             isKeypadOpen = true;
-            if(selectionsContainer != null) selectionsContainer.Visible = false; // Hide the profile list
+            if(selectionsContainer != null) selectionsContainer.Visible = false; 
             keypadPopup.Open(0); 
             SFX.Play("Confirm");
         }else{ 
@@ -79,7 +78,7 @@ public partial class ProfileMenu : ScrollableMenu{
     private void HandleTagConfirmed(string newTag){
         isKeypadOpen = false;
         keypadPopup.Close();
-        if(selectionsContainer != null) selectionsContainer.Visible = true; // Show the profile list again
+        if(selectionsContainer != null) selectionsContainer.Visible = true; 
         
         ControlProfileManager.CreateProfile(newTag); 
         
@@ -90,12 +89,12 @@ public partial class ProfileMenu : ScrollableMenu{
     private void HandleKeypadCanceled(){
         isKeypadOpen = false;
         keypadPopup.Close();
-        if(selectionsContainer != null) selectionsContainer.Visible = true; // Show the profile list again
+        if(selectionsContainer != null) selectionsContainer.Visible = true; 
         SFX.Play("Back", 1.125f);
     }
 
     public override void _Input(InputEvent @event){
-        if(isKeypadOpen) return; // Prevent deleting profiles while typing
+        if(isKeypadOpen) return; 
 
         if(@event is InputEventJoypadButton btnEvent && btnEvent.IsPressed()){
             if(btnEvent.ButtonIndex == JoyButton.X){
