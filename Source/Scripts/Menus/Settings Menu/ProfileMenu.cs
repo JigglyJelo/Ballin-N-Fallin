@@ -3,17 +3,31 @@ using Godot;
 public partial class ProfileMenu : ScrollableMenu{
     private const float LABEL_X_POS = -1920;
     private const float LABEL_SPACING = 200f;
-	private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn");
+    private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn");
+
+    private Keypad keypadPopup;
+    private bool isKeypadOpen = false;
 
     public override void _Ready(){
         base._Ready(); 
+        
+        keypadPopup = GetNode<Keypad>("Keypad");
+        keypadPopup.Visible = false;
+        keypadPopup.OnTagConfirmed += HandleTagConfirmed;
+        keypadPopup.OnCanceled += HandleKeypadCanceled;
+
         RefreshProfileList();
+    }
+
+    public override void _Process(double delta){
+        // Halt ProfileMenu input checks while the keypad is open!
+        if(isKeypadOpen) return;
+        base._Process(delta);
     }
 
     private void RefreshProfileList(){
         if(selectionsContainer == null) return;
 
-        //Clear existing children for a clean refresh
         foreach(Node child in selectionsContainer.GetChildren()){
             selectionsContainer.RemoveChild(child);
             child.QueueFree();
@@ -22,19 +36,17 @@ public partial class ProfileMenu : ScrollableMenu{
         Selections = new Godot.Collections.Array<Node>();
         float currentY = -800f;
 
-        //Add "Create Profile" at the very top
         Label createLabel = profileLabelScene.Instantiate<Label>();
-		createLabel.Text = "+ Create New Profile";
-		createLabel.Position = new Vector2(LABEL_X_POS, currentY);
+        createLabel.Text = "+ Create New Profile";
+        createLabel.Position = new Vector2(LABEL_X_POS, currentY);
         selectionsContainer.AddChild(createLabel);
         Selections.Add(createLabel);
         currentY += LABEL_SPACING;
 
-        //Populate the list directly from your manager's Profiles list
         foreach(string profile in ControlProfileManager.Profiles){
             Label profileLabel = profileLabelScene.Instantiate<Label>();
-			profileLabel.Text = profile;
-			profileLabel.Position = new Vector2(LABEL_X_POS, currentY);
+            profileLabel.Text = profile;
+            profileLabel.Position = new Vector2(LABEL_X_POS, currentY);
             selectionsContainer.AddChild(profileLabel);
             Selections.Add(profileLabel);
             currentY += LABEL_SPACING;
@@ -47,18 +59,13 @@ public partial class ProfileMenu : ScrollableMenu{
 
     protected override void MenuChoose(int choice){
         if(choice == 1){ 
-            //1 is CREATE NEW PROFILE
-            ControlProfileManager.CreateAutoNamedProfile();
+            isKeypadOpen = true;
+            if(selectionsContainer != null) selectionsContainer.Visible = false; // Hide the profile list
+            keypadPopup.Open(0); 
             SFX.Play("Confirm");
-            RefreshProfileList();
         }else{ 
-            //Anything else is selecting an existing profile to edit
-            //choice - 2 accounts for 1-based index and the Create button
             string selectedProfile = ControlProfileManager.Profiles[choice - 2];
-            
-            //Tell the ControlsMenu which profile we want to map
             ControlsMenu.TargetProfile = selectedProfile; 
-            
             SFX.Play("Confirm");
             MenuScene.LoadMenu("Settings/ControlsMenu"); 
         }
@@ -69,11 +76,30 @@ public partial class ProfileMenu : ScrollableMenu{
         MenuScene.LoadMenu("Settings/SettingsMenu");
     }
 
+    private void HandleTagConfirmed(string newTag){
+        isKeypadOpen = false;
+        keypadPopup.Close();
+        if(selectionsContainer != null) selectionsContainer.Visible = true; // Show the profile list again
+        
+        ControlProfileManager.CreateProfile(newTag); 
+        
+        SFX.Play("Confirm", 1.125f);
+        RefreshProfileList();
+    }
+
+    private void HandleKeypadCanceled(){
+        isKeypadOpen = false;
+        keypadPopup.Close();
+        if(selectionsContainer != null) selectionsContainer.Visible = true; // Show the profile list again
+        SFX.Play("Back", 1.125f);
+    }
+
     public override void _Input(InputEvent @event){
-        //Profile Deletion Logic (Press X)
+        if(isKeypadOpen) return; // Prevent deleting profiles while typing
+
         if(@event is InputEventJoypadButton btnEvent && btnEvent.IsPressed()){
             if(btnEvent.ButtonIndex == JoyButton.X){
-                if(Selection > 1){ //Ensure we don't try to delete the "+ Create" button
+                if(Selection > 1){ 
                     string selectedProfile = ControlProfileManager.Profiles[Selection - 2];
                     
                     if(selectedProfile != ControlProfileManager.DEFAULT_PROFILE){
@@ -82,7 +108,7 @@ public partial class ProfileMenu : ScrollableMenu{
                         RefreshProfileList();
                         GetViewport().SetInputAsHandled();
                     }else{
-                        SFX.Play("Error"); //Cannot delete "Default"
+                        SFX.Play("Error"); 
                     }
                 }
             }
