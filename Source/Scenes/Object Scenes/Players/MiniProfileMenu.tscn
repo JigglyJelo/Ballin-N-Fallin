@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck8ha1j442bxx"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/MiniProfileMenu.cs" id="1_p177w"]
+[ext_resource type="PackedScene" uid="uid://j1rk64jq7nm5" path="res://Source/Scenes/Object Scenes/Menus/Keypad.tscn" id="3_vyqqb"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="4_lnkq4"]
+[ext_resource type="PackedScene" uid="uid://b6kehpuuetcw8" path="res://Source/Scenes/Object Scenes/Players/MiniControlsMenu.tscn" id="4_shmgb"]
+
+[node name="MiniProfileMenu" type="Node2D"]
+script = ExtResource("1_p177w")
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(-450, -383, 450, -383, 450, 333, -450, 333)
+
+[node name="Line2D" type="Line2D" parent="Background"]
+points = PackedVector2Array(-460, -393, 460, -393, 460, 343, -460, 343)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="TitleLabel" type="Label" parent="."]
+z_index = 1
+offset_left = -471.0
+offset_top = -395.0
+offset_right = 1377.0
+offset_bottom = -161.0
+scale = Vector2(0.5, 0.5)
+label_settings = ExtResource("4_lnkq4")
+horizontal_alignment = 1
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="Keypad" parent="." instance=ExtResource("3_vyqqb")]
+visible = false
+
+[node name="MiniControlsMenu" parent="." instance=ExtResource("4_shmgb")]
+scale = Vector2(0.4, 0.4)

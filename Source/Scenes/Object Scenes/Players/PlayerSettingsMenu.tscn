@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://d3wjs3uhwa4g"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/PlayerSettingsMenu.cs" id="1_4dtcv"]
+[ext_resource type="PackedScene" uid="uid://bvrkggycrj4wr" path="res://Source/Scenes/Object Scenes/Players/ColorMenu.tscn" id="2_w8nxb"]
+[ext_resource type="PackedScene" uid="uid://ck8ha1j442bxx" path="res://Source/Scenes/Object Scenes/Players/MiniProfileMenu.tscn" id="3_mtfqr"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="5_gg8bd"]
+[ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Object Scenes/Players/StaticPlayer.tscn" id="6_bytrq"]
+
+[node name="PlayerSettingsMenu" type="Node2D"]
+script = ExtResource("1_4dtcv")
+
+[node name="Player" parent="." instance=ExtResource("6_bytrq")]
+position = Vector2(0, -649)
+
+[node name="ColorMenu" parent="." instance=ExtResource("2_w8nxb")]
+
+[node name="MiniProfileMenu" parent="." instance=ExtResource("3_mtfqr")]
+
+[node name="ProfileLabel" type="Label" parent="."]
+z_index = 1
+offset_left = -471.0
+offset_top = 341.0
+offset_right = 1377.0
+offset_bottom = 575.0
+scale = Vector2(0.5, 0.5)
+text = "Profile: Default"
+label_settings = ExtResource("5_gg8bd")
+horizontal_alignment = 1

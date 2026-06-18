@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6kehpuuetcw8"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/MiniControlsMenu.cs" id="1_tcxdu"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_vrxvp"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Object Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_0qjee"]
+
+[node name="MiniControlsMenu" type="Node2D"]
+script = ExtResource("1_tcxdu")
+
+[node name="ProfileText" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -935.0
+offset_right = 1920.0
+offset_bottom = -695.0
+text = "Editing "
+label_settings = ExtResource("3_vrxvp")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="Selections" type="Node2D" parent="."]
+position = Vector2(215, 0)
+
+[node name="ActionLabel_0" type="Label" parent="Selections"]
+offset_left = -1300.0
+offset_top = -667.0
+offset_right = 676.0
+offset_bottom = -427.0
+text = "Charge"
+label_settings = ExtResource("3_vrxvp")
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="ActionLabel_1" type="Label" parent="Selections"]
+offset_left = -1300.0
+offset_top = -433.0
+offset_right = 676.0
+offset_bottom = -193.0
+text = "Slam"
+label_settings = ExtResource("3_vrxvp")
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="ActionLabel_2" type="Label" parent="Selections"]
+offset_left = -1300.0
+offset_top = -133.0
+offset_right = 305.0
+offset_bottom = 107.0
+text = "Item"
+label_settings = ExtResource("3_vrxvp")
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="ActionLabel_3" type="Label" parent="Selections"]
+offset_left = -1300.0
+offset_top = 167.0
+offset_right = 137.0
+offset_bottom = 407.0
+text = "Show Text"
+label_settings = ExtResource("3_vrxvp")
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="VibrationLabel" type="Label" parent="Selections"]
+offset_left = -1300.0
+offset_top = 409.0
+offset_right = 137.0
+offset_bottom = 649.0
+text = "Vibration"
+label_settings = ExtResource("3_vrxvp")
+vertical_alignment = 1
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_0qjee")]
+position = Vector2(1032, 753)
