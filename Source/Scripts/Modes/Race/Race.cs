@@ -25,7 +25,7 @@ public partial class Race : Mode, ILevelLoadedEvent{
         racePath.Curve.BakeInterval = 200;
         TotalLaps = level.LevelUnit;
         Instructions = "Complete " + TotalLaps + " Laps";
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         RaceCheckpoint.TotalCheckpoints = 0;
         Node2D levelNode = GetNode<Node2D>("Level");
         RaceCheckpoint.TotalCheckpoints = 0;
@@ -37,11 +37,11 @@ public partial class Race : Mode, ILevelLoadedEvent{
         RaceTimer = 0;
         
         TopCheckPoint = 0;
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Race/Countdown.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Race/Countdown.tscn").Instantiate());
 
         //Time Trials
         if(Game.TotalPlayers == 1){
-            AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Race/RaceHUD.tscn").Instantiate());
+            AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Race/RaceHUD.tscn").Instantiate());
             //Game.Players[0].Item = new Pepper(Game.Players[0],TotalLaps); Moved to Level Spawn Player function
         }
         isScoreMode = true;

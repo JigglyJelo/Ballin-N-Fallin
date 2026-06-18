@@ -248,7 +248,7 @@ public partial class HotPotato : Mode, ILevelLoadedEvent{
         //Explode Player
         GD.Print("Explosion");
         Player player = Game.Players[explodedId-1];
-        //Node2D explosion = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Explosion.tscn").Instantiate<Node2D>();
+        //Node2D explosion = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Explosion.tscn").Instantiate<Node2D>();
         //explosion.GlobalPosition = player.Rb.GlobalPosition;
         //AddChild(explosion);
         ParticleManager.ParticleManagerNode.SpawnExplosion(player.Rb.GlobalPosition,0.5f);

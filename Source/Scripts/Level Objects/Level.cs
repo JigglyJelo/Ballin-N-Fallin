@@ -44,7 +44,7 @@ public partial class Level : Node2D {
         if(background != null){
             levelBackground = background.Instantiate<LevelBackground>();
         }else{
-            levelBackground = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Backgrounds/BackgroundTemplate.tscn").Instantiate<LevelBackground>();
+            levelBackground = GD.Load<PackedScene>("res://Source/Scenes/Backgrounds/BackgroundTemplate.tscn").Instantiate<LevelBackground>();
         }
         AddChild(levelBackground);
         if(Game.GameNode.GetTree().Root.ContentScaleMode == Window.ContentScaleModeEnum.CanvasItems && Game.Resolution > DisplayServer.WindowGetSize().Y && Game.Resolution >= Game.BASE_RES){
@@ -378,7 +378,7 @@ public partial class Level : Node2D {
         //Make host set player spawnpoints
         if(Online.IsOnline){ //If not host spawn this immediately to prevent errors from not having the node when rpcs come
             Game.Players = Array.Empty<Player>();
-            Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/PlayerSynchronizer.tscn").Instantiate());
+            Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Players/PlayerSynchronizer.tscn").Instantiate());
         }
     }
 
@@ -507,7 +507,7 @@ public partial class Level : Node2D {
     private void SpawnPlayers(Vector2[] playerSpawns,byte flippedStart,string[] teams){
         Game.Players = new Player[Game.TotalPlayers];
         for(int i = 0; i < Game.TotalPlayers; i++){
-            Player player = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/Player.tscn").Instantiate<Player>();
+            Player player = GD.Load<PackedScene>("res://Source/Scenes/Players/Player.tscn").Instantiate<Player>();
             player.Id = (byte)(i+1);
             player.Name = "Player" + player.Id;
             Game.Players[i] = player;
@@ -529,7 +529,7 @@ public partial class Level : Node2D {
     private void SpawnPlayers(Vector2[] playerSpawns,byte flippedStart){
         Game.Players = new Player[Game.TotalPlayers];
         for(int i = 0; i < Game.TotalPlayers; i++){
-            Player player = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/Player.tscn").Instantiate<Player>();
+            Player player = GD.Load<PackedScene>("res://Source/Scenes/Players/Player.tscn").Instantiate<Player>();
             player.Id = (byte)(i+1);
             player.Name = "Player" + player.Id;
             Game.Players[i] = player;

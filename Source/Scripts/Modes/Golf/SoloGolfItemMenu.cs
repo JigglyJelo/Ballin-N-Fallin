@@ -27,7 +27,7 @@ public partial class SoloGolfItemMenu : Menu2D{
 		juiceText.Text = string.Format("Juice: {0:F1}",GolfCup.Juice);
 		int index = 0;
 		foreach(Item item in items.Keys){
-			SoloGolfItemMenuOption itemOption = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Golf/SoloGolfItemMenu/SoloGolfItemMenuSprite.tscn").Instantiate<SoloGolfItemMenuOption>();
+			SoloGolfItemMenuOption itemOption = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Golf/SoloGolfItemMenu/SoloGolfItemMenuSprite.tscn").Instantiate<SoloGolfItemMenuOption>();
 			itemOption.Price = items[item];
 			itemOption.Item = item;
 			int row = index % 4;

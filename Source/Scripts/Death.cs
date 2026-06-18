@@ -5,7 +5,7 @@ public partial class Death : Node{
 	public static Death DeathNode;
 	public static Dictionary<int,float> RespawnTimes;
 	private List<int> respawnTimesToDelete;
-	private readonly PackedScene RESPAWN_POINT_INDICATOR = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/RespawnPointIndicator.tscn");
+	private readonly PackedScene RESPAWN_POINT_INDICATOR = GD.Load<PackedScene>("res://Source/Scenes/Players/RespawnPointIndicator.tscn");
 
 	public override void _Ready(){
 		DeathNode = this;

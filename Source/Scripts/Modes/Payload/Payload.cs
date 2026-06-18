@@ -19,7 +19,7 @@ public partial class Payload : TeamMode, ILevelLoadedEvent{
 	}
 
     public void OnLevelLoaded(){
-        payload = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Payload/Payload.tscn").Instantiate<PayloadTower>();
+        payload = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Payload/Payload.tscn").Instantiate<PayloadTower>();
         Level.LevelNode.AddChild(payload);
     }
 

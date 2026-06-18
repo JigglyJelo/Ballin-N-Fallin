@@ -15,17 +15,17 @@ public partial class ParticleManager : Node{
 		int playerParticleCount = (Game.TotalPlayers * 2) + (Game.TotalPlayers/4) + (Game.TotalPlayers == 1 ? 1 : 0);
 		bounceIndex = 0;
 		bounceParticles = new BounceParticles[playerParticleCount];
-		PackedScene bounceParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Particles/BounceParticles.tscn");
+		PackedScene bounceParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Particles/BounceParticles.tscn");
 		launchIndex = 0;
 		launchParticles = new CpuParticles2D[playerParticleCount];
-		PackedScene launchParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Particles/LaunchParticles.tscn");
+		PackedScene launchParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Particles/LaunchParticles.tscn");
 		for(int i = 0; i < playerParticleCount; i++){
 			bounceParticles[i] = bounceParticleScene.Instantiate<BounceParticles>();
 			AddChild(bounceParticles[i]);
 			launchParticles[i] = launchParticleScene.Instantiate<CpuParticles2D>();
 			AddChild(launchParticles[i]);
 		}
-		PackedScene popParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Particles/Pop Particles.tscn");
+		PackedScene popParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Particles/Pop Particles.tscn");
 		int popParticleCount = (int)MathF.Ceiling(Game.TotalPlayers / 2f);
 		popParticles = new CpuParticles2D[popParticleCount];
 		for(int i = 0; i < popParticleCount; i++){
@@ -34,7 +34,7 @@ public partial class ParticleManager : Node{
 		}
 		popIndex = 0;
 		if(Game.CurrentMode == Mode.GameMode.Golf || Game.CurrentMode == Mode.GameMode.HotPotato || Game.CurrentMode == Mode.GameMode.BombBall){
-			explosionParticles = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Particles/Explosion.tscn").Instantiate<CpuParticles2D>();
+			explosionParticles = GD.Load<PackedScene>("res://Source/Scenes/Particles/Explosion.tscn").Instantiate<CpuParticles2D>();
 			AddChild(explosionParticles);
 		}
 		SetProcess(false);

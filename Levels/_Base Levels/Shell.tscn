@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://dqswlrmdevp58"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_epang"]
-[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_ooffi"]
+[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Source/Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_ooffi"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_8xire"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_t3isn"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_rvkq4"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_rvkq4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abyno"]
 size = Vector2(5376, 2816)

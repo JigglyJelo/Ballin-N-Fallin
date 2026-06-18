@@ -6,7 +6,7 @@ public partial class CoinSpawner : Sprite2D{
 	[Export]
 	public Godot.Collections.Array<CoinPattern> CoinPatterns;
 
-	private const string PATH = "res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/Coin Patterns";
+	private const string PATH = "res://Source/Scenes/Mode Stuff/Ballin to the Bank/Coin Patterns";
 	public readonly static PackedScene[] COIN_PATTERNS = LoadCoinPatterns();
 	private static PackedScene[] LoadCoinPatterns(){
 		List<PackedScene> patterns = new List<PackedScene>();

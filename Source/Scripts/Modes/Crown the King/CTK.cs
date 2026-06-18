@@ -72,7 +72,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
         Mode.Scores = new float[Game.MAX_PLAYERS];
         Game.CurrentMode = Mode.GameMode.CrownTheKing;
         Instructions = "Down the Crown for " + TotalScore + " seconds";
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         isScoreMode = true;
         SpawnCrown();
         pitchTimer = 0;
@@ -214,7 +214,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
     [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SpawnCrown(){
 		//Make Crown at spawnpoint
-        if(CrownScene == null) CrownScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Crown the King/Crown.tscn");
+        if(CrownScene == null) CrownScene = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Crown the King/Crown.tscn");
         CrownNode = CrownScene.Instantiate<Crown>();
         AddChild(CrownNode);
 	}

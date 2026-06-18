@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cy84s7hn2yowx"]
 
-[ext_resource type="PackedScene" uid="uid://bg831gigbstmm" path="res://Source/Scenes/Object Scenes/Score Screen/ScoreScreen.tscn" id="1_yfk3o"]
+[ext_resource type="PackedScene" uid="uid://bg831gigbstmm" path="res://Source/Scenes/Score Screen/ScoreScreen.tscn" id="1_yfk3o"]
 [ext_resource type="AudioStream" uid="uid://cie2v6uyo5syk" path="res://Assets/Music/Score.ogg" id="2_5qtpx"]
 [ext_resource type="Script" path="res://Source/Scripts/SFX.cs" id="3_mcjbq"]
 [ext_resource type="AudioStream" uid="uid://btq4qp4fvqyrs" path="res://Assets/SFX/Menu/confirm.ogg" id="4_x7hpv"]

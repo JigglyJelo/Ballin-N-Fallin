@@ -12,7 +12,7 @@ public abstract partial class TeamSportsMode : TeamMode, ILevelLoadedEvent, IMod
         SportBall = null;
         //Create and setup HUD
         //Create and setup HUD
-        CanvasLayer teamHud = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/TeamHud.tscn").Instantiate<CanvasLayer>();
+        CanvasLayer teamHud = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/TeamHud.tscn").Instantiate<CanvasLayer>();
         teamHud.Scale =  new Vector2(Game.Resolution / 2160f,Game.Resolution / 2160f);
         AddChild(teamHud);
         teamALabel = GetNode<Label>("Team HUD/ATeamText");
@@ -24,7 +24,7 @@ public abstract partial class TeamSportsMode : TeamMode, ILevelLoadedEvent, IMod
         WinningTeam = "";
 
         if(Instructions.Equals("")) Instructions = "Score " + TotalScore + " points";
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         isScoreMode = false;
     }
 
@@ -122,9 +122,9 @@ public abstract partial class TeamSportsMode : TeamMode, ILevelLoadedEvent, IMod
     public void SpawnBall(string team){
         if(SportBall == null){
             if(Game.CurrentMode != GameMode.BombBall){
-                SportBall = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/SportBall.tscn").Instantiate<SportBall>();
+                SportBall = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/SportBall.tscn").Instantiate<SportBall>();
             }else{
-                SportBall = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Bomb Ball/BombBall.tscn").Instantiate<TheBomb>();
+                SportBall = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Bomb Ball/BombBall.tscn").Instantiate<TheBomb>();
             }
             AddChild(SportBall);
         }

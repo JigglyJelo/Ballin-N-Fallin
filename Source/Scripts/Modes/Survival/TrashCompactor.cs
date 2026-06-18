@@ -33,16 +33,16 @@ public partial class TrashCompactor : Node2D{
     public Dictionary<byte,Trash> SpawnedTrash = new Dictionary<byte, Trash>();
     public override void _Ready(){
         Trash = new PackedScene[]{
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Bottle.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Cone.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Box.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Crate.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Barrel.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Girder.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Tire.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/Safe.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/TrashSportBall.tscn"),
-            GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Trash/TrashPlayerBall.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Bottle.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Cone.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Box.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Crate.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Barrel.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Girder.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Tire.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/Safe.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/TrashSportBall.tscn"),
+            GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Trash/TrashPlayerBall.tscn"),
         };
     }
 

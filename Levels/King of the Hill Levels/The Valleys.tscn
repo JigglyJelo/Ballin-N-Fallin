@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://bms4goxydlbip"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_vaua1"]
-[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_mbdi5"]
-[ext_resource type="PackedScene" uid="uid://baf3theg36lvb" path="res://Source/Scenes/Object Scenes/Mode Stuff/King of the Hill/KothZone.tscn" id="3_k3ny1"]
+[ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Source/Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_mbdi5"]
+[ext_resource type="PackedScene" uid="uid://baf3theg36lvb" path="res://Source/Scenes/Mode Stuff/King of the Hill/KothZone.tscn" id="3_k3ny1"]
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="4_gly1u"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="5_xmy0c"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="6_bn86v"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="7_wuq4t"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="7_wuq4t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ois1q"]
 size = Vector2(7104, 3680)

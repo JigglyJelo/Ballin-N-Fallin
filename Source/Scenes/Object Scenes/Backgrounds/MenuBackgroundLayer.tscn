@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cofy74vo0cowt"]
-
-[ext_resource type="PackedScene" uid="uid://s1fupi1cythv" path="res://Source/Scenes/Object Scenes/Backgrounds/MenuBackground.tscn" id="2_f1rl7"]
-
-[node name="BackgroundLayer" type="CanvasLayer"]
-process_mode = 3
-follow_viewport_enabled = true
-
-[node name="Background" parent="." instance=ExtResource("2_f1rl7")]

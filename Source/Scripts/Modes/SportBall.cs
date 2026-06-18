@@ -11,7 +11,7 @@ public partial class SportBall : Node{
     public override void _Ready(){
         Rb = GetNode<InterpolatedBody>("Ball");
 		Smoother = GetNode<Node2D>("Smoothing2D");
-		Smoother.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/" + Mode.EnumToString(Game.CurrentMode) + "/" + Mode.EnumToString(Game.CurrentMode) + "Sprites.tscn").Instantiate());
+		Smoother.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/" + Mode.EnumToString(Game.CurrentMode) + "/" + Mode.EnumToString(Game.CurrentMode) + "Sprites.tscn").Instantiate());
 		shadingSprite = GetNode<Sprite2D>("Smoothing2D/Sprites/Shading");
 		Mode.AddCameraTarget(Smoother);
     }

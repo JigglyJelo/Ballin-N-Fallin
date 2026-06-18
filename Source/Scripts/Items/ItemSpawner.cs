@@ -15,7 +15,7 @@ public partial class ItemSpawner : Sprite2D{
 		SpawnerId = TotalSpawners;
 		TotalSpawners++;
 		Texture = null;
-		if(itemBoxScene == null) itemBoxScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Items/ItemBox.tscn");
+		if(itemBoxScene == null) itemBoxScene = GD.Load<PackedScene>("res://Source/Scenes/Items/ItemBox.tscn");
 		if(Online.IsHost()) spawnTime = Game.Random.Next(3,13);
 		breakSound = GetNode<AudioStreamPlayer2D>("SFX");
 		float zoomScale = 1 + (1-(GetParent() as Level).CameraZoom);

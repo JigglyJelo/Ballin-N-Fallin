@@ -18,7 +18,7 @@ public partial class Survival : Mode{
 
         //Endless Solo
         if(Game.TotalPlayers == 1){ 
-            AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Survival/SurvivalHUD.tscn").Instantiate());
+            AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Survival/SurvivalHUD.tscn").Instantiate());
         }
         isScoreMode = true;
         Scores = new float[Game.MAX_PLAYERS];

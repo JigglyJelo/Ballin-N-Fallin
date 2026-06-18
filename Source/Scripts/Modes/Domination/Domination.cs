@@ -18,7 +18,7 @@ public partial class Domination : Mode, IModeStartEvent{
 		base._Ready();
         Game.CurrentMode = Mode.GameMode.Domination;
         Instructions = "Control the zones";
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         isScoreMode = true;
         Scores = new float[Game.TotalPlayers];
         TopScore = 0;

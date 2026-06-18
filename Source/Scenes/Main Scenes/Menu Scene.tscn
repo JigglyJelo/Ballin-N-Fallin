@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://btq4qp4fvqyrs" path="res://Assets/SFX/Menu/confirm.ogg" id="5_8g3dp"]
 [ext_resource type="AudioStream" uid="uid://sek7s07hype1" path="res://Assets/SFX/Menu/back.ogg" id="6_ulqei"]
 [ext_resource type="AudioStream" uid="uid://c4dupxxcy32up" path="res://Assets/SFX/Menu/keypress-017.ogg" id="7_pywyu"]
-[ext_resource type="PackedScene" uid="uid://s1fupi1cythv" path="res://Source/Scenes/Object Scenes/Backgrounds/MenuBackground.tscn" id="8_8odrv"]
+[ext_resource type="PackedScene" uid="uid://s1fupi1cythv" path="res://Source/Scenes/Backgrounds/MenuBackground.tscn" id="8_8odrv"]
 [ext_resource type="AudioStream" uid="uid://byp56obcr85mg" path="res://Assets/SFX/Menu/gun_cocking.ogg" id="8_eprgt"]
 [ext_resource type="AudioStream" uid="uid://cf7uht76mpgh7" path="res://Assets/SFX/bad.ogg" id="8_xtfaq"]
 

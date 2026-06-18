@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3 uid="uid://wyun4hyflt3x"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/OnlineMenu.cs" id="1_sh81n"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_5jqju"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_t7sip"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="5_hx7j2"]
+
+[node name="OnlineMenu" type="Node2D"]
+position = Vector2(-480, -270)
+script = ExtResource("1_sh81n")
+
+[node name="UsernameEntry" type="LineEdit" parent="."]
+offset_left = -588.0
+offset_top = -721.0
+offset_right = 1556.0
+offset_bottom = -447.0
+theme = ExtResource("5_hx7j2")
+placeholder_text = "Enter Username"
+alignment = 1
+max_length = 15
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_t7sip")]
+position = Vector2(2230, 1240)
+
+[node name="Selections" type="Node2D" parent="."]
+position = Vector2(-400, 0)
+
+[node name="HostButton" type="Polygon2D" parent="Selections"]
+position = Vector2(0, 188)
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(520, -520, 520, 520, -520, 520, -520, -520)
+
+[node name="Outline" type="Line2D" parent="Selections/HostButton"]
+points = PackedVector2Array(-530, -530, 530, -530, 530, 530, -530, 530)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="HostText" type="Label" parent="Selections/HostButton"]
+offset_left = -540.0
+offset_top = 280.0
+offset_right = 540.0
+offset_bottom = 520.0
+text = "Host Lobby"
+label_settings = ExtResource("3_5jqju")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="JoinButton" type="Polygon2D" parent="Selections"]
+position = Vector2(0, 188)
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(1240, -520, 1240, 520, 2280, 520, 2280, -520)
+
+[node name="Outline" type="Line2D" parent="Selections/JoinButton"]
+points = PackedVector2Array(1240, -530, 1240, 530, 2290, 530, 2290, -530)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="JoinText" type="Label" parent="Selections/JoinButton"]
+offset_left = 1205.0
+offset_top = 242.0
+offset_right = 2285.0
+offset_bottom = 482.0
+text = "Join Lobby"
+label_settings = ExtResource("3_5jqju")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="DirectButton" type="Polygon2D" parent="Selections"]
+position = Vector2(0, 188)
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(1880, 660, 1880, 890, -120, 890, -120, 660)
+
+[node name="Outline" type="Line2D" parent="Selections/DirectButton"]
+points = PackedVector2Array(1890, 650, 1890, 900, -130, 900, -130, 650)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="DirectText" type="Label" parent="Selections/DirectButton"]
+offset_left = 187.0
+offset_top = 656.0
+offset_right = 1573.0
+offset_bottom = 896.0
+text = "Direct connect"
+label_settings = ExtResource("3_5jqju")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

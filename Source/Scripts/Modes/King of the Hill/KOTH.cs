@@ -19,7 +19,7 @@ public partial class KOTH : Mode{
         Scores = new float[Game.MAX_PLAYERS];
         Game.CurrentMode = Mode.GameMode.KingOfTheHill;
         Instructions = "Stay in the zone for " + TotalScore + " seconds";
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         isScoreMode = true;
         TopScore = 0;
 	}

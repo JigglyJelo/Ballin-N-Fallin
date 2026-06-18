@@ -32,7 +32,7 @@ public partial class OnlineLobby : Node{
         Game.GameNode.Multiplayer.PeerConnected += PeerConnected;
         Game.GameNode.Multiplayer.PeerDisconnected += PeerDisconnected;
         Game.GameNode.Multiplayer.ConnectedToServer += ConnectedToServer;
-        PackedScene playerTextScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/OnlinePlayerText.tscn");
+        PackedScene playerTextScene = GD.Load<PackedScene>("res://Source/Scenes/Menus/Online/OnlinePlayerText.tscn");
         for(int i = 0; i < playerTexts.Length; i++){
             OnlinePlayerText playerText = playerTextScene.Instantiate<OnlinePlayerText>();
             playerText.Name = "Player " + (i+1) + " Text";
@@ -129,7 +129,7 @@ public partial class OnlineLobby : Node{
                 else FailHostSetup();
                 break;
             case Online.NetworkType.Steam:
-                Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
+                Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
                 AddChild(steamSetupNode);
                 steamSetupNode.Call("host_lobby");
                 CreatePingGetter();
@@ -149,7 +149,7 @@ public partial class OnlineLobby : Node{
     }
 
     public void JoinedLobby(){
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/LobbySettingsMenu.tscn").Instantiate<LobbySettingsMenu>());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/Online/LobbySettingsMenu.tscn").Instantiate<LobbySettingsMenu>());
         LobbySettingsMenu = GetNode<LobbySettingsMenu>("LobbySettingsMenu");
         banButton = GetNode<Sprite2D>("PlayerTexts/HostPlayerOptions/BanButton");
         UpdatePlayerTexts();
@@ -171,7 +171,7 @@ public partial class OnlineLobby : Node{
                 joinSuccess = NoraySetup.NorayJoin();
                 break;
             case Online.NetworkType.Steam:
-                Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
+                Node steamSetupNode = GD.Load<PackedScene>("res://Source/Scenes/Menus/Online/SteamMultiplayerPeerSetup.tscn").Instantiate();
                 AddChild(steamSetupNode);
                 steamSetupNode.Call("join_lobby", LobbyID);
                 return;
@@ -338,7 +338,7 @@ public partial class OnlineLobby : Node{
 
     private void CreatePingGetter(){
         if(Game.GameNode.GetNodeOrNull("PingGetter") == null){
-            PingGetter pingNode = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/Online/PingGetter.tscn").Instantiate<PingGetter>();
+            PingGetter pingNode = GD.Load<PackedScene>("res://Source/Scenes/Menus/Online/PingGetter.tscn").Instantiate<PingGetter>();
             Game.GameNode.AddChild(pingNode);
             Game.GameNode.MoveChild(pingNode,0);
         }

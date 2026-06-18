@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://q3dk6sixm7gh"]
 
 [ext_resource type="PackedScene" uid="uid://dqswlrmdevp58" path="res://Levels/_Base Levels/Shell.tscn" id="1_6uec7"]
-[ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Source/Scenes/Object Scenes/Mode Stuff/Domination/DominationZone.tscn" id="6_o8axa"]
+[ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Source/Scenes/Mode Stuff/Domination/DominationZone.tscn" id="6_o8axa"]
 
 [node name="Level" instance=ExtResource("1_6uec7")]
 

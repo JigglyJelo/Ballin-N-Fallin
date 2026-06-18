@@ -22,7 +22,7 @@ public partial class GolfHUD : Node{
 		if(Game.Players[0].Inventory.Item == null){
 			timer += (float)delta;
 			if(Input.IsActionJustPressed("Item1") && Game.TotalPlayers == 1 && !SoloGolfItemMenu.InMenu && timer >= lockout){
-				AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Golf/SoloGolfItemMenu/SoloGolfItemMenu.tscn").Instantiate());
+				AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Golf/SoloGolfItemMenu/SoloGolfItemMenu.tscn").Instantiate());
 				SoloGolfItemMenu.InMenu = true;
 				timer = 0;
 			}

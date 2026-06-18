@@ -18,7 +18,7 @@ public partial class TargetTest : Mode, IModeStartEvent{
         PlayerScores = new int[Game.TotalPlayers];
         Game.CurrentMode = Mode.GameMode.TargetTest;
         Instructions = "Land in the zones and get " + TotalScore + " points";
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         isScoreMode = true;
         TopScore = 0;
 	}

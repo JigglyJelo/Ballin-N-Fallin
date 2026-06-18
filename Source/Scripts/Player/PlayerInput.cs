@@ -35,7 +35,7 @@ public partial class PlayerInput{
 		if(Input.IsActionJustPressed("Item" + InputId)) player.Inventory.ItemButtonPressed();
 		if(Input.IsActionJustPressed("Start" + InputId)){
 			PauseMenu.Pauser = player.Id;
-			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/PauseMenu.tscn").Instantiate());
+			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/PauseMenu.tscn").Instantiate());
 		}
 
 		if(vibrationTimer > 0) vibrationTimer -= delta;
@@ -67,7 +67,7 @@ public partial class PlayerInput{
 		if(player.Inventory.Item != null && Input.IsActionJustReleased("Item Mouse") && !player.Visuals.ItemRouletteAnimation.Visible) player.Inventory.ItemButtonPressed();
 		if(Input.IsActionPressed("Pause Keyboard")){
 			PauseMenu.Pauser = player.Id;
-			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/PauseMenu.tscn").Instantiate());
+			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/PauseMenu.tscn").Instantiate());
 		}
 
 		void MouseAiming(){

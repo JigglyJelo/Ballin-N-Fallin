@@ -22,7 +22,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
         Par = GetNode<Level>("Level").LevelUnit;
         FinishedPlayerStrokes = new sbyte[Game.MAX_PLAYERS];
         for (int i = 0; i < FinishedPlayerStrokes.Length; i++) FinishedPlayerStrokes[i] = sbyte.MaxValue;
-        if (Game.TotalPlayers == 1) AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Golf/GolfHud.tscn").Instantiate());
+        if (Game.TotalPlayers == 1) AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Golf/GolfHud.tscn").Instantiate());
         //else foreach(Player player in Game.Players) player.Invulnerable = true; In player spawn function now in level class
         if (GolfCup.IsCup) GolfCup.HolePars.Add(Par);
         Scores = new float[Game.MAX_PLAYERS];

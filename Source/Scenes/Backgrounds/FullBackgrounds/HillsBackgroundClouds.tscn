@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://de4f2l043u44x"]
+
+[ext_resource type="PackedScene" uid="uid://gry0r2s1m3ge" path="res://Source/Scenes/Backgrounds/BackgroundTemplate.tscn" id="1_lxvqr"]
+[ext_resource type="PackedScene" uid="uid://ck6hegmlr65da" path="res://Source/Scenes/Backgrounds/BackgroundElements/Clouds.tscn" id="2_jfulk"]
+[ext_resource type="Texture2D" uid="uid://iow3ctv8od1c" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/Hills/Hills1Back.png" id="3_pko7q"]
+[ext_resource type="Texture2D" uid="uid://duwum7ynpdusn" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Front/Hills/Hills1.png" id="4_3l4ey"]
+
+[node name="Background" instance=ExtResource("1_lxvqr")]
+
+[node name="Clouds" parent="." index="1" instance=ExtResource("2_jfulk")]
+
+[node name="Back" type="Node2D" parent="BackgroundLayers" index="0"]
+
+[node name="Top" type="Sprite2D" parent="BackgroundLayers/Back" index="0"]
+position = Vector2(0, 874)
+scale = Vector2(13.333, 13.333)
+texture = ExtResource("3_pko7q")
+centered = false
+
+[node name="Bot" type="Polygon2D" parent="BackgroundLayers/Back" index="1"]
+color = Color(0.92549, 0.92549, 0.92549, 1)
+polygon = PackedVector2Array(0, 1340, 3840, 1340, 3840, 1598, 0, 1598)
+
+[node name="Front" type="Node2D" parent="BackgroundLayers" index="1"]
+
+[node name="Top" type="Sprite2D" parent="BackgroundLayers/Front" index="0"]
+position = Vector2(0, 1360)
+scale = Vector2(2.667, 2.667)
+texture = ExtResource("4_3l4ey")
+centered = false
+
+[node name="Bot" type="Polygon2D" parent="BackgroundLayers/Front" index="1"]
+color = Color(0.847059, 0.847059, 0.847059, 1)
+polygon = PackedVector2Array(0, 1656, 3840, 1656, 3840, 2160, 0, 2160)

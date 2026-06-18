@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbknglccp1gil"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Modes/SportBall.cs" id="1_l6g2k"]
+[ext_resource type="Script" path="res://Source/Scripts/InterpolatedBody.cs" id="2_ym441"]
+[ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Source/Scenes/Particles/Shadow.tscn" id="4_o4bjo"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4us5k"]
+friction = 0.5
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wcv7a"]
+radius = 192.0
+
+[node name="SportBall" type="Node2D"]
+script = ExtResource("1_l6g2k")
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+
+[node name="Ball" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Ball", "Bump"]]
+mass = 1.5
+physics_material_override = SubResource("PhysicsMaterial_4us5k")
+gravity_scale = 0.75
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource("2_ym441")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_wcv7a")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Ball"]
+remote_path = NodePath("../../Shadow")
+update_rotation = false
+update_scale = false
+
+[node name="Shadow" parent="." instance=ExtResource("4_o4bjo")]
+widthMultiplier = 2.0
+
+[connection signal="body_entered" from="Ball" to="Ball" method="_on_body_entered"]

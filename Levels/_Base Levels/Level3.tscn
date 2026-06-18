@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://1eyv3h661uqs"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_xi1ms"]
-[ext_resource type="PackedScene" uid="uid://bhywldkplxcw3" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/DiagonalCheckerboard.tscn" id="2_iwnaj"]
+[ext_resource type="PackedScene" uid="uid://bhywldkplxcw3" path="res://Source/Scenes/Backgrounds/FullBackgrounds/DiagonalCheckerboard.tscn" id="2_iwnaj"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_yrk4j"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_oaraf"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_to3oq"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_to3oq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kaeo2"]
 size = Vector2(4864, 2688)
