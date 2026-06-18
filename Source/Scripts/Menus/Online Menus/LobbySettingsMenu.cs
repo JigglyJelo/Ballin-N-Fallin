@@ -63,7 +63,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		}
 		void createColorMenu(){
 			InColorMenu = true;
-			AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/ColorMenu.tscn").Instantiate());
+			AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/PlayerSettingsMenu/PlayerSettingsMenu.tscn").Instantiate());
 		}
 		bool hoveredOverColorText(){
 			Vector2 mousePosition = colorText.GetLocalMousePosition();
@@ -202,7 +202,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 				case 5:
 					OnlineLobby.ShowLobby(false);
 					ModeMenu.ModeToggleMenu = true;
-					GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/ModeMenu.tscn").Instantiate());		
+					GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());		
 					break;
 				case 7:
 					if(Tour.IsTour){
@@ -212,7 +212,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 					}else{
 						ModeMenu.ModeToggleMenu = false;
 						OnlineLobby.ShowLobby(false);
-						GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/ModeMenu.tscn").Instantiate());		
+						GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());		
 					}
 					break;
 			}

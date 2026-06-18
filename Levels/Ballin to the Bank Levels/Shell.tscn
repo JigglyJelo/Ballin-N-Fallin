@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5oq8tebubl7l"]
 
 [ext_resource type="PackedScene" uid="uid://dqswlrmdevp58" path="res://Levels/_Base Levels/Shell.tscn" id="1_o7270"]
-[ext_resource type="PackedScene" uid="uid://dpetd5su5wr8n" path="res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/CoinSpawner.tscn" id="2_72uay"]
-[ext_resource type="PackedScene" uid="uid://73lg8k8dvblk" path="res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/Piggy.tscn" id="3_wwbgi"]
+[ext_resource type="PackedScene" uid="uid://dpetd5su5wr8n" path="res://Source/Scenes/Mode Stuff/Ballin to the Bank/CoinSpawner.tscn" id="2_72uay"]
+[ext_resource type="PackedScene" uid="uid://73lg8k8dvblk" path="res://Source/Scenes/Mode Stuff/Ballin to the Bank/Piggy.tscn" id="3_wwbgi"]
 
 [node name="Level" instance=ExtResource("1_o7270")]
 

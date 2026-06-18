@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://blvbwis3142q8"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_2tfso"]
-[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Object Scenes/Level Stuff/DeathZone.tscn" id="2_22bmg"]
-[ext_resource type="PackedScene" uid="uid://b2ydssn5bu2oi" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/Cutouts.tscn" id="2_ays8c"]
+[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Level Stuff/DeathZone.tscn" id="2_22bmg"]
+[ext_resource type="PackedScene" uid="uid://b2ydssn5bu2oi" path="res://Source/Scenes/Backgrounds/FullBackgrounds/Cutouts.tscn" id="2_ays8c"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_e34q5"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_d0iyf"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_d0iyf"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_upu38"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_snlv5"]

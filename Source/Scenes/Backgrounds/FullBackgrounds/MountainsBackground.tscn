@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3 uid="uid://c67evamjga26g"]
+
+[ext_resource type="PackedScene" uid="uid://gry0r2s1m3ge" path="res://Source/Scenes/Backgrounds/BackgroundTemplate.tscn" id="1_b6qqi"]
+[ext_resource type="PackedScene" uid="uid://ck6hegmlr65da" path="res://Source/Scenes/Backgrounds/BackgroundElements/Clouds.tscn" id="2_ir8gv"]
+[ext_resource type="PackedScene" uid="uid://cl8q23tlnfw1k" path="res://Source/Scenes/Backgrounds/BackgroundElements/Mount1.tscn" id="4_5j3xh"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="4_gg03h"]
+[ext_resource type="Texture2D" uid="uid://day2tkuhk8i43" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Front/Hills/HillsQuarter.png" id="5_uwds6"]
+
+[node name="Background" instance=ExtResource("1_b6qqi")]
+
+[node name="Clouds" parent="." index="1" instance=ExtResource("2_ir8gv")]
+
+[node name="MountainBack" type="Node2D" parent="BackgroundLayers" index="0"]
+
+[node name="B" type="Polygon2D" parent="BackgroundLayers/MountainBack" index="0"]
+color = Color(0.631373, 0.631373, 0.631373, 1)
+polygon = PackedVector2Array(11, 1280, 0, 1280, 0, 1806, 3840, 1806, 3840, 1279, 3330, 860, 3209, 798, 3065, 837, 3054, 837, 3036, 830, 2940, 765, 2869, 712, 2849, 703, 2832, 696, 2810, 688, 2741, 687, 2638, 721, 2201, 1116, 1395, 591, 192, 1263)
+script = ExtResource("4_gg03h")
+stroke_color = Color(0.631373, 0.631373, 0.631373, 1)
+
+[node name="L" type="Polygon2D" parent="BackgroundLayers/MountainBack" index="1"]
+color = Color(0.882353, 0.882353, 0.882353, 1)
+polygon = PackedVector2Array(11, 1280, 108, 1233, 405, 1116, 709, 971, 952, 835, 1137, 717, 1312, 615, 1334, 606, 1395, 591, 1313, 705, 1277, 744, 1187, 836, 994, 976, 792, 1089, 467, 1207, 193, 1263)
+script = ExtResource("4_gg03h")
+stroke_color = Color(0.882353, 0.882353, 0.882353, 1)
+
+[node name="M" type="Polygon2D" parent="BackgroundLayers/MountainBack" index="2"]
+color = Color(0.882353, 0.882353, 0.882353, 1)
+polygon = PackedVector2Array(1978, 1179, 2070, 1182, 2120, 1186, 2180, 1186, 2260, 1166, 2307, 1150, 2372, 1114, 2504, 965, 2655, 730, 2657, 727, 2666, 719, 2731, 688, 2740, 687, 2758, 682, 2740, 682, 2716, 684, 2601, 714, 2566, 751, 2405, 908, 2289, 1020, 2226, 1088, 2201, 1116)
+script = ExtResource("4_gg03h")
+stroke_color = Color(0.882353, 0.882353, 0.882353, 1)
+stroke_width = 1.0
+
+[node name="R" type="Polygon2D" parent="BackgroundLayers/MountainBack" index="3"]
+color = Color(0.882353, 0.882353, 0.882353, 1)
+polygon = PackedVector2Array(3209, 798, 3205, 795, 3177, 792, 3151, 792, 3124, 805, 3106, 814, 3091, 822, 3075, 833, 3062, 837, 3098, 833, 3113, 827, 3166, 812)
+script = ExtResource("4_gg03h")
+stroke_color = Color(0.882353, 0.882353, 0.882353, 1)
+stroke_width = 1.0
+stroke_sharp_limit = 0.0
+
+[node name="Mountains" type="Node2D" parent="BackgroundLayers" index="1"]
+modulate = Color(0.784314, 0.784314, 0.784314, 1)
+
+[node name="1" parent="BackgroundLayers/Mountains" index="0" instance=ExtResource("4_5j3xh")]
+position = Vector2(544, 1435)
+rotation = -0.120428
+scale = Vector2(1.667, 1.667)
+
+[node name="2" parent="BackgroundLayers/Mountains" index="1" instance=ExtResource("4_5j3xh")]
+position = Vector2(1799, 1550)
+rotation = 0.120428
+scale = Vector2(-1, 1)
+
+[node name="3" parent="BackgroundLayers/Mountains" index="2" instance=ExtResource("4_5j3xh")]
+position = Vector2(3282, 1233)
+rotation = 0.120428
+scale = Vector2(1.667, 2.5)
+
+[node name="Hills" type="Node2D" parent="BackgroundLayers" index="2"]
+modulate = Color(0.882353, 0.882353, 0.882353, 1)
+
+[node name="Top" type="Sprite2D" parent="BackgroundLayers/Hills" index="0"]
+texture_repeat = 2
+position = Vector2(0, 1642)
+scale = Vector2(2, 2)
+texture = ExtResource("5_uwds6")
+centered = false
+region_enabled = true
+region_rect = Rect2(533, 1, 1920, 73)
+
+[node name="Bot" type="Polygon2D" parent="BackgroundLayers/Hills" index="1"]
+polygon = PackedVector2Array(0, 1785, 3840, 1785, 3840, 2160, 0, 2160)

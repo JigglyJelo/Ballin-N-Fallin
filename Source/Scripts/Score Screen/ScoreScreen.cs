@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public partial class ScoreScreen : CanvasLayer{
 	//Score screen variables
 	public static Vector2 BackgroundStartingPosition;
-	private readonly PackedScene endScreenScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Score Screen/PlayerEndscreenResult.tscn");
+	private readonly PackedScene endScreenScene = GD.Load<PackedScene>("res://Source/Scenes/Score Screen/PlayerEndscreenResult.tscn");
 	private EndscreenResult[] playerResults = new EndscreenResult[Game.TotalPlayers];
 	private int playerScoresDone = 0;
 	private Label topText,winnerText;
@@ -123,7 +123,7 @@ public partial class ScoreScreen : CanvasLayer{
 						//Tour.PrepareTour();
 						//SceneTransitioner.RpcStartNextRound((byte)Game.CurrentMode,Game.CurrentLevelName,Game.CurrentFolderPath);
 					}else{
-						AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/ScoreScreenMenu.tscn").Instantiate<ScoreScreenMenu>());
+						AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ScoreScreenMenu.tscn").Instantiate<ScoreScreenMenu>());
 					}
 				}else{
 					SceneTransitioner.RpcStartNextRound((byte)nextMode,Game.CurrentLevelName,Game.CurrentFolderPath);

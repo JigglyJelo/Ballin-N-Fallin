@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://db6t7s74qmr61"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/DirectConnectMenu.cs" id="1_7ghss"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="2_evryc"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_rl4n2"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_mxl7y"]
+
+[node name="Online Menu" type="Node2D"]
+script = ExtResource("1_7ghss")
+
+[node name="IPEntry" type="LineEdit" parent="."]
+offset_left = -1072.0
+offset_top = 470.0
+offset_right = 1072.0
+offset_bottom = 744.0
+theme = ExtResource("2_evryc")
+placeholder_text = "Enter IP Address"
+alignment = 1
+max_length = 50
+
+[node name="PortEntry" type="LineEdit" parent="."]
+offset_left = -1072.0
+offset_top = 758.0
+offset_right = 1072.0
+offset_bottom = 1032.0
+theme = ExtResource("2_evryc")
+placeholder_text = "Enter Port"
+alignment = 1
+max_length = 5
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="Host200" type="Label" parent="Selections"]
+offset_left = -251.0
+offset_top = -483.0
+offset_right = 255.0
+offset_bottom = -249.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(253, 117)
+text = "Host"
+label_settings = ExtResource("3_rl4n2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Join200" type="Label" parent="Selections"]
+offset_left = -236.0
+offset_top = 75.0
+offset_right = 232.0
+offset_bottom = 309.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(234, 117)
+text = "Join"
+label_settings = ExtResource("3_rl4n2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_mxl7y")]
+position = Vector2(1750, 970)

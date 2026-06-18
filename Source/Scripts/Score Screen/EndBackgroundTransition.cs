@@ -10,7 +10,7 @@ public partial class EndBackgroundTransition : CanvasLayer{
 		Tween musicTween = GetTree().CreateTween();
 		musicTween.TweenProperty(music,"volume_db",-60,0.75);
 		//Fade in Background
-		Game.GameNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Backgrounds/MenuBackgroundLayer.tscn").Instantiate());
+		Game.GameNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Backgrounds/MenuBackgroundLayer.tscn").Instantiate());
 		background = Game.GameNode.GetNode<Polygon2D>("BackgroundLayer/Background");
 		background.SelfModulate = Game.CLEAR;
 		CanvasLayer bgLayer = background.GetParent<CanvasLayer>();

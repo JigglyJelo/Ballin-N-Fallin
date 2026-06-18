@@ -5,6 +5,7 @@ using System.Linq;
 public partial class PlayerMenu : Node2D{
 	private Label topText,backButtonText;
 	private Polygon2D backPolygon;
+	private PackedScene playerSettingsMenuScene = GD.Load<PackedScene>("res://Source/Scenes/Menus/PlayerSettingsMenu/PlayerSettingsMenu.tscn");
 	public static List<Color> selectedColors; //Keeps track of what colors are currently selected so no repeats
 	public static List<PlayerSettingsMenu> SettingMenus = new List<PlayerSettingsMenu>();
 
@@ -86,7 +87,7 @@ public partial class PlayerMenu : Node2D{
 		if(Game.TotalPlayers == 0 && Input.IsActionJustPressed("Charge N Launch Mouse")){
 			SFX.Play("PlayerEnter");
 			Game.TotalPlayers++;
-			PlayerSettingsMenu newMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/PlayerSettingsMenu.tscn").Instantiate<PlayerSettingsMenu>();
+			PlayerSettingsMenu newMenu = playerSettingsMenuScene.Instantiate<PlayerSettingsMenu>();
 			//Game.InputIds.Add(1);
 			Game.PlayerDatas.Add(new PlayerData("PM",PlayerData.PlayerInputDevice.Mouse,1));
 			newMenu.Id = 1;
@@ -101,7 +102,7 @@ public partial class PlayerMenu : Node2D{
 				Game.TotalPlayers++;
 				//Game.InputIds.Add((byte)i);
 				Game.PlayerDatas.Add(new PlayerData("P"+(i+1),(PlayerData.PlayerInputDevice)i,1));
-				PlayerSettingsMenu newMenu = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Players/PlayerSettingsMenu.tscn").Instantiate<PlayerSettingsMenu>();
+				PlayerSettingsMenu newMenu = playerSettingsMenuScene.Instantiate<PlayerSettingsMenu>();
 				//newMenu.Id = (byte)Game.InputIds.Count;
 				newMenu.Id = Game.PlayerDatas.Count;
 				SettingMenus.Add(newMenu);

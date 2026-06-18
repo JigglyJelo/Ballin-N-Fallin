@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvn2hop1xx750"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Modes/Payload/PayloadTower.cs" id="1_yaj8w"]
+[ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Source/Scenes/Particles/Shadow.tscn" id="2_3cqji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3x2xv"]
+size = Vector2(512, 512)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5238a"]
+size = Vector2(640, 80)
+
+[node name="Payload" type="Node2D"]
+script = ExtResource("1_yaj8w")
+
+[node name="Physics" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Physics"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/Area2D"]
+shape = SubResource("RectangleShape2D_3x2xv")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Physics" groups=["Regain"]]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/StaticBody2D"]
+position = Vector2(0, 280)
+shape = SubResource("RectangleShape2D_5238a")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Zone" type="Polygon2D" parent="Visual"]
+color = Color(1, 1, 1, 0.501961)
+polygon = PackedVector2Array(-320, -256, 320, -256, 320, 256, -320, 256)
+
+[node name="Platform" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(-320, 256, 320, 256, 320, 320, -320, 320)
+
+[node name="Floor" type="Polygon2D" parent="Visual"]
+light_mask = 3
+polygon = PackedVector2Array(-320, 256, 320, 256, 320, 224, -320, 224)
+
+[node name="Shadow" parent="Visual" instance=ExtResource("2_3cqji")]
+position = Vector2(0, 322)
+widthMultiplier = 4.0
+
+[node name="PlatformLine" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-320, 320, 320, 320, 320, 256, -320, 256)
+closed = true
+width = 8.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="ZoneLine" type="Line2D" parent="Visual"]
+points = PackedVector2Array(320, 256, 320, -256, -320, -256, -320, 256)
+width = 8.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="FloorLine" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-320, 224, 320, 224)
+default_color = Color(0, 0, 0, 1)
+
+[connection signal="body_entered" from="Physics/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Physics/Area2D" to="." method="_on_area_2d_body_exited"]

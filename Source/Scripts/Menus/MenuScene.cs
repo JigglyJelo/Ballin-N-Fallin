@@ -4,7 +4,7 @@ using System;
 public partial class MenuScene : Node{
 	public static MenuScene MenuNode;
 	public AudioStreamPlayer Music;
-	public const string MENU_PATH = "res://Source/Scenes/Object Scenes/Menus/";
+	public const string MENU_PATH = "res://Source/Scenes/Menus/";
 	public static string MenuToLoad = "";
 	public static Node CurrentMenuNode = null;
 	public override void _Ready(){

@@ -89,7 +89,7 @@ public partial class ItemSynchronizer : Node{
 
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public void SpawnBall(byte playerId,byte id){
-        BallScript ball = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Items/Ball.tscn").Instantiate<BallScript>();
+        BallScript ball = GD.Load<PackedScene>("res://Source/Scenes/Items/Ball.tscn").Instantiate<BallScript>();
         ball.SetMultiplayerAuthority(1);
         ball.Player = Game.Players[playerId-1];
         ball.Name = "SpawnedItem" + id;

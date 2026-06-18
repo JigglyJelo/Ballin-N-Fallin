@@ -28,6 +28,13 @@ public partial class Online{
         set{buffer = Mathf.Clamp(value, 0f, 1f);} 
     }
 
+    public static PlayerData GetClientsPlayerData(){
+        foreach(PlayerData playerData in Game.PlayerDatas){
+            if(playerData.UUID == GetUUID()) return playerData;
+        }
+        return null;
+    }
+
     public static int GetUUID(){
         return Game.GameNode.Multiplayer.GetUniqueId();
     }

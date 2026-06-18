@@ -12,7 +12,7 @@ public abstract partial class TeamMode : Mode, IModeStartEvent{
         base._Ready();
         //Reset static variables
         WinningTeam = "";
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         isScoreMode = false;
     }
 

@@ -28,7 +28,7 @@ public abstract partial class Mode : Node{
         Finished = false;
         Positions = new byte[Game.MAX_PLAYERS];
         points = new byte[Game.MAX_PLAYERS];
-        if(!string.IsNullOrEmpty(Mode.ModeNode.Instructions)) AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        if(!string.IsNullOrEmpty(Mode.ModeNode.Instructions)) AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         GD.Print("P: " + Game.TotalPlayers);
     }
 
@@ -50,7 +50,7 @@ public abstract partial class Mode : Node{
         for(int i = 0; i < Game.MAX_PLAYERS; i++) Input.StopJoyVibration(i);
         for(int i = 0; i < positions.Length; i++) Positions[i] = positions[i];
         Tour.GameFinishedPoints(points,positions);
-        ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Score Screen/EndBackgroundTransition.tscn").Instantiate<CanvasLayer>());
+        ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Score Screen/EndBackgroundTransition.tscn").Instantiate<CanvasLayer>());
         if(ModeNode is IRoundEndedEvent roundEnd) roundEnd.OnRoundEnd();
     }
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -59,7 +59,7 @@ public abstract partial class Mode : Node{
         for(int i = 0; i < positions.Length; i++) Positions[i] = positions[i];
         for(int i = 0; i < Scores.Length; i++) Scores[i] = scores[i];
         Tour.GameFinishedPoints(points,positions);
-        ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Score Screen/EndBackgroundTransition.tscn").Instantiate<CanvasLayer>());
+        ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Score Screen/EndBackgroundTransition.tscn").Instantiate<CanvasLayer>());
     }
     /// <summary>Distributes points to players at the end of the round based on their performance</summary>
     protected abstract void SetPoints();

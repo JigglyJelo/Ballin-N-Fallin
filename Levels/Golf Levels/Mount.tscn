@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://bh7rl5iqm32bs"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_6ixva"]
-[ext_resource type="PackedScene" uid="uid://cqdnd2vlvyawg" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/ForestBackground.tscn" id="2_e5np4"]
+[ext_resource type="PackedScene" uid="uid://cqdnd2vlvyawg" path="res://Source/Scenes/Backgrounds/FullBackgrounds/ForestBackground.tscn" id="2_e5np4"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="2_od1ly"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="3_58ora"]
-[ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Source/Scenes/Object Scenes/Level Stuff/Sand.tscn" id="4_s2ts7"]
-[ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Source/Scenes/Object Scenes/Mode Stuff/Golf/GolfHole.tscn" id="5_b7t0i"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="3_58ora"]
+[ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Source/Scenes/Level Stuff/Sand.tscn" id="4_s2ts7"]
+[ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Source/Scenes/Mode Stuff/Golf/GolfHole.tscn" id="5_b7t0i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ltqiq"]
 size = Vector2(5760, 3232)

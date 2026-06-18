@@ -80,7 +80,7 @@ public partial class Player : Node2D{
 		flameParticles = Visuals.GetNode<CpuParticles2D>("HUD/FlameParticles");
 		blastParticles = GetNode<CpuParticles2D>("Particles/BlastZoneParticles");
 		popParticles = GetNode<CpuParticles2D>("Particles/PopParticles");
-		if(slamParticleScene == null) slamParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Particles/SlamParticles.tscn");
+		if(slamParticleScene == null) slamParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Particles/SlamParticles.tscn");
 		flameParticles.ZIndex = 1;
 		RbShape = GetNode<CollisionShape2D>("RigidBody2D/CollisionShape2D");
 
@@ -113,7 +113,7 @@ public partial class Player : Node2D{
 				}else{
 					if(Input.IsActionJustPressed("Start" + PlayerData.InputDevice) || (Game.UsingMouse() && Input.IsActionPressed("Pause Keyboard"))){
 						PauseMenu.Pauser = Id;
-						Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Menus/PauseMenu.tscn").Instantiate());
+						Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/PauseMenu.tscn").Instantiate());
 					}
 				}
 			}

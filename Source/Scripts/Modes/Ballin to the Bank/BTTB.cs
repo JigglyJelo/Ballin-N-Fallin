@@ -12,7 +12,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 	//But is seperate from normal coins so technically 256 floating coins and 256 dropped coins can both be on screen
     public Dictionary<byte,DroppedCoin> SpawnedDroppedCoins = new Dictionary<byte, DroppedCoin>();
 	private static List<CoinSpawner> coinSpawners;
-	private readonly static PackedScene DROPPED_COIN_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/DroppedCoin.tscn");
+	private readonly static PackedScene DROPPED_COIN_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Ballin to the Bank/DroppedCoin.tscn");
 	private float coinSpawnTimer;
 	private Vector2 coinScale;
 	private readonly Vector2 MIN_SCALE = new Vector2(0.05f,1);
@@ -36,7 +36,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 		base._Ready();
         Game.CurrentMode = Mode.GameMode.BallinToTheBank;
         Instructions = "Deposit $"+MoneyToWin;
-        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
+        AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         isScoreMode = true;
 		coinSpawners  = new List<CoinSpawner>();
 		foreach(Node node in Level.LevelNode.GetChildren()){
@@ -147,7 +147,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 		Godot.Collections.Array<Node> coinsToSpawn = coinPattern.GetChildren();
 		foreach(Node node in coinsToSpawn){
 			if(node is Coin coinTemplate){
-				Coin newCoin = GD.Load<PackedScene>("res://Source/Scenes/Object Scenes/Mode Stuff/Ballin to the Bank/Coin.tscn").Instantiate<Coin>();
+				Coin newCoin = GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Ballin to the Bank/Coin.tscn").Instantiate<Coin>();
 				//Set Id
 				HashSet<byte> keys = new HashSet<byte>(SpawnedCoins.Keys);
         		byte? newCoinId = ItemSynchronizer.GetUnusedItemId(keys);

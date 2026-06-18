@@ -1,11 +1,11 @@
 [gd_scene load_steps=16 format=3 uid="uid://cvaqcuymaoj2q"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_tjuey"]
-[ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Source/Scenes/Object Scenes/Mode Stuff/Race/FinishLine.tscn" id="2_kk2qc"]
-[ext_resource type="PackedScene" uid="uid://c67evamjga26g" path="res://Source/Scenes/Object Scenes/Backgrounds/FullBackgrounds/MountainsBackground.tscn" id="2_u1mgd"]
-[ext_resource type="PackedScene" uid="uid://bn403mgsuccm0" path="res://Source/Scenes/Object Scenes/Mode Stuff/Race/Checkpoint.tscn" id="3_xxjx5"]
+[ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Source/Scenes/Mode Stuff/Race/FinishLine.tscn" id="2_kk2qc"]
+[ext_resource type="PackedScene" uid="uid://c67evamjga26g" path="res://Source/Scenes/Backgrounds/FullBackgrounds/MountainsBackground.tscn" id="2_u1mgd"]
+[ext_resource type="PackedScene" uid="uid://bn403mgsuccm0" path="res://Source/Scenes/Mode Stuff/Race/Checkpoint.tscn" id="3_xxjx5"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_yq54d"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Object Scenes/Level Stuff/ItemSpawner.tscn" id="5_6mwx3"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_6mwx3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5taoj"]
 size = Vector2(5120, 2944)

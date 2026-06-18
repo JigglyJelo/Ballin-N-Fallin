@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://b6q6tdb01j16k"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Items/ItemBox.cs" id="1_aygkn"]
+[ext_resource type="Texture2D" uid="uid://bhdsmb7nockt" path="res://Assets/Sprites/Items/Item Box/ItemBox (1).png" id="2_qud6q"]
+[ext_resource type="Script" path="res://Source/Scripts/InterpolatedBody.cs" id="2_u8m82"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="3_uq1lb"]
+[ext_resource type="Texture2D" uid="uid://dsn3pmg0rfuf3" path="res://Assets/Sprites/Items/Item Box/QuestionMarkBlack.png" id="4_lwo8r"]
+[ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Source/Scenes/Particles/Shadow.tscn" id="6_xdwva"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mdwea"]
+friction = 0.75
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2l6w"]
+size = Vector2(210, 210)
+
+[node name="Item" type="Node"]
+script = ExtResource("1_aygkn")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Item Box"]]
+physics_material_override = SubResource("PhysicsMaterial_mdwea")
+script = ExtResource("2_u8m82")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
+remote_path = NodePath("../../Shadow")
+update_rotation = false
+update_scale = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_d2l6w")
+
+[node name="ItemBoxArea" type="Area2D" parent="RigidBody2D" groups=["Item Box"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/ItemBoxArea"]
+shape = SubResource("RectangleShape2D_d2l6w")
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+
+[node name="Visuals" type="Node2D" parent="Smoothing2D"]
+
+[node name="AntialiasedPolygon2D" type="Polygon2D" parent="Smoothing2D/Visuals"]
+texture_repeat = 3
+texture = ExtResource("2_qud6q")
+texture_offset = Vector2(100, 100)
+polygon = PackedVector2Array(-90, -100, 90, -100, 100, -90, 100, 90, 90, 100, -90, 100, -100, 90, -100, -90)
+script = ExtResource("3_uq1lb")
+stroke_color = Color(0.705882, 0, 1, 1)
+stroke_sharp_limit = 1000.0
+
+[node name="?" type="Sprite2D" parent="Smoothing2D/Visuals/AntialiasedPolygon2D"]
+scale = Vector2(2, 2)
+texture = ExtResource("4_lwo8r")
+
+[node name="Shadow" parent="." instance=ExtResource("6_xdwva")]
+widthMultiplier = 1.25
+
+[connection signal="body_entered" from="RigidBody2D/ItemBoxArea" to="." method="BodyEnteredSignal"]

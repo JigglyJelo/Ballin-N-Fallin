@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckx1p2l4jo13o"]
+
+[ext_resource type="PackedScene" uid="uid://gry0r2s1m3ge" path="res://Source/Scenes/Backgrounds/BackgroundTemplate.tscn" id="1_xe1ir"]
+[ext_resource type="Texture2D" uid="uid://bghxor1tgh7p7" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/Factory/MetalBG.png" id="2_q8c0d"]
+[ext_resource type="Texture2D" uid="uid://cgq2h1o7ygqxd" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Front/Factory/GirderTile.png" id="4_bgc0w"]
+
+[node name="Background" instance=ExtResource("1_xe1ir")]
+
+[node name="Polygon2D" type="Polygon2D" parent="BackgroundLayers" index="0"]
+texture_repeat = 2
+color = Color(0.784314, 0.784314, 0.784314, 1)
+texture = ExtResource("2_q8c0d")
+texture_scale = Vector2(1.25, 1.25)
+polygon = PackedVector2Array(0, 0, 3840, 0, 3840, 2160, 0, 2160)
+
+[node name="TGirder" type="Sprite2D" parent="BackgroundLayers" index="1"]
+self_modulate = Color(0.882353, 0.882353, 0.882353, 1)
+texture_repeat = 2
+position = Vector2(1920, 750)
+rotation = 1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("4_bgc0w")
+region_enabled = true
+region_rect = Rect2(148, 128, 148, 1920)
+
+[node name="LGirder" type="Sprite2D" parent="BackgroundLayers" index="2"]
+texture_repeat = 2
+position = Vector2(532, 1080)
+scale = Vector2(2, 2)
+texture = ExtResource("4_bgc0w")
+region_enabled = true
+region_rect = Rect2(148, 128, 148, 1080)
+
+[node name="RGirder" type="Sprite2D" parent="BackgroundLayers" index="3"]
+texture_repeat = 2
+position = Vector2(3308, 1080)
+scale = Vector2(2, 2)
+texture = ExtResource("4_bgc0w")
+region_enabled = true
+region_rect = Rect2(148, 128, 148, 1080)

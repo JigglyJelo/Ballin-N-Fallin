@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://dq5uc2keiahw0"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Modes/Survival/TrashBall.cs" id="1_7fr7w"]
+[ext_resource type="PhysicsMaterial" uid="uid://cl78t0kopdgd6" path="res://Source/Materials/PlayerPhysicsMaterial.tres" id="2_h5nlx"]
+[ext_resource type="Script" path="res://Source/Scripts/InterpolatedBody.cs" id="3_qmuh2"]
+[ext_resource type="Shape2D" uid="uid://mmicm5qifgge" path="res://Source/Materials/PlayerShape.tres" id="4_shrrm"]
+[ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="6_a3vkd"]
+[ext_resource type="Texture2D" uid="uid://dlm0ki33nhb7f" path="res://Assets/Sprites/Player/Ball31.png" id="6_jo2fx"]
+[ext_resource type="Texture2D" uid="uid://2n6tbh4lhy5d" path="res://Assets/Sprites/Player/190/BallLines.png" id="7_5jefe"]
+[ext_resource type="Texture2D" uid="uid://br0xolkmnp2kg" path="res://Assets/Sprites/Player/190/Outline.png" id="8_o1aty"]
+[ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Source/Scenes/Particles/Shadow.tscn" id="9_iowjq"]
+
+[node name="Ball" type="Node" groups=["Bump", "PlayerBall", "Trash"]]
+script = ExtResource("1_7fr7w")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." node_paths=PackedStringArray("VisualsNode") groups=["Bump", "PlayerBall", "Trash"]]
+physics_interpolation_mode = 1
+physics_material_override = ExtResource("2_h5nlx")
+gravity_scale = 2.0
+contact_monitor = true
+max_contacts_reported = 6
+linear_damp = 0.125
+angular_damp = 0.125
+script = ExtResource("3_qmuh2")
+VisualsNode = NodePath("../Smoothing2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = ExtResource("4_shrrm")
+
+[node name="ShadowRemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
+remote_path = NodePath("../../Shadow")
+update_rotation = false
+update_scale = false
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+
+[node name="BallSprite" type="Sprite2D" parent="Smoothing2D"]
+texture_repeat = 3
+scale = Vector2(3.015, 3.015)
+texture = ExtResource("6_jo2fx")
+region_enabled = true
+region_rect = Rect2(0, 62, 62, 62)
+
+[node name="Shading" type="Sprite2D" parent="Smoothing2D"]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("6_a3vkd")
+
+[node name="LineSprite" type="Sprite2D" parent="Smoothing2D"]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("7_5jefe")
+flip_h = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="Smoothing2D"]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("8_o1aty")
+
+[node name="Shadow" parent="." instance=ExtResource("9_iowjq")]
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_entered"]
