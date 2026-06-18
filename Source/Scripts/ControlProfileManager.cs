@@ -63,6 +63,15 @@ public static class ControlProfileManager{
         }
     }
 
+    public static void CreateProfile(string newName){
+        // Prevent duplicate names or overwriting "Default"
+        if(!Profiles.Contains(newName)){
+            Profiles.Add(newName);
+            // Saving an empty dictionary registers it in the file and defaults it to factory controls
+            SaveProfileData(newName, new Godot.Collections.Dictionary()); 
+        }
+    }
+
     public static Godot.Collections.Dictionary GetProfileData(string profileName){
         Variant defaultDict = new Godot.Collections.Dictionary();
         Variant data = Game.Save.GetValue("Controls", profileName, defaultDict);
