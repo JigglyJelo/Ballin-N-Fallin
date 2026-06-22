@@ -97,7 +97,12 @@ public partial class LevelMenu : VerticalMenu{
 	public override void MenuBack(){
 		SFX.Play("Back");
 		if(FoldersOpened.Count <= 1){
-			MenuScene.LoadMenu(lastMenu);
+			if(lastMenu == "ModeMenu" && Online.IsOnline){
+				MenuScene.MenuNode.AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "ModeMenu" + ".tscn").Instantiate<Node>());
+            	QueueFree();
+			}else{
+				MenuScene.LoadMenu(lastMenu);
+			}
 		}else{
 			FolderNavigation(false);
 		}

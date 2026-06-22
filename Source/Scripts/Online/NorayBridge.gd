@@ -11,7 +11,7 @@ var is_host: bool = false
 var max_players: int = 4
 var current_target_oid: String = ""
 
-var noray_address: String = "foxssake.studio"
+var noray_address: String = "127.0.0.1"
 var noray_port: int = 8890
 
 func _ready() -> void:
