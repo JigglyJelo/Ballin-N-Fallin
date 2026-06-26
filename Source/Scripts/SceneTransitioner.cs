@@ -81,7 +81,7 @@ public partial class SceneTransitioner : Node{
 		CanvasLayer backgroundLayer = Game.GameNode.GetNodeOrNull<CanvasLayer>("BackgroundLayer");
 		if(backgroundLayer != null){
 			MenuBackground background = backgroundLayer.GetNode<MenuBackground>("Background");
-			background.GlobalPosition = new Vector2(1920,1080);
+			background.GlobalPosition = Vector2.Zero;
 			backgroundLayer.Layer = 1;
 			backgroundLayer.FollowViewportEnabled = false;
 			backgroundLayer.Reparent(Game.GameNode);
