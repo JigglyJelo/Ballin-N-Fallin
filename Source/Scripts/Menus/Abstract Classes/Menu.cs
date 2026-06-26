@@ -12,7 +12,7 @@ public abstract partial class Menu : Node2D{
     /// <summary>The time in seconds to wait between accepting rapid mouse or stick inputs.</summary>
     public const float TIMEOUT = 0.2f;
     /// <summary>The deadzone threshold the joystick must pass to register a directional input.</summary>
-    public const float STICK_THRESHOLD = 0.5f;
+    public const float STICK_THRESHOLD = 0.3f;
 	protected float joystickTimer = TIMEOUT;
     private float mouseTimer = 0;
     /// <summary>The currently highlighted selection. Note: This is 1-indexed.</summary>
