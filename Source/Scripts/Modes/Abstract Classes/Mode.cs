@@ -168,12 +168,15 @@ public abstract partial class Mode : Node{
     public virtual void PlayerRespawned(Player player){
         player.Invulnerable = true;
     }
-    public virtual void OnPlayerEnterRegain(Player player) {
+    public virtual void OnPlayerEnterRegain(Player player){
         player.CanLaunch = true;
         player.CanSlam = true;
     }
-    public virtual void PlayerRegainCheck(Player player, float delta) {
-        //Default mode does nothing special during updates
+    public virtual void PlayerRegainCheck(Player player, float delta){
+        if(player.IsRegaining){
+            player.CanLaunch = true;
+            player.CanSlam = true;
+        }
     }
     public virtual float MoonAirTimeRequirement => 0.75f;
     public virtual string GetPlayerText(Player player){
