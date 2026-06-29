@@ -50,7 +50,7 @@ public partial class SportBall : Node{
 		}
     }
 
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.SportBall)]
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.ModeEvent)]
 	public void StartSpawnTween(){
 		Node2D sportBallSprite = Smoother.GetNode<Node2D>("Sprites");
         sportBallSprite.Scale = Vector2.Zero;
@@ -58,7 +58,7 @@ public partial class SportBall : Node{
 		scaleTween.TweenProperty(sportBallSprite,"scale",Vector2.One,0.125);
 	}
 
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]//Ordered, TransferChannel = (int)Online.TransferChannelEnum.SportBall
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]
 	private void SyncBall(byte[] ballData){
 		ushort update = BitConverter.ToUInt16(ballData, ballData.Length-2);
 		if(UnreliableManager.IsNewerRpc(UnreliableManager.UnreliableChannel.SportBall,update)){
@@ -73,7 +73,7 @@ public partial class SportBall : Node{
 		}
 	}
 
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]//Ordered, TransferChannel = (int)Online.TransferChannelEnum.SportBall
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]
 	private void SyncVelocity(byte[] velocityData){
 		ushort update = BitConverter.ToUInt16(velocityData, velocityData.Length-2);
 		if(UnreliableManager.IsNewerRpc(UnreliableManager.UnreliableChannel.SportBall,update)){

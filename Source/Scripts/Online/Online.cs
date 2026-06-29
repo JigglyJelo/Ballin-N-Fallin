@@ -160,8 +160,14 @@ public partial class Online{
     }
 
     public enum TransferChannelEnum : int{
-        Default = 0, SendLaunch, SendSlam, SuccessfulStomp, Item, PlayerText,
-        PlayerFlip, SportBall, LaunchParticle, SlamParticle, PopParticle, DeathParticle, BounceParticle, Trail,
+        Default = 0, 
+        SendLaunch, //For clients sending launch to server
+        SendSlam, //For clients sending slam to server
+        SuccessfulStomp, //For clients receiving a successful stomp from server
+        Item, //For clients sending their item usage to server
+        PlayerText, //For clients sending display player text to server
+        ModeEvent, //Optional channel for independent mode stuff (Sportball, BTTB Coins, etc)
+        PlayerFlip,  LaunchParticle, SlamParticle, PopParticle, DeathParticle, BounceParticle, Trail,//All for various visual effects
         PingGetter,SendHostPing, Chat
     }
 
