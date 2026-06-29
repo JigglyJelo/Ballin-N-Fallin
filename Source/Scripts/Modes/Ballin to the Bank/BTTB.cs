@@ -140,7 +140,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 		BTTB modeNode = Mode.ModeNode as BTTB;
 		modeNode.Rpc(nameof(modeNode.SpawnCoinPatternRpc),coinSpawnerIndex,coinPatternEnum);
 	}
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.ModeEvent)]
 	private void SpawnCoinPatternRpc(byte coinSpawnerIndex, byte coinPatternEnum){
 		int coinPatternIndex = CoinSpawner.EnumToIndex((CoinSpawner.CoinPattern)coinPatternEnum);
 		Node coinPattern = CoinSpawner.COIN_PATTERNS[coinPatternIndex].Instantiate();
@@ -175,7 +175,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 		BTTB modeNode = (BTTB)Mode.ModeNode;
 		modeNode.Rpc(nameof(modeNode.CoinCollectedRpc),coinId,playerId);
 	}
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.ModeEvent)]
 	private void CoinCollectedRpc(byte coinId,byte playerId){
 		SFX.Play("Coin");
 		Player player = Game.Players[playerId-1];
@@ -189,7 +189,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 	public void RpcSpawnDroppedCoins(Vector2 position, byte droppedCoinCount){
 		Rpc(nameof(SpawnDroppedCoinsRpc),position,droppedCoinCount);
 	}
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.ModeEvent)]
 	private void SpawnDroppedCoinsRpc(Vector2 position, byte droppedCoinCount){
 		Random droppedCoinRandom = new Random((int)(position.X*position.Y));
 		for(int i = 0; i < droppedCoinCount; i++){
@@ -223,7 +223,7 @@ public partial class BTTB : Mode, IModeStartEvent{
 		BTTB modeNode = (BTTB)Mode.ModeNode;
 		modeNode.Rpc(nameof(modeNode.DroppedCoinCollectedRpc),coinId,playerId);
 	}
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.ModeEvent)]
 	private void DroppedCoinCollectedRpc(byte coinId,byte playerId){
 		SFX.Play("Coin");
 		Player player = Game.Players[playerId-1];
@@ -231,7 +231,13 @@ public partial class BTTB : Mode, IModeStartEvent{
 		player.Visuals.ShowPlayerText();
 		RemoveDroppedCoin(coinId);
 	}
-	public static void RemoveDroppedCoin(byte coinId){
+
+	public static void RpcRemoveDroppedCoin(byte coinId){
+		BTTB modeNode = (BTTB)Mode.ModeNode;
+		modeNode.Rpc(nameof(modeNode.RemoveDroppedCoin),coinId);
+	}
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.ModeEvent)]
+	private static void RemoveDroppedCoin(byte coinId){
 		BTTB modeNode = (BTTB)Mode.ModeNode;
 		DroppedCoin coin = modeNode.SpawnedDroppedCoins[coinId];
         modeNode.SpawnedDroppedCoins.Remove(coinId);
