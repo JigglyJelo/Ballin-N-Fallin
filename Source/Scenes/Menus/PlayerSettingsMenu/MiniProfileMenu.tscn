@@ -18,6 +18,11 @@ closed = true
 width = 20.0
 default_color = Color(0, 0, 0, 1)
 
+[node name="Selections" type="Polygon2D" parent="."]
+clip_children = 1
+color = Color(1, 0.639216, 0.290196, 1)
+polygon = PackedVector2Array(-450, -383, 450, -383, 450, 333, -450, 333)
+
 [node name="TitleLabel" type="Label" parent="."]
 z_index = 1
 offset_left = -471.0
@@ -27,8 +32,6 @@ offset_bottom = -161.0
 scale = Vector2(0.5, 0.5)
 label_settings = ExtResource("4_lnkq4")
 horizontal_alignment = 1
-
-[node name="Selections" type="Node2D" parent="."]
 
 [node name="Keypad" parent="." instance=ExtResource("3_vyqqb")]
 visible = false
