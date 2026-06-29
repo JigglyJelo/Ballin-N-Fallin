@@ -45,10 +45,8 @@ public partial class PlayerSettingsMenu : Node2D{
 		}else{
 			Id = Game.PlayerDatas.FindIndex(player => player.UUID == Game.GameNode.Multiplayer.GetUniqueId())+1;
 		}
-
-		if(!Game.UsingMouse()){
-			profileLabel.Text = "Profile: " + Game.PlayerDatas[Id-1].ControlProfileName;
-		}else{
+		profileLabel.Text = GetDisplayName();
+		if(Game.UsingMouse()){
 			profileLabel.Visible = false;
 		}
 
@@ -95,8 +93,12 @@ public partial class PlayerSettingsMenu : Node2D{
 
 	private void HandleProfileSelected(string newProfile){
 		Game.PlayerDatas[Id-1].ControlProfileName = newProfile;
-		profileLabel.Text = "Profile: " + newProfile;
+		profileLabel.Text = GetDisplayName();
 		SwitchToColorMenu();
+	}
+
+	private string GetDisplayName(){
+		return Game.PlayerDatas[Id-1].ControlProfileName == ControlProfileManager.DEFAULT_PROFILE ? "Player " + Id : Game.PlayerDatas[Id-1].ControlProfileName;
 	}
 
 	private void HandleProfileCanceled(){
@@ -176,5 +178,6 @@ public partial class PlayerSettingsMenu : Node2D{
 				}
 				break;
 		}
+		profileLabel.Text = GetDisplayName();
 	}
 }

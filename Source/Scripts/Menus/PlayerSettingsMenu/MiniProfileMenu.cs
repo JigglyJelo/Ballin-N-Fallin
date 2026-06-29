@@ -6,9 +6,8 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	public Action OnCanceled;
 
 	private const float LABEL_X_POS = -1920f;
-    private const float LABEL_Y_POS = -800;
+    private const float LABEL_Y_POS = -400;
 	private const float LABEL_SPACING = 200;
-    private readonly Vector2 LABEL_SCALE = new Vector2(0.4f,0.4f);
 	private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn");
 
 	private Keypad keypadPopup;
@@ -29,6 +28,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		controlsMenu = GetNode<MiniControlsMenu>("MiniControlsMenu");
 		controlsMenu.Visible = false;
 		controlsMenu.OnCanceled += HandleControlsCanceled;
+		defaultFontSize = 0.4f;
 	}
 
 	public void Open(int inputId, string currentProfile){
@@ -80,7 +80,6 @@ public partial class MiniProfileMenu : ScrollableMenu{
 
 	private void RefreshProfileList(){
 		if(selectionsContainer == null) return;
-        selectionsContainer.Scale = LABEL_SCALE;
 		foreach(Node child in selectionsContainer.GetChildren()){
 			selectionsContainer.RemoveChild(child);
 			child.QueueFree();
@@ -94,7 +93,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		createLabel.Position = new Vector2(LABEL_X_POS, currentY);
 		selectionsContainer.AddChild(createLabel);
 		Selections.Add(createLabel);
-		currentY += LABEL_SPACING;
+		currentY += LABEL_SPACING * defaultFontSize;
 
 		foreach(string profile in ControlProfileManager.Profiles){
 			Label profileLabel = profileLabelScene.Instantiate<Label>();
@@ -102,7 +101,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 			profileLabel.Position = new Vector2(LABEL_X_POS, currentY);
 			selectionsContainer.AddChild(profileLabel);
 			Selections.Add(profileLabel);
-			currentY += LABEL_SPACING;
+			currentY += LABEL_SPACING * defaultFontSize;
 		}
 
 		totalSelections = Selections.Count;

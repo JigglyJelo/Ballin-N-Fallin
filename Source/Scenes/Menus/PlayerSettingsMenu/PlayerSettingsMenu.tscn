@@ -19,10 +19,10 @@ position = Vector2(0, -649)
 [node name="ProfileLabel" type="Label" parent="."]
 z_index = 1
 offset_left = -471.0
-offset_top = 341.0
+offset_top = -1018.0
 offset_right = 1377.0
-offset_bottom = 575.0
+offset_bottom = -784.0
 scale = Vector2(0.5, 0.5)
-text = "Profile: Default"
+text = "Player "
 label_settings = ExtResource("5_odugn")
 horizontal_alignment = 1
