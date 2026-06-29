@@ -10,7 +10,8 @@ public partial class PayloadTower : Node2D{
 	private byte[] distanceData = new byte[6];
 	private Color teamAColor,teamBColor;
 	public float Distance;
-	private const float SPEED = 300;
+	private const float SPEED = 400;
+	const float RETURN_SPEED_MULTIPLIER = 0.125f;
 	private float lineLength;
 
 	public override void _Ready(){
@@ -61,12 +62,12 @@ public partial class PayloadTower : Node2D{
 			}else if(teamAPlayers < teamBPlayers){
 				float playersWeight = (float)teamBPlayers/TeamMode.TeamBPlayerCount;
 				IncrementDistance(-fDelta*playersWeight);
-			}else if(teamAPlayers == 0 && teamBPlayers == 0){
-				const float RETURN_SPEED = 4;
-				if(Distance > 0.5f){
-					IncrementDistance(-fDelta/RETURN_SPEED);
-				}else if(Distance < 0.5f){
-					IncrementDistance(fDelta/RETURN_SPEED);
+			}else if(teamAPlayers == 0 && teamBPlayers == 0 && TeamMode.TeamAPlayerCount != TeamMode.TeamBPlayerCount){
+				//If teams are uneven team with more players has it return slowly when unoccupied
+				if(Distance > 0.5f && TeamMode.TeamAPlayerCount > TeamMode.TeamBPlayerCount){
+					IncrementDistance(-fDelta*RETURN_SPEED_MULTIPLIER);
+				}else if(Distance < 0.5f && TeamMode.TeamAPlayerCount < TeamMode.TeamBPlayerCount){
+					IncrementDistance(fDelta*RETURN_SPEED_MULTIPLIER);
 				}
 			}
 			//Sync distance online
