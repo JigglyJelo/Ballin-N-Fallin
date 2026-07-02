@@ -53,16 +53,16 @@ public partial class KOTHZone : Area2D{
 					timeToLose = 3;
 					break;
 				case 4:
-        			timeToLose = 2.25f;
+        			timeToLose = 2;
         			break;
     			case 5:
-					timeToLose = 2;
+					timeToLose = 1.5f;
 					break;
     			case 6:
-    			    timeToLose = 1.75f;
+    			    timeToLose = 1.25f;
     			    break;
     			default:
-    			    timeToLose = 1.5f;
+    			    timeToLose = 1;
     			    break;
 			}
 			if(player.Score >= KOTH.TotalScore - timeToLose){

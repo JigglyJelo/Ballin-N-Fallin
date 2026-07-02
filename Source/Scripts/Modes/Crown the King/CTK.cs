@@ -12,6 +12,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
     public static float CrownPitch = MIN_CROWN_PITCH;
     private static float pitchTimer = 0;
     private const float PITCH_RESET_TIME = 2;
+    private const float CROWN_LOSS_PERCENTAGE = 0.95f;
     public const float FAST_MUSIC_SPEED = 1.25f;
     private readonly Palette[] CTK_PALETTES = new Palette[]{
         new Palette(new Color(1,238/255f,1),new Color(1,202/255f,1),new Color(210/255f,160/255f,210/255f))
@@ -24,7 +25,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
             CTK modeNode = Mode.ModeNode as CTK;
             if(modeNode.king != null){
                 //Remove old king's crown and points
-                Sprite2D crownSprite = modeNode.king.Visuals.SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
+                Sprite2D crownSprite = modeNode.king.Visuals.RotationsNode.GetNodeOrNull<Sprite2D>("Crown");
                 crownSprite.Visible = false;
 				float timeToLose;
 				switch(Game.TotalPlayers){
@@ -56,7 +57,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
             //Set new King
             modeNode.king = value;
             if(value != null){
-                Sprite2D crownSprite = modeNode.king.Visuals.SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
+                Sprite2D crownSprite = modeNode.king.Visuals.RotationsNode.GetNodeOrNull<Sprite2D>("Crown");
                 crownSprite.Visible = true;
 				modeNode.king.PlayerEmotion = Player.Emotion.Happy;
                 if(modeNode.king.Score >= TotalScore*(2.0/3.0)) MusicPlayer.SetPitch(FAST_MUSIC_SPEED);
@@ -113,7 +114,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
         foreach(Player player in Game.Players){
             Sprite2D crownSprite = CTK.GetCrownSprite(false);
 			crownSprite.Visible = false;
-			player.Visuals.SpritesNode.AddChild(crownSprite);
+			player.Visuals.RotationsNode.AddChild(crownSprite);
         }
     }
 
@@ -130,7 +131,7 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
         if(deathCause == Death.DeathCause.Offscreen && player == King){
             SpawnCrown();
             King = null;
-            if(player.Score > CTK.TotalScore * 0.9f) player.Score = CTK.TotalScore * 0.9f;
+            if(player.Score > CTK.TotalScore * CROWN_LOSS_PERCENTAGE) player.Score = CTK.TotalScore * CROWN_LOSS_PERCENTAGE;
         }
     }
 

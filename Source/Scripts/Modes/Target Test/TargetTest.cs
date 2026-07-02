@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class TargetTest : Mode, IModeStartEvent{
     public static int TopScore;
-    public static int TotalScore = 300;
+    public static int TotalScore = 250;
     public static int[] PlayerScores;
     public List<TargetZone> TargetZones = new List<TargetZone>();
     private readonly Palette[] TARGET_TEST_PALETTES = new Palette[]{
