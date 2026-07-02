@@ -249,7 +249,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void EnterSpectatorModeRpc(){
-		int specatorUUID = Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
+		int specatorUUID = Online.GetRpcSender();
 		PlayerData spectatorInfo = null;
 		foreach(PlayerData playerInfo in Game.PlayerDatas){
 			if(specatorUUID == playerInfo.UUID){

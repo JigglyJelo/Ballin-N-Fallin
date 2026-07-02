@@ -257,7 +257,7 @@ public partial class PlayerSync : Node{
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]
 	private void SyncChargeScale(byte[] arrowData){ // 3-5 Byte Array: First byte is charge scalenext (0, 1 or 2) bytes are angle and last two are update
-		int id = Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
+		int id = Online.GetRpcSender();
 		ushort update = BitConverter.ToUInt16(arrowData, arrowData.Length-2);
 		if(Online.IsHost()){
 			if(UnreliableManager.IsNewerRpc(UnreliableManager.ClientUnreliableChannel.PlayerArrow,id,update)){

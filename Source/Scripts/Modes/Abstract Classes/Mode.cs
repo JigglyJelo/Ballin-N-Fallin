@@ -198,6 +198,10 @@ public abstract partial class Mode : Node{
         Miscellaneous,None
     }
 
+    public virtual float GetRespawnTime(Player player){
+        return 2;
+    }
+
     public static string EnumToString(GameMode mode){
         switch(mode){
             case GameMode.Race: return "Race";

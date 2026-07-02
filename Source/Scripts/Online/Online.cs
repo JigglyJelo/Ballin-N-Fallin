@@ -46,9 +46,13 @@ public partial class Online{
     }
 
     public static bool IsRpcFromHost(){
-        int id = Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
+        int id = GetRpcSender();
         if(id == 0) GD.PrintErr("IsRpcFromHost() called in Non-Rpc method");
         return id == 1;
+    }
+
+    public static int GetRpcSender(){
+        return Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
     }
 
     public static bool IsConnected(){

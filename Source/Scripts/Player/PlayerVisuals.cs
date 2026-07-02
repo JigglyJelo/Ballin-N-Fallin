@@ -219,12 +219,12 @@ public partial class PlayerVisuals : Node2D{
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.PlayerFlip)]
 	public void Flip(bool flipped){
-		if(Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId() == 0 || player.IsRpcFromPlayerOwner() || Online.IsRpcFromHost()){
+		if(Online.GetRpcSender() == 0 || player.IsRpcFromPlayerOwner() || Online.IsRpcFromHost()){
 			LinesSprite.FlipH = flipped;
 			EyesSprite.FlipH = flipped;
 			PupilsSprite.FlipH = flipped;
 			if(Game.CurrentMode == Mode.GameMode.CrownTheKing){
-				Sprite2D crownSprite = SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
+				Sprite2D crownSprite = RotationsNode.GetNodeOrNull<Sprite2D>("Crown");
 				if(crownSprite != null){
 					crownSprite.FlipH = flipped;
 					int sign = flipped ? 1 : -1;
@@ -241,7 +241,7 @@ public partial class PlayerVisuals : Node2D{
 	}
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.PlayerFlip)]
 	public void Flip(bool flipped,float rotation){
-		int senderId = Game.GameNode.GetTree().GetMultiplayer().GetRemoteSenderId();
+		int senderId = Online.GetRpcSender();
 		if(senderId == 0 || player.IsRpcFromPlayerOwner() || Online.IsRpcFromHost()){
 			if(senderId == 0 || !player.OwnsPlayer() || (Online.IsHost() && !player.IsRegaining)) RotationsNode.GlobalRotation = rotation; //Rb.SetDeferred("global_rotation", rotation);
 			CallDeferred(nameof(Flip), flipped);

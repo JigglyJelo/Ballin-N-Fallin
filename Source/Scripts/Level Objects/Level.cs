@@ -57,6 +57,9 @@ public partial class Level : Node2D {
             if(child is StaticBody2D staticBody){
                 staticBodies.Add(staticBody);
                 staticBody.CollisionLayer = 0b11;
+                if(staticBody.IsInGroup("NoRegain")){
+                    staticBody.Modulate = new Color(0.85f,0.85f,0.85f);
+                }
             }
         }
 

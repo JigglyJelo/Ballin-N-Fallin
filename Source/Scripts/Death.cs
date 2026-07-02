@@ -39,7 +39,7 @@ public partial class Death : Node{
 
 	public static void KillPlayer(Player player, DeathCause deathCause){
 		if(Online.IsHost()){
-			float respawnTime = 2;
+			float respawnTime = Mode.ModeNode.GetRespawnTime(player);
 			switch(deathCause){
 				case DeathCause.Offscreen:
 					player.Rpc(nameof(player.SpawnBlastParticles),player.Rb.GlobalPosition);
