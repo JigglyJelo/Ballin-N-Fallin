@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://wyun4hyflt3x"]
+[gd_scene load_steps=6 format=3 uid="uid://wyun4hyflt3x"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/OnlineMenu.cs" id="1_sh81n"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_5jqju"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_t7sip"]
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="5_hx7j2"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_sahyo"]
 
 [node name="OnlineMenu" type="Node2D"]
 position = Vector2(-480, -270)
@@ -90,3 +91,9 @@ label_settings = ExtResource("3_5jqju")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_sahyo")]
+offset_left = 1230.0
+offset_top = 1233.0
+offset_right = 3632.0
+offset_bottom = 1467.0

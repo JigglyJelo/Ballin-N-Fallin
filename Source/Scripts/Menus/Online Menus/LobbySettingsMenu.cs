@@ -16,9 +16,8 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		bufferText = GetNode<Label>("Selections/BufferText066");
 		startText = GetNode<Label>("Selections/StartText");
 		colorText = GetNode<Label>("ColorText");
-		if(Game.UsingMouse()){
-			colorText.Text = "Click to change color";
-			colorText.GetNode<Sprite2D>("ButtonPrompt").Visible = false;
+		if(!Game.UsingMouse()){
+			colorText.QueueFree();
 		}
 		UpdateSelectionVisual();
 		UpdateTexts();

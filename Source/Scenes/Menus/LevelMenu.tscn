@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://h4y8bi6prkry"]
+[gd_scene load_steps=5 format=3 uid="uid://h4y8bi6prkry"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/LevelMenu.cs" id="2_1u16u"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_rfns1"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="3_i8aar"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="4_oyml2"]
 
 [node name="LevelMenu" type="Node2D"]
 script = ExtResource("2_1u16u")
@@ -22,3 +23,5 @@ vertical_alignment = 1
 
 [node name="MenuBackButton" parent="." instance=ExtResource("3_i8aar")]
 position = Vector2(1750, 970)
+
+[node name="InputPrompts" parent="." instance=ExtResource("4_oyml2")]

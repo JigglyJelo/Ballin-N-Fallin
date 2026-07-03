@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/LobbySettingsMenu.cs" id="1_geijo"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_jfy81"]
-[ext_resource type="Texture2D" uid="uid://v8y46nq5xs0m" path="res://Assets/Sprites/Input Prompts/Face Button Prompt.png" id="3_g01g4"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_na08j"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3iktt"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="6_dgd7k"]
 
 [node name="LobbySettingsMenu" type="Node2D"]
 script = ExtResource("1_geijo")
@@ -24,18 +24,9 @@ offset_top = 778.0
 offset_right = 2631.0
 offset_bottom = 1012.0
 scale = Vector2(0.5, 0.5)
-text = "Change Color"
+text = "Click to change color"
 label_settings = ExtResource("2_jfy81")
 horizontal_alignment = 2
-
-[node name="ButtonPrompt" type="Sprite2D" parent="ColorText"]
-texture_repeat = 3
-position = Vector2(1745, 120)
-rotation = 1.5708
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_g01g4")
-region_enabled = true
-region_rect = Rect2(0, 0, 386, 386)
 
 [node name="ArrowSelections" parent="." instance=ExtResource("4_na08j")]
 
@@ -137,3 +128,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MenuBackButton" parent="." instance=ExtResource("5_3iktt")]
 position = Vector2(1750, 970)
+
+[node name="InputPrompts" parent="." instance=ExtResource("6_dgd7k")]
+InputMessages = {
+0: "Change Color",
+2: "Confirm",
+3: "Back"
+}

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://fsyp7xhhbpup"]
+[gd_scene load_steps=8 format=3 uid="uid://fsyp7xhhbpup"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/TourMenu.cs" id="1_oosdl"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_6fscv"]
 [ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="2_7rvig"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_0353d"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3kpyk"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="6_huxux"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ci4ky"]
 font = ExtResource("2_7rvig")
@@ -121,3 +122,5 @@ vertical_alignment = 1
 
 [node name="MenuBackButton" parent="." instance=ExtResource("5_3kpyk")]
 position = Vector2(1750, 970)
+
+[node name="InputPrompts" parent="." instance=ExtResource("6_huxux")]

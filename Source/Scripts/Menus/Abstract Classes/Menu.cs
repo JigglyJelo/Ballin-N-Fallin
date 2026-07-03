@@ -111,14 +111,14 @@ public abstract partial class Menu : Node2D{
         Up,Down,Right,Left,Neutral
     }
     protected void SetControllerUsage(bool usingController){
+        InputPrompts inputPrompts = GetNodeOrNull<InputPrompts>("InputPrompts");
+        if(inputPrompts != null) inputPrompts.Visible = usingController;
+        Node2D backButton = GetNodeOrNull<Node2D>("MenuBackButton");
+        Cursor.UsingCursor = !usingController;
         if(usingController){
-            Cursor.UsingCursor = false;
-            Node2D backButton = GetNodeOrNull<Node2D>("MenuBackButton");
             if(backButton != null) backButton.Modulate = new Color(0,0,0,float.Epsilon); //Hack needed cause gdscript add on used for aa lines because godot's implementation doesnt work
             Input.MouseMode = Input.MouseModeEnum.Hidden;
         }else{
-            Cursor.UsingCursor = true;
-            Node2D backButton = GetNodeOrNull<Node2D>("MenuBackButton");
             if(backButton != null) backButton.Modulate = new Color(1,1,1,1);
             Input.MouseMode = Input.MouseModeEnum.Visible;
         }

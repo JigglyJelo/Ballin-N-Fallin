@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5gymye4ubgm7"]
+[gd_scene load_steps=5 format=3 uid="uid://b5gymye4ubgm7"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/SoloMenu.cs" id="1_rmede"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_y3ry3"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="3_i86i5"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_udo0e"]
 
 [node name="Solo Menu" type="Node2D"]
 position = Vector2(-1920, -1080)
@@ -85,6 +86,12 @@ scale = Vector2(1.5, 1.5)
 text = "Solo Modes"
 label_settings = ExtResource("2_y3ry3")
 horizontal_alignment = 1
+
+[node name="InputPrompts" parent="." instance=ExtResource("3_udo0e")]
+offset_left = 2639.0
+offset_top = 2043.0
+offset_right = 5041.0
+offset_bottom = 2277.0
 
 [node name="MenuBackButton" parent="." instance=ExtResource("3_i86i5")]
 position = Vector2(3670, 2050)
