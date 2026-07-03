@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5rcl7168ie7o"]
+[gd_scene load_steps=6 format=3 uid="uid://c5rcl7168ie7o"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/PlayerMenu.cs" id="1_28otk"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_kl2x5"]
 [ext_resource type="Texture2D" uid="uid://c2kkarucbt417" path="res://Assets/Sprites/1.png" id="3_0rgxt"]
 [ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="4_sgdl6"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_ym35b"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_28otk")
@@ -39,3 +40,5 @@ offset_bottom = 157.0
 scale = Vector2(0.667, 0.667)
 text = "Back"
 label_settings = ExtResource("2_kl2x5")
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_ym35b")]

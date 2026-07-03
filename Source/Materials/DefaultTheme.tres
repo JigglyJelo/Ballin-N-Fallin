@@ -13,7 +13,26 @@ border_color = Color(0, 0, 0, 1)
 anti_aliasing = false
 
 [resource]
+default_font = ExtResource("1_0ylt7")
+default_font_size = 200
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 20
+Label/constants/shadow_offset_x = 11
+Label/constants/shadow_offset_y = 11
+Label/constants/shadow_outline_size = 20
+Label/font_sizes/font_size = 200
+Label/fonts/font = ExtResource("1_0ylt7")
 LineEdit/font_sizes/font_size = 200
 LineEdit/fonts/font = ExtResource("1_0ylt7")
 LineEdit/styles/focus = SubResource("StyleBoxFlat_xfmdo")
 LineEdit/styles/normal = ExtResource("2_dfnc6")
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
+RichTextLabel/constants/outline_size = 20
+RichTextLabel/constants/shadow_offset_x = 11
+RichTextLabel/constants/shadow_offset_y = 11
+RichTextLabel/constants/shadow_outline_size = 20
+RichTextLabel/font_sizes/bold_font_size = 200
+RichTextLabel/font_sizes/bold_italics_font_size = 200
+RichTextLabel/font_sizes/italics_font_size = 200
+RichTextLabel/font_sizes/mono_font_size = 200
+RichTextLabel/font_sizes/normal_font_size = 200

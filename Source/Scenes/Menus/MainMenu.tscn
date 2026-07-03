@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cv2evldohts40"]
+[gd_scene load_steps=4 format=3 uid="uid://cv2evldohts40"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/MainMenu.cs" id="1_7hwb8"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_6iaex"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_45pv8"]
 
 [node name="Main Menu" type="Node2D"]
@@ -93,3 +94,9 @@ offset_bottom = 1242.0
 scale = Vector2(0.333, 0.333)
 text = "© 2026 JigglyJello. Some rights reserved"
 label_settings = ExtResource("3_45pv8")
+
+[node name="InputPrompts" parent="." instance=ExtResource("3_6iaex")]
+InputMessages = {
+2: "Confirm",
+3: "Exit"
+}

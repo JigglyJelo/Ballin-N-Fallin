@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgbb4h7ala333"]
+[gd_scene load_steps=6 format=3 uid="uid://cgbb4h7ala333"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/Settings Menu/VideoMenu.cs" id="1_5sha7"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_tt2b0"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="2_xluyp"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="3_b0gh1"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_s6ef3"]
 
 [node name="Video Menu" type="Node2D"]
 script = ExtResource("1_5sha7")
@@ -68,3 +69,5 @@ vertical_alignment = 1
 
 [node name="MenuBackButton" parent="." instance=ExtResource("3_b0gh1")]
 position = Vector2(1750, 970)
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_s6ef3")]
