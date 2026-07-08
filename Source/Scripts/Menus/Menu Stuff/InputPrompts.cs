@@ -12,16 +12,30 @@ public partial class InputPrompts : RichTextLabel{
 		{ InputPrompt.RT, "res://Assets/Sprites/Input Prompts/RT Prompt.png" },
 		{ InputPrompt.Joystick, "res://Assets/Sprites/Input Prompts/LeftStick.png" }
 	};
-	[Export]
-	private Godot.Collections.Dictionary<InputPrompt,string> InputMessages = new(){
+
+	private Godot.Collections.Dictionary<InputPrompt,string> inputMessages = new(){
 		{ InputPrompt.South, "Confirm" },
 		{ InputPrompt.East, "Back" },
 	};
+
+	[Export]
+	public Godot.Collections.Dictionary<InputPrompt,string> InputMessages {
+		get => inputMessages;
+		set {
+			inputMessages = value;
+			UpdateVisuals();
+		}
+	}
 		
 	public enum InputPrompt{
 		North, West, South, East, LT, RT, Joystick
 	}
+
 	public override void _Ready(){
+		UpdateVisuals();
+	}
+
+	private void UpdateVisuals(){
 		int fontSize = GetThemeFontSize("normal_font_size");
 		StringBuilder finalText = new StringBuilder();
 		finalText.Append("[right]");
