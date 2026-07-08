@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class MiniProfileMenu : ScrollableMenu{
 	public Action<string> OnProfileSelected;
@@ -13,12 +14,33 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	private Keypad keypadPopup;
 	public bool IsKeypadOpen = false; 
 	public int InputId = 0;
-
 	private MiniControlsMenu controlsMenu;
+	private InputPrompts inputPrompts;
+	
+	private Godot.Collections.Dictionary<InputPrompts.InputPrompt,string> profilePrompts = new(){
+		{ InputPrompts.InputPrompt.North, "Edit" },
+		{ InputPrompts.InputPrompt.West, "Delete" },
+		{ InputPrompts.InputPrompt.South, "Confirm" },
+		{ InputPrompts.InputPrompt.East, "Back" },
+	};
+	private Godot.Collections.Dictionary<InputPrompts.InputPrompt,string> keypadPrompts = new(){
+		{ InputPrompts.InputPrompt.South, "Confirm" },
+		{ InputPrompts.InputPrompt.East, "Back" },
+	};
+	private Godot.Collections.Dictionary<InputPrompts.InputPrompt,string> controlsPrompts = new(){
+		{ InputPrompts.InputPrompt.North, "Reset" },
+		{ InputPrompts.InputPrompt.West, "Clear" },
+		{ InputPrompts.InputPrompt.South, "Confirm" },
+		{ InputPrompts.InputPrompt.East, "Back" },
+	};
+	
 	public bool InControlsMenu = false;
 
 	public override void _Ready(){
 		base._Ready();
+		
+		inputPrompts = GetNode<InputPrompts>("InputPrompts");
+		inputPrompts.InputMessages = profilePrompts;
 		
 		keypadPopup = GetNode<Keypad>("Keypad");
 		keypadPopup.Visible = false;
@@ -35,6 +57,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		InputId = inputId;
 		IsKeypadOpen = false;
 		InControlsMenu = false; 
+		inputPrompts.InputMessages = profilePrompts;
 		RefreshProfileList();
 
 		int index = ControlProfileManager.Profiles.IndexOf(currentProfile);
@@ -50,6 +73,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 			InControlsMenu = true;
 			if(selectionsContainer != null) selectionsContainer.Visible = false;
 			controlsMenu.Open(InputId, selectedProfile);
+			inputPrompts.InputMessages = controlsPrompts;
 			SFX.Play("Confirm");
 		}
 	}
@@ -76,6 +100,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	private void HandleControlsCanceled(){
 		InControlsMenu = false;
 		if(selectionsContainer != null) selectionsContainer.Visible = true;
+		inputPrompts.InputMessages = profilePrompts;
 	}
 
 	private void RefreshProfileList(){
@@ -114,6 +139,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 			IsKeypadOpen = true;
 			if(selectionsContainer != null) selectionsContainer.Visible = false;
 			keypadPopup.Open(InputId); 
+			inputPrompts.InputMessages = keypadPrompts;
 			SFX.Play("Confirm");
 		}else{ 
 			string selectedProfile = ControlProfileManager.Profiles[choice - 2];
@@ -134,6 +160,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		
 		ControlProfileManager.CreateProfile(newTag); 
 		SFX.Play("Confirm", 1.125f);
+		inputPrompts.InputMessages = profilePrompts;
 		RefreshProfileList();
 
 		int newIndex = ControlProfileManager.Profiles.IndexOf(newTag);
@@ -147,6 +174,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		IsKeypadOpen = false;
 		keypadPopup.Close();
 		if(selectionsContainer != null) selectionsContainer.Visible = true;
+		inputPrompts.InputMessages = profilePrompts;
 		SFX.Play("Back", 1.125f);
 	}
 }
