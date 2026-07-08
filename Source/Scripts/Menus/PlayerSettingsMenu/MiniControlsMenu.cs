@@ -50,7 +50,7 @@ public partial class MiniControlsMenu : VerticalMenu, ILeftRightSelections{
 		}
 
 		if(isListening) return;
-		InputChecks(delta, InputId); // Pumps inputs specifically for this player
+		InputChecks(delta, InputId);
 	}
 
 	protected override void MenuChoose(int choice){
@@ -71,7 +71,7 @@ public partial class MiniControlsMenu : VerticalMenu, ILeftRightSelections{
 		isListening = true;
 		
 		int actionIndex = choice - 1;
-		actionLabels[actionIndex].Text = ControlProfileManager.REMAP_ACTIONS[actionIndex] + ": [Press Button]";
+		actionLabels[actionIndex].Text = ControlProfileManager.REMAP_ACTIONS[actionIndex] + ": [Press Button to Add]";
 	}
 
 	public override void MenuBack(){
@@ -101,7 +101,6 @@ public partial class MiniControlsMenu : VerticalMenu, ILeftRightSelections{
 	public override void _Input(InputEvent @event){
 		if(!Visible) return;
 
-		// CRITICAL: Prevent other controllers from rebinding this player's profile!
 		if(@event is InputEventJoypadButton joyBtn && joyBtn.Device != InputId) return;
 		if(@event is InputEventJoypadMotion joyMot && joyMot.Device != InputId) return;
 

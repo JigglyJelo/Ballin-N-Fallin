@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvrkggycrj4wr"]
+[gd_scene load_steps=6 format=3 uid="uid://bvrkggycrj4wr"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/PlayerSettingsMenu/ColorMenu.cs" id="1_mock4"]
 [ext_resource type="Texture2D" uid="uid://dsqbjuon6kn2j" path="res://Assets/Sprites/Menus/Color/colorButton.png" id="3_3ys2e"]
 [ext_resource type="Texture2D" uid="uid://bcebx8kxnajhr" path="res://Assets/Sprites/Menus/Color/Circle.png" id="3_d7kdi"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_suqww"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="8_2fx5h"]
 
 [node name="ColorMenu" type="Node2D"]
@@ -133,3 +134,15 @@ scale = Vector2(0.5, 0.5)
 text = "Choose Color"
 label_settings = ExtResource("8_2fx5h")
 horizontal_alignment = 1
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_suqww")]
+offset_left = -470.0
+offset_top = 360.0
+offset_right = 3290.0
+offset_bottom = 594.0
+scale = Vector2(0.25, 0.25)
+InputMessages = {
+0: "Change Profile",
+2: "Confirm",
+3: "Unjoin"
+}

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ck8ha1j442bxx"]
+[gd_scene load_steps=6 format=3 uid="uid://ck8ha1j442bxx"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/PlayerSettingsMenu/MiniProfileMenu.cs" id="1_p177w"]
 [ext_resource type="PackedScene" uid="uid://j1rk64jq7nm5" path="res://Source/Scenes/Menus/Keypad.tscn" id="3_vyqqb"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="4_lnkq4"]
 [ext_resource type="PackedScene" uid="uid://b6kehpuuetcw8" path="res://Source/Scenes/Menus/PlayerSettingsMenu/MiniControlsMenu.tscn" id="4_shmgb"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_puexh"]
 
 [node name="MiniProfileMenu" type="Node2D"]
 script = ExtResource("1_p177w")
@@ -38,3 +39,16 @@ visible = false
 
 [node name="MiniControlsMenu" parent="." instance=ExtResource("4_shmgb")]
 scale = Vector2(0.4, 0.4)
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_puexh")]
+offset_left = -470.0
+offset_top = 360.0
+offset_right = 3290.0
+offset_bottom = 594.0
+scale = Vector2(0.25, 0.25)
+InputMessages = {
+0: "Edit",
+1: "Delete",
+2: "Confirm",
+3: "Back"
+}
