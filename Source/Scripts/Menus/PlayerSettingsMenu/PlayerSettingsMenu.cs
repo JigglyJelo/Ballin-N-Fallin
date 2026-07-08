@@ -63,11 +63,14 @@ public partial class PlayerSettingsMenu : Node2D{
 		if(isReady) return;
 
 		if(!Game.UsingMouse() && InputId != (int)PlayerData.PlayerInputDevice.Mouse){
-			if(profileMenu.IsKeypadOpen) return;
+			if(profileMenu.IsKeypadOpen || profileMenu.InControlsMenu) return;
 
 			if((Game.PlayerDatas.Count >= Id || Online.IsOnline) && Input.IsActionJustReleased("Y" + InputId)){
-				if(inProfileMenu) HandleProfileCanceled(); 
-				else SwitchToProfileMenu();
+				if(inProfileMenu){
+					profileMenu.OpenControlsMenu();
+				}else{
+					SwitchToProfileMenu();
+				}
 			}
 		}
 	}

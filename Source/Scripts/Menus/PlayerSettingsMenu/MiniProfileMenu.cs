@@ -6,7 +6,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	public Action OnCanceled;
 
 	private const float LABEL_X_POS = -1920f;
-    private const float LABEL_Y_POS = -400;
+	private const float LABEL_Y_POS = -400;
 	private const float LABEL_SPACING = 200;
 	private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn");
 
@@ -15,7 +15,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	public int InputId = 0;
 
 	private MiniControlsMenu controlsMenu;
-	private bool inControlsMenu = false;
+	public bool InControlsMenu = false;
 
 	public override void _Ready(){
 		base._Ready();
@@ -34,7 +34,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	public void Open(int inputId, string currentProfile){
 		InputId = inputId;
 		IsKeypadOpen = false;
-		inControlsMenu = false; 
+		InControlsMenu = false; 
 		RefreshProfileList();
 
 		int index = ControlProfileManager.Profiles.IndexOf(currentProfile);
@@ -44,8 +44,18 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		}
 	}
 
+	public void OpenControlsMenu() {
+		if(Selection > 1) { 
+			string selectedProfile = ControlProfileManager.Profiles[Selection - 2];
+			InControlsMenu = true;
+			if(selectionsContainer != null) selectionsContainer.Visible = false;
+			controlsMenu.Open(InputId, selectedProfile);
+			SFX.Play("Confirm");
+		}
+	}
+
 	public override void _Process(double delta){
-		if(!Visible || IsKeypadOpen || inControlsMenu) return;
+		if(!Visible || IsKeypadOpen || InControlsMenu) return;
 		
 		InputChecks(delta, InputId); 
 
@@ -61,20 +71,10 @@ public partial class MiniProfileMenu : ScrollableMenu{
 				}
 			}
 		}
-
-		if(Input.IsActionJustReleased("Start" + InputId)){
-			if(Selection > 1){ 
-				string selectedProfile = ControlProfileManager.Profiles[Selection - 2];
-				inControlsMenu = true;
-				if(selectionsContainer != null) selectionsContainer.Visible = false;
-				controlsMenu.Open(InputId, selectedProfile);
-				SFX.Play("Confirm");
-			}
-		}
 	}
 
 	private void HandleControlsCanceled(){
-		inControlsMenu = false;
+		InControlsMenu = false;
 		if(selectionsContainer != null) selectionsContainer.Visible = true;
 	}
 
