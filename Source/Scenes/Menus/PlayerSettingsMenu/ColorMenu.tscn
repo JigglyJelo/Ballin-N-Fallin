@@ -144,5 +144,5 @@ scale = Vector2(0.25, 0.25)
 InputMessages = {
 0: "Change Profile",
 2: "Confirm",
-3: "Unjoin"
+3: "Back"
 }
