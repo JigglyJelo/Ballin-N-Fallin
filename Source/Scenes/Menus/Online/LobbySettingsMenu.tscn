@@ -130,6 +130,8 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(1750, 970)
 
 [node name="InputPrompts" parent="." instance=ExtResource("6_dgd7k")]
+offset_left = -745.0
+offset_right = 4647.0
 InputMessages = {
 0: "Change Color",
 2: "Confirm",

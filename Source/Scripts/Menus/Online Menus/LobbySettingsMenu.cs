@@ -43,7 +43,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 							if(Game.UsingMouse() || inputId == (int)PlayerData.PlayerInputDevice.Mouse){
 								if(Input.IsActionJustReleased("Charge N Launch Mouse") && hoveredOverColorText()) createColorMenu();
 							}else{
-								if(Input.IsActionJustReleased("Slam" + inputId)) createColorMenu();
+								if(Input.IsActionJustReleased("Y" + inputId)) createColorMenu();
 							}
 						}
 					}catch{}
@@ -55,7 +55,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 				}else{
 					for(int i = 0; i < Game.MAX_PLAYERS; i++){
 						if(Input.IsActionJustReleased("B" + i)) MenuBack();
-						if(Input.IsActionJustReleased("Slam" + i) && colorChangeTimer >= 1) createColorMenu();
+						if(Input.IsActionJustReleased("Y" + i) && colorChangeTimer >= 1) createColorMenu();
 					}
 				}
 			}
