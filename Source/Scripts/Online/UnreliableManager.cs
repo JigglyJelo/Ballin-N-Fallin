@@ -3,21 +3,23 @@ using Godot;
 
 public partial class UnreliableManager{
 	//For simulating the Unreliable ordered manually as the SteamMultiplayerPeer options both don't support it
-	//this should on the bright side use less bandwidth as each update/sequence value is only 2 bytes and gets reset each round allowing for 18mins worth at 60 calls/sec
+	//this should on the bright side use less bandwidth as each update/sequence value is only 2 bytes
 	private static Dictionary<UnreliableChannel,ushort> transferChannelLastUpdate = GetResetTransferChannelLastUpdate();
 	private static Dictionary<UnreliableChannel,ushort> GetResetTransferChannelLastUpdate(){
 		return new Dictionary<UnreliableChannel, ushort>{
-			{UnreliableChannel.PlayerVelocity,0},{UnreliableChannel.PlayerPosition,0},{UnreliableChannel.PlayerArrow,0},{UnreliableChannel.PlayerDirection,0},
-			{UnreliableChannel.SpawnedBoxes,0}, {UnreliableChannel.SpawnedItems,0},
-			{UnreliableChannel.SportBall,0},{UnreliableChannel.TrashPosition,0},{UnreliableChannel.TrashRotation,0},
-			{UnreliableChannel.Payload,0}
+			{UnreliableChannel.PlayerVelocity,ushort.MaxValue},{UnreliableChannel.PlayerPosition,ushort.MaxValue},{UnreliableChannel.PlayerArrow,ushort.MaxValue},{UnreliableChannel.PlayerDirection,ushort.MaxValue},
+			{UnreliableChannel.SpawnedBoxes,ushort.MaxValue}, {UnreliableChannel.SpawnedItems,ushort.MaxValue},
+			{UnreliableChannel.SportBall,ushort.MaxValue},{UnreliableChannel.TrashPosition,ushort.MaxValue},{UnreliableChannel.TrashRotation,ushort.MaxValue},
+			{UnreliableChannel.Payload,ushort.MaxValue}
 		};
 	}
 	public static void ResetTransferChannelLastUpdate(){
 		transferChannelLastUpdate = GetResetTransferChannelLastUpdate();
 	}
 	public static bool IsNewerRpc(UnreliableChannel transferChannel, ushort sentUpdate){
-		if(sentUpdate >= transferChannelLastUpdate[transferChannel]){
+		ushort diff = (ushort)(sentUpdate - transferChannelLastUpdate[transferChannel]);
+		// diff > 0 ignores exact duplicates. diff < 32768 ignores old/delayed packets.
+		if(diff > 0 && diff < 32768){
 			transferChannelLastUpdate[transferChannel] = sentUpdate;
 			return true;
 		}
@@ -25,9 +27,7 @@ public partial class UnreliableManager{
 	}
 	public static void HostIncrementLastUpdate(UnreliableChannel transferChannel){
 		if(Online.IsHost()){
-			if(transferChannelLastUpdate[transferChannel] != ushort.MaxValue){
-				transferChannelLastUpdate[transferChannel]++;
-			}
+			transferChannelLastUpdate[transferChannel]++;
 		}else{
 			GD.PrintErr("Client is attempting to increment last update");
 		}
@@ -45,7 +45,7 @@ public partial class UnreliableManager{
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	private static Dictionary<ClientUnreliableChannel,ushort> clientsChannels = GetResetClientChannelLastUpdate();
 	private static Dictionary<ClientUnreliableChannel,ushort> GetResetClientChannelLastUpdate(){
-		return new Dictionary<ClientUnreliableChannel,ushort>(){{ClientUnreliableChannel.PlayerArrow,0}};
+		return new Dictionary<ClientUnreliableChannel,ushort>(){{ClientUnreliableChannel.PlayerArrow,ushort.MaxValue}};
 	}
 	public static void ResetClientChannelLastUpdate(){
 		clientsChannels = GetResetClientChannelLastUpdate();
@@ -56,7 +56,7 @@ public partial class UnreliableManager{
 		foreach(PlayerData playerInfo in Game.PlayerDatas){
 			int id = playerInfo.UUID;
 			try{
-				channels.Add(id,new Dictionary<ClientUnreliableChannel,ushort>(){{ClientUnreliableChannel.PlayerArrow,0}});
+				channels.Add(id,new Dictionary<ClientUnreliableChannel,ushort>(){{ClientUnreliableChannel.PlayerArrow,ushort.MaxValue}});
 			}catch{}
 		}
 		return channels;
@@ -65,16 +65,16 @@ public partial class UnreliableManager{
 		hostClientChannels = GetResetHostClientChannelLastUpdate();
 	}
 	public static bool IsNewerRpc(ClientUnreliableChannel transferChannel, int senderUUID, ushort sentUpdate){
-		if(sentUpdate >= hostClientChannels[senderUUID][transferChannel]){
+		ushort diff = (ushort)(sentUpdate - hostClientChannels[senderUUID][transferChannel]);
+		// diff > 0 ignores exact duplicates. diff < 32768 ignores old/delayed packets.
+		if(diff > 0 && diff < 32768){
 			hostClientChannels[senderUUID][transferChannel] = sentUpdate;
 			return true;
 		}
 		return false;
 	}
 	public static void ClientIncrementUpdate(ClientUnreliableChannel transferChannel){
-		if(clientsChannels[transferChannel] != ushort.MaxValue){
-			clientsChannels[transferChannel]++;
-		}
+		clientsChannels[transferChannel]++;
 	}
 	public static ushort GetChannelLastUpdate(ClientUnreliableChannel transferChannel){
 		return clientsChannels[transferChannel];

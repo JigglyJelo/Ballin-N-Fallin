@@ -12,7 +12,7 @@ public partial class NohubHostManager : Node{
         {"items_enabled", Variant.Type.Bool},
     };
     public static NohubHostManager NohubManagerNode;
-    private GodotObject nohubClient; 
+    private GodotObject nohubClient = null; 
     private GodotObject nohubConnection;
     private GDScript asyncBridgeScript;
     private string lobbyAddress;
@@ -101,11 +101,12 @@ func call_async(target: Object, method: String, args: Array = []):
 
     public static void UpdateLobbyData(){
         //Ensure the node and lobby actually exist before trying to update
-        if (NohubManagerNode == null || NohubManagerNode.nohubClient == null || string.IsNullOrEmpty(NohubManagerNode.myLobbyId)) return;
-        //Gather players and spectators, then subtract disconnected players
-        Godot.Collections.Dictionary updatedData = GetLobbyData();
-        GodotObject updateBridge = (GodotObject)NohubManagerNode.asyncBridgeScript.New();
-        updateBridge.Call("call_async", NohubManagerNode.nohubClient, "set_lobby_data", new Godot.Collections.Array{NohubManagerNode.myLobbyId, updatedData});
+        if(IsNohubSetup()){
+            //Gather players and spectators, then subtract disconnected players
+            Godot.Collections.Dictionary updatedData = GetLobbyData();
+            GodotObject updateBridge = (GodotObject)NohubManagerNode.asyncBridgeScript.New();
+            updateBridge.Call("call_async", NohubManagerNode.nohubClient, "set_lobby_data", new Godot.Collections.Array{NohubManagerNode.myLobbyId, updatedData});
+        }
     }
 
     private static Godot.Collections.Dictionary GetLobbyData(){
@@ -131,7 +132,7 @@ func call_async(target: Object, method: String, args: Array = []):
     }
 
     public static async void LockLobby(){
-        if(NohubManagerNode.nohubClient == null || !GodotObject.IsInstanceValid(NohubManagerNode.nohubClient) || string.IsNullOrEmpty(NohubManagerNode.myLobbyId)){
+        if(!IsNohubSetup()){
             GD.PrintErr("NohubHostManager: Cannot lock lobby. Client invalid or lobby not created yet.");
             return;
         }
@@ -153,7 +154,7 @@ func call_async(target: Object, method: String, args: Array = []):
     }
 
     public static async void UnlockLobby(){
-        if(NohubManagerNode.nohubClient == null || !GodotObject.IsInstanceValid(NohubManagerNode.nohubClient) || string.IsNullOrEmpty(NohubManagerNode.myLobbyId)){
+        if(!IsNohubSetup()){
             GD.PrintErr("NohubHostManager: Cannot unlock lobby. Client invalid or lobby not created yet.");
             return;
         }
@@ -170,6 +171,10 @@ func call_async(target: Object, method: String, args: Array = []):
         }else{
             GD.PrintErr("NohubHostManager: Failed to unlock the lobby.");
         }
+    }
+
+    public static bool IsNohubSetup(){
+        return NohubManagerNode != null && GodotObject.IsInstanceValid(NohubManagerNode) && NohubManagerNode.nohubClient != null && GodotObject.IsInstanceValid(NohubManagerNode.nohubClient) && !string.IsNullOrEmpty(NohubManagerNode.myLobbyId);
     }
 
     public override void _ExitTree(){

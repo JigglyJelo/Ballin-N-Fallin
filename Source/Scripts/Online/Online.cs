@@ -90,10 +90,10 @@ public partial class Online{
     public static void Disconnect() => Disconnect("Disconnected");
 
     public static void PlayerDisconnected(long id){
-        if(IsHost()){
+        if(IsHost() && PeerIsActive()){
             bool removePlayer = Game.Players == null || Game.Players.Length == 0;
             Game.TellClientsWhatToDoAboutDisconnectedPlayer(removePlayer, (int)id);
-            NohubHostManager.UpdateLobbyData();
+            if(NohubHostManager.IsNohubSetup()) NohubHostManager.UpdateLobbyData();
         }
     }
 
