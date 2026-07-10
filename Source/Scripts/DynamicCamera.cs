@@ -26,12 +26,14 @@ public partial class DynamicCamera : Camera2D{
     private Vector2 targetPosition;
     private Vector2 targetZoom;
     private Level currentLevel;
+    public static DynamicCamera CameraNode;
 
     public override void _Ready(){
         LimitLeft = -10000000;
         LimitTop = -10000000;
         LimitRight = 10000000;
         LimitBottom = 10000000;
+        CameraNode = this;
     }
 
     public override void _Process(double delta){
