@@ -16,7 +16,8 @@ public partial class Player : Node2D{
 	public Vector2 RawInputVector;
 	//Children
 	public CollisionShape2D RbShape;
-	private CpuParticles2D flameParticles,blastParticles,popParticles;
+	private BlastParticle blastParticles;
+	private CpuParticles2D flameParticles,popParticles;
 	public AudioStreamPlayer2D RouletteSound;
 	public AudioStreamPlayer2D BounceSound, FlameSound, ItemSound;
 	public Trail Trail;
@@ -78,7 +79,7 @@ public partial class Player : Node2D{
 		RouletteSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/RouletteSound");
 		ItemSound = GetNode<AudioStreamPlayer2D>("RigidBody2D/ItemSound");
 		flameParticles = Visuals.GetNode<CpuParticles2D>("HUD/FlameParticles");
-		blastParticles = GetNode<CpuParticles2D>("Particles/BlastZoneParticles");
+		blastParticles = GetNode<BlastParticle>("Particles/BlastZoneParticles");
 		popParticles = GetNode<CpuParticles2D>("Particles/PopParticles");
 		if(slamParticleScene == null) slamParticleScene = GD.Load<PackedScene>("res://Source/Scenes/Particles/SlamParticles.tscn");
 		flameParticles.ZIndex = 1;
@@ -153,30 +154,11 @@ public partial class Player : Node2D{
 	}
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable,TransferChannel = (int)Online.TransferChannelEnum.DeathParticle)]
 	public void SpawnBlastParticles(Vector2 position){
-		float zoomScale = 1 + (1-Level.LevelNode.CameraZoom);
-		float angle = position.Angle();
-		blastParticles.GlobalPosition = Level.GetEdgePosition(position,angle,3840*zoomScale,2160*zoomScale);
+		blastParticles.Initialize(position);
 		blastParticles.SelfModulate = PlayerColor;
 		blastParticles.Emitting = true;
-		switch(Level.DetermineEdge(blastParticles.GlobalPosition,3840*zoomScale,2160*zoomScale)){
-			case 0: //Right
-				blastParticles.Rotation = MathF.PI;
-				blastParticles.GlobalPosition += new Vector2(533.333f/Level.LevelNode.CameraZoom,0);
-				break;
-			case 1: //Left
-				blastParticles.Rotation = 0;
-				blastParticles.GlobalPosition -= new Vector2(533.333f/Level.LevelNode.CameraZoom,0);
-				break;
-			case 2: //Bottom
-				blastParticles.Rotation = (3*MathF.PI)/2;
-				blastParticles.GlobalPosition += new Vector2(0,300/Level.LevelNode.CameraZoom);
-				break;
-			case 3: //Top
-				blastParticles.Rotation = MathF.PI/2;
-				blastParticles.GlobalPosition -= new Vector2(0,300/Level.LevelNode.CameraZoom);
-				break;
-		}
-		SFX.Play("Blast",Level.GetEdgePosition(position,angle,3840,2160));
+		
+		SFX.Play("Blast", blastParticles.GlobalPosition);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable,TransferChannel = (int)Online.TransferChannelEnum.PopParticle)]
