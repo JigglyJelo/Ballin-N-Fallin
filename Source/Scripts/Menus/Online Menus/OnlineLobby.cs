@@ -17,7 +17,6 @@ public partial class OnlineLobby : Node{
     private static Gradient pingGradient = GD.Load<Gradient>("res://Assets/Gradients/Ping.tres");
     private Sprite2D banButton;
     public long LobbyID = -1;
-    private bool inLobby = false;
 
     public override void _Ready(){
         Lobby = this;
@@ -48,7 +47,7 @@ public partial class OnlineLobby : Node{
             if(IsHost) HostLobby();
             else JoinLobby();
         }else if(Online.IsHost()){
-            NohubHostManager.UnlockLobby();
+            if(NohubHostManager.IsNohubSetup()) NohubHostManager.UnlockLobby();
             Multiplayer.MultiplayerPeer.RefuseNewConnections = false;
         }
         
@@ -69,10 +68,10 @@ public partial class OnlineLobby : Node{
     }
 
     public override void _PhysicsProcess(double delta){
-        if(Online.IsHost() && Online.IsOnlinePeer() && inLobby){
+        if(Online.IsHost() && Online.IsOnlinePeer() && Online.PeerIsActive()){
             KickBanPlayerButtons();
         }
-        if(!Online.IsHost() && !inLobby){
+        if(!Online.IsHost() && !Online.PeerIsActive()){
             unableToJoinLobbyTimer += (float)delta;
             if(unableToJoinLobbyTimer >= CONNECT_TIMEOUT){
                 Online.Disconnect("Failed to connect to lobby");
@@ -135,7 +134,6 @@ public partial class OnlineLobby : Node{
                 CreatePingGetter();
                 break;
         }
-        inLobby = true;
         void InitializeSuccessfulHost() {
             Online.IsOnline = true;
             Online.BannedIps = new List<string>();
@@ -187,7 +185,6 @@ public partial class OnlineLobby : Node{
 
     private void ConnectedToServer(){
         GD.Print("Connected");
-        inLobby = true;
         if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray) {
             RpcId(1, nameof(SendPlayerInfoDirect), Online.Username, (byte)Online.InputId, Game.GameNode.Multiplayer.GetUniqueId());
         }
@@ -307,7 +304,7 @@ public partial class OnlineLobby : Node{
             }
             playerText.ResetPlayerText();
         }
-        if(Online.IsHost()){
+        if(Online.IsHost() && NohubHostManager.IsNohubSetup()){
             NohubHostManager.UpdateLobbyData();
         }
     }
@@ -352,7 +349,7 @@ public partial class OnlineLobby : Node{
         Game.StompSetting = (Game.StompSettingEnum)stompSetting;
         Online.Buffer = buffer;
         if(LobbySettingsMenu != null) LobbySettingsMenu.UpdateTexts();
-        if(Online.IsHost()) NohubHostManager.UpdateLobbyData();
+        if(Online.IsHost() && NohubHostManager.IsNohubSetup()) NohubHostManager.UpdateLobbyData();
     }
     
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -368,7 +365,7 @@ public partial class OnlineLobby : Node{
 
     public void StartGame(){
         Game.GameNode.Multiplayer.MultiplayerPeer.RefuseNewConnections = true;
-        NohubHostManager.LockLobby();
+        if(NohubHostManager.IsNohubSetup()) NohubHostManager.LockLobby();
         Rpc(nameof(UpdateLobbySettings),Tour.IsTour,Tour.CurrentTour.PointsToWin,Tour.CurrentTour.ItemsEnabled,(byte)Game.StompSetting,Online.Buffer);
         Rpc(nameof(StartingGame),(byte)Game.CurrentMode,Game.CurrentLevelName,Game.CurrentFolderPath);
     }

@@ -51,7 +51,7 @@ public partial class LevelMenu : VerticalMenu{
 	}
 
 	public override void _Process(double delta){
-		if(!Game.UsingMouse()){
+		if(!Game.UsingMouse() && inputId < (int)PlayerData.PlayerInputDevice.Mouse){
 			InputChecks(delta,inputId);
 			if(Input.IsActionJustReleased("Y" + inputId)){
 				Selection = new Random().Next(1,optionNames.Count + 1);
