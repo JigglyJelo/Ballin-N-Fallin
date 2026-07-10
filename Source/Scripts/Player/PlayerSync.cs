@@ -19,7 +19,7 @@ public partial class PlayerSync : Node{
     public override void _Ready(){
 		if(!Online.IsOnline){
 			SetPhysicsProcess(false);
-			Free();
+			QueueFree();
 		}else{
 			if(Online.IsHost()){
 				ResetSyncArrayLengths();
