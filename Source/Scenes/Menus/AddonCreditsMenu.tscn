@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6rx7k5x7l2dl"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/CreditsMenu/AddonCreditsMenu.cs" id="1_m0s58"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="1_moqiu"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="2_8cuce"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_srjj2"]
+
+[node name="AddonsCreditsMenu" type="Node2D"]
+script = ExtResource("1_m0s58")
+
+[node name="CreditsHeader" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -1090.0
+offset_right = 1152.0
+offset_bottom = -856.0
+scale = Vector2(1.25, 1.25)
+text = "Addons Used"
+label_settings = ExtResource("1_moqiu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinkSubheader" type="Label" parent="."]
+self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
+offset_left = -935.0
+offset_top = -762.0
+offset_right = 2807.0
+offset_bottom = -291.0
+scale = Vector2(0.5, 0.5)
+text = "https://github.com/JigglyJelo/Ballin-N-Fallin
+for more info and credits"
+label_settings = ExtResource("1_moqiu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LicenseLabel" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -838.0
+offset_right = 5750.0
+offset_bottom = 2084.0
+scale = Vector2(0.5, 0.5)
+label_settings = ExtResource("1_moqiu")
+autowrap_mode = 2
+
+[node name="MenuBackButton" parent="." instance=ExtResource("2_8cuce")]
+position = Vector2(1750, 970)
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="antialiased_line2d" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -480.0
+offset_right = 1920.0
+offset_bottom = -246.0
+pivot_offset = Vector2(1920, 117)
+text = "antialiased_line2d | MIT"
+label_settings = ExtResource("1_moqiu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="netfox_internals" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -180.0
+offset_right = 1920.0
+offset_bottom = 54.0
+pivot_offset = Vector2(1920, 117)
+text = "netfox.internals | MIT"
+label_settings = ExtResource("1_moqiu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NorayText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = 120.0
+offset_right = 1920.0
+offset_bottom = 354.0
+pivot_offset = Vector2(1920, 117)
+text = "netfox.noray | MIT"
+label_settings = ExtResource("1_moqiu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NohubText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = 420.0
+offset_right = 1920.0
+offset_bottom = 654.0
+pivot_offset = Vector2(1920, 117)
+text = "nohub.gd | MIT
+"
+label_settings = ExtResource("1_moqiu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TrimsockText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = 720.0
+offset_right = 1920.0
+offset_bottom = 954.0
+pivot_offset = Vector2(1920, 117)
+text = "trimsock.gd | MIT"
+label_settings = ExtResource("1_moqiu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copyright" type="Label" parent="."]
+self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
+offset_left = -1920.0
+offset_top = 1008.0
+offset_right = -391.0
+offset_bottom = 1242.0
+scale = Vector2(0.333, 0.333)
+text = "© 2026 JigglyJello. Some rights reserved"
+label_settings = ExtResource("1_moqiu")
+
+[node name="InputPrompts" parent="." instance=ExtResource("3_srjj2")]
+InputMessages = {
+2: "View License",
+3: "Back"
+}
