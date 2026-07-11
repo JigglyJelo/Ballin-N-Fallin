@@ -23,7 +23,7 @@ public partial class OnlineMenu : Menu2D{
 		for(int i = 0; i < Game.MAX_PLAYERS; i++){
 			if(Input.IsActionJustReleased("Charge N Launch" + i)) Online.InputId = (PlayerData.PlayerInputDevice)i;
 		}
-		if(Online.InputId == PlayerData.PlayerInputDevice.None && Input.IsActionJustReleased("Charge N Launch Mouse")){
+		if(Game.UsingMouse() && Online.InputId == PlayerData.PlayerInputDevice.None && Input.IsActionJustReleased("Charge N Launch Mouse")){
 			if(Game.MouseMode == Game.MouseModeEnum.Off) Game.MouseMode = Game.MouseModeEnum.Cursor;
 			Online.InputId = PlayerData.PlayerInputDevice.Mouse;
 		}

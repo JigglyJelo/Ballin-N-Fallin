@@ -28,7 +28,7 @@ public partial class DirectConnectMenu : VerticalMenu{
 		for(byte i = 0; i < Game.MAX_PLAYERS; i++){
 			if(Input.IsActionJustReleased("Charge N Launch" + i)) Online.InputId = (PlayerData.PlayerInputDevice)i;
 		}
-		if(Input.IsActionJustReleased("Charge N Launch Mouse")){
+		if(Input.IsActionJustReleased("Charge N Launch Mouse") && Game.UsingMouse()){
 			Online.InputId = PlayerData.PlayerInputDevice.Mouse;
 		}
 		InputChecks(delta);
