@@ -12,10 +12,16 @@ script = ExtResource("1_qqoyh")
 CameraZoom = 0.75
 background = ExtResource("2_81isw")
 
+[node name="CameraBoundary" type="ReferenceRect" parent="."]
+offset_left = -2624.0
+offset_top = -1296.0
+offset_right = 2624.0
+offset_bottom = 1792.0
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(1920, -1536, 2560, -1536, 2560, 2048, -2560, 2048, -2560, -1536, -2048, -1536, 1920, -1536, 1920, -1024, 1024, -320, -1024, -320, -1920, -1024, -2496, -1024, -2496, -64, -1920, -64, -1152, 192, -1152, 448, -1920, 704, -2496, 704, -2496, 1664, -1920, 1664, -1024, 960, 1024, 960, 1920, 1664, 2496, 1664, 2496, 704, 1920, 704, 1152, 448, 1152, 192, 1920, -64, 2496, -64, 2496, -1024, 1920, -1024)
+polygon = PackedVector2Array(1920, -1536, 2688, -1536, 2688, 2048, -2688, 2048, -2688, -1536, -2048, -1536, 1920, -1536, 1920, -1024, 1024, -320, -1024, -320, -1920, -1024, -2496, -1024, -2496, -64, -1920, -64, -1152, 192, -1152, 448, -1920, 704, -2496, 704, -2496, 1664, -1920, 1664, -1024, 960, 1024, 960, 1920, 1664, 2496, 1664, 2496, 704, 1920, 704, 1152, 448, 1152, 192, 1920, -64, 2496, -64, 2496, -1024, 1920, -1024)
 metadata/invert = true
 
 [node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]

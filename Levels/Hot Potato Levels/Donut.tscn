@@ -12,6 +12,12 @@ script = ExtResource("1_61edq")
 CameraZoom = 0.8
 background = ExtResource("2_wh5qk")
 
+[node name="CameraBoundary" type="ReferenceRect" parent="."]
+offset_left = -2432.0
+offset_top = -1152.0
+offset_right = 2432.0
+offset_bottom = 1792.0
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
