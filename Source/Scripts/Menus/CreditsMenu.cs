@@ -71,8 +71,12 @@ public partial class CreditsMenu : VerticalMenu{
     }
 
     protected override void MenuChoose(int choice){
-		ShowSubCredits(choice);
 		SFX.Play("Confirm");
+		if(Selection != 4){
+			ShowSubCredits(choice);
+		}else{
+			MenuScene.LoadMenu("AddonCreditsMenu");
+		}
     }
 
 	public override void MenuBack(){
