@@ -19,7 +19,6 @@ public partial class Level : Node2D {
     private Texture2D groundTexture;
     [Export]
     private PackedScene background;
-    public RectangleShape2D CameraBoundary;
     private static List<Node2D> respawnPoints;
     private static List<Node2D> spawnPoints;
     public const float OUTLINE_WIDTH = 9;
