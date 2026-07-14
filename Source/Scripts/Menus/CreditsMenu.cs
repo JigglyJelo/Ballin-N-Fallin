@@ -75,7 +75,7 @@ public partial class CreditsMenu : VerticalMenu{
 		if(Selection != 4){
 			ShowSubCredits(choice);
 		}else{
-			MenuScene.LoadMenu("AddonCreditsMenu");
+			MenuScene.LoadMenu("CreditsMenu/AddonCreditsMenu");
 		}
     }
 

@@ -67,7 +67,7 @@ public partial class AddonCreditsMenu : VerticalMenu{
 		if(displayingSubCredits){
 			ShowLicense(false);
 		}else{
-			MenuScene.LoadMenu("CreditsMenu");
+			MenuScene.LoadMenu("CreditsMenu/CreditsMenu");
 		}
 		SFX.Play("Back");
 	}
