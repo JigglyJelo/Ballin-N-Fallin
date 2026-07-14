@@ -82,23 +82,6 @@ Others: https://opengameart.org/content/ui-and-item-sound-effect-jingles-sample-
 label_settings = ExtResource("1_xubh5")
 vertical_alignment = 1
 
-[node name="MiscCredits" type="Label" parent="."]
-visible = false
-offset_left = -1660.0
-offset_top = -727.0
-offset_right = 1633.0
-offset_bottom = 929.0
-text = "Game made in Godot
- Addons used:
-antialiased_line2D | MIT
-netfox.internals | MIT
-netfox.noray | MIT
-nohub.gd | MIT
-trimsock.gd | MIT"
-label_settings = ExtResource("1_xubh5")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="MenuBackButton" parent="." instance=ExtResource("3_1kban")]
 position = Vector2(1750, 970)
 
