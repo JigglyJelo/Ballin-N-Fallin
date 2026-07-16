@@ -1,11 +1,10 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class MiniProfileMenu : ScrollableMenu{
 	public Action<string> OnProfileSelected;
 	public Action OnCanceled;
-
+	private const float FONT_SIZE = 0.4f;
 	private const float LABEL_X_POS = -1920f;
 	private const float LABEL_Y_POS = -400;
 	private const float LABEL_SPACING = 200;
@@ -50,7 +49,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		controlsMenu = GetNode<MiniControlsMenu>("MiniControlsMenu");
 		controlsMenu.Visible = false;
 		controlsMenu.OnCanceled += HandleControlsCanceled;
-		defaultFontSize = 0.4f;
+		defaultFontSize = FONT_SIZE;
 	}
 
 	public void Open(int inputId, string currentProfile){
@@ -104,6 +103,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	}
 
 	private void RefreshProfileList(){
+		defaultFontSize = FONT_SIZE;
 		if(selectionsContainer == null) return;
 		foreach(Node child in selectionsContainer.GetChildren()){
 			selectionsContainer.RemoveChild(child);
@@ -152,6 +152,11 @@ public partial class MiniProfileMenu : ScrollableMenu{
 		SFX.Play("Back");
 		OnCanceled?.Invoke();
 	}
+
+    protected override void UpdateSelectionVisual(){
+		defaultFontSize = FONT_SIZE;
+        base.UpdateSelectionVisual();
+    }
 
 	private void HandleTagConfirmed(string newTag){
 		IsKeypadOpen = false;
