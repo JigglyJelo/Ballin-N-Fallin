@@ -1,3 +1,7 @@
 "Boost.png" "BoostRight.png" "SandTop.png" and "Respawn Point.png" are by JigglyJello and available under:
 CC0 1.0 Universal
 https://creativecommons.org/publicdomain/zero/1.0/
+
+Spawnpoint.png is by JigglyJello and available under:
+CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
