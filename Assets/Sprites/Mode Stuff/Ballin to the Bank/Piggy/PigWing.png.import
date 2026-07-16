@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://i8iviw76gw0o"
-path="res://.godot/imported/Piggy.png-6b7b473015cafa3b58abfbfe3cc510d1.ctex"
+uid="uid://b3xsnafs8fpna"
+path="res://.godot/imported/PigWing.png-791aefd174b40225ad3477e11307469b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Mode Stuff/Ballin to the Bank/Piggy.png"
-dest_files=["res://.godot/imported/Piggy.png-6b7b473015cafa3b58abfbfe3cc510d1.ctex"]
+source_file="res://Assets/Sprites/Mode Stuff/Ballin to the Bank/Piggy/PigWing.png"
+dest_files=["res://.godot/imported/PigWing.png-791aefd174b40225ad3477e11307469b.ctex"]
 
 [params]
 
