@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://73lg8k8dvblk"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Modes/Ballin to the Bank/Piggy.cs" id="1_c5703"]
-[ext_resource type="Texture2D" uid="uid://i8iviw76gw0o" path="res://Assets/Sprites/Mode Stuff/Ballin to the Bank/Piggy.png" id="1_rqfn8"]
+[ext_resource type="Texture2D" uid="uid://i8iviw76gw0o" path="res://Assets/Sprites/Mode Stuff/Ballin to the Bank/Piggy/Piggy.png" id="1_rqfn8"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_jo2an"]
-[ext_resource type="Texture2D" uid="uid://b3xsnafs8fpna" path="res://Assets/Sprites/Mode Stuff/Ballin to the Bank/PigWing.png" id="3_poqwa"]
+[ext_resource type="Texture2D" uid="uid://b3xsnafs8fpna" path="res://Assets/Sprites/Mode Stuff/Ballin to the Bank/Piggy/PigWing.png" id="3_poqwa"]
 [ext_resource type="PackedScene" uid="uid://bcywajfijiv6n" path="res://Source/Scenes/Particles/Shadow.tscn" id="4_4pqbk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3kxkb"]
