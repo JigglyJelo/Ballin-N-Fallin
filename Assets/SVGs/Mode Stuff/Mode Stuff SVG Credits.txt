@@ -1,0 +1,7 @@
+Coins.svg, Flag.svg, GolfPole.svg, SoccerBall.svg, and Volleyball.svg are by JigglyJello and available under:
+CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+
+The other files in this Mode Stuff Folder and its subfolders are by JigglyJello and available under:
+CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
