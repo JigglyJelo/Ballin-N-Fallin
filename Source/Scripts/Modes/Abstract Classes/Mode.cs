@@ -169,8 +169,7 @@ public abstract partial class Mode : Node{
         player.Invulnerable = true;
     }
     public virtual void OnPlayerEnterRegain(Player player){
-        player.CanLaunch = true;
-        player.CanSlam = true;
+        player.Physics.PlayerRegained();
     }
     public virtual void PlayerRegainCheck(Player player, float delta){
         if(player.IsRegaining){

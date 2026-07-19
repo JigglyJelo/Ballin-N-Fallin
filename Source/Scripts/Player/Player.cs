@@ -219,7 +219,7 @@ public partial class Player : Node2D{
 				int ping = PingGetter.GetMedianPing();
 				if(Online.Buffer >= 0.5f){
 					byte ticks = (byte)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
-					if(!Mode.Finished) RpcId(1,nameof(SendLaunchToServer),InputVector.Angle(),LaunchPower,ticks);
+					if(!Mode.Finished) RpcId(1,nameof(LaunchOnServer),InputVector.Angle(),LaunchPower,ticks);
 					if(InputVector.X < 0) Visuals.Flip(true,InputVector.Angle() + MathF.PI);
 					else Visuals.Flip(false,InputVector.Angle());
 					TicksToIgnore = (int)Math.Ceiling((1-Online.Buffer)*(ping / (1000.0/Engine.PhysicsTicksPerSecond)));
@@ -227,7 +227,7 @@ public partial class Player : Node2D{
 					GD.Print("Ping: " + ping);
 					if(!Level.IsPositionOffscreen(Rb.GlobalPosition)){
 						TicksToIgnore = PingGetter.PingToTicks(ping);
-						if (!Mode.Finished) RpcId(1, nameof(SendLaunchToServerNRewind), InputVector.Angle(), LaunchPower, (byte)TicksToIgnore);
+						if (!Mode.Finished) RpcId(1, nameof(LaunchOnServerNRewind), InputVector.Angle(), LaunchPower, (byte)TicksToIgnore);
 						if (InputVector.X < 0) Visuals.Flip(true, InputVector.Angle() + MathF.PI);
 						else Visuals.Flip(false, InputVector.Angle());
 						TicksToIgnore++;
@@ -476,7 +476,7 @@ public partial class Player : Node2D{
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.SendLaunch)]
-	private void SendLaunchToServerNRewind(float angle,float launchPower,byte ticks){
+	private void LaunchOnServerNRewind(float angle,float launchPower,byte ticks){
 		if(Online.IsHost() && IsRpcFromPlayerOwner() && Online.Buffer == 0 && !Level.IsPositionOffscreenOrDead(Rb.GlobalPosition)){
 			//Get old position
 			Vector2 rewindedPosition = Trail.GetPreviousPosition(ticks);
@@ -488,10 +488,7 @@ public partial class Player : Node2D{
 			if (launchPower > PlayerPhysics.MAX_LAUNCH_POWER) launchPower = PlayerPhysics.MAX_LAUNCH_POWER;
 			else if (launchPower < 0) launchPower = 0;
 			LaunchPower = launchPower;
-			if(!CanLaunch){
-				GD.PrintErr(OwnerId + " launched when they shouldnt");
-				CanLaunch = true;
-			}
+			Physics.ImproperLaunchCheck();
 			if(CanLaunch){
 				Launch();
 				byte bAngle = (byte)(angle/(2*MathF.PI) *255);
@@ -503,16 +500,13 @@ public partial class Player : Node2D{
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = (int)Online.TransferChannelEnum.SendLaunch)]
-	private void SendLaunchToServer(float angle,float launchPower,byte ticks){
+	private void LaunchOnServer(float angle,float launchPower,byte ticks){
 		if(Online.IsHost() && IsRpcFromPlayerOwner()){
 			InputVector = Vector2.FromAngle(angle);
 			if (launchPower > PlayerPhysics.MAX_LAUNCH_POWER) launchPower = PlayerPhysics.MAX_LAUNCH_POWER;
 			else if (launchPower < 0) launchPower = 0;
 			LaunchPower = launchPower;
-			if(!CanLaunch){
-				GD.PrintErr(OwnerId + " launched when they shouldnt");
-				CanLaunch = true;
-			}
+			Physics.ImproperLaunchCheck();
 			if(CanLaunch){
 				Launch();
 				byte bAngle = (byte)(angle/(2*MathF.PI) *255);

@@ -19,11 +19,13 @@ public class PlayerPhysics{
 	public const float MIN_VEL_FOR_LAUNCH_PARTICLE = (float)(MAX_LAUNCH_POWER * 0.15); //The amount your launch needed to be charged for particle to spawn
 	private const float MIN_STRETCH_SPEED = 2300; //The minimum velocity before the squash n stretch effect starts
     public float StillTimer, AirTimer;
+	private int improperLaunchesSinceRegain = 0;
+	private float timeSinceLastRegain, timeSinceLastImproperLaunch;
 	private Player player;
     public PlayerPhysics(Player player){
         this.player = player;
     }
-    public void DoPlayerPhysics(float delta){
+    public void DoPlayerPhysics(float fDelta){
         float velocityMagnitudeSquared = player.Rb.LinearVelocity.LengthSquared();
 		if(Online.IsHost()){
 			if((player.Rb.GlobalPosition.Y>2500/Level.LevelNode.CameraZoom || (player.Rb.GlobalPosition.Y<-2500/Level.LevelNode.CameraZoom && player.Rb.GlobalPosition.Y>-10000/Level.LevelNode.CameraZoom) || (player.Rb.GlobalPosition.X<-4444/Level.LevelNode.CameraZoom && player.Rb.GlobalPosition.X>-17777/Level.LevelNode.CameraZoom) || (player.Rb.GlobalPosition.X>4444/Level.LevelNode.CameraZoom && player.Rb.GlobalPosition.X<17777/Level.LevelNode.CameraZoom)) && !player.Finished) 
@@ -47,7 +49,7 @@ public class PlayerPhysics{
 		}
 
 		if(player.IsStomping){
-			player.StompTimer += delta;
+			player.StompTimer += fDelta;
 			const float MIN_STOMP_TIME = 0.25f;
 			if(player.Rb.LinearVelocity.Y <= MIN_STOMP_SPEED && player.StompTimer >= MIN_STOMP_TIME){
 				player.IsStomping = false;
@@ -56,14 +58,48 @@ public class PlayerPhysics{
 
 		//Gives player launch and slam back if stuck in air
 		if(!player.CanLaunch || !player.CanSlam){
-			if(AirTimer <= 10) AirTimer += delta;
+			if(AirTimer <= 10) AirTimer += fDelta;
 			else{
 				player.CanSlam = true;
 				player.CanLaunch = true;
 				AirTimer = 0;
 			}
 		}
+
+		//Improper Launch Timers
+		timeSinceLastRegain += fDelta;
+		if(improperLaunchesSinceRegain > 0) timeSinceLastImproperLaunch += fDelta;
     }
+
+	public void ImproperLaunchCheck(){
+		if(!player.CanLaunch){
+			string improperLaunchMessage = player.OwnerId + " launched when they shouldnt";
+			if(timeSinceLastRegain <= 0.5f){
+				player.CanLaunch = true;
+				improperLaunchMessage += " (ALLOWED: TOUCHED WITHIN 0.5s)";
+			}else if(improperLaunchesSinceRegain == 0){
+				player.CanLaunch = true;
+				improperLaunchMessage += " (ALLOWED: FIRST SINCE TOUCH)";
+			}else if(timeSinceLastImproperLaunch > 1 && improperLaunchesSinceRegain < 3){
+				player.CanLaunch = true;
+				improperLaunchMessage += " (ALLOWED: NOT SPAMMING)";
+			}else{
+				improperLaunchMessage += " (DENIED)";
+			}
+			GD.PrintErr(improperLaunchMessage);
+			if(player.CanLaunch){
+				improperLaunchesSinceRegain++;
+				timeSinceLastImproperLaunch = 0;
+			}
+		}
+	}
+
+	public void PlayerRegained(){
+		player.CanLaunch = true;
+        player.CanSlam = true;
+        improperLaunchesSinceRegain = 0;
+        timeSinceLastRegain = 0;
+	}
 
     public void OnRigidBodyEntered(PhysicsBody2D body){
 		if(body.IsInGroup("NoRegain")){
