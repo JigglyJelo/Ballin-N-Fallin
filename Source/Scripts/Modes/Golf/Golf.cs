@@ -120,8 +120,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
     public override void PlayerRegainCheck(Player player, float delta) {
         if(player.IsRegaining){
             if(player.Physics.StillTimer >= 2){
-                player.CanLaunch = true;
-                player.CanSlam = true;
+                player.Physics.PlayerRegained();
                 player.SetNewPos = false;
                 player.Physics.StillTimer = 0;
             }else if(player.Physics.StillTimer >= 1 && player.Physics.StillTimer < 2 && Mathf.Abs(player.Rb.GlobalPosition.DistanceTo(player.SpawnPoint)) < 512 && Golf.PlayerStrokes[player.Index] != 0){
