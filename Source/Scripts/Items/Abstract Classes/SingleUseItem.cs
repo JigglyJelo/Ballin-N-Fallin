@@ -3,7 +3,7 @@ public abstract class SingleUseItem : Item{
 
     public SingleUseItem(Player player,ItemEnum itemType,byte Amount): base(player, itemType){
         this.Amount = Amount;
-        //if(Amount > 1 && Player.Item == this) Player.ItemAmountText.Text = Amount.ToString();
+        if(Amount > 1) player.Visuals.ItemAmountText.Text = Amount.ToString();
     }
     
     public override void UseItem(){
