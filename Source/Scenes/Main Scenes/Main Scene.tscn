@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dme3ppymd8g6u"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Game.cs" id="1_nn26k"]
-[ext_resource type="Script" path="res://Source/Scripts/SceneTransitioner.cs" id="2_of2mv"]
-[ext_resource type="Script" path="res://Source/Scripts/DynamicCamera.cs" id="2_tuvjl"]
-[ext_resource type="Script" path="res://Source/Scripts/Cursor.cs" id="3_3hbu3"]
+[ext_resource type="Script" uid="uid://b5w1blsbb54ur" path="res://Source/Scripts/Game.cs" id="1_nn26k"]
+[ext_resource type="Script" uid="uid://c7vis35o47cir" path="res://Source/Scripts/SceneTransitioner.cs" id="2_of2mv"]
+[ext_resource type="Script" uid="uid://dd4ic316r4x4f" path="res://Source/Scripts/DynamicCamera.cs" id="2_tuvjl"]
+[ext_resource type="Script" uid="uid://ce86llgmdyubx" path="res://Source/Scripts/Cursor.cs" id="3_3hbu3"]
 
 [node name="Game" type="Node"]
 physics_interpolation_mode = 2

@@ -106,7 +106,7 @@ public partial class MusicPlayer : AudioStreamPlayer{
 		float audioBusPitch;
 		int musicBusIndex = AudioServer.GetBusIndex("Music");
 		AudioEffectPitchShift pitchShift = AudioServer.GetBusEffect(musicBusIndex,0) as AudioEffectPitchShift;
-		AudioServer.SetBusEffectEnabled(musicBusIndex,0,Game.CurrentScene == Game.SceneType.Game);
+		pitchShift.Oversampling = 10;
 		if(pitch != 1){
 			audioBusPitch = 1 / pitch;
 			pitchShift.PitchScale = audioBusPitch;
