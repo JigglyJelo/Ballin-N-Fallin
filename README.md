@@ -17,9 +17,9 @@
 
 ### Source Code
 
-All software code and files within the `Source` folder, along with the Godot project files located in the root of the repository (including structural scripts, base scenes, resources, and materials), is licensed under the [GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later)](LICENSE).
+All software code and files within the `Source` folder, along with the Godot project files located in the root of the repository (including structural scripts, base scenes, resources, and materials), are licensed under the [GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later)](LICENSE).
 
-To ensure the game can be distributed on PC storefronts, this project includes a specific Section 7 exception that permits linking with the Steamworks SDK. By submitting a pull request, you explicitly agree to release your contributions under the AGPLv3 or later, and you accept the terms outlined in the [LICENSE-ADDENDUM.md](LICENSE-ADDENDUM.md) file.
+This project includes a specific Section 7 Additional permission to the AGPL that permits linking with the Steamworks SDK. By contributing, you explicitly agree to release your contributions under the AGPLv3 or later, and the Additional permission outlined in the [LICENSE-ADDENDUM.md](LICENSE-ADDENDUM.md) file.
 
 ### Game Assets
 
