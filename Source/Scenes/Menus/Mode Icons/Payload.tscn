@@ -1,0 +1,77 @@
+[gd_scene load_steps=5 format=3 uid="uid://1ltkgi2gvfy1"]
+
+[ext_resource type="Texture2D" uid="uid://cq07b6n7spnpi" path="res://Assets/Gradients/Payload.tres" id="1_glrt5"]
+[ext_resource type="Texture2D" uid="uid://cyf06ne765poi" path="res://Assets/Sprites/Particles/Shadow.png" id="2_el47o"]
+[ext_resource type="Texture2D" uid="uid://b2jxsobecogl" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Golf Tile.png" id="2_h7ox8"]
+[ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="3_xj58d"]
+
+[node name="Domination" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+texture = ExtResource("1_glrt5")
+texture_offset = Vector2(0, 1000)
+polygon = PackedVector2Array(-816, -520, 816, -520, 816, 520, -816, 520)
+
+[node name="Payload" type="Node2D" parent="."]
+
+[node name="Line2D" type="Line2D" parent="Payload"]
+points = PackedVector2Array(-824, 0, 824, 0)
+default_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[node name="Visual" type="Node2D" parent="Payload"]
+
+[node name="Zone" type="Polygon2D" parent="Payload/Visual"]
+texture_repeat = 2
+color = Color(0.823529, 0, 0, 0.501961)
+texture = ExtResource("2_h7ox8")
+polygon = PackedVector2Array(-320, -256, 320, -256, 320, 256, -320, 256)
+
+[node name="Platform" type="Polygon2D" parent="Payload/Visual"]
+color = Color(0.823529, 0, 0, 1)
+polygon = PackedVector2Array(-320, 256, 320, 256, 320, 320, -320, 320)
+
+[node name="Floor" type="Polygon2D" parent="Payload/Visual"]
+light_mask = 3
+color = Color(0.823529, 0, 0, 1)
+polygon = PackedVector2Array(-320, 256, 320, 256, 320, 224, -320, 224)
+
+[node name="PlatformLine" type="Line2D" parent="Payload/Visual"]
+points = PackedVector2Array(-320, 320, 320, 320, 320, 256, -320, 256)
+closed = true
+width = 8.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="ZoneLine" type="Line2D" parent="Payload/Visual"]
+points = PackedVector2Array(320, 256, 320, -256, -320, -256, -320, 256)
+width = 8.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="FloorLine" type="Line2D" parent="Payload/Visual"]
+points = PackedVector2Array(-320, 224, 320, 224)
+default_color = Color(0, 0, 0, 1)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.517647)
+position = Vector2(192, 240)
+texture = ExtResource("2_el47o")
+
+[node name="Player" parent="." instance=ExtResource("3_xj58d")]
+position = Vector2(193, 147)
+scale = Vector2(0.4, 0.4)
+
+[node name="BallSprite" parent="Player" index="0"]
+self_modulate = Color(0.823529, 0, 0, 1)
+
+[node name="ShadingSprite" parent="Player" index="1"]
+self_modulate = Color(0.823529, 0, 0, 1)
+
+[node name="PupilsSprite" parent="Player/EyesSprite" index="0"]
+position = Vector2(15, 0)
+
+[node name="Border" type="Line2D" parent="."]
+points = PackedVector2Array(-825, -525, 825, -525, 825, 525, -825, 525)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[editable path="Player"]

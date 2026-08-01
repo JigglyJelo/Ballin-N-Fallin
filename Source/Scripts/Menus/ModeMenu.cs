@@ -25,11 +25,11 @@ public partial class ModeMenu : ScrollableMenu{
     
     private Label[] texts;
     private Label descriptionLabel;
-    private Sprite2D modeIcon;
+    private Node2D modeBorder;
 
     public override void _Ready(){
         descriptionLabel = GetNode<Label>("DescriptionLabel");
-        modeIcon = GetNode<Sprite2D>("ModeIcon");
+        modeBorder = GetNode<Node2D>("ModeBorder");
         texts = new Label[modes.Length];
         base._Ready();
 
@@ -111,7 +111,8 @@ public partial class ModeMenu : ScrollableMenu{
             }
         }
         Mode.GameMode mode = modes[Selection-1];
-        modeIcon.Texture = GD.Load<Texture2D>("res://Assets/Sprites/Menus/Modes/" + Mode.EnumToString(mode) + " Icon.png");
+        if(modeBorder.GetChildCount() > 0)modeBorder.GetChild(0).QueueFree();
+        modeBorder.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/Mode Icons/" + Mode.EnumToString(mode) + ".tscn").Instantiate());
         descriptionLabel.Text = Mode.GetModeDescription(mode);
     }
     

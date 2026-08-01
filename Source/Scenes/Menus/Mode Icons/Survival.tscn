@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://fcdmrw30nyrk"]
+
+[ext_resource type="Texture2D" uid="uid://b13cl4nvdvln7" path="res://Assets/Gradients/Target Test.tres" id="1_rwdnv"]
+[ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="2_kme32"]
+[ext_resource type="Texture2D" uid="uid://bkmosxfq65ihk" path="res://Assets/Sprites/Mode Stuff/Trash/crate.png" id="3_ctdoa"]
+
+[node name="Race" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0.154876, 0.154876, 0.154876, 1)
+texture = ExtResource("1_rwdnv")
+texture_offset = Vector2(0, 1000)
+polygon = PackedVector2Array(-816, -520, 816, -520, 816, 520, -816, 520)
+
+[node name="Player" parent="." instance=ExtResource("2_kme32")]
+position = Vector2(-434, 143)
+rotation = -0.0959931
+skew = -0.298451
+
+[node name="BallSprite" parent="Player" index="0"]
+self_modulate = Color(0.305882, 0.305882, 0.305882, 1)
+
+[node name="ShadingSprite" parent="Player" index="1"]
+self_modulate = Color(0.305882, 0.305882, 0.305882, 1)
+
+[node name="PupilsSprite" parent="Player/EyesSprite" index="0"]
+position = Vector2(15, -5)
+
+[node name="Crate" type="Sprite2D" parent="."]
+texture_repeat = 3
+position = Vector2(376, -69)
+rotation = -0.174533
+scale = Vector2(2, 2)
+texture = ExtResource("3_ctdoa")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 384)
+
+[node name="Border" type="Line2D" parent="."]
+points = PackedVector2Array(-825, -525, 825, -525, 825, 525, -825, 525)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[editable path="Player"]
