@@ -341,7 +341,8 @@ public partial class PlayerVisuals : Node2D{
 		}else{
 			itemSprite.Texture = player.Inventory.Item.Icon;
 			itemTriangle.Visible = true;
-			if(player.Inventory.Item is SingleUseItem) ItemAmountText.Text = (player.Inventory.Item as SingleUseItem).Amount.ToString();
+			if(player.Inventory.Item is SingleUseItem suItem) ItemAmountText.Text = suItem.Amount.ToString();
+			else ItemAmountText.Text = "";
 		}
 		AdjustUsernamePosition();
 	}
