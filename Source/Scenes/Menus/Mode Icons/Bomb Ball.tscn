@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://nwht5xk3riqc" path="res://Assets/Gradients/Bomb Ball.tres" id="1_cr6wk"]
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="2_xq4qp"]
 [ext_resource type="Texture2D" uid="uid://copxvptmpq3h" path="res://Assets/Sprites/Player/500/Eyes/AngryEyes.png" id="3_fsk7r"]
-[ext_resource type="Texture2D" uid="uid://c7f2swrf7fs0b" path="res://Assets/Sprites/Level Stuff/Ground Patterns/King of the Hill Tile.png" id="4_vmd7q"]
+[ext_resource type="Texture2D" uid="uid://c7n3h7q6cw6vu" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Bomb Ball Tile.png" id="4_7yub4"]
 [ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_line2d.gd" id="5_ugl42"]
 [ext_resource type="Texture2D" uid="uid://cyf06ne765poi" path="res://Assets/Sprites/Particles/Shadow.png" id="6_gb00i"]
 [ext_resource type="Texture2D" uid="uid://bqedcq64h6f46" path="res://Assets/Sprites/Mode Stuff/Soccer/SportBall.png" id="7_nspvi"]
@@ -75,7 +75,7 @@ flip_h = true
 [node name="Inside" type="Polygon2D" parent="Level"]
 texture_repeat = 2
 color = Color(0.772549, 0.623529, 0.788235, 1)
-texture = ExtResource("4_vmd7q")
+texture = ExtResource("4_7yub4")
 polygon = PackedVector2Array(-816, 520, 816, 520, 816, 384, -816, 384)
 
 [node name="Floor" type="Polygon2D" parent="Level"]

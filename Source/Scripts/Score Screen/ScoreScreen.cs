@@ -111,7 +111,7 @@ public partial class ScoreScreen : CanvasLayer{
 				}
 				TweenWinnerText();
 			}
-			const double WAIT_TIME = 3.275+0.3;
+			const double WAIT_TIME = 3.5f;
 			if(Online.IsHost()){
 				if(!Tour.IsTour){
 					await ToSignal(GetTree().CreateTimer(1,false), "timeout");
