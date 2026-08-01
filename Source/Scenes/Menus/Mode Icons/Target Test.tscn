@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b13cl4nvdvln7" path="res://Assets/Gradients/Target Test.tres" id="1_s5pv8"]
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="3_wvimn"]
 
-[node name="Race" type="Node2D"]
+[node name="Target Test" type="Node2D"]
 
 [node name="Background" type="Polygon2D" parent="."]
 texture = ExtResource("1_s5pv8")
