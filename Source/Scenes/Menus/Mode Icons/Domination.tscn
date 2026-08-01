@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://csqvan6eifi6j"]
+
+[ext_resource type="Texture2D" uid="uid://bjvc2b52dobon" path="res://Assets/Gradients/Domination.tres" id="1_uustq"]
+[ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Source/Scenes/Mode Stuff/Domination/DominationZone.tscn" id="2_56mji"]
+[ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="3_2tu04"]
+
+[node name="Domination" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+texture = ExtResource("1_uustq")
+texture_offset = Vector2(0, 1000)
+polygon = PackedVector2Array(-816, -520, 816, -520, 816, 520, -816, 520)
+
+[node name="DominationZone" parent="." instance=ExtResource("2_56mji")]
+position = Vector2(320, 0)
+
+[node name="Player" parent="." instance=ExtResource("3_2tu04")]
+position = Vector2(-321, 113)
+rotation = 0.143117
+scale = Vector2(0.75, 0.75)
+skew = 0.298451
+
+[node name="BallSprite" parent="Player" index="0"]
+self_modulate = Color(1, 0.290196, 0, 1)
+
+[node name="ShadingSprite" parent="Player" index="1"]
+self_modulate = Color(1, 0.290196, 0, 1)
+
+[node name="PupilsSprite" parent="Player/EyesSprite" index="0"]
+position = Vector2(15, -5)
+
+[node name="Border" type="Line2D" parent="."]
+points = PackedVector2Array(-825, -525, 825, -525, 825, 525, -825, 525)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[editable path="Player"]
