@@ -2,6 +2,6 @@ TransformBar.png, HalfArrow.png, and LineSmallest.png are by JigglyJello and ava
 CC0 1.0 Universal
 https://creativecommons.org/publicdomain/zero/1.0/
 
-The other files in this Player Folder and its subfolders are by JigglyJello and available under:
+The other files in this Player Folder and its subfolders, along with the Player/Baller characters themselves, are by JigglyJello and available under:
 CC BY-SA 4.0
 https://creativecommons.org/licenses/by-sa/4.0/
