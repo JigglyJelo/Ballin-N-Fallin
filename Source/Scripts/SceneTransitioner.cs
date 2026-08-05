@@ -17,6 +17,7 @@ public partial class SceneTransitioner : Node{
     }
     public static void SwitchToScene(Game.SceneType scene, bool free){
         //Game.ClearFontCache(); //Breaks exported game
+		Game.StopVibrations();
 		//Reset music speed and pitch
 		Game.CurrentScene = scene;
 		MusicPlayer.MusicNode = null;
