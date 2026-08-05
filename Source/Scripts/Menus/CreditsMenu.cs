@@ -2,7 +2,7 @@ using Godot;
 
 public partial class CreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
-	private Label headerLabel, subheaderLabel, codeLabel, musicLabel,sfxLabel,miscLabel;
+	private Label headerLabel, subheaderLabel, codeLabel, musicLabel,sfxLabel;
 	private const string MUSIC_CREDITS_TEXT = @"
 		Menu: The Gallant Seventh - US Marine Band
 		Score Screen: Semper Fidelis - US Marine Band
@@ -36,8 +36,7 @@ public partial class CreditsMenu : VerticalMenu{
 		codeLabel = GetNode<Label>("CodeCredits");
 		musicLabel = GetNode<Label>("MusicCredits");
 		sfxLabel = GetNode<Label>("SFXCredits");
-		miscLabel = GetNode<Label>("MiscCredits");
-		totalSelections = 4;
+		totalSelections = 5;
 	}
 
     public override void _Process(double delta){
@@ -72,10 +71,10 @@ public partial class CreditsMenu : VerticalMenu{
 
     protected override void MenuChoose(int choice){
 		SFX.Play("Confirm");
-		if(Selection != 4){
-			ShowSubCredits(choice);
-		}else{
-			MenuScene.LoadMenu("CreditsMenu/AddonCreditsMenu");
+		switch(Selection){
+			case 4:	MenuScene.LoadMenu("Credits/AddonCreditsMenu"); break;
+			case 5: MenuScene.LoadMenu("Credits/GodotCreditsMenu"); break;
+			default: ShowSubCredits(choice); break;
 		}
     }
 
@@ -100,7 +99,6 @@ public partial class CreditsMenu : VerticalMenu{
 		codeLabel.Visible = subCredits == 1;
 		musicLabel.Visible = subCredits == 2;
 		sfxLabel.Visible = subCredits == 3;
-		miscLabel.Visible = subCredits == 4;
 		switch(subCredits){
 			case 0: headerLabel.Text = "Ballin N Fallin by JigglyJello"; break;
 			case 2:
@@ -109,7 +107,6 @@ public partial class CreditsMenu : VerticalMenu{
 				musicLabel.Position = new Vector2(-1920, -838);
 				break;
 			case 3: headerLabel.Text = "SFX Used"; break;
-			case 4: headerLabel.Text = "Misc Credits"; break;
 		}
 	}
 }

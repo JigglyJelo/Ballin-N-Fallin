@@ -131,6 +131,17 @@ label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GodotText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = 720.0
+offset_right = 1920.0
+offset_bottom = 954.0
+pivot_offset = Vector2(1920, 117)
+text = "Godot Credits"
+label_settings = ExtResource("1_xubh5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Copyright" type="Label" parent="."]
 self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
 offset_left = -1920.0
