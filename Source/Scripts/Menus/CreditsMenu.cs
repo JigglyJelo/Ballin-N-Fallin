@@ -3,31 +3,7 @@ using Godot;
 public partial class CreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
 	private Label headerLabel, subheaderLabel, codeLabel, musicLabel,sfxLabel;
-	private const string MUSIC_CREDITS_TEXT = @"
-		Menu: The Gallant Seventh - US Marine Band
-		Score Screen: Semper Fidelis - US Marine Band
-		Victory: Stars & Stripes Forever - US Marine Band
-		Race: William Tell Overture Finale - US Marine Band
-		Golf: Strauss Waltz Medley - USAF Band
-		King of the Hill: Can-Can (by Offenbach) - European Archive
-		Deathmatch: Danse Baccanale from Samson et Dalila - USAF Band
-		Soccer: Washington Post March - US Marine Band
-		Crown the King: Egmont Overture Finale Kevin MacLeod (incompetech.com) 
-		     Licensed under Creative Commons: By Attribution 4.0 License
-		     http://creativecommons.org/licenses/by/4.0/
-		Survival: Flight of the Bumblebees - US Army Band
-		Volleyball: The Blue Danube - US Marine Band
-		Hot Potato: Hall of the Mountain King - Kevin MacLeod (incompetech.com) 
-		     Licensed under Creative Commons: By Attribution 4.0 License
-		     http://creativecommons.org/licenses/by/4.0/
-		Ballin to the Bank: Russian Dance - Lud and Schlatts Musical Emporium 
-			 Licensed under Creative Commons: By Attribution 3.0 License
-			 https://creativecommons.org/licenses/by/3.0/
-		Domination: Radetzky March - US Marine Band
-		Target Test: Carmen - Prelude, Act I - European Archive
-		Payload: Galop from Genevieve de Brabant - United States Marine Band
-		Bomb Ball: Go Falcons + Falcons Fight - US Air Force Band of the Rockies
-	";
+	private const float VISIBLE_AREA_HEIGHT = 600f;
 	
 	public override void _Ready(){
 		base._Ready();
@@ -39,8 +15,11 @@ public partial class CreditsMenu : VerticalMenu{
 		totalSelections = 5;
 	}
 
-    public override void _Process(double delta){
-        if(displayingSubCredits){
+	public override void _Process(double delta){
+		if(displayingSubCredits){
+			float topLimit = -838f;
+			float bottomLimit = topLimit - Mathf.Max(0, (musicLabel.Size.Y * musicLabel.Scale.Y) - VISIBLE_AREA_HEIGHT);
+
 			//Only check for back button
 			for(int i = 0; i < Game.MAX_PLAYERS; i++){
 				if(Input.IsActionJustReleased("B" + i)){
@@ -48,35 +27,35 @@ public partial class CreditsMenu : VerticalMenu{
 					return;
 				}else{
 					float y = Input.GetVector("Aim Left" + i, "Aim Right" + i, "Aim Up" + i, "Aim Down" + i).Y;
-					if(y > 0.5f && musicLabel.Position.Y > -1228){
+					if(y > 0.5f && musicLabel.Position.Y > bottomLimit){
 						musicLabel.Position -= new Vector2(0,(float)delta * 400);
 						return;
-					}else if(y < -0.5f && musicLabel.Position.Y < -838){
+					}else if(y < -0.5f && musicLabel.Position.Y < topLimit){
 						musicLabel.Position += new Vector2(0,(float)delta * 400);
 						return;
 					}
 				}
 			}
-			if(Input.IsActionJustReleased("ScrollWheelUp") && musicLabel.Position.Y < -838){
+			if(Input.IsActionJustReleased("ScrollWheelUp") && musicLabel.Position.Y < topLimit){
 				musicLabel.Position += new Vector2(0,(float)delta * 4000);
 				return;
-			}else if(Input.IsActionJustReleased("ScrollWheelDown") && musicLabel.Position.Y > -1228){
+			}else if(Input.IsActionJustReleased("ScrollWheelDown") && musicLabel.Position.Y > bottomLimit){
 				musicLabel.Position -= new Vector2(0,(float)delta * 4000);
 				return;
 			}
 		}else{
 			InputChecks(delta);
 		}
-    }
+	}
 
-    protected override void MenuChoose(int choice){
+	protected override void MenuChoose(int choice){
 		SFX.Play("Confirm");
 		switch(Selection){
-			case 4:	MenuScene.LoadMenu("Credits/AddonCreditsMenu"); break;
+			case 4: MenuScene.LoadMenu("Credits/AddonCreditsMenu"); break;
 			case 5: MenuScene.LoadMenu("Credits/GodotCreditsMenu"); break;
 			default: ShowSubCredits(choice); break;
 		}
-    }
+	}
 
 	public override void MenuBack(){
 		if(displayingSubCredits){
@@ -103,10 +82,16 @@ public partial class CreditsMenu : VerticalMenu{
 			case 0: headerLabel.Text = "Ballin N Fallin by JigglyJello"; break;
 			case 2:
 				headerLabel.Text = "Music Used";
-				musicLabel.Text = MUSIC_CREDITS_TEXT;
+				musicLabel.Text = GetMusicCredits();
 				musicLabel.Position = new Vector2(-1920, -838);
 				break;
 			case 3: headerLabel.Text = "SFX Used"; break;
 		}
+	}
+
+	private static string GetMusicCredits(){
+		using FileAccess file = FileAccess.Open("res://Assets/Music/Music Credits.txt", FileAccess.ModeFlags.Read);
+		if(file != null) return file.GetAsText();
+		return null; 
 	}
 }
