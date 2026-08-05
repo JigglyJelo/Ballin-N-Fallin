@@ -425,7 +425,7 @@ public partial class Player : Node2D{
 					Rb.SetDeferred("global_position",new Vector2(1000000f,Game.Random.Next(-100000,100000)));
 					Rb.SkipInterpolation();
 				}
-				if(OwnsPlayer()){
+				if(OwnsPlayer() && PlayerData.InputDevice < PlayerData.PlayerInputDevice.Mouse){
 					Input.StopJoyVibration((int)PlayerData.InputDevice);
 				}
 				Trail.ResetTrail();
