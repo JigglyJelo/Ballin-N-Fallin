@@ -49,10 +49,11 @@ autowrap_mode = 3
 visible = false
 offset_left = -1920.0
 offset_top = -838.0
-offset_right = 8109.0
-offset_bottom = 4136.0
+offset_right = 7720.0
+offset_bottom = 3937.0
 scale = Vector2(0.4, 0.4)
 label_settings = ExtResource("1_xubh5")
+autowrap_mode = 1
 
 [node name="SFXCredits" type="Label" parent="."]
 visible = false
