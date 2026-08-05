@@ -16,9 +16,6 @@ public partial class MainMenu : VerticalMenu{
 		copyrightText = GetNode<Label>("Copyright");
 		UpdateSelectionVisual();
 		Input.MouseMode = Input.MouseModeEnum.Visible;
-		foreach(PlayerData playerData in Game.PlayerDatas){
-			Input.StopJoyVibration((int)playerData.InputDevice);
-		}
 		AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Logo.tscn").Instantiate());
 	}
 
