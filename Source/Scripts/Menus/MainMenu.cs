@@ -29,7 +29,7 @@ public partial class MainMenu : VerticalMenu{
 		if(IsMouseOverLabel(copyrightText)){
 			Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
 			if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-				MenuScene.LoadMenu("CreditsMenu/CreditsMenu");
+				MenuScene.LoadMenu("Credits/CreditsMenu");
 				SFX.Play("Confirm");
 			}
 			if(copyrightText.SelfModulate != COPYRIGHT_COLOR_HOVERED){
