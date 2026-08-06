@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="6_kr4ne"]
 [ext_resource type="PackedScene" uid="uid://b5lf243tgfp82" path="res://Source/Scenes/Mode Stuff/Survival/Sumo/TheRing.tscn" id="7_ty4st"]
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_1v5xd")
 CameraZoom = 0.65
 floorColorOverride = Color(0.952941, 0.788235, 0.545098, 1)
@@ -17,7 +17,7 @@ OutlineColorOverride = Color(0.768627, 0.427451, 0.368627, 1)
 groundTexture = ExtResource("2_wu6n2")
 background = ExtResource("3_qq0is")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-2880, -1472, -2880, 2112, 2880, 2112, 2880, -1664, -2880, -1664, -2880, -1472, 2432, -1472, 2432, 1536, 1664, 1536, 1408, 640, 1088, 640, 896, 256, -896, 256, -1088, 640, -1408, 640, -1664, 1536, -2368, 1536, -2368, -1472)

@@ -28,7 +28,7 @@ size = Vector2(138, 832)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2cxn"]
 size = Vector2(640, 138)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_3mkrw")
 LevelUnit = 6
 background = ExtResource("2_od8uk")
@@ -37,7 +37,7 @@ metadata/medals = PackedFloat32Array(50, 42, 35, 30)
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8n4m8")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(-384, 768)

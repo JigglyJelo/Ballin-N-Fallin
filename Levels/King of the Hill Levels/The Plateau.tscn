@@ -16,7 +16,7 @@ _data = {
 }
 point_count = 9
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_hp0yf")
 CameraZoom = 0.7
 background = ExtResource("2_ic4fq")
@@ -24,7 +24,7 @@ background = ExtResource("2_ic4fq")
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_djmoj")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(2560, 1408, 2560, 2048, -2816, 2048, -2816, -1664, 2816, -1664, 2816, 2048, 2560, 2048, 2560, -1408, -2560, -1408, -2560, 1408)

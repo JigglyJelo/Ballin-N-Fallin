@@ -58,6 +58,8 @@ public partial class Level : Node2D {
                 staticBody.CollisionLayer = 0b11;
                 if(staticBody.IsInGroup("NoRegain")){
                     staticBody.Modulate = new Color(0.85f,0.85f,0.85f);
+                }else if(!staticBody.IsInGroup("Regain")){
+                    GD.PrintErr($"{Game.CurrentLevelName}: FORGOT TO ASSIGN EITHER Regain or NoRegain group to {staticBody.Name} Node");
                 }
             }
         }

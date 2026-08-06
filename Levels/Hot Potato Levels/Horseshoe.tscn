@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_507hn"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="4_l0k4f"]
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(0, -320)
 script = ExtResource("1_bprnr")
 CameraZoom = 0.8
@@ -18,7 +18,7 @@ offset_top = -1152.0
 offset_right = 2304.0
 offset_bottom = 1664.0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(2048, -1536, 2560, -1536, 2560, 2048, -2560, 2048, -2560, -1536, 2048, -1536, 2048, -960, 384, -960, 384, -192, 896, -192, 896, 320, -896, 320, -896, -192, -384, -192, -384, -960, -2048, -960, -2048, -192, -1536, -192, -1536, 320, -1920, 320, -1920, 1024, -1024, 1536, 1024, 1536, 1920, 1024, 1920, 320, 1536, 320, 1536, -192, 2048, -192, 2048, -960)

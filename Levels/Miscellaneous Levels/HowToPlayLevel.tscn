@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://i72vkh4su701" path="res://Assets/Sprites/Input Prompts/RT.png" id="10_3hy2x"]
 [ext_resource type="AudioStream" uid="uid://cie2v6uyo5syk" path="res://Assets/Music/Score.ogg" id="13_rxa1k"]
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(-64, -512)
 script = ExtResource("1_u7ck4")
 floorColorOverride = Color(1, 0.678431, 0.129412, 1)
@@ -28,7 +28,7 @@ z_index = -10
 color = Color(1, 0.764706, 0.388235, 0.501961)
 polygon = PackedVector2Array(-1728, -512, 1856, -512, 1856, 1472, -1728, 1472)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
