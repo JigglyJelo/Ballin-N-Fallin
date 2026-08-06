@@ -9,13 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="7_d3uhc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5ek"]
-size = Vector2(5485, 2944)
+size = Vector2(5878.5, 2944)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u7gcf"]
-size = Vector2(128, 3737)
+size = Vector2(128, 4226)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5v26a"]
-size = Vector2(128, 3778)
+size = Vector2(128, 4282)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1iex4"]
 size = Vector2(128, 7311)
@@ -29,7 +29,7 @@ CameraZoom = 0.5
 background = ExtResource("2_0yhhv")
 
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
-position = Vector2(0, 320)
+position = Vector2(196.75, 320)
 shape = SubResource("RectangleShape2D_gr5ek")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -39,23 +39,23 @@ polygon = PackedVector2Array(-2464, 2528, -2464, 1456, -1968, 1456, -1968, 960, 
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(3416, -672)
-polygon = PackedVector2Array(-2464, 2528, -2464, 1456, -1968, 1456, -1968, 960, -1464, 960, -1464, 528, -968, 528, -960, 2528)
+polygon = PackedVector2Array(-2464, 2528, -2456, 1440, -1944, 1440, -1944, 992, -1496, 992, -1496, 544, -664, 544, -664, 2528)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-640, 1344, 0, 1344, 704, 1344, 704, 1760, 0, 1432, -704, 1496)
+polygon = PackedVector2Array(-640, 1344, 704, 1344, 704, 1448, -648, 1448)
 
 [node name="KothZone" parent="." instance=ExtResource("3_jwjri")]
 position = Vector2(2207, -140)
 
 [node name="CollisionPolygon2D" parent="KothZone" index="0"]
-polygon = PackedVector2Array(256, 0, 256, -512, -256, -512, -256, 0)
+polygon = PackedVector2Array(545, 460, 545, -692, -735, -692, -735, 460)
 
 [node name="DeathZone" type="Area2D" parent="."]
 position = Vector2(0, 653)
 script = ExtResource("6_hskhp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
-position = Vector2(3639, 32.5)
+position = Vector2(3639, -212)
 shape = SubResource("RectangleShape2D_u7gcf")
 debug_color = Color(1, 0, 0, 0.501961)
 
@@ -64,7 +64,7 @@ position = Vector2(-704, 704)
 script = ExtResource("6_hskhp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone2"]
-position = Vector2(-2815, 9)
+position = Vector2(-2815, -243)
 shape = SubResource("RectangleShape2D_5v26a")
 debug_color = Color(1, 0, 0, 0.501961)
 
@@ -74,7 +74,7 @@ rotation = 1.57079
 script = ExtResource("6_hskhp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone3"]
-position = Vector2(-0.00012207, -1898.5)
+position = Vector2(-500, -1898.5)
 shape = SubResource("RectangleShape2D_1iex4")
 debug_color = Color(1, 0, 0, 0.501961)
 
