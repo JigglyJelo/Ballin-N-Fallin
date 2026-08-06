@@ -37,7 +37,7 @@ _data = {
 }
 point_count = 24
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(64, 960)
 script = ExtResource("1_m3vll")
 LevelUnit = 2
@@ -48,7 +48,7 @@ background = ExtResource("2_o2kmg")
 position = Vector2(-128, -864)
 shape = SubResource("RectangleShape2D_3wwbk")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-2752, 1088, 3136, 1088, 3136, -3072, -3392, -3072, -3392, 1088, -2752, 1088, -2752, -832, -1152, -960, -1152, -1088, -2752, -1088, -2752, -2432, -1344, -2432, -1088, -2240, -1088, -2432, 320, -2432, 576, -2176, 1152, -2176, 1344, -2560, 2496, -2560, 2816, -1984, 2816, -960, 704, -960, 704, -832, 768, -768, 1856, -768, 2496, -576, 2496, 192, 1536, 192, 1152, 704, -1920, 704, -2240, 832, -2752, 832)

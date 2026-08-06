@@ -9,7 +9,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abyno"]
 size = Vector2(5376, 2816)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(0, -448)
 script = ExtResource("1_epang")
 CameraZoom = 0.75
@@ -19,7 +19,7 @@ background = ExtResource("2_ooffi")
 position = Vector2(0, 448)
 shape = SubResource("RectangleShape2D_abyno")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(1152, -1088, 3456, -1088, 3456, 1984, -3456, 1984, -3456, -1088, 1152, -1088, 1152, -832, -1088, -832, -2304, -192, -2304, 1088, -1088, 1728, 1088, 1728, 2304, 1024, 2304, -192, 1152, -832)

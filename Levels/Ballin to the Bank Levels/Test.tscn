@@ -8,12 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://73lg8k8dvblk" path="res://Source/Scenes/Mode Stuff/Ballin to the Bank/Piggy.tscn" id="8_dqqn8"]
 [ext_resource type="PackedScene" uid="uid://dpetd5su5wr8n" path="res://Source/Scenes/Mode Stuff/Ballin to the Bank/CoinSpawner.tscn" id="14_3kx2l"]
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(-64, -512)
 script = ExtResource("1_xn28q")
 background = ExtResource("3_fdfnj")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-1856, 1664, -1856, -640, -1728, -640, -1728, 1472, 0, 1472, 384, 1152, 832, 1152, 1408, 896, 1856, 896, 1856, -64, 1472, -512, -1728, -512, -1728, -640, 1024, -640, 1984, -640, 1984, 1664)

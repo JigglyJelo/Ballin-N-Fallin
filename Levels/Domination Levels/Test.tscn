@@ -7,12 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="6_q8cjo"]
 [ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Source/Scenes/Mode Stuff/Domination/DominationZone.tscn" id="8_p6vxf"]
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(-64, -512)
 script = ExtResource("1_h4ff7")
 background = ExtResource("3_s2c13")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]

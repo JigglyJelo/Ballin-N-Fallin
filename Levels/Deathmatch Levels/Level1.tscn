@@ -19,7 +19,7 @@ size = Vector2(128, 3200)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qmxs7"]
 size = Vector2(4608, 128)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(0, -512)
 script = ExtResource("1_2tfso")
 background = ExtResource("2_ays8c")
@@ -28,7 +28,7 @@ background = ExtResource("2_ays8c")
 position = Vector2(0, 320)
 shape = SubResource("RectangleShape2D_snlv5")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-1024, 2176, -1024, 1152, 1024, 1152, 1024, 2176)

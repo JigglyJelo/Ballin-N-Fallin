@@ -39,7 +39,7 @@ _data = {
 }
 point_count = 14
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(64, 832)
 script = ExtResource("1_tjuey")
 LevelUnit = 3
@@ -53,7 +53,7 @@ offset_top = -2304.0
 offset_right = 2496.0
 offset_bottom = 640.0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(-128, 0)

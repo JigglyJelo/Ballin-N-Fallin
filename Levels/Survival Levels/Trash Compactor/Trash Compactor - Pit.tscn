@@ -23,7 +23,7 @@ size = Vector2(1280, 832)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mt77g"]
 size = Vector2(4608, 128)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(-384, -448)
 script = ExtResource("1_6m04d")
 CameraZoom = 0.8
@@ -33,7 +33,7 @@ OutlineColorOverride = Color(0, 0, 0.117647, 1)
 groundTexture = ExtResource("2_obci2")
 background = ExtResource("3_ihqjq")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-2048, -1920, 2816, -1920, 2816, 2752, -2048, 2752, -2048, -1920, -640, -1664, -1920, -448, -1920, 1536, -128, 1728, -128, 2112, -256, 2432, -256, 2688, 1024, 2688, 1024, 2432, 896, 2112, 896, 1728, 2688, 1472, 2688, -448, 1408, -1664, -640, -1664)
