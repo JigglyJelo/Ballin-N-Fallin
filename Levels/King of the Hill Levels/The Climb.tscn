@@ -23,7 +23,7 @@ size = Vector2(128, 7311)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u221v"]
 size = Vector2(128, 7347)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_ptihi")
 CameraZoom = 0.5
 background = ExtResource("2_0yhhv")
@@ -35,14 +35,14 @@ shape = SubResource("RectangleShape2D_gr5ek")
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-2464, 2528, -2464, 1456, -1968, 1456, -1968, 960, -1464, 960, -1464, 528, -968, 528, -960, 2528)
+polygon = PackedVector2Array(-2688, 2544, -2688, 1472, -2048, 1472, -2048, 960, -1472, 960, -1472, 512, -960, 512, -960, 2544)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(3416, -672)
-polygon = PackedVector2Array(-2464, 2528, -2456, 1440, -1944, 1440, -1944, 992, -1496, 992, -664, 992, -664, 2528)
+polygon = PackedVector2Array(-2456, 2528, -2456, 1440, -1944, 1440, -1944, 992, -664, 992, -664, 2528)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-640, 1344, 704, 1344, 704, 1448, -648, 1448)
+polygon = PackedVector2Array(-640, 1344, 704, 1344, 704, 1448, -640, 1448)
 
 [node name="KothZone" parent="." instance=ExtResource("3_jwjri")]
 position = Vector2(2207, -140)
@@ -89,53 +89,53 @@ shape = SubResource("RectangleShape2D_u221v")
 debug_color = Color(1, 0, 0, 0.501961)
 
 [node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
-position = Vector2(-1899, 439)
+position = Vector2(-1760, 712)
 texture = ExtResource("4_pbdj1")
 
 [node name="RespawnPoint2" type="Sprite2D" parent="." groups=["Respawn"]]
-position = Vector2(-2217, 797)
+position = Vector2(-2368, 1192)
 texture = ExtResource("4_pbdj1")
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2217, 997)
+position = Vector2(-2560, 1344)
 texture = ExtResource("5_l1jxn")
 
 [node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2217, 599)
+position = Vector2(-2176, 1344)
 texture = ExtResource("5_l1jxn")
 
 [node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2395, 801)
+position = Vector2(-1920, 832)
 texture = ExtResource("5_l1jxn")
 
 [node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2043, 797)
+position = Vector2(-1600, 832)
 texture = ExtResource("5_l1jxn")
 
 [node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1743, 434)
+position = Vector2(-1408, 384)
 texture = ExtResource("5_l1jxn")
 
 [node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1899, 282)
+position = Vector2(-1024, 384)
 texture = ExtResource("5_l1jxn")
 
 [node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2052, 438)
+position = Vector2(-2368, 1024)
 texture = ExtResource("5_l1jxn")
 
 [node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1888, 589)
+position = Vector2(-1760, 576)
 texture = ExtResource("5_l1jxn")
 
 [node name="ItemSpawner" parent="." instance=ExtResource("7_d3uhc")]
-position = Vector2(-1199, 307)
+position = Vector2(-1216, 128)
 
 [node name="ItemSpawner2" parent="." instance=ExtResource("7_d3uhc")]
 position = Vector2(23, 1126)
 
 [node name="ItemSpawner3" parent="." instance=ExtResource("7_d3uhc")]
-position = Vector2(-2350, 1297)
+position = Vector2(-2368, 608)
 
 [connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="DeathZone2" to="DeathZone2" method="_on_area_2d_body_entered"]
