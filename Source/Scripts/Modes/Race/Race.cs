@@ -85,6 +85,9 @@ public partial class Race : Mode, ILevelLoadedEvent{
         return "Lap " + (int)(Race.PlayerLaps[player.Id-1] + 1) + "/" + Race.TotalLaps;
     }
 
+	public override bool IsSamePlayerSpawns(){
+		return true;
+	}
 
     private Line2D line;
     private Line2D remainingLine = null;

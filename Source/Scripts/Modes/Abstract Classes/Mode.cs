@@ -184,6 +184,9 @@ public abstract partial class Mode : Node{
     public virtual float GetChargeMultiplier(Player player){
         return 1;
     }
+	public virtual bool IsSamePlayerSpawns(){
+		return false; //TRUE All players spawn at same spawn point with some invulnerability. FALSE All players spawn at unique spawn points
+	}
 
     public enum GameMode{
         Golf,

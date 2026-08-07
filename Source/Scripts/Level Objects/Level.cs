@@ -619,7 +619,7 @@ public partial class Level : Node2D {
 			if(Game.TotalPlayers != 1){
 				Vector2[] playerSpawns = new Vector2[Game.TotalPlayers];
 				bool[] flippedStarts = new bool[Game.TotalPlayers];
-				if(Game.CurrentMode == Mode.GameMode.Race || Game.CurrentMode == Mode.GameMode.Golf){
+				if(Mode.ModeNode.IsSamePlayerSpawns()){
 					Node2D theSpawner = spawnPoints[Game.Random.Next(0,spawnPoints.Count)];
 					for(int i = 0; i < Game.TotalPlayers; i++){
 						flippedStarts[i] = (theSpawner as Sprite2D).FlipH;
