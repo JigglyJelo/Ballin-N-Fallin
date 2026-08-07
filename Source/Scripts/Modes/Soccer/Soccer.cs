@@ -1,15 +1,10 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class Soccer : TeamSportsMode{
-    private readonly Palette[] SOCCER_PALETTES = new Palette[]{
-        new Palette(new Color(0,145/255f,0),new Color(0,200/255f,0),new Color(0,64/255f,0))
-    };
     
     public override void _Ready(){
         TotalScore = 4;
-        LevelPalette = SOCCER_PALETTES[Game.Random.Next(0,SOCCER_PALETTES.Length)];
         base._Ready();
         Game.CurrentMode = Mode.GameMode.Soccer;
     }

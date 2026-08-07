@@ -1,20 +1,14 @@
 using System;
-using Godot;
-using System.Collections.Generic;
 
 public partial class Deathmatch : Mode{
 	public static int TotalLives;
     public static int TopLives;
     private static int deadPlayers;
     public static float TotalTime = 0;
-    private readonly Palette[] DEATHMATCH_PALETTES = new Palette[]{
-        new Palette(new Color(0,125/255f,1),new Color(0,27/255f,1),Colors.Black)
-    };
     public static int[] PlayerLives;
 
 	public override void _Ready(){
         TotalLives = Game.TotalPlayers;
-        LevelPalette = DEATHMATCH_PALETTES[Game.Random.Next(0,DEATHMATCH_PALETTES.Length)];
         Instructions = "Be the last Ball standing";
         base._Ready();
         Game.CurrentMode = Mode.GameMode.Deathmatch;

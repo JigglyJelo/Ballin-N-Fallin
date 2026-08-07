@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class Race : Mode, ILevelLoadedEvent{
     public static int TopLap;
@@ -11,14 +10,10 @@ public partial class Race : Mode, ILevelLoadedEvent{
     private Label raceTimerLabel;
     private Path2D racePath;
     private Vector2[] racePathBakedPoints;
-    private readonly Palette[] RACE_PALETTES = new Palette[]{
-        new Palette(new Color(1,173/255f,33/255f),new Color(1,128/255f,33/255f),new Color(255/255f,97/255f,0))
-    };
     public static int[] PlayerCheckpoints;
     public static int[] PlayerLaps;
 
 	public override void _Ready(){
-        LevelPalette = RACE_PALETTES[Game.Random.Next(0,RACE_PALETTES.Length)];
         base._Ready();
         Level level = GetNode<Level>("Level");
         racePath = level.GetNode<Path2D>("RacePath");
@@ -90,6 +85,9 @@ public partial class Race : Mode, ILevelLoadedEvent{
         return "Lap " + (int)(Race.PlayerLaps[player.Id-1] + 1) + "/" + Race.TotalLaps;
     }
 
+	public override bool IsSamePlayerSpawns(){
+		return true;
+	}
 
     private Line2D line;
     private Line2D remainingLine = null;

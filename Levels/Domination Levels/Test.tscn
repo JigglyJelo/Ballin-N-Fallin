@@ -1,18 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5tw6075q2v0s"]
+[gd_scene load_steps=9 format=3 uid="uid://b5tw6075q2v0s"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_h4ff7"]
 [ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="3_s2c13"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_5vfvo"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_vfj44"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="6_q8cjo"]
+[ext_resource type="Texture2D" uid="uid://bckq4s1p1vwyv" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Domination Tile.png" id="7_rt7f1"]
 [ext_resource type="PackedScene" uid="uid://v6apxn0w8jhr" path="res://Source/Scenes/Mode Stuff/Domination/DominationZone.tscn" id="8_p6vxf"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_y7cqx"]
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(-64, -512)
 script = ExtResource("1_h4ff7")
 background = ExtResource("3_s2c13")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
@@ -78,3 +81,52 @@ position = Vector2(-687, 1068)
 
 [node name="DominationZone4" parent="." instance=ExtResource("8_p6vxf")]
 position = Vector2(979, 55)
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1856, 1664, -1856, -640, -1728, -640, -1728, 1472, 0, 1472, 384, 1152, 832, 1152, 1408, 896, 1856, 896, 1856, -64, 1472, -512, -1728, -512, -1728, -640, 1024, -640, 1984, -640, 1984, 1664)
+metadata/invert = true
+
+[node name="@Polygon2D@201052" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(0.784314, 0.784314, 0.784314, 1)
+texture = ExtResource("7_rt7f1")
+invert_enabled = true
+invert_border = 768.0
+polygon = PackedVector2Array(-1728, -512, 1472, -512, 1856, -64, 1856, 896, 1408, 896, 832, 1152, 384, 1152, 0, 1472, -1728, 1472)
+script = ExtResource("8_y7cqx")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@201054" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(0.941176, 0.941176, 0.941176, 1)
+invert_enabled = true
+invert_border = 768.0
+polygon = PackedVector2Array(-1728, -544, 1472, -544, 1856, -96, 1856, 864, 1408, 864, 832, 1120, 384, 1120, 0, 1440, -1728, 1440)
+script = ExtResource("8_y7cqx")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1216, 367, -448, 367, -448, 512, -1344, 512, -1344, 239)
+
+[node name="@Polygon2D@201056" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+texture_repeat = 2
+color = Color(0.784314, 0.784314, 0.784314, 1)
+texture = ExtResource("7_rt7f1")
+polygon = PackedVector2Array(-1344, 512, -1344, 256, -1216, 384, -448, 384, -448, 512)
+script = ExtResource("8_y7cqx")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@201058" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+light_mask = 3
+z_index = -2
+color = Color(0.941176, 0.941176, 0.941176, 1)
+polygon = PackedVector2Array(-1344, 480, -1344, 224, -1216, 352, -448, 352, -448, 480)
+script = ExtResource("8_y7cqx")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@CollisionPolygon2D@201051" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1856, 1647, -1856, -657, -1728, -657, -1728, 1455, 0, 1455, 384, 1135, 832, 1135, 1408, 879, 1856, 879, 1856, -81, 1472, -529, -1728, -529, -1728, -657, 1024, -657, 1984, -657, 1984, 1647)

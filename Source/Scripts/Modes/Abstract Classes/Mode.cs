@@ -184,6 +184,9 @@ public abstract partial class Mode : Node{
     public virtual float GetChargeMultiplier(Player player){
         return 1;
     }
+	public virtual bool IsSamePlayerSpawns(){
+		return false; //TRUE All players spawn at same spawn point with some invulnerability. FALSE All players spawn at unique spawn points
+	}
 
     public enum GameMode{
         Golf,
@@ -222,6 +225,28 @@ public abstract partial class Mode : Node{
             default: return "Undefined Mode";
         }
     }
+
+	public static GameMode StringToEnum(string modeString){
+		switch(modeString){
+			case "Race": return GameMode.Race;
+			case "Golf": return GameMode.Golf;
+			case "King of the Hill": return GameMode.KingOfTheHill;
+			case "Deathmatch": return GameMode.Deathmatch;
+			case "Soccer": return GameMode.Soccer;
+			case "Crown the King": return GameMode.CrownTheKing;
+			case "Survival": return GameMode.Survival;
+			case "Volleyball": return GameMode.Volleyball;
+			case "Hot Potato": return GameMode.HotPotato;
+			case "Ballin to the Bank": return GameMode.BallinToTheBank;
+			case "Domination": return GameMode.Domination;
+			case "Payload": return GameMode.Payload;
+			case "Bomb Ball": return GameMode.BombBall;
+			case "Target Test": return GameMode.TargetTest;
+			case "Miscellaneous": return GameMode.Miscellaneous;
+			case "": return GameMode.None;
+			default: return GameMode.None;
+		}
+	}
 
     public static string GetModeDescription(GameMode mode){
         switch(mode){

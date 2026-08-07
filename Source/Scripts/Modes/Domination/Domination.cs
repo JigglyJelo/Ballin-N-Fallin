@@ -5,16 +5,12 @@ using System.Collections.Generic;
 public partial class Domination : Mode, IModeStartEvent{
 	public static float TotalScore = 30;
     public static float TopScore;
-	private readonly Palette[] DOMINATION_PALETTES = new Palette[]{
-        new Palette(Color.Color8(240,240,240),Color.Color8(200,200,200),Colors.Black)//Color.Color8(64,64,64)
-    };
 	private List<DominationZone> zones = new List<DominationZone>();
     public static int ZoneCount;
     public const float FAST_MUSIC_SPEED = 1.25f;
 
     public override void _Ready(){
 		Domination.Scores = new float[Game.TotalPlayers];
-		LevelPalette = DOMINATION_PALETTES[Game.Random.Next(0,DOMINATION_PALETTES.Length)];
 		base._Ready();
         Game.CurrentMode = Mode.GameMode.Domination;
         Instructions = "Control the zones";

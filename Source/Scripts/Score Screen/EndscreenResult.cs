@@ -3,7 +3,11 @@ using System;
 using System.Text;
 
 public partial class EndscreenResult : Node2D{
-	const int BAR_FULL_HEIGHT = -768;
+	private const int BAR_FULL_HEIGHT = -768;
+	private const double UPDATE_RESULTS_WAIT = 0.25+0.33;
+	private const double ENDSCREEN_DONE_WAIT = 1.5;
+	private const double FINISHED_TOUR_ENDSCREEN_DONE_WAIT = 0.7;
+	private const float FINISHED_TOUR_BAR_SPEED = 3.225f;
 	public int Id;
 	private CollisionPolygon2D collisionPolygon;
 	private Polygon2D visualPolygon;
@@ -98,7 +102,7 @@ public partial class EndscreenResult : Node2D{
 			}
 		}
 
-		await ToSignal(GetTree().CreateTimer(0.25,true), "timeout");
+		await ToSignal(GetTree().CreateTimer(UPDATE_RESULTS_WAIT,true), "timeout");
 		UpdateResults();
 	}
 
@@ -112,8 +116,7 @@ public partial class EndscreenResult : Node2D{
         ScorePlayer.GlobalPosition = new Vector2(GlobalPosition.X+192,ScorePlayer.GlobalPosition.Y); //Find a way to not to this every tick
     }
 
-    private async void UpdateResults(){
-		await ToSignal(GetTree().CreateTimer(1.0/3.0,true), "timeout");
+    private void UpdateResults(){
 		Tween roundTextTween = GetTree().CreateTween();
 		roundTextTween.TweenProperty(roundResultText,"self_modulate",Game.CLEAR,1.5);
 		tweeningBar = true;
@@ -140,7 +143,7 @@ public partial class EndscreenResult : Node2D{
 		float tweenSpeed;
 		if(scoreIncreaseAmount != 0){
 			if(ScoreScreen.TourFinished){
-				tweenSpeed = (scoreIncreaseAmount / (float)Tour.CurrentTour.PointsToWin) * 3.225f;
+				tweenSpeed = (scoreIncreaseAmount / (float)Tour.CurrentTour.PointsToWin) * FINISHED_TOUR_BAR_SPEED;
 			}else{
 				tweenSpeed = scoreIncreaseAmount / (Tour.IsTour ? 10f : 30f);
 			}
@@ -190,7 +193,7 @@ public partial class EndscreenResult : Node2D{
 				}
 				scoreText.Text = "Score: " + Tour.PlayerScores[scoreIndex] + "\n"+Game.GetUsername(Id);
 			} 
-			await ToSignal(GetTree().CreateTimer(0.7,true), "timeout");
+			await ToSignal(GetTree().CreateTimer(ScoreScreen.TourFinished ? FINISHED_TOUR_ENDSCREEN_DONE_WAIT : ENDSCREEN_DONE_WAIT,true), "timeout");
 			scoreScreen.EndScreenDone();
 		}
 	}

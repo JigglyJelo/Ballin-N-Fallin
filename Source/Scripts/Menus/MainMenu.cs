@@ -16,9 +16,6 @@ public partial class MainMenu : VerticalMenu{
 		copyrightText = GetNode<Label>("Copyright");
 		UpdateSelectionVisual();
 		Input.MouseMode = Input.MouseModeEnum.Visible;
-		foreach(PlayerData playerData in Game.PlayerDatas){
-			Input.StopJoyVibration((int)playerData.InputDevice);
-		}
 		AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Logo.tscn").Instantiate());
 	}
 
@@ -29,7 +26,7 @@ public partial class MainMenu : VerticalMenu{
 		if(IsMouseOverLabel(copyrightText)){
 			Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
 			if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-				MenuScene.LoadMenu("CreditsMenu/CreditsMenu");
+				MenuScene.LoadMenu("Credits/CreditsMenu");
 				SFX.Play("Confirm");
 			}
 			if(copyrightText.SelfModulate != COPYRIGHT_COLOR_HOVERED){

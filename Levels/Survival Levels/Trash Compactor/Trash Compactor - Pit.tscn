@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7f1lfyswuxqv"]
+[gd_scene load_steps=18 format=3 uid="uid://7f1lfyswuxqv"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_6m04d"]
 [ext_resource type="Texture2D" uid="uid://pylypiewve4i" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Hot Potato Tile.png" id="2_obci2"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="11_hsa8j"]
 [ext_resource type="PackedScene" uid="uid://cryhqyifcuaju" path="res://Source/Scenes/Level Stuff/EmotionZone.tscn" id="12_12o7r"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="13_v1x8x"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="14_rxcv8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cc2qt"]
 size = Vector2(1280, 256)
@@ -23,7 +24,7 @@ size = Vector2(1280, 832)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mt77g"]
 size = Vector2(4608, 128)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(-384, -448)
 script = ExtResource("1_6m04d")
 CameraZoom = 0.8
@@ -33,10 +34,12 @@ OutlineColorOverride = Color(0, 0, 0.117647, 1)
 groundTexture = ExtResource("2_obci2")
 background = ExtResource("3_ihqjq")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-2048, -1920, 2816, -1920, 2816, 2752, -2048, 2752, -2048, -1920, -640, -1664, -1920, -448, -1920, 1536, -128, 1728, -128, 2112, -256, 2432, -256, 2688, 1024, 2688, 1024, 2432, 896, 2112, 896, 1728, 2688, 1472, 2688, -448, 1408, -1664, -640, -1664)
+polygon = PackedVector2Array(2688, 2752, -2048, 2752, -2048, -1920, 2816, -1920, 2816, 2752, 2688, 2752, 2688, -448, 1408, -1664, -640, -1664, -1920, -448, -1920, 1536, -128, 1728, -128, 2112, -256, 2432, -256, 2688, 1024, 2688, 1024, 2432, 896, 2112, 896, 1728, 2688, 1472)
+metadata/invert = true
 
 [node name="ConveyorBelt" type="Area2D" parent="."]
 position = Vector2(0, -2000)
@@ -131,22 +134,54 @@ Emotion = 4
 position = Vector2(384, 2016)
 shape = SubResource("RectangleShape2D_xvixe")
 
-[node name="OneWay" type="StaticBody2D" parent="." groups=["NoRegain"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWay"]
-position = Vector2(384, -384)
-rotation = 3.14159
-shape = SubResource("RectangleShape2D_mt77g")
-one_way_collision = true
-
-[node name="Polygon2D" type="Polygon2D" parent="OneWay"]
+[node name="OneWay" type="Polygon2D" parent="."]
 position = Vector2(80, 0)
 scale = Vector2(0.958333, 1)
 color = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(-2086.96, -448, 2721.39, -448, 2721.39, -320, -2086.96, -320)
 
+[node name="StaticBody2D" type="StaticBody2D" parent="OneWay" groups=["NoRegain"]]
+position = Vector2(-83.4783, 0)
+scale = Vector2(1.04348, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWay/StaticBody2D"]
+position = Vector2(384, -384)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_mt77g")
+one_way_collision = true
+
 [node name="ItemSpawner" parent="." instance=ExtResource("13_v1x8x")]
 position = Vector2(384, -960)
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="@CollisionPolygon2D@359740" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(2688, 2735, -2048, 2735, -2048, -1937, 2816, -1937, 2816, 2735, 2688, 2735, 2688, -465, 1408, -1681, -640, -1681, -1920, -465, -1920, 1519, -128, 1711, -128, 2095, -256, 2415, -256, 2671, 1024, 2671, 1024, 2415, 896, 2095, 896, 1711, 2688, 1455)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(2688, 2752, -2048, 2752, -2048, -1920, 2816, -1920, 2816, 2752, 2688, 2752, 2688, -448, 1408, -1664, -640, -1664, -1920, -448, -1920, 1536, -128, 1728, -128, 2112, -256, 2432, -256, 2688, 1024, 2688, 1024, 2432, 896, 2112, 896, 1728, 2688, 1472)
+metadata/invert = true
+
+[node name="@Polygon2D@359741" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(0, 0.117647, 0.333333, 1)
+texture = ExtResource("2_obci2")
+invert_enabled = true
+invert_border = 1792.0
+polygon = PackedVector2Array(1408, -1664, 2688, -448, 2688, 1472, 896, 1728, 896, 2112, 1024, 2432, 1024, 2688, -256, 2688, -256, 2432, -128, 2112, -128, 1728, -1920, 1536, -1920, -448, -640, -1664)
+script = ExtResource("14_rxcv8")
+stroke_color = Color(0, 0, 0.117647, 1)
+
+[node name="@Polygon2D@359743" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(0.294118, 0.294118, 0.294118, 1)
+invert_enabled = true
+invert_border = 1792.0
+polygon = PackedVector2Array(1408, -1696, 2688, -480, 2688, 1440, 896, 1696, 896, 2080, 1024, 2400, 1024, 2656, -256, 2656, -256, 2400, -128, 2080, -128, 1696, -1920, 1504, -1920, -480, -640, -1696)
+script = ExtResource("14_rxcv8")
+stroke_color = Color(0, 0, 0.117647, 1)
 
 [connection signal="body_entered" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_entered"]
 [connection signal="body_exited" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bu2ruhkhmjgqh"]
+[gd_scene load_steps=18 format=3 uid="uid://bu2ruhkhmjgqh"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_m3vll"]
 [ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Source/Scenes/Mode Stuff/Race/FinishLine.tscn" id="2_f38ue"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bn403mgsuccm0" path="res://Source/Scenes/Mode Stuff/Race/Checkpoint.tscn" id="3_63py0"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_pv8o1"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_caj0e"]
+[ext_resource type="Texture2D" uid="uid://dl6c0u37pwxhv" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Race Tile.png" id="7_k4ppd"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_vdspn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wwbk"]
 size = Vector2(6372, 3584)
@@ -37,7 +39,7 @@ _data = {
 }
 point_count = 24
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(64, 960)
 script = ExtResource("1_m3vll")
 LevelUnit = 2
@@ -48,7 +50,8 @@ background = ExtResource("2_o2kmg")
 position = Vector2(-128, -864)
 shape = SubResource("RectangleShape2D_3wwbk")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-2752, 1088, 3136, 1088, 3136, -3072, -3392, -3072, -3392, 1088, -2752, 1088, -2752, -832, -1152, -960, -1152, -1088, -2752, -1088, -2752, -2432, -1344, -2432, -1088, -2240, -1088, -2432, 320, -2432, 576, -2176, 1152, -2176, 1344, -2560, 2496, -2560, 2816, -1984, 2816, -960, 704, -960, 704, -832, 768, -768, 1856, -768, 2496, -576, 2496, 192, 1536, 192, 1152, 704, -1920, 704, -2240, 832, -2752, 832)
@@ -161,6 +164,55 @@ position = Vector2(-1024, -384)
 
 [node name="RacePath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_yccnr")
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="@CollisionPolygon2D@326422" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-2752, 1071, 3136, 1071, 3136, -3089, -3392, -3089, -3392, 1071, -2752, 1071, -2752, -849, -1152, -977, -1152, -1105, -2752, -1105, -2752, -2449, -1344, -2449, -1088, -2257, -1088, -2449, 320, -2449, 576, -2193, 1152, -2193, 1344, -2577, 2496, -2577, 2816, -2001, 2816, -977, 704, -977, 704, -849, 768, -785, 1856, -785, 2496, -593, 2496, 175, 1536, 175, 1152, 687, -1920, 687, -2240, 815, -2752, 815)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-2752, 1088, 3136, 1088, 3136, -3072, -3392, -3072, -3392, 1088, -2752, 1088, -2752, -832, -1152, -960, -1152, -1088, -2752, -1088, -2752, -2432, -1344, -2432, -1088, -2240, -1088, -2432, 320, -2432, 576, -2176, 1152, -2176, 1344, -2560, 2496, -2560, 2816, -1984, 2816, -960, 704, -960, 704, -832, 768, -768, 1856, -768, 2496, -576, 2496, 192, 1536, 192, 1152, 704, -1920, 704, -2240, 832, -2752, 832)
+metadata/invert = true
+
+[node name="@Polygon2D@326423" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(1, 0.501961, 0.129412, 1)
+texture = ExtResource("7_k4ppd")
+invert_enabled = true
+invert_border = 2048.0
+polygon = PackedVector2Array(2816, -1984, 2816, -960, 704, -960, 704, -832, 768, -768, 1856, -768, 2496, -576, 2496, 192, 1536, 192, 1152, 704, -1920, 704, -2240, 832, -2752, 832, -2752, -832, -1152, -960, -1152, -1088, -2752, -1088, -2752, -2432, -1344, -2432, -1088, -2240, -1088, -2432, 320, -2432, 576, -2176, 1152, -2176, 1344, -2560, 2496, -2560)
+script = ExtResource("8_vdspn")
+stroke_color = Color(1, 0.380392, 0, 1)
+
+[node name="@Polygon2D@326425" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.678431, 0.129412, 1)
+invert_enabled = true
+invert_border = 2048.0
+polygon = PackedVector2Array(2816, -2016, 2816, -992, 704, -992, 704, -864, 768, -800, 1856, -800, 2496, -608, 2496, 160, 1536, 160, 1152, 672, -1920, 672, -2240, 800, -2752, 800, -2752, -864, -1152, -992, -1152, -1120, -2752, -1120, -2752, -2464, -1344, -2464, -1088, -2272, -1088, -2464, 320, -2464, 576, -2208, 1152, -2208, 1344, -2592, 2496, -2592)
+script = ExtResource("8_vdspn")
+stroke_color = Color(1, 0.380392, 0, 1)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-384, -2065, -384, -1873, 320, -1873, 576, -1617, 1152, -1617, 1920, -1873, 1920, -1408, 704, -1408, 384, -1600, -192, -1600, -192, -209, 832, -209, 832, -64, 576, -64, 320, 64, 64, -64, -1728, -64, -1920, 192, -2368, -128, -2368, -337, -1728, -209, -768, -209, -576, -849, -576, -1472, -960, -1600, -2048, -1600, -2048, -2065, -1792, -1873, -640, -1873, -640, -2065)
+
+[node name="@Polygon2D@326427" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+texture_repeat = 2
+color = Color(1, 0.501961, 0.129412, 1)
+texture = ExtResource("7_k4ppd")
+polygon = PackedVector2Array(-1728, -64, 64, -64, 320, 64, 576, -64, 832, -64, 832, -192, -192, -192, -192, -1600, 384, -1600, 704, -1408, 1920, -1408, 1920, -1856, 1152, -1600, 576, -1600, 320, -1856, -384, -1856, -384, -2048, -640, -2048, -640, -1856, -1792, -1856, -2048, -2048, -2048, -1856, -2048, -1600, -960, -1600, -576, -1472, -576, -832, -768, -192, -1728, -192, -2368, -320, -2368, -128, -1920, 192)
+script = ExtResource("8_vdspn")
+stroke_color = Color(1, 0.380392, 0, 1)
+
+[node name="@Polygon2D@326429" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.678431, 0.129412, 1)
+polygon = PackedVector2Array(-1728, -96, 64, -96, 320, 32, 576, -96, 832, -96, 832, -224, -192, -224, -192, -1632, 384, -1632, 704, -1440, 1920, -1440, 1920, -1888, 1152, -1632, 576, -1632, 320, -1888, -384, -1888, -384, -2080, -640, -2080, -640, -1888, -1792, -1888, -2048, -2080, -2048, -1888, -2048, -1632, -960, -1632, -576, -1504, -576, -864, -768, -224, -1728, -224, -2368, -352, -2368, -160, -1920, 160)
+script = ExtResource("8_vdspn")
+stroke_color = Color(1, 0.380392, 0, 1)
 
 [editable path="FinishLine"]
 [editable path="Checkpoint"]

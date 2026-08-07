@@ -4,9 +4,6 @@ using System;
 public partial class KOTH : Mode{
 	public static int TotalScore = 30;
     public static float TopScore;
-    private readonly Palette[] KOTH_PALETTES = new Palette[]{
-        new Palette(new Color(0,250/255f,0),new Color(0,195/255f,0),new Color(0,125/255f,0))
-    };
     public const float FAST_MUSIC_SPEED = 1.25f;
 
 	public override void _Ready(){
@@ -14,7 +11,6 @@ public partial class KOTH : Mode{
         if(Game.TotalPlayers >= 4) TotalScore = 25;
         else if(Game.TotalPlayers == 3) TotalScore = 27;
         else TotalScore = 30;
-        LevelPalette = KOTH_PALETTES[Game.Random.Next(0,KOTH_PALETTES.Length)];
         base._Ready();
         Scores = new float[Game.MAX_PLAYERS];
         Game.CurrentMode = Mode.GameMode.KingOfTheHill;

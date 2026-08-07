@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://qaqr157g5uj1"]
+
+[ext_resource type="Texture2D" uid="uid://b13cl4nvdvln7" path="res://Assets/Gradients/Target Test.tres" id="1_s5pv8"]
+[ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="3_wvimn"]
+
+[node name="Target Test" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+texture = ExtResource("1_s5pv8")
+texture_offset = Vector2(0, 1000)
+polygon = PackedVector2Array(-816, -520, 816, -520, 816, 520, -816, 520)
+
+[node name="Player" parent="." instance=ExtResource("3_wvimn")]
+position = Vector2(-321, 113)
+rotation = 0.143117
+skew = 0.298451
+
+[node name="BallSprite" parent="Player" index="0"]
+self_modulate = Color(0.52549, 0.129412, 0, 1)
+
+[node name="ShadingSprite" parent="Player" index="1"]
+self_modulate = Color(0.52549, 0.129412, 0, 1)
+
+[node name="PupilsSprite" parent="Player/EyesSprite" index="0"]
+position = Vector2(15, -5)
+
+[node name="Border" type="Line2D" parent="."]
+points = PackedVector2Array(-825, -525, 825, -525, 825, 525, -825, 525)
+closed = true
+width = 20.0
+default_color = Color(0, 0, 0, 1)
+
+[editable path="Player"]

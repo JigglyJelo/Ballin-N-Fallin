@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b7vgyr0wst5kh"]
+[gd_scene load_steps=11 format=3 uid="uid://b7vgyr0wst5kh"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_11fx8"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_2d0to"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_0v46s"]
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="4_ffw3d"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_ey78a"]
+[ext_resource type="Texture2D" uid="uid://ctv0ow7j447pg" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Soccer Tile.png" id="7_21ykx"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_ddsw2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rciy3"]
 size = Vector2(128, 896)
@@ -13,13 +15,14 @@ size = Vector2(128, 896)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7rbrp"]
 size = Vector2(5248, 2816)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(0, -448)
 script = ExtResource("1_11fx8")
 CameraZoom = 0.75
 background = ExtResource("2_5f7v4")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(1152, -1088, 3456, -1088, 3456, 1984, -3456, 1984, -3456, -1088, 1152, -1088, 1152, -832, -1088, -832, -2560, -64, -3328, -64, -3328, 832, -2560, 832, -1088, 1728, 1088, 1728, 2560, 832, 3328, 832, 3328, -64, 2560, -64, 1152, -832)
@@ -105,6 +108,36 @@ position = Vector2(0, 320)
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
 position = Vector2(0, 448)
 shape = SubResource("RectangleShape2D_7rbrp")
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="@CollisionPolygon2D@336629" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1152, -1105, 3456, -1105, 3456, 1967, -3456, 1967, -3456, -1105, 1152, -1105, 1152, -849, -1088, -849, -2560, -81, -3328, -81, -3328, 815, -2560, 815, -1088, 1711, 1088, 1711, 2560, 815, 3328, 815, 3328, -81, 2560, -81, 1152, -849)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1152, -1088, 3456, -1088, 3456, 1984, -3456, 1984, -3456, -1088, 1152, -1088, 1152, -832, -1088, -832, -2560, -64, -3328, -64, -3328, 832, -2560, 832, -1088, 1728, 1088, 1728, 2560, 832, 3328, 832, 3328, -64, 2560, -64, 1152, -832)
+metadata/invert = true
+
+[node name="@Polygon2D@336630" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(0, 0.784314, 0, 1)
+texture = ExtResource("7_21ykx")
+invert_enabled = true
+invert_border = 2368.0
+polygon = PackedVector2Array(1152, -832, 2560, -64, 3328, -64, 3328, 832, 2560, 832, 1088, 1728, -1088, 1728, -2560, 832, -3328, 832, -3328, -64, -2560, -64, -1088, -832)
+script = ExtResource("8_ddsw2")
+stroke_color = Color(0, 0.25098, 0, 1)
+
+[node name="@Polygon2D@336632" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.568627, 0, 1)
+invert_enabled = true
+invert_border = 2368.0
+polygon = PackedVector2Array(1152, -864, 2560, -96, 3328, -96, 3328, 800, 2560, 800, 1088, 1696, -1088, 1696, -2560, 800, -3328, 800, -3328, -96, -2560, -96, -1088, -864)
+script = ExtResource("8_ddsw2")
+stroke_color = Color(0, 0.25098, 0, 1)
 
 [connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="DeathZone2" to="DeathZone2" method="_on_area_2d_body_entered"]
