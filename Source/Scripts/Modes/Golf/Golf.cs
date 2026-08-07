@@ -56,6 +56,10 @@ public partial class Golf : Mode, ILevelLoadedEvent{
         Rpc(nameof(NewStroke),player.Id);
     }
 
+	public override bool IsSamePlayerSpawns(){
+		return true;
+	}
+
     //Golf
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public async void NewStroke(byte id){
