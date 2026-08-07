@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://hl8udnv43ic6"]
+[gd_scene load_steps=14 format=3 uid="uid://hl8udnv43ic6"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_wn5gm"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="2_1x065"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="4_0t0ht"]
 [ext_resource type="PackedScene" uid="uid://1388bpo3io0t" path="res://Source/Scenes/Level Stuff/Sand.tscn" id="5_6u7tv"]
 [ext_resource type="PackedScene" uid="uid://bu3ooc381j7qa" path="res://Source/Scenes/Mode Stuff/Golf/GolfHole.tscn" id="6_120ft"]
+[ext_resource type="Texture2D" uid="uid://b2jxsobecogl" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Golf Tile.png" id="8_n66q4"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="9_esorb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8txa"]
 size = Vector2(6656, 3744)
@@ -32,6 +34,7 @@ position = Vector2(128, 720)
 shape = SubResource("RectangleShape2D_q8txa")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(505.6, 0)
@@ -124,6 +127,85 @@ shape = SubResource("RectangleShape2D_rym46")
 
 [node name="Hole" parent="." instance=ExtResource("6_120ft")]
 position = Vector2(1280, -64)
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1344, 3183, -1344.85, 3183, -1344, 3200, -2368, 3200, -2367.15, 3183, -2368, 3183, -2304, 1903, -1408, 1903)
+
+[node name="@Polygon2D@209783" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(0, 1, 0.545098, 1)
+texture = ExtResource("8_n66q4")
+polygon = PackedVector2Array(-2304, 1920, -1408, 1920, -1344, 3200, -2368, 3200)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
+
+[node name="@Polygon2D@209785" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(0, 1, 0.788235, 1)
+polygon = PackedVector2Array(-2304, 1888, -1408, 1888, -1344, 3168, -1344, 3200, -2368, 3200, -2368, 3168)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(2176, 1839, 2368, 3183, 2365.57, 3183, 2368, 3200, 448, 3200, 448.944, 3183, 448, 3183, 512, 2031, 576, 2031, 704, 2159, 960, 2159, 960, 2287, 1408, 2287, 1408, 2159, 1664, 2159, 2112, 1839)
+
+[node name="@Polygon2D@209787" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+texture_repeat = 2
+color = Color(0, 1, 0.545098, 1)
+texture = ExtResource("8_n66q4")
+polygon = PackedVector2Array(576, 2048, 512, 2048, 448, 3200, 2368, 3200, 2176, 1856, 2112, 1856, 1664, 2176, 1408, 2176, 1408, 2304, 960, 2304, 960, 2176, 704, 2176)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
+
+[node name="@Polygon2D@209789" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+light_mask = 3
+z_index = -2
+color = Color(0, 1, 0.788235, 1)
+polygon = PackedVector2Array(576, 2016, 512, 2016, 448, 3168, 448, 3200, 2368, 3200, 2368, 3168, 2176, 1824, 2112, 1824, 1664, 2144, 1408, 2144, 1408, 2272, 960, 2272, 960, 2144, 704, 2144)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-2048, 239, -1280, 239, -1152, 111, -832, 687, -832, 728, -1152, 768, -2112, 768, -2304, 704, -2304, -593)
+
+[node name="@Polygon2D@209791" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+texture_repeat = 2
+color = Color(0, 1, 0.545098, 1)
+texture = ExtResource("8_n66q4")
+polygon = PackedVector2Array(-2304, -576, -2048, 256, -1280, 256, -1152, 128, -832, 704, -832, 728, -1152, 768, -2112, 768, -2304, 704)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
+
+[node name="@Polygon2D@209793" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+light_mask = 3
+z_index = -2
+color = Color(0, 1, 0.788235, 1)
+polygon = PackedVector2Array(-2304, -608, -2048, 224, -1280, 224, -1152, 96, -832, 672, -832, 696, -1152, 736, -2112, 736, -2304, 672)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1152, -273, 1152, -17, 1344, -17, 1344, -273, 1408, -273, 1536, -209, 1728, -209, 2176, -145, 2176, 0, 2048, 640, 640, 640, -72, 64, -128, 0, -128, -145, 256, -209, 832, -209, 1088, -273)
+
+[node name="@Polygon2D@209795" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D4"]
+texture_repeat = 2
+color = Color(0, 1, 0.545098, 1)
+texture = ExtResource("8_n66q4")
+polygon = PackedVector2Array(-128, -128, -128, 0, -72, 64, 640, 640, 2048, 640, 2176, 0, 2176, -128, 1728, -192, 1536, -192, 1408, -256, 1344, -256, 1344, 0, 1152, 0, 1152, -256, 1088, -256, 832, -192, 256, -192)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
+
+[node name="@Polygon2D@209797" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D4"]
+light_mask = 3
+z_index = -2
+color = Color(0, 1, 0.788235, 1)
+polygon = PackedVector2Array(-128, -160, -128, -32, -72, 32, 640, 608, 2048, 608, 2176, -32, 2176, -160, 1728, -224, 1536, -224, 1408, -288, 1344, -288, 1344, -32, 1152, -32, 1152, -288, 1088, -288, 832, -224, 256, -224)
+script = ExtResource("9_esorb")
+stroke_color = Color(0, 0.741176, 0.235294, 1)
 
 [editable path="DeathZone"]
 [editable path="DeathZone2"]

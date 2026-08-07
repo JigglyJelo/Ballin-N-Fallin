@@ -1,16 +1,11 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class Volleyball : TeamSportsMode, ILevelLoadedEvent{
     public static PackedScene VolleyBall;
-    private readonly Palette[] VOLLEYBALL_PALETTES = new Palette[]{
-        new Palette(new Color(1,1,207/255f),new Color(1,1,149/255f),new Color(1,200/255f,0))
-    };
     
     public override void _Ready(){
         TotalScore = 5;
-        LevelPalette = VOLLEYBALL_PALETTES[Game.Random.Next(0,VOLLEYBALL_PALETTES.Length)];
         base._Ready();
         Game.CurrentMode = Mode.GameMode.Volleyball;
     }

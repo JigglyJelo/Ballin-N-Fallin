@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class Golf : Mode, ILevelLoadedEvent{
     public static int TopStroke;
@@ -9,17 +8,13 @@ public partial class Golf : Mode, ILevelLoadedEvent{
     public static int[] PlayerStrokes;
     public static sbyte[] FinishedPlayerStrokes;
     private static sbyte[] sortedScores;
-    private readonly Palette[] GOLF_PALETTES = new Palette[]{
-        new Palette(new Color(0,1,201/255f),new Color(0,1,139/255f),new Color(0,189/255f,60/255f))
-    };
 
-    public override void _Ready() {
-        LevelPalette = GOLF_PALETTES[Game.Random.Next(0, GOLF_PALETTES.Length)];
+    public override void _Ready(){
         Instructions = "Reach the hole in the least strokes";
         base._Ready();
         FinishedPlayers = 0;
         Game.CurrentMode = Mode.GameMode.Golf;
-        Par = GetNode<Level>("Level").LevelUnit;
+        Par = (sbyte)GetNode<Level>("Level").LevelUnit;
         FinishedPlayerStrokes = new sbyte[Game.MAX_PLAYERS];
         for (int i = 0; i < FinishedPlayerStrokes.Length; i++) FinishedPlayerStrokes[i] = sbyte.MaxValue;
         if (Game.TotalPlayers == 1) AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Golf/GolfHud.tscn").Instantiate());

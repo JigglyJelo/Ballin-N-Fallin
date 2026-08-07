@@ -2,12 +2,7 @@ using Godot;
 using System;
 
 public partial class BombBall : TeamSportsMode{
-    private readonly Palette[] BOMB_BALL_PALETTES = new Palette[]{
-        new Palette(Color.Color8(207,186,225),Color.Color8(197,159,201),Color.Color8(133,0,249))
-    };
-    
     public override void _Ready(){
-        LevelPalette = BOMB_BALL_PALETTES[Game.Random.Next(0,BOMB_BALL_PALETTES.Length)];
         TotalScore = 3;
         Game.CurrentMode = Mode.GameMode.BombBall;
         Instructions = "Get the Bomb off your side";

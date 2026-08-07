@@ -8,9 +8,6 @@ public partial class HotPotato : Mode, ILevelLoadedEvent{
     private const float STARTING_BOMB_PITCH = 0.5f;
     public static float BombPitch = STARTING_BOMB_PITCH;
     public float[] TagTimers = new float[Game.TotalPlayers];
-    private readonly Palette[] HOT_POTATO_PALETTES = new Palette[]{
-        new Palette(new Color(0.5f,0.5f,0.5f),new Color(0.25f,0.25f,0.25f),new Color(0.0625f,0.0625f,0.0625f))
-    };
     private Vector2 deathPoint;
     private Player potatoHolder = null;
     public static Player PotatoHolder{
@@ -36,7 +33,6 @@ public partial class HotPotato : Mode, ILevelLoadedEvent{
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready(){
-        LevelPalette = HOT_POTATO_PALETTES[Game.Random.Next(0,HOT_POTATO_PALETTES.Length)];
         Instructions = "Pass the bomb before the boom";
         base._Ready();
         deadPlayers = 0;
