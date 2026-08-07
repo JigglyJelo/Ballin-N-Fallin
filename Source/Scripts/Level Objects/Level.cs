@@ -114,8 +114,9 @@ public partial class Level : Node2D {
 
 	private List<StaticBody2D> CreateBakedBodies(List<StaticBody2D> editorBodies){
 		List<StaticBody2D> bakedBodies = new List<StaticBody2D>();
-		foreach (StaticBody2D editorBody in editorBodies){
+		foreach(StaticBody2D editorBody in editorBodies){
 			StaticBody2D bakedBody = new StaticBody2D();
+			bakedBody.Position = editorBody.Position;
 			bakedBody.Name = editorBody.Name + "_Baked";
 			bakedBody.CollisionLayer = 0b11;
 
@@ -334,7 +335,7 @@ public partial class Level : Node2D {
 						Vector2.Inf, 
 						new Vector2(float.NegativeInfinity,float.PositiveInfinity), 
 						new Vector2(float.NegativeInfinity,float.NegativeInfinity), 
-						new Vector2(float.PositiveInfinity,float.NegativeInfinity)	
+						new Vector2(float.PositiveInfinity,float.NegativeInfinity)  
 					};
 					foreach(Vector2 point in collisionPolygon.Polygon){
 						if(point.X <= clipPolygon[0].X && point.Y <= clipPolygon[0].Y) clipPolygon[0] = point;
@@ -461,8 +462,7 @@ public partial class Level : Node2D {
 					topCollisionArr[j] -= new Vector2(0,17f);
 				}
 
-				// --- SMART MERGE LOGIC FOR SOLIDS ---
-				if (!invert) {
+				if(!invert){
 					Godot.Collections.Array<Vector2[]> mergedPhysics = Geometry2D.MergePolygons(collisionPolygon.Polygon, topCollisionArr);
 					if (mergedPhysics.Count > 0) {
 						collisionPolygon.Polygon = mergedPhysics[0]; 
@@ -472,15 +472,18 @@ public partial class Level : Node2D {
 							extraPoly.Polygon = mergedPhysics[m];
 							bakedBodies[i].AddChild(extraPoly);
 							if (Engine.IsEditorHint()) extraPoly.Owner = GetTree().EditedSceneRoot;
+							bakedBodies[i].MoveChild(extraPoly, 0);
 						}
 					}
-				} else {
+				}else{
 					CollisionPolygon2D topCollision = new CollisionPolygon2D();
 					topCollision.Position = collisionPolygon.Position;
 					topCollision.Polygon = topCollisionArr;
 					bakedBodies[i].AddChild(topCollision);
 					if (Engine.IsEditorHint()) topCollision.Owner = GetTree().EditedSceneRoot;
+					bakedBodies[i].MoveChild(topCollision, 0);
 				}
+				bakedBodies[i].MoveChild(collisionPolygon, -1);
 				
 				GodotObject aaInsidePolygon = (GodotObject)aaPolygonScript.New();
 				Vector2[] insideArr = insidePolygon.Polygon;

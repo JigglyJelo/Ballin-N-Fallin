@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dcqiq1s4manhd"]
+[gd_scene load_steps=15 format=3 uid="uid://dcqiq1s4manhd"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_3mkrw"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="2_2jfr5"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="3_dxurg"]
 [ext_resource type="PackedScene" uid="uid://cedmqpxe4ge46" path="res://Source/Scenes/Mode Stuff/Race/FinishLine.tscn" id="4_hm6xk"]
 [ext_resource type="PackedScene" uid="uid://bn403mgsuccm0" path="res://Source/Scenes/Mode Stuff/Race/Checkpoint.tscn" id="5_sakdp"]
+[ext_resource type="Texture2D" uid="uid://dl6c0u37pwxhv" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Race Tile.png" id="7_nc54j"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_ysna7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8n4m8"]
 size = Vector2(3840, 2304)
@@ -38,6 +40,7 @@ metadata/medals = PackedFloat32Array(50, 42, 35, 30)
 shape = SubResource("RectangleShape2D_8n4m8")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(-384, 768)
@@ -122,6 +125,55 @@ id = 3
 [node name="CollisionShape2D" parent="Checkpoint3" index="0"]
 position = Vector2(64, 192)
 shape = SubResource("RectangleShape2D_l2cxn")
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="@CollisionPolygon2D@320968" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1856, 1135, -1856, 623, -1472, 1007, 1472, 1007, 1856, 623, 1856, -657, 1472, -1041, -1472, -1041, -1856, -657, -1856, 1135, -1920, 1135, -1920, -1169, 1920, -1169, 1920, 1135)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1856, 1152, -1856, 640, -1472, 1024, 1472, 1024, 1856, 640, 1856, -640, 1472, -1024, -1472, -1024, -1856, -640, -1856, 1152, -1920, 1152, -1920, -1152, 1920, -1152, 1920, 1152)
+metadata/invert = true
+
+[node name="@Polygon2D@320969" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(1, 0.501961, 0.129412, 1)
+texture = ExtResource("7_nc54j")
+invert_enabled = true
+invert_border = 512.0
+polygon = PackedVector2Array(1472, -1024, 1856, -640, 1856, 640, 1472, 1024, -1472, 1024, -1856, 640, -1856, -640, -1472, -1024)
+script = ExtResource("8_ysna7")
+stroke_color = Color(1, 0.380392, 0, 1)
+
+[node name="@Polygon2D@320971" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.678431, 0.129412, 1)
+invert_enabled = true
+invert_border = 512.0
+polygon = PackedVector2Array(1472, -1056, 1856, -672, 1856, 608, 1472, 992, -1472, 992, -1856, 608, -1856, -672, -1472, -1056)
+script = ExtResource("8_ysna7")
+stroke_color = Color(1, 0.380392, 0, 1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1152, -209, 1216, -145, 1216, 128, 1158.81, 192, -1152, 192, -1216, 128, -1216, -145, -1152, -209)
+
+[node name="@Polygon2D@320973" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+texture_repeat = 2
+color = Color(1, 0.501961, 0.129412, 1)
+texture = ExtResource("7_nc54j")
+polygon = PackedVector2Array(-1216, -128, -1216, 128, -1152, 192, 1158.81, 192, 1216, 128, 1216, -128, 1152, -192, -1152, -192)
+script = ExtResource("8_ysna7")
+stroke_color = Color(1, 0.380392, 0, 1)
+
+[node name="@Polygon2D@320975" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.678431, 0.129412, 1)
+polygon = PackedVector2Array(-1216, -160, -1216, 96, -1152, 160, 1158.81, 160, 1216, 96, 1216, -160, 1152, -224, -1152, -224)
+script = ExtResource("8_ysna7")
+stroke_color = Color(1, 0.380392, 0, 1)
 
 [editable path="FinishLine"]
 [editable path="Checkpoint"]

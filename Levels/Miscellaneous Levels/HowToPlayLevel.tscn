@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bp1f8nj6sltaw"]
+[gd_scene load_steps=15 format=3 uid="uid://bp1f8nj6sltaw"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_u7ck4"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_0tdri"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cl7m6s4mcdctv" path="res://Assets/Sprites/Input Prompts/LeftStick.png" id="6_3t3lx"]
 [ext_resource type="Texture2D" uid="uid://cbnguvlc7876c" path="res://Assets/Sprites/Input Prompts/FaceButton.png" id="7_5agpm"]
 [ext_resource type="Texture2D" uid="uid://dfj1o3debqtee" path="res://Assets/Sprites/Input Prompts/Trigger.png" id="8_mktw5"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_xs3ed"]
 [ext_resource type="Texture2D" uid="uid://daoqrxh36qjqi" path="res://Assets/Sprites/Input Prompts/LT.png" id="9_gmx4e"]
 [ext_resource type="Texture2D" uid="uid://i72vkh4su701" path="res://Assets/Sprites/Input Prompts/RT.png" id="10_3hy2x"]
 [ext_resource type="AudioStream" uid="uid://cie2v6uyo5syk" path="res://Assets/Music/Score.ogg" id="13_rxa1k"]
@@ -29,6 +30,7 @@ color = Color(1, 0.764706, 0.388235, 0.501961)
 polygon = PackedVector2Array(-1728, -512, 1856, -512, 1856, 1472, -1728, 1472)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
@@ -82,6 +84,60 @@ position = Vector2(640, -64)
 
 [node name="ItemSpawner2" parent="." instance=ExtResource("4_lvqhf")]
 position = Vector2(-960, -320)
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_rxa1k")
+autoplay = true
+bus = &"Music"
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="@CollisionPolygon2D@262685" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1856, 1647, -1856, -657, -1728, -657, -1728, 1455, 0, 1455, 384, 1135, 832, 1135, 1408, 879, 1856, 879, 1856, -81, 1472, -529, -1728, -529, -1728, -657, 1024, -657, 1984, -657, 1984, 1647)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1856, 1664, -1856, -640, -1728, -640, -1728, 1472, 0, 1472, 384, 1152, 832, 1152, 1408, 896, 1856, 896, 1856, -64, 1472, -512, -1728, -512, -1728, -640, 1024, -640, 1984, -640, 1984, 1664)
+metadata/invert = true
+
+[node name="@Polygon2D@262686" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(1, 0.466667, 0, 1)
+texture = ExtResource("2_2aa68")
+invert_enabled = true
+invert_border = 768.0
+polygon = PackedVector2Array(-1728, -512, 1472, -512, 1856, -64, 1856, 896, 1408, 896, 832, 1152, 384, 1152, 0, 1472, -1728, 1472)
+script = ExtResource("8_xs3ed")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@262688" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.678431, 0.129412, 1)
+invert_enabled = true
+invert_border = 768.0
+polygon = PackedVector2Array(-1728, -544, 1472, -544, 1856, -96, 1856, 864, 1408, 864, 832, 1120, 384, 1120, 0, 1440, -1728, 1440)
+script = ExtResource("8_xs3ed")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1216, 367, -448, 367, -448, 512, -1344, 512, -1344, 239)
+
+[node name="@Polygon2D@262690" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+texture_repeat = 2
+color = Color(1, 0.466667, 0, 1)
+texture = ExtResource("2_2aa68")
+polygon = PackedVector2Array(-1344, 512, -1344, 256, -1216, 384, -448, 384, -448, 512)
+script = ExtResource("8_xs3ed")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@262692" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.678431, 0.129412, 1)
+polygon = PackedVector2Array(-1344, 480, -1344, 224, -1216, 352, -448, 352, -448, 480)
+script = ExtResource("8_xs3ed")
+stroke_color = Color(0, 0, 0, 1)
 
 [node name="Controls" type="Node2D" parent="."]
 
@@ -175,8 +231,3 @@ texture = ExtResource("8_mktw5")
 
 [node name="RT" type="Sprite2D" parent="Controls/RightTrigger"]
 texture = ExtResource("10_3hy2x")
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_rxa1k")
-autoplay = true
-bus = &"Music"
