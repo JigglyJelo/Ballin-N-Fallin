@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dw4pmm403y7vn"]
+[gd_scene load_steps=11 format=3 uid="uid://dw4pmm403y7vn"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_v1llg"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_rr32e"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_ublrr"]
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="4_f1p48"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_egsi6"]
+[ext_resource type="Texture2D" uid="uid://ctv0ow7j447pg" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Soccer Tile.png" id="7_8f4gx"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_0km6n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_efikw"]
 size = Vector2(4096, 2176)
@@ -24,6 +26,7 @@ position = Vector2(0, 512)
 shape = SubResource("RectangleShape2D_efikw")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(1920, -704, 2688, -704, 2688, 1728, -2688, 1728, -2688, -704, 1920, -704, 1920, -448, -1920, -448, -1920, -64, -2560, -64, -2560, 1088, -1920, 1088, -1920, 1472, 1920, 1472, 1920, 1088, 2560, 1088, 2560, -64, 1920, -64)
@@ -108,6 +111,55 @@ debug_color = Color(1, 0, 0, 0.501961)
 
 [node name="ItemSpawner" parent="." instance=ExtResource("5_egsi6")]
 position = Vector2(0, 960)
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="@CollisionPolygon2D@339415" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1920, -721, 2688, -721, 2688, 1711, -2688, 1711, -2688, -721, 1920, -721, 1920, -465, -1920, -465, -1920, -81, -2560, -81, -2560, 1071, -1920, 1071, -1920, 1455, 1920, 1455, 1920, 1071, 2560, 1071, 2560, -81, 1920, -81)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1920, -704, 2688, -704, 2688, 1728, -2688, 1728, -2688, -704, 1920, -704, 1920, -448, -1920, -448, -1920, -64, -2560, -64, -2560, 1088, -1920, 1088, -1920, 1472, 1920, 1472, 1920, 1088, 2560, 1088, 2560, -64, 1920, -64)
+metadata/invert = true
+
+[node name="@Polygon2D@339416" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(0, 0.784314, 0, 1)
+texture = ExtResource("7_8f4gx")
+invert_enabled = true
+invert_border = 768.0
+polygon = PackedVector2Array(1920, -64, 2560, -64, 2560, 1088, 1920, 1088, 1920, 1472, -1920, 1472, -1920, 1088, -2560, 1088, -2560, -64, -1920, -64, -1920, -448, 1920, -448)
+script = ExtResource("8_0km6n")
+stroke_color = Color(0, 0.25098, 0, 1)
+
+[node name="@Polygon2D@339418" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.568627, 0, 1)
+invert_enabled = true
+invert_border = 768.0
+polygon = PackedVector2Array(1920, -96, 2560, -96, 2560, 1056, 1920, 1056, 1920, 1440, -1920, 1440, -1920, 1056, -2560, 1056, -2560, -96, -1920, -96, -1920, -480, 1920, -480)
+script = ExtResource("8_0km6n")
+stroke_color = Color(0, 0.25098, 0, 1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(128, 832, -128, 832, -128, 175, 128, 175)
+
+[node name="@Polygon2D@339420" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+texture_repeat = 2
+color = Color(0, 0.784314, 0, 1)
+texture = ExtResource("7_8f4gx")
+polygon = PackedVector2Array(-128, 192, 128, 192, 128, 832, -128, 832)
+script = ExtResource("8_0km6n")
+stroke_color = Color(0, 0.25098, 0, 1)
+
+[node name="@Polygon2D@339422" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.568627, 0, 1)
+polygon = PackedVector2Array(-128, 160, 128, 160, 128, 800, -128, 800)
+script = ExtResource("8_0km6n")
+stroke_color = Color(0, 0.25098, 0, 1)
 
 [connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="DeathZone2" to="DeathZone2" method="_on_area_2d_body_entered"]

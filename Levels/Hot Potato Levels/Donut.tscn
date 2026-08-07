@@ -77,11 +77,14 @@ position = Vector2(0, 1216)
 [node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
 collision_layer = 3
 
+[node name="@CollisionPolygon2D@241922" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(2560, -1553, 2560, 2031, -2560, 2031, -2560, -1553, -2048, -1553, 1280, -1553, 1280, -209, 512, -977, -512, -977, -1280, -209, -1280, 815, -512, 1583, 512, 1583, 1280, 815, 1280, -209, 1280, -1553)
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(2560, -1536, 2560, 2048, -2560, 2048, -2560, -1536, -2048, -1536, 1280, -1536, 1280, -192, 512, -960, -512, -960, -1280, -192, -1280, 832, -512, 1600, 512, 1600, 1280, 832, 1280, -192, 1280, -1536)
 metadata/invert = true
 
-[node name="@Polygon2D@235767" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@241923" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 texture_repeat = 2
 color = Color(0.25, 0.25, 0.25, 1)
 texture = ExtResource("6_up5e7")
@@ -91,7 +94,7 @@ polygon = PackedVector2Array(512, -960, 1280, -192, 1280, 832, 512, 1600, -512, 
 script = ExtResource("7_iedbd")
 stroke_color = Color(0.0625, 0.0625, 0.0625, 1)
 
-[node name="@Polygon2D@235769" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@241925" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 light_mask = 3
 z_index = -2
 color = Color(0.5, 0.5, 0.5, 1)
@@ -104,7 +107,7 @@ stroke_color = Color(0.0625, 0.0625, 0.0625, 1)
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(512, 47, 512, 576, 256, 832, -256, 832, -512, 576, -512, 47, -256, -209, 256, -209)
 
-[node name="@Polygon2D@235771" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+[node name="@Polygon2D@241927" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
 texture_repeat = 2
 color = Color(0.25, 0.25, 0.25, 1)
 texture = ExtResource("6_up5e7")
@@ -112,13 +115,10 @@ polygon = PackedVector2Array(-256, -192, 256, -192, 512, 64, 512, 576, 256, 832,
 script = ExtResource("7_iedbd")
 stroke_color = Color(0.0625, 0.0625, 0.0625, 1)
 
-[node name="@Polygon2D@235773" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+[node name="@Polygon2D@241929" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
 light_mask = 3
 z_index = -2
 color = Color(0.5, 0.5, 0.5, 1)
 polygon = PackedVector2Array(-256, -224, 256, -224, 512, 32, 512, 544, 256, 800, -256, 800, -512, 544, -512, 32)
 script = ExtResource("7_iedbd")
 stroke_color = Color(0.0625, 0.0625, 0.0625, 1)
-
-[node name="@CollisionPolygon2D@235766" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
-polygon = PackedVector2Array(2560, -1553, 2560, 2031, -2560, 2031, -2560, -1553, -2048, -1553, 1280, -1553, 1280, -209, 512, -977, -512, -977, -1280, -209, -1280, 815, -512, 1583, 512, 1583, 1280, 815, 1280, -209, 1280, -1553)
