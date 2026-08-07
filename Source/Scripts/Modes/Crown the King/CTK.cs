@@ -14,9 +14,6 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
     private const float PITCH_RESET_TIME = 2;
     private const float CROWN_LOSS_PERCENTAGE = 0.95f;
     public const float FAST_MUSIC_SPEED = 1.25f;
-    private readonly Palette[] CTK_PALETTES = new Palette[]{
-        new Palette(new Color(1,238/255f,1),new Color(1,202/255f,1),new Color(210/255f,160/255f,210/255f))
-    };
     public float[] TagTimers = new float[Game.TotalPlayers];
     private Player king;
     public static Player King{
@@ -68,7 +65,6 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
     //public static float[] Scores;
 	
 	public override void _Ready(){
-        LevelPalette = CTK_PALETTES[Game.Random.Next(0,CTK_PALETTES.Length)];
         base._Ready();
         Mode.Scores = new float[Game.MAX_PLAYERS];
         Game.CurrentMode = Mode.GameMode.CrownTheKing;

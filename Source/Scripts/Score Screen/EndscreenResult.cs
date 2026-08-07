@@ -116,7 +116,7 @@ public partial class EndscreenResult : Node2D{
         ScorePlayer.GlobalPosition = new Vector2(GlobalPosition.X+192,ScorePlayer.GlobalPosition.Y); //Find a way to not to this every tick
     }
 
-    private async void UpdateResults(){
+    private void UpdateResults(){
 		Tween roundTextTween = GetTree().CreateTween();
 		roundTextTween.TweenProperty(roundResultText,"self_modulate",Game.CLEAR,1.5);
 		tweeningBar = true;

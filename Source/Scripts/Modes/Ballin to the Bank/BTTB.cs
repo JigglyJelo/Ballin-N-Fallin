@@ -17,9 +17,6 @@ public partial class BTTB : Mode, IModeStartEvent{
 	private Vector2 coinScale;
 	private readonly Vector2 MIN_SCALE = new Vector2(0.05f,1);
 	private bool growing = false;
-	private readonly Palette[] BTTB_PALETTES = new Palette[]{
-        new Palette(Color.Color8(255,230,0),Color.Color8(255,196,0),Color.Color8(255,255,0))
-    };
 	private const float BASE_COIN_SPAWN_TIME = 5;
 	private float coinSpawnTime = BASE_COIN_SPAWN_TIME - (2*((float)Game.TotalPlayers/Game.MAX_PLAYERS));
 	public static int[] DepositedMoney; //Array of each player's deposited money
@@ -32,7 +29,6 @@ public partial class BTTB : Mode, IModeStartEvent{
 	public static Vector2 CoinScale;
 
     public override void _Ready(){
-		LevelPalette = BTTB_PALETTES[Game.Random.Next(0,BTTB_PALETTES.Length)];
 		base._Ready();
         Game.CurrentMode = Mode.GameMode.BallinToTheBank;
         Instructions = "Deposit $"+MoneyToWin;

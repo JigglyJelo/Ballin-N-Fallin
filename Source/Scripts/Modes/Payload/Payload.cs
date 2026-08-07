@@ -2,16 +2,10 @@ using Godot;
 using System;
 
 public partial class Payload : TeamMode, ILevelLoadedEvent{
-    private readonly Palette[] PAYLOAD_PALETTES = new Palette[]{
-        new Palette(Color.Color8(253,152,63),Color.Color8(214,81,8),Color.Color8(89,31,10))
-        //new Palette(Color.Color8(243,201,139),Color.Color8(218,165,136),Color.Color8(196,109,94))
-    };
-
     public static PayloadTower payload;
     public static Path2D PayloadPath;
 
 	public override void _Ready(){
-        LevelPalette = PAYLOAD_PALETTES[Game.Random.Next(0,PAYLOAD_PALETTES.Length)];
         Instructions = "Control the Zone";
         base._Ready();
         Game.CurrentMode = Mode.GameMode.Payload;

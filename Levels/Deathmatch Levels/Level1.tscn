@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://blvbwis3142q8"]
+[gd_scene load_steps=13 format=3 uid="uid://blvbwis3142q8"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_2tfso"]
 [ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Level Stuff/DeathZone.tscn" id="2_22bmg"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_e34q5"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_d0iyf"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_upu38"]
+[ext_resource type="Texture2D" uid="uid://bldra2kx6hqev" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Deathmatch Tile.png" id="7_xkgb8"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_2rbjn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_snlv5"]
 size = Vector2(3840, 2160)
@@ -29,6 +31,7 @@ position = Vector2(0, 320)
 shape = SubResource("RectangleShape2D_snlv5")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-1024, 2176, -1024, 1152, 1024, 1152, 1024, 2176)
@@ -118,6 +121,104 @@ position = Vector2(-896, 384)
 
 [node name="ItemSpawner2" parent="." instance=ExtResource("5_d0iyf")]
 position = Vector2(896, 384)
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1024, 2176, -1024, 2176, -1024, 1135, 1024, 1135)
+
+[node name="@Polygon2D@189931" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(0, 0.105882, 1, 1)
+texture = ExtResource("7_xkgb8")
+polygon = PackedVector2Array(-1024, 2176, -1024, 1152, 1024, 1152, 1024, 2176)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@189933" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.490196, 1, 1)
+polygon = PackedVector2Array(-1024, 2144, -1024, 1120, 1024, 1120, 1024, 2144)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-448, 512, -704, 512, -704, 367, -448, 367)
+
+[node name="@Polygon2D@189935" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+texture_repeat = 2
+color = Color(0, 0.105882, 1, 1)
+texture = ExtResource("7_xkgb8")
+polygon = PackedVector2Array(-704, 512, -704, 384, -448, 384, -448, 512)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@189937" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.490196, 1, 1)
+polygon = PackedVector2Array(-704, 480, -704, 352, -448, 352, -448, 480)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(704, 512, 448, 512, 448, 367, 704, 367)
+
+[node name="@Polygon2D@189939" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+texture_repeat = 2
+color = Color(0, 0.105882, 1, 1)
+texture = ExtResource("7_xkgb8")
+polygon = PackedVector2Array(448, 512, 448, 384, 704, 384, 704, 512)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@189941" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.490196, 1, 1)
+polygon = PackedVector2Array(448, 480, 448, 352, 704, 352, 704, 480)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(1600, 768, 1472, 768, 1472, 239, 1600, 239)
+
+[node name="@Polygon2D@189943" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D4"]
+texture_repeat = 2
+color = Color(0, 0.105882, 1, 1)
+texture = ExtResource("7_xkgb8")
+polygon = PackedVector2Array(1472, 768, 1472, 256, 1600, 256, 1600, 768)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@189945" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D4"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.490196, 1, 1)
+polygon = PackedVector2Array(1472, 736, 1472, 224, 1600, 224, 1600, 736)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(-1472, 768, -1600, 768, -1600, 239, -1472, 239)
+
+[node name="@Polygon2D@189947" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D5"]
+texture_repeat = 2
+color = Color(0, 0.105882, 1, 1)
+texture = ExtResource("7_xkgb8")
+polygon = PackedVector2Array(-1600, 768, -1600, 256, -1472, 256, -1472, 768)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
+
+[node name="@Polygon2D@189949" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D5"]
+light_mask = 3
+z_index = -2
+color = Color(0, 0.490196, 1, 1)
+polygon = PackedVector2Array(-1600, 736, -1600, 224, -1472, 224, -1472, 736)
+script = ExtResource("8_2rbjn")
+stroke_color = Color(0, 0, 0, 1)
 
 [editable path="DeathZone"]
 [editable path="DeathZone2"]
