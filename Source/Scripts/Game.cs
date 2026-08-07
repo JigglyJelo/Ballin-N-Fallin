@@ -269,6 +269,12 @@ public partial class Game : Node{
                 return PlayerDatas[id-1].ControlProfileName;
         }
     }
+
+    public static void StopVibrations(){
+        for(int i = 0; i < MAX_PLAYERS; i++){
+            Input.StopJoyVibration(i);
+        }
+    }
     
     public static void DisableProcesses(Node node){
         node.SetProcess(false);

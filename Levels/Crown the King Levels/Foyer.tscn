@@ -1,5 +1,116 @@
-[gd_scene load_steps=2 format=3 uid="uid://sujr72n35ano"]
+[gd_scene load_steps=4 format=3 uid="uid://sujr72n35ano"]
 
 [ext_resource type="PackedScene" uid="uid://chgfonqy7dwgc" path="res://Levels/_Base Levels/Foyer.tscn" id="1_qg27x"]
+[ext_resource type="Texture2D" uid="uid://djp6mq2cffy0u" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Crown the King Tile.png" id="2_4mgob"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="3_iyxq8"]
 
 [node name="Level" instance=ExtResource("1_qg27x")]
+
+[node name="StaticBody2D" parent="." index="1"]
+visible = false
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="12" groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]
+polygon = PackedVector2Array(2048, -1536, 2560, -1536, 2560, 2048, -2560, 2048, -2560, -1536, -2048, -1536, 2048, -1536, 2048, -640, 1792, -640, 1792, -896, 256, -896, 256, -768, 128, -768, 128, -640, -128, -640, -128, -768, -256, -768, -256, -896, -1792, -896, -1792, -640, -2048, -640, -2048, 1408, -1536, 1408, -1536, 1536, -640, 1536, -640, 1408, -512, 1408, -512, 1536, 512, 1536, 512, 1408, 640, 1408, 640, 1536, 1536, 1536, 1536, 1408, 2048, 1408)
+metadata/invert = true
+
+[node name="@Polygon2D@187605" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="0"]
+texture_repeat = 2
+color = Color(1, 0.792157, 1, 1)
+texture = ExtResource("2_4mgob")
+invert_enabled = true
+invert_border = 1024.0
+polygon = PackedVector2Array(-256, -896, -256, -768, -128, -768, -128, -640, 128, -640, 128, -768, 256, -768, 256, -896, 1792, -896, 1792, -640, 2048, -640, 2048, 1408, 1536, 1408, 1536, 1536, 640, 1536, 640, 1408, 512, 1408, 512, 1536, -512, 1536, -512, 1408, -640, 1408, -640, 1536, -1536, 1536, -1536, 1408, -2048, 1408, -2048, -640, -1792, -640, -1792, -896)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="@Polygon2D@187607" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="1"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.933333, 1, 1)
+invert_enabled = true
+invert_border = 1024.0
+polygon = PackedVector2Array(-256, -928, -256, -800, -128, -800, -128, -672, 128, -672, 128, -800, 256, -800, 256, -928, 1792, -928, 1792, -672, 2048, -672, 2048, 1376, 1536, 1376, 1536, 1504, 640, 1504, 640, 1376, 512, 1376, 512, 1504, -512, 1504, -512, 1376, -640, 1376, -640, 1504, -1536, 1504, -1536, 1376, -2048, 1376, -2048, -672, -1792, -672, -1792, -928)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="1"]
+polygon = PackedVector2Array(1280, 751, 1280, 896, 256, 896, 256, 751)
+
+[node name="@Polygon2D@187609" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="0"]
+texture_repeat = 2
+color = Color(1, 0.792157, 1, 1)
+texture = ExtResource("2_4mgob")
+polygon = PackedVector2Array(256, 768, 256, 896, 1280, 896, 1280, 768)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="@Polygon2D@187611" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="1"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.933333, 1, 1)
+polygon = PackedVector2Array(256, 736, 256, 864, 1280, 864, 1280, 736)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="2"]
+polygon = PackedVector2Array(-256, 896, -1280, 896, -1280, 751, -256, 751)
+
+[node name="@Polygon2D@187613" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3" index="0"]
+texture_repeat = 2
+color = Color(1, 0.792157, 1, 1)
+texture = ExtResource("2_4mgob")
+polygon = PackedVector2Array(-256, 768, -256, 896, -1280, 896, -1280, 768)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="@Polygon2D@187615" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3" index="1"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.933333, 1, 1)
+polygon = PackedVector2Array(-256, 736, -256, 864, -1280, 864, -1280, 736)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="3"]
+polygon = PackedVector2Array(1152, -145, 1152, 0, 384, 0, 384, -145)
+
+[node name="@Polygon2D@187617" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D4" index="0"]
+texture_repeat = 2
+color = Color(1, 0.792157, 1, 1)
+texture = ExtResource("2_4mgob")
+polygon = PackedVector2Array(384, 0, 1152, 0, 1152, -128, 384, -128)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="@Polygon2D@187619" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D4" index="1"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.933333, 1, 1)
+polygon = PackedVector2Array(384, -32, 1152, -32, 1152, -160, 384, -160)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="4"]
+polygon = PackedVector2Array(-384, -145, -384, 0, -1152, 0, -1152, -145)
+
+[node name="@Polygon2D@187621" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D5" index="0"]
+texture_repeat = 2
+color = Color(1, 0.792157, 1, 1)
+texture = ExtResource("2_4mgob")
+polygon = PackedVector2Array(-384, 0, -384, -128, -1152, -128, -1152, 0)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="@Polygon2D@187623" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D5" index="1"]
+light_mask = 3
+z_index = -2
+color = Color(1, 0.933333, 1, 1)
+polygon = PackedVector2Array(-384, -32, -384, -160, -1152, -160, -1152, -32)
+script = ExtResource("3_iyxq8")
+stroke_color = Color(0.823529, 0.627451, 0.823529, 1)
+
+[node name="@CollisionPolygon2D@187604" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="5"]
+polygon = PackedVector2Array(2048, -1553, 2560, -1553, 2560, 2031, -2560, 2031, -2560, -1553, -2048, -1553, 2048, -1553, 2048, -657, 1792, -657, 1792, -913, 256, -913, 256, -785, 128, -785, 128, -657, -128, -657, -128, -785, -256, -785, -256, -913, -1792, -913, -1792, -657, -2048, -657, -2048, 1391, -1536, 1391, -1536, 1519, -640, 1519, -640, 1391, -512, 1391, -512, 1519, 512, 1519, 512, 1391, 640, 1391, 640, 1519, 1536, 1519, 1536, 1391, 2048, 1391)

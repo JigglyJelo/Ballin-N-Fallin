@@ -7,12 +7,8 @@ public partial class TargetTest : Mode, IModeStartEvent{
     public static int TotalScore = 250;
     public static int[] PlayerScores;
     public List<TargetZone> TargetZones = new List<TargetZone>();
-    private readonly Palette[] TARGET_TEST_PALETTES = new Palette[]{
-        new Palette(Color.Color8(176,254,118),Color.Color8(129,233,121),Color.Color8(143,187,153))
-    };
 
     public override void _Ready(){
-        LevelPalette = TARGET_TEST_PALETTES[Game.Random.Next(0,TARGET_TEST_PALETTES.Length)];
         base._Ready();
         Scores = new float[Game.MAX_PLAYERS];
         PlayerScores = new int[Game.TotalPlayers];

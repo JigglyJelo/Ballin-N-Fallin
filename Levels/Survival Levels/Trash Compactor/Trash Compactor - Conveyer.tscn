@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cl1wflbx7lwd"]
+[gd_scene load_steps=18 format=3 uid="uid://cl1wflbx7lwd"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_66h86"]
 [ext_resource type="Texture2D" uid="uid://pylypiewve4i" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Hot Potato Tile.png" id="2_nvooh"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="10_x2oqr"]
 [ext_resource type="PackedScene" uid="uid://cryhqyifcuaju" path="res://Source/Scenes/Level Stuff/EmotionZone.tscn" id="11_2gbuh"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="12_4yfsd"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="13_va0fi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsvcj"]
 size = Vector2(6848, 640)
@@ -25,7 +26,7 @@ size = Vector2(1344, 1792)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32ctc"]
 size = Vector2(1664, 128)
 
-[node name="Level" type="Node2D" groups=["Regain"]]
+[node name="Level" type="Node2D"]
 position = Vector2(-384, -448)
 script = ExtResource("1_66h86")
 CameraZoom = 0.75
@@ -35,7 +36,7 @@ OutlineColorOverride = Color(0, 0.117647, 0, 1)
 groundTexture = ExtResource("2_nvooh")
 background = ExtResource("3_eji3x")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-2944, -1088, 4224, -1088, 4224, 1984, -2944, 1984, -2944, 1344, 4096, 1344, 4096, -320, -2944, -320)
@@ -118,22 +119,46 @@ Emotion = 4
 position = Vector2(-2080, 576)
 shape = SubResource("RectangleShape2D_xvixe")
 
-[node name="OneWay" type="StaticBody2D" parent="." groups=["NoRegain"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWay"]
-position = Vector2(1728, 512)
-rotation = -1.5708
-shape = SubResource("RectangleShape2D_32ctc")
-one_way_collision = true
-
-[node name="Polygon2D" type="Polygon2D" parent="OneWay"]
+[node name="OneWay" type="Polygon2D" parent="."]
 position = Vector2(-128, 15.4483)
 scale = Vector2(1, 1.03448)
 color = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(1792, -324.268, 1920, -324.268, 1920, 1284.27, 1792, 1284.27)
 
+[node name="StaticBody2D" type="StaticBody2D" parent="OneWay" groups=["NoRegain"]]
+position = Vector2(128, -14.9334)
+scale = Vector2(1, 0.966669)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWay/StaticBody2D"]
+position = Vector2(1728, 512)
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_32ctc")
+one_way_collision = true
+
 [node name="ItemSpawner" parent="." instance=ExtResource("12_4yfsd")]
 position = Vector2(3072, -64)
+
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+collision_layer = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+polygon = PackedVector2Array(4224, 1984, -2944, 1984, -2944, 1327, 4096, 1327, 4096, -320, -2944, -320, -2944, -1105, 4224, -1105)
+
+[node name="@Polygon2D@343976" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+texture_repeat = 2
+color = Color(0, 0.333333, 0, 1)
+texture = ExtResource("2_nvooh")
+polygon = PackedVector2Array(-2944, -1088, 4224, -1088, 4224, 1984, -2944, 1984, -2944, 1344, 4096, 1344, 4096, -320, -2944, -320)
+script = ExtResource("13_va0fi")
+stroke_color = Color(0, 0.117647, 0, 1)
+
+[node name="@Polygon2D@343978" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+z_index = -2
+color = Color(0.294118, 0.294118, 0.294118, 1)
+polygon = PackedVector2Array(-2944, -1120, 4224, -1120, 4224, 1952, -2944, 1952, -2944, 1312, 4096, 1312, 4096, -352, -2944, -352)
+script = ExtResource("13_va0fi")
+stroke_color = Color(0, 0.117647, 0, 1)
 
 [connection signal="body_entered" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_entered"]
 [connection signal="body_exited" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_exited"]
