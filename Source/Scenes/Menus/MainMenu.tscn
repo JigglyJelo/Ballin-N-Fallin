@@ -28,7 +28,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Online Text" type="Label" parent="Selections"]
+[node name="Settings Text" type="Label" parent="Selections"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -41,13 +41,13 @@ offset_bottom = 476.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(401, 175)
-text = "Online"
+text = "Settings"
 label_settings = ExtResource("3_45pv8")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Settings Text" type="Label" parent="Selections"]
+[node name="Credits Text" type="Label" parent="Selections"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -60,7 +60,7 @@ offset_bottom = 751.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(510, 175)
-text = "Settings"
+text = "Credits"
 label_settings = ExtResource("3_45pv8")
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -27,7 +27,7 @@ public partial class SoloMenu : VerticalMenu{
 
 	public override void MenuBack(){
 		SFX.Play("Back");
-		MenuScene.LoadMenu("MainMenu");
+		MenuScene.LoadMenu("PlayMenu");
 	}
 
 	protected override void MenuChoose(int choice){

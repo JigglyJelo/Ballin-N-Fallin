@@ -1,7 +1,7 @@
 using Godot;
 
 public partial class VsMenu : Menu2D{
-	private Label tourText,freeplayText,howToPlayText;
+	private Label tourText,freeplayText,howToPlayText, subheaderText;
 	private Polygon2D tourButton,freeplayButton,howToPlayButton;
 	public override void _Ready(){
 		base._Ready();
@@ -11,6 +11,7 @@ public partial class VsMenu : Menu2D{
 		freeplayButton = GetNode<Polygon2D>("Selections/FreeplayButton");
 		howToPlayText = GetNode<Label>("Selections/HowToPlayButton/HowToPlayText");
 		howToPlayButton = GetNode<Polygon2D>("Selections/HowToPlayButton");
+		subheaderText = GetNode<Label>("SubHeaderText");
 		Selection = Tour.IsTour ? 1 : 2;
 		UpdateSelectionVisual();
 	}
@@ -87,6 +88,7 @@ public partial class VsMenu : Menu2D{
 				freeplayButton.Color = BUTTON_COLOR;
 				howToPlayText.SelfModulate = Colors.White;
 				howToPlayButton.Color = BUTTON_COLOR;
+				subheaderText.Text = "Play multiple rounds of mini-games; the first to earn enough points wins!";
 				break;
 			case 2:
 				//Selected
@@ -97,6 +99,7 @@ public partial class VsMenu : Menu2D{
 				tourButton.Color = BUTTON_COLOR;
 				howToPlayText.SelfModulate = Colors.White;
 				howToPlayButton.Color = BUTTON_COLOR;
+				subheaderText.Text = "Play any mini-game of your choice.";
 				break;
 			default:
 				//Selected
@@ -107,6 +110,7 @@ public partial class VsMenu : Menu2D{
 				tourButton.Color = BUTTON_COLOR;
 				freeplayText.SelfModulate = Colors.White;
 				freeplayButton.Color = BUTTON_COLOR;
+				subheaderText.Text = "Practice and learn how to play the game.";
 				break;
 		}
 	}
