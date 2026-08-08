@@ -58,7 +58,7 @@ public partial class OnlineMenu : Menu2D{
 
 	public override void MenuBack(){
 		SFX.Play("Back");
-		MenuScene.LoadMenu("MainMenu");
+		MenuScene.LoadMenu("PlayMenu");
 	}
 
 	protected override void MenuRight(){

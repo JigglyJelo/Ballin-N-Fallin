@@ -24,6 +24,7 @@ position = Vector2(2230, 1240)
 position = Vector2(-400, 0)
 
 [node name="TourButton" type="Polygon2D" parent="Selections"]
+position = Vector2(0, 95)
 color = Color(1, 0.639216, 0.290196, 1)
 polygon = PackedVector2Array(520, -520, 520, 520, -520, 520, -520, -520)
 
@@ -166,6 +167,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="FreeplayButton" type="Polygon2D" parent="Selections"]
+position = Vector2(0, 95)
 color = Color(1, 0.639216, 0.290196, 1)
 polygon = PackedVector2Array(1240, -520, 1240, 520, 2280, 520, 2280, -520)
 
@@ -241,6 +243,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="HowToPlayButton" type="Polygon2D" parent="Selections"]
+position = Vector2(0, 95)
 color = Color(1, 0.639216, 0.290196, 1)
 polygon = PackedVector2Array(1880, 660, 1880, 890, -120, 890, -120, 660)
 
@@ -270,12 +273,33 @@ offset_bottom = 858.0
 scale = Vector2(1.25, 1.25)
 text = "?"
 label_settings = ExtResource("5_tbmwm")
+metadata/_edit_use_anchors_ = true
 
 [node name="InputPrompts" parent="." instance=ExtResource("12_8jqmn")]
 offset_left = 1230.0
 offset_top = 1233.0
 offset_right = 3632.0
 offset_bottom = 1467.0
+
+[node name="HeaderText" type="Label" parent="."]
+offset_left = -2400.0
+offset_top = -849.0
+offset_right = 1440.0
+offset_bottom = -615.0
+scale = Vector2(1.5, 1.5)
+text = "Select a gameplay mode"
+label_settings = ExtResource("5_tbmwm")
+horizontal_alignment = 1
+
+[node name="SubHeaderText" type="Label" parent="."]
+offset_left = -1440.0
+offset_top = 1052.0
+offset_right = 6240.0
+offset_bottom = 1286.0
+scale = Vector2(0.5, 0.5)
+text = "Play multiple rounds of mini-games; the first to earn enough points wins!"
+label_settings = ExtResource("5_tbmwm")
+horizontal_alignment = 1
 
 [editable path="Selections/TourButton/Orange"]
 [editable path="Selections/TourButton/Lime"]

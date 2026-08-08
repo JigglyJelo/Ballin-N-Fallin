@@ -9,7 +9,7 @@ public partial class PlayerMenu : Node2D{
 	public static List<Color> selectedColors; //Keeps track of what colors are currently selected so no repeats
 	public static List<PlayerSettingsMenu> SettingMenus = new List<PlayerSettingsMenu>();
 
-    public override void _Ready(){
+	public override void _Ready(){
 		//Game.InputIds = new List<byte>();
 		Game.PlayerDatas = new List<PlayerData>();
 		SettingMenus = new List<PlayerSettingsMenu>();
@@ -28,9 +28,9 @@ public partial class PlayerMenu : Node2D{
 			Input.MouseMode = Input.MouseModeEnum.Visible;
 		}
 		Game.TotalPlayers = 0;
-    }
+	}
 	
-    public override void _Process(double delta){
+	public override void _Process(double delta){
 		if(Game.TotalPlayers > 0 && !Game.UsingMouse()){
 			for(int i = 0; i < Game.TotalPlayers; i++){
 				if(Input.IsActionJustReleased("Start" + (int)Game.PlayerDatas[i].InputDevice)) MenuStart();
@@ -128,11 +128,11 @@ public partial class PlayerMenu : Node2D{
 			if(Game.TotalPlayers == 1) MenuScene.LoadMenu("SoloMenu");
 			else MenuScene.LoadMenu("VsMenu");
 		}
-    }
+	}
 
 	private void MenuBack(){
 		SFX.Play("Back");
 		Game.MouseMode = Game.MouseModeEnum.Off;
-		MenuScene.LoadMenu("MainMenu");
+		MenuScene.LoadMenu("PlayMenu");
 	}
 }

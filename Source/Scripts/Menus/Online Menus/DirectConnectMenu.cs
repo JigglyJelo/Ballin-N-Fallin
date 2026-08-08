@@ -73,7 +73,6 @@ public partial class DirectConnectMenu : VerticalMenu{
     public override void MenuBack(){
 		SFX.Play("Back");
 		Online.IsOnline = false;
-		GetParent().AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "MainMenu.tscn").Instantiate());
-        QueueFree();
+		MenuScene.LoadMenu("Online/OnlineMenu");
     }
 }
