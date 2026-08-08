@@ -10,12 +10,12 @@ script = ExtResource("1_71h3v")
 VisibleItems = 7
 
 [node name="Label" type="Label" parent="."]
-offset_left = 420.0
+offset_left = 205.0
 offset_top = -1097.0
-offset_right = 1858.0
+offset_right = 2292.0
 offset_bottom = -863.0
 scale = Vector2(0.8, 0.8)
-text = "Choose a Mode"
+text = "Choose a mini-game"
 label_settings = ExtResource("2_li23j")
 horizontal_alignment = 1
 
