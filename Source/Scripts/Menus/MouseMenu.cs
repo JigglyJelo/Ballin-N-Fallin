@@ -117,7 +117,7 @@ public partial class MouseMenu : Polygon2D{
 
 	private void MenuBack(){
 		SFX.Play("Back");
-		MenuScene.LoadMenu("MainMenu");
+		MenuScene.LoadMenu("PlayMenu");
 	}
 
 	private void MenuChoose(int selection){

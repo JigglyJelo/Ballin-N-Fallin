@@ -1,7 +1,7 @@
 using Godot;
 
 public partial class MainMenu : VerticalMenu{
-	private Label playText, onlineText, settingsText, exitText,copyrightText;
+	private Label playText, settingsText, creditsText, exitText,copyrightText;
 	private readonly Color COPYRIGHT_COLOR = Color.Color8(192,192,192);
 	private readonly Color COPYRIGHT_COLOR_HOVERED = Color.Color8(225,225,225);
 	public override void _Ready(){
@@ -10,8 +10,8 @@ public partial class MainMenu : VerticalMenu{
 		totalSelections = 4;
 		defaultFontSize = 1;
 		playText = GetNode<Label>("Selections/Play Text");
-		onlineText = GetNode<Label>("Selections/Online Text");
 		settingsText = GetNode<Label>("Selections/Settings Text");
+		creditsText = GetNode<Label>("Selections/Credits Text");
 		exitText = GetNode<Label>("Selections/Exit Text");
 		copyrightText = GetNode<Label>("Copyright");
 		UpdateSelectionVisual();
@@ -38,11 +38,6 @@ public partial class MainMenu : VerticalMenu{
 		}
     }
 
-    private void LoadMouseMenu(string nextMenu){
-		MouseMenu.NextMenu = nextMenu;
-		MenuScene.LoadMenu("MouseMenu");
-	}
-
 	private void QuitGame(){
 		GetTree().Quit();
 	}
@@ -50,21 +45,9 @@ public partial class MainMenu : VerticalMenu{
 	protected override void MenuChoose(int choice){
 		SFX.Play("Confirm");
 		switch(choice){
-			case 1:
-				if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-					LoadMouseMenu("PlayerMenu");
-				}else{
-					MenuScene.LoadMenu("PlayerMenu");
-				}
-				break;
-			case 2:
-				if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-					LoadMouseMenu("Online/OnlineMenu");
-				}else{
-					MenuScene.LoadMenu("Online/OnlineMenu");
-				}
-				break;
-			case 3: MenuScene.LoadMenu("Settings/SettingsMenu"); break;
+			case 1: MenuScene.LoadMenu("PlayMenu"); break;
+			case 2: MenuScene.LoadMenu("Settings/SettingsMenu"); break;
+			case 3: MenuScene.LoadMenu("Credits/CreditsMenu"); break;
 			case 4: QuitGame(); break;
 		}
 	}
