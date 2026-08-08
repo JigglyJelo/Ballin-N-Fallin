@@ -55,22 +55,14 @@ public partial class MusicPlayer : AudioStreamPlayer{
 			if(files.Count > 0){
 				string fileNameAndPath = filePath + "/" + files[new Random().Next(0,files.Count)];
 				GD.Print(fileNameAndPath);
-				switch(fileNameAndPath.Substring(fileNameAndPath.Length - 4)){ //Do - 3 and remove . from switches
+				switch(fileNameAndPath.Substring(fileNameAndPath.Length - 4)){
 					case ".ogg":
 						AudioStreamOggVorbis oggStream = AudioStreamOggVorbis.LoadFromFile(fileNameAndPath);
 						oggStream.Loop = true;
 						return oggStream;
-					case ".wav": // This is somewhat broken but not going to fix it until I update to 4.4+ because it has built in support for .wav
-       					FileAccess wavFile = FileAccess.Open(fileNameAndPath, FileAccess.ModeFlags.Read);
-        				byte[] wavByteArray = wavFile.GetBuffer((int)wavFile.GetLength());
-						AudioStreamWav wavStream = new AudioStreamWav();
-						wavStream.MixRate = (wavByteArray[24] | (wavByteArray[25] << 8) | (wavByteArray[26] << 16) | (wavByteArray[27] << 24));
-						GD.Print(wavStream.MixRate);
-        				wavStream.Format = AudioStreamWav.FormatEnum.Format16Bits;
-        				wavStream.Stereo = (wavByteArray[22] | (wavByteArray[23] << 8)) == 2;
-        				wavStream.Data = wavByteArray;
+					case ".wav":
+						AudioStreamWav wavStream = AudioStreamWav.LoadFromFile(fileNameAndPath);
 						wavStream.LoopMode = AudioStreamWav.LoopModeEnum.Forward;
-						wavStream.LoopEnd = (int)(wavStream.MixRate * wavStream.GetLength());
         				return wavStream;
 					case ".mp3":
 						FileAccess mp3File = FileAccess.Open(fileNameAndPath, FileAccess.ModeFlags.Read);
