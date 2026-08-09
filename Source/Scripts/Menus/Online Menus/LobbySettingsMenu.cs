@@ -37,7 +37,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 			if(Online.IsHost()){
 				if(OnlineLobby.Lobby.LobbyShown){
 					try{
-						int inputId = (int)Game.PlayerDatas[0].InputDevice;
+						int inputId = (int)Online.InputId;
 						InputChecks(delta,inputId);
 						if(!InColorMenu){
 							if(Game.UsingMouse() || inputId == (int)PlayerData.PlayerInputDevice.Mouse){
