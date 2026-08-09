@@ -605,15 +605,6 @@ public partial class Level : Node2D {
 	}
 
 	public void HostSpawnPlayers(){
-		if(Game.TotalPlayers != 1){
-			for(int i = 0; i < Game.MAX_PLAYERS; i++){
-				if(spawnPoints.Count == 0) break;
-				Node2D spawnToDelete = spawnPoints[Game.Random.Next(0,spawnPoints.Count)];
-				spawnPoints.Remove(spawnToDelete);
-				spawnToDelete.QueueFree();
-			}
-		}
-
 		if(TeamSportsMode.IsTeamMode() && (Online.IsHost() || !Online.PeerIsActive())) TeamSportsMode.SetTeams(); 
 		if(Online.IsHost() || !Online.PeerIsActive()){
 			if(Game.TotalPlayers != 1){
@@ -630,12 +621,14 @@ public partial class Level : Node2D {
 					for(int i = 0; i < Game.TotalPlayers; i++){
 						List<Node2D> validSpawns = new List<Node2D>();
 						foreach(Node2D spawner in spawnPoints){
+							GD.Print(spawner.Name);
 							if(!TeamSportsMode.IsTeamMode()){
 								validSpawns.Add(spawner);
 							}else if(((string)spawner.GetMeta(META_TEAM)).Equals(TeamSportsMode.Teams[i])){
 								validSpawns.Add(spawner);
 							}
 						}
+						GD.Print(validSpawns.Count);
 						Node2D theSpawner = validSpawns[Game.Random.Next(0,validSpawns.Count)];
 						flippedStarts[i] = (theSpawner as Sprite2D).FlipH;
 						spawnPoints.Remove(theSpawner);

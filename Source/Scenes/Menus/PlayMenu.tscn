@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://cvx6sf8cl77po"]
 
-[ext_resource type="Script" uid="uid://cuyd82smjq8cl" path="res://Source/Scripts/Menus/PlayMenu.cs" id="1_mfrq5"]
+[ext_resource type="Script" path="res://Source/Scripts/Menus/PlayMenu.cs" id="1_mfrq5"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="2_iiqm0"]
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="3_eg117"]
 [ext_resource type="Texture2D" uid="uid://cr14f7lg7g8t4" path="res://Assets/Sprites/Player/500/Eyes/AnnoyedEyes.png" id="3_ht0fw"]
