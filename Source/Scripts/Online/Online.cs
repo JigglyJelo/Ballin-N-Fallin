@@ -181,184 +181,219 @@ public partial class Online{
 
     //Probably going to remove these at some point and maybe try limited Netfox rollback instead
     public static void PredictPosition(RigidBody2D rb, byte physicsTicks){
-        PredictPosition(rb,physicsTicks,null);
-    }
-    public static void PredictPosition(RigidBody2D rb, byte physicsTicks,Vector2? hostOriginalPosition){
-        if(physicsTicks == 0) return;
-        bool playerPrediction = rb.IsInGroup("Player");
-        Vector2[] trailPointsToSend = new Vector2[physicsTicks > 0 ? physicsTicks - 1 : 0];
-        List<Area2D> areasInScene = new List<Area2D>();
-        getArea2DNodes(Game.GameNode);
-        List<Area2D> areasEntered = new List<Area2D>();
-        if(hostOriginalPosition != null && playerPrediction){
-            Vector2 newPosition = rb.GlobalPosition;
-            rb.GlobalPosition = (Vector2)hostOriginalPosition;
-            getPlayerAreaOverlaps(true);
-            rb.GlobalPosition = newPosition;
-            getPlayerAreaOverlaps(false);
-        }else{
-            getPlayerAreaOverlaps(true);
-        }
-        
-        PhysicsBody2D lastCollision = null;
-        GD.Print("New prediction of " + physicsTicks + " ticks");
-        if(rb.Sleeping) rb.Sleeping = false;
-        if(rb.Freeze) rb.Freeze = false;
-        float fDelta = 1f / Engine.PhysicsTicksPerSecond;
-        Vector2 currentVelocity = rb.LinearVelocity;
-        float angularVelocity = rb.AngularVelocity;
-        bool stopPrediction = false;
-        for(int i = 0; i < physicsTicks && !stopPrediction; i++){
-            //Do necessary changes to velocities and rotation
-            currentVelocity *= (float)Mathf.Clamp(1-(rb.LinearDamp/Engine.PhysicsTicksPerSecond),0,1);// Apply Linear damping  1.0-rb.LinearDamp*delta
-            angularVelocity *= (float)Mathf.Clamp(1-(rb.AngularDamp/Engine.PhysicsTicksPerSecond),0,1);// Apply Angular damping 1.0-rb.AngularDamp*delta
-            rb.Rotation += angularVelocity * fDelta; //Rotate
-            currentVelocity += new Vector2(0,980 * fDelta * rb.GravityScale);
-            //Do physics tick
-            KinematicCollision2D collision = rb.MoveAndCollide(currentVelocity * fDelta);
-            //Check for phyisics body collisions
-            if(collision != null){
-                GodotObject collidedObject = collision.GetCollider();
-                GD.Print((collidedObject as Node).Name);
-                currentVelocity = currentVelocity.Bounce(collision.GetNormal()) * rb.PhysicsMaterialOverride.Bounce; //Apply Collision and bounce predicted rb
-                if(collidedObject is RigidBody2D collidedRb){
-                    Vector2 newVelocity = currentVelocity.Bounce(collision.GetNormal()) * collidedRb.PhysicsMaterialOverride.Bounce; //Bounce object that collided with predicted rb
-                    collidedRb.LinearVelocity = newVelocity;
-                }
-                
-                //Emit signals for Physics collisions
-                if(collidedObject is PhysicsBody2D collidedPhysicsBody){
-                    //Create bounce particle effects at simulated position
-                    if(playerPrediction){
-                        Player predictedPlayer = rb.GetParent() as Player;
-                        Node collidedNode = collidedObject as Node;
-                        predictedPlayer.BounceTimer += fDelta;
-                        if(collidedNode.IsInGroup("Regain") || collidedNode.IsInGroup("NoRegain")){
-                            foreach(Player player in Game.Players){
-                                if(player.OwnerId != predictedPlayer.OwnerId){
-                                    predictedPlayer.RpcId(player.OwnerId,nameof(predictedPlayer.BounceEffects),rb.GlobalPosition,currentVelocity,physicsTicks-i);
-                                }
-                            }
-                        }else{
-                            Node parent = collidedNode.GetParentOrNull<Node>();
-                            if(parent != null){
-                                if(parent.IsInGroup("Regain") || parent.IsInGroup("NoRegain")){
-                                    foreach(Player player in Game.Players){
-                                        if(player.OwnerId != predictedPlayer.OwnerId){
-                                            predictedPlayer.RpcId(player.OwnerId,nameof(predictedPlayer.BounceEffects),rb.GlobalPosition,currentVelocity,physicsTicks-i);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+		PredictPosition(rb, physicsTicks, null);
+	}
 
-                    //If the collision last tick is not the same as the current collision emit signals
-                    if(lastCollision != collidedPhysicsBody){
-                        if(lastCollision != null){
-                            if(lastCollision.HasSignal("body_exited")) lastCollision.EmitSignal("body_exited",rb);
-                            rb.EmitSignal("body_exited",lastCollision);
-                        }
-                        if(collidedPhysicsBody.HasSignal("body_entered")) collidedPhysicsBody.EmitSignal("body_entered",rb);
-                        rb.EmitSignal("body_entered",collidedPhysicsBody);
-                        lastCollision = collidedPhysicsBody;
-                    }
-                }
-            }else if(lastCollision != null){
-                if(lastCollision.HasSignal("body_exited")) lastCollision.EmitSignal("body_exited",rb);
-                rb.EmitSignal("body_exited",lastCollision);
-                lastCollision = null;
-            }
-            
-            if(playerPrediction){
-                Player player = rb.GetParent() as Player;
-                getPlayerAreaOverlaps(false);
-                if(i != physicsTicks-1){ 
-                    trailPointsToSend[i] = rb.GlobalPosition;
-                    player.Trail.AddPoint(rb.GlobalPosition);
-                }
-            }
-        }
-        
-        rb.AngularVelocity = angularVelocity;
-        rb.LinearVelocity = currentVelocity;
-        //Sync Trail points for clients
-        if(playerPrediction){
-            Player predictedPlayer = rb.GetParent() as Player;
-            for(int i = 0; i < Game.PlayerDatas.Count; i++){
-                int uuid = Game.PlayerDatas[i].UUID;
-                Player player = Game.Players[i];
-                if(uuid != predictedPlayer.OwnerId && player.OwnerId != 1 && !Game.DisconnectedDatas.Contains(Game.PlayerDatas[i])){
-                    predictedPlayer.Trail.RpcId(uuid,nameof(predictedPlayer.Trail.SyncTrail),trailPointsToSend);
-                }
-            }
-        }
-        
-        //Local functions
-        void getPlayerAreaOverlaps(bool firstIteration){
-            Player player = rb.GetParent() as Player;
-            foreach(Area2D area in areasInScene){
-                foreach(Node node in area.GetChildren()){
-                    if(node is CollisionShape2D collisionShape){
-                        if(!areasEntered.Contains(area) && playerInsideArea(player,collisionShape)){
-                            if(!firstIteration){ 
-                                if(area.IsInGroup("Stop Prediction")){
-                                    stopPrediction = true;
-                                }
-                                area.EmitSignal("body_entered",rb);
-                            }
-                            areasEntered.Add(area);
-                            GD.Print("Entered " + area.Name);
-                        }else if(areasEntered.Contains(area) && !playerInsideArea(player,collisionShape)){
-                            area.EmitSignal("body_exited",rb);
-                            areasEntered.Remove(area);
-                            GD.Print("Exited " + area.Name);
-                        }
-                        break; 
-                    }
-                }
-            }
-        }
-        
-        bool playerInsideArea(Player player,CollisionShape2D collisionShape){
-            float playerRadius = PlayerPhysics.RADIUS * player.PlayerScale;
-            switch(collisionShape.Shape){
-                case RectangleShape2D rectangleShape:{
-                    Transform2D rectTransform = collisionShape.GlobalTransform;
-                    Vector2 playerPosition;
-                    Vector2 rectSize = rectangleShape.Size;
-                    Vector2 rectTopLeft;
-                    if(Mathf.IsZeroApprox(rectTransform.Rotation)){ 
-                        Vector2 rectCenter = collisionShape.GlobalPosition;
-                        rectTopLeft = rectCenter - (rectSize / 2);
-                        playerPosition = player.Rb.GlobalPosition;
-                    }else{ 
-                        Transform2D rectInverseTransform = rectTransform.AffineInverse();
-                        playerPosition = rectInverseTransform.BasisXform(player.Rb.GlobalPosition);
-                        rectTopLeft = -rectSize / 2;
-                    }
-                    float closestX = Mathf.Clamp(playerPosition.X, rectTopLeft.X, rectTopLeft.X + rectSize.X);
-                    float closestY = Mathf.Clamp(playerPosition.Y, rectTopLeft.Y, rectTopLeft.Y + rectSize.Y);
-                    float distanceX = playerPosition.X - closestX;
-                    float distanceY = playerPosition.Y - closestY;
-                    float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-                    return distanceSquared <= (playerRadius * playerRadius);
-                }
-                case CircleShape2D circleShape:{
-                    Vector2 circleCenter = collisionShape.GlobalPosition;
-                    float circleRadius = circleShape.Radius;
-                    float distanceX = player.Rb.GlobalPosition.X - circleCenter.X;
-                    float distanceY = player.Rb.GlobalPosition.Y - circleCenter.Y;
-                    float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-                    float combinedRadius = playerRadius + circleRadius;
-                    return distanceSquared <= (combinedRadius * combinedRadius);
-                }
-            }
-            return false;
-        }
-        void getArea2DNodes(Node currentNode){
-            if(currentNode is Area2D) areasInScene.Add(currentNode as Area2D);
-            foreach(Node child in currentNode.GetChildren()) getArea2DNodes(child);
-        }
-    }
+	public static void PredictPosition(RigidBody2D rb, byte physicsTicks, Vector2? hostOriginalPosition){
+		if(physicsTicks == 0) return;
+		
+		bool playerPrediction = rb.IsInGroup("Player");
+		List<Vector2> trailPointsToSend = new List<Vector2>(physicsTicks > 0 ? physicsTicks - 1 : 0);
+		
+		var areasInScene = Game.GameNode.FindChildren("*", "Area2D");
+		List<Area2D> areasEntered = new List<Area2D>();
+		
+		if(hostOriginalPosition != null && playerPrediction){
+			Vector2 newPosition = rb.GlobalPosition;
+			rb.GlobalPosition = (Vector2)hostOriginalPosition;
+			getPlayerAreaOverlaps(true);
+			rb.GlobalPosition = newPosition;
+			getPlayerAreaOverlaps(false);
+		}else{
+			getPlayerAreaOverlaps(true);
+		}
+		
+		PhysicsBody2D lastCollision = null;
+		GD.Print("New prediction of " + physicsTicks + " ticks");
+		if(rb.Sleeping) rb.Sleeping = false;
+		if(rb.Freeze) rb.Freeze = false;
+		
+		float fDelta = 1f / Engine.PhysicsTicksPerSecond;
+		Vector2 currentVelocity = rb.LinearVelocity;
+		float angularVelocity = rb.AngularVelocity;
+		bool stopPrediction = false;
+		
+		for(int i = 0; i < physicsTicks && !stopPrediction; i++){
+			// Do necessary changes to velocities and rotation
+			currentVelocity *= (float)Mathf.Clamp(1 - (rb.LinearDamp / Engine.PhysicsTicksPerSecond), 0, 1);
+			angularVelocity *= (float)Mathf.Clamp(1 - (rb.AngularDamp / Engine.PhysicsTicksPerSecond), 0, 1);
+			rb.Rotation += angularVelocity * fDelta; // Rotate
+			currentVelocity += new Vector2(0, 980 * fDelta * rb.GravityScale);
+			
+			// Do physics tick
+			KinematicCollision2D collision = rb.MoveAndCollide(currentVelocity * fDelta);
+			
+			// Check for physics body collisions
+			if(collision != null){
+				GodotObject collidedObject = collision.GetCollider();
+				
+				if(collidedObject is Node collidedNode){
+					GD.Print(collidedNode.Name);
+					
+					Vector2 preBounceVelocity = currentVelocity; 
+					
+					// FIX: Safely extract bounce values to prevent NullReferenceExceptions
+					float playerBounce = rb.PhysicsMaterialOverride != null ? rb.PhysicsMaterialOverride.Bounce : 0f;
+					currentVelocity = preBounceVelocity.Bounce(collision.GetNormal()) * playerBounce; 
+					
+					// FIX: Don't lose the remaining physics delta! Bounce the remainder vector and apply it so fast objects don't stick.
+					Vector2 remainder = collision.GetRemainder();
+					if(remainder.LengthSquared() > 0){
+						Vector2 bouncedRemainder = remainder.Bounce(collision.GetNormal());
+						rb.MoveAndCollide(bouncedRemainder);
+					}
+					
+					if(collidedNode is RigidBody2D collidedRb){
+						float collidedBounce = collidedRb.PhysicsMaterialOverride != null ? collidedRb.PhysicsMaterialOverride.Bounce : 0f;
+						Vector2 newVelocity = preBounceVelocity.Bounce(collision.GetNormal()) * collidedBounce; 
+						collidedRb.LinearVelocity = newVelocity;
+					}
+					
+					// Emit signals for Physics collisions
+					if(collidedNode is PhysicsBody2D collidedPhysicsBody){
+						if(playerPrediction){
+							Player predictedPlayer = rb.GetParent() as Player;
+							predictedPlayer.BounceTimer += fDelta;
+							
+							if(collidedNode.IsInGroup("Regain") || collidedNode.IsInGroup("NoRegain")){
+								foreach(Player player in Game.Players){
+									if(player.OwnerId != predictedPlayer.OwnerId){
+										predictedPlayer.RpcId(player.OwnerId, nameof(predictedPlayer.BounceEffects), rb.GlobalPosition, currentVelocity, physicsTicks - i);
+									}
+								}
+							}else{
+								Node parent = collidedNode.GetParentOrNull<Node>();
+								if(parent != null && (parent.IsInGroup("Regain") || parent.IsInGroup("NoRegain"))){
+									foreach(Player player in Game.Players){
+										if(player.OwnerId != predictedPlayer.OwnerId){
+											predictedPlayer.RpcId(player.OwnerId, nameof(predictedPlayer.BounceEffects), rb.GlobalPosition, currentVelocity, physicsTicks - i);
+										}
+									}
+								}
+							}
+						}
+
+						// If the collision last tick is not the same as the current collision emit signals
+						if(lastCollision != collidedPhysicsBody){
+							if(lastCollision != null){
+								if(lastCollision.HasSignal("body_exited")) lastCollision.EmitSignal("body_exited", rb);
+								rb.EmitSignal("body_exited", lastCollision);
+							}
+							if(collidedPhysicsBody.HasSignal("body_entered")) collidedPhysicsBody.EmitSignal("body_entered", rb);
+							rb.EmitSignal("body_entered", collidedPhysicsBody);
+							lastCollision = collidedPhysicsBody;
+						}
+					}
+				}
+			}else if(lastCollision != null){
+				if(lastCollision.HasSignal("body_exited")) lastCollision.EmitSignal("body_exited", rb);
+				rb.EmitSignal("body_exited", lastCollision);
+				lastCollision = null;
+			}
+			
+			if(playerPrediction){
+				Player player = rb.GetParent() as Player;
+				getPlayerAreaOverlaps(false);
+				
+				if(i != physicsTicks - 1){ 
+					trailPointsToSend.Add(rb.GlobalPosition);
+					player.Trail.AddPoint(rb.GlobalPosition);
+				}
+			}
+		}
+		
+		rb.AngularVelocity = angularVelocity;
+		rb.LinearVelocity = currentVelocity;
+		
+		// Sync Trail points for clients
+		if(playerPrediction && trailPointsToSend.Count > 0){
+			Player predictedPlayer = rb.GetParent() as Player;
+			Vector2[] trailArray = trailPointsToSend.ToArray(); 
+			
+			for(int i = 0; i < Game.PlayerDatas.Count; i++){
+				int uuid = Game.PlayerDatas[i].UUID;
+				Player player = Game.Players[i];
+				if(uuid != predictedPlayer.OwnerId && player.OwnerId != 1 && !Game.DisconnectedDatas.Contains(Game.PlayerDatas[i])){
+					predictedPlayer.Trail.RpcId(uuid, nameof(predictedPlayer.Trail.SyncTrail), trailArray);
+				}
+			}
+		}
+		
+		// Local functions
+		void getPlayerAreaOverlaps(bool firstIteration){
+			Player player = rb.GetParent() as Player;
+			foreach(Node nodeInArray in areasInScene){
+				if(nodeInArray is Area2D area){
+					
+					// Check ALL shapes first to see if the player is in the Area.
+					// This prevents flicker bugs if an area has multiple collision shapes.
+					bool isInside = false;
+					foreach(Node child in area.GetChildren()){
+						if(child is CollisionShape2D collisionShape){
+							if(playerInsideArea(player, collisionShape)){
+								isInside = true;
+								break; // Break shape loop, we know they are in this Area
+							}
+						}
+					}
+					
+					if(isInside && !areasEntered.Contains(area)){
+						if(!firstIteration){ 
+							if(area.IsInGroup("Stop Prediction")){
+								stopPrediction = true;
+							}
+							area.EmitSignal("body_entered", rb);
+						}
+						areasEntered.Add(area);
+						GD.Print("Entered " + area.Name);
+					}else if(!isInside && areasEntered.Contains(area)){
+						if(!firstIteration){
+							area.EmitSignal("body_exited", rb);
+						}
+						areasEntered.Remove(area);
+						GD.Print("Exited " + area.Name);
+					}
+				}
+			}
+		}
+		
+		bool playerInsideArea(Player player, CollisionShape2D collisionShape){
+			float playerRadius = PlayerPhysics.RADIUS * player.PlayerScale;
+			switch(collisionShape.Shape){
+				case RectangleShape2D rectangleShape:{
+					Transform2D rectTransform = collisionShape.GlobalTransform;
+					Vector2 playerPosition;
+					Vector2 rectSize = rectangleShape.Size;
+					Vector2 rectTopLeft;
+					
+					if(Mathf.IsZeroApprox(rectTransform.Rotation)){ 
+						Vector2 rectCenter = collisionShape.GlobalPosition;
+						rectTopLeft = rectCenter - (rectSize / 2);
+						playerPosition = player.Rb.GlobalPosition;
+					}else{ 
+						Transform2D rectInverseTransform = rectTransform.AffineInverse();
+						playerPosition = rectInverseTransform * player.Rb.GlobalPosition; 
+						rectTopLeft = -rectSize / 2;
+					}
+					
+					float closestX = Mathf.Clamp(playerPosition.X, rectTopLeft.X, rectTopLeft.X + rectSize.X);
+					float closestY = Mathf.Clamp(playerPosition.Y, rectTopLeft.Y, rectTopLeft.Y + rectSize.Y);
+					float distanceX = playerPosition.X - closestX;
+					float distanceY = playerPosition.Y - closestY;
+					float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+					return distanceSquared <= (playerRadius * playerRadius);
+				}
+				case CircleShape2D circleShape:{
+					Vector2 circleCenter = collisionShape.GlobalPosition;
+					float circleRadius = circleShape.Radius;
+					float distanceX = player.Rb.GlobalPosition.X - circleCenter.X;
+					float distanceY = player.Rb.GlobalPosition.Y - circleCenter.Y;
+					float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+					float combinedRadius = playerRadius + circleRadius;
+					return distanceSquared <= (combinedRadius * combinedRadius);
+				}
+			}
+			return false;
+		}
+	}
 }
