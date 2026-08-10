@@ -3,7 +3,7 @@ using Godot;
 
 public partial class PlayerSync : Node{
     private int positionSyncTimer = 0;
-	private readonly int POSITION_SYNC_INTERVAL = Engine.PhysicsTicksPerSecond/30; //30 Times per second
+	private readonly int POSITION_SYNC_INTERVAL = Engine.PhysicsTicksPerSecond/60; //30 Times per second
 	private int visualSyncTimer = 0;
 	public static readonly int VISUAL_SYNC_INTERVAL = Engine.PhysicsTicksPerSecond/15; //15 Times per second
 	private float[] xVelocities;
