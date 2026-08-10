@@ -3,7 +3,7 @@ public partial class SettingsMenu : VerticalMenu{
     public override void _Ready(){
         base._Ready();
         Selection = 1;
-        totalSelections = 4;
+        totalSelections = 5;
         defaultFontSize = 1;
         LoadData();
         UpdateSelectionVisual();
@@ -16,6 +16,7 @@ public partial class SettingsMenu : VerticalMenu{
             case 2: MenuScene.LoadMenu("Settings/SoundMenu"); break;
             case 3: MenuScene.LoadMenu("Settings/ProfileMenu"); break;
             case 4: MenuScene.LoadMenu("Settings/AccessibilityMenu"); break;
+			case 5: MenuScene.LoadMenu("Settings/OnlineMenu"); break;
         }
     }
 
@@ -29,5 +30,6 @@ public partial class SettingsMenu : VerticalMenu{
         SoundMenu.LoadData();
         ControlProfileManager.LoadProfiles();
         AccessibilityMenu.LoadData();
+		SettingsOnlineMenu.LoadData();
     }
 }

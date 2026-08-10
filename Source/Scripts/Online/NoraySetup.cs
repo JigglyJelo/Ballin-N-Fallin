@@ -2,6 +2,8 @@ using Godot;
 
 public partial class NoraySetup : Node{
     public static Node BridgeNode;
+	public static string NorayIP;
+	public static ushort NorayPort;
 
     public static void InitializeBridge(){
         if (BridgeNode == null) {
@@ -40,13 +42,13 @@ public partial class NoraySetup : Node{
 
     public static bool NorayHost(){
         InitializeBridge();
-        BridgeNode.Call("start_host", Game.MAX_PLAYERS);
+        BridgeNode.Call("start_host", Game.MAX_PLAYERS, NorayIP, NorayPort);
         return true;
     }
 
     public static bool NorayJoin(){
         InitializeBridge();
-        BridgeNode.Call("start_client", Online.NorayHostOid);
+        BridgeNode.Call("start_client", Online.NorayHostOid, NorayIP, NorayPort);
         return true;
     }
 }

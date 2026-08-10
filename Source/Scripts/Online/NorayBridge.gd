@@ -11,9 +11,6 @@ var is_host: bool = false
 var max_players: int = 4
 var current_target_oid: String = ""
 
-var noray_address: String = "127.0.0.1"
-var noray_port: int = 8890
-
 func _ready() -> void:
 	var noray: _Noray = get_node_or_null("/root/Noray")
 	if noray == null:
@@ -23,9 +20,9 @@ func _ready() -> void:
 	noray.connect("on_connect_nat", Callable(self, "_handle_connect_nat"))
 	noray.connect("on_connect_relay", Callable(self, "_handle_connect_relay"))
 
-func _setup_noray() -> Error:
+func _setup_noray(noray_ip: String, noray_port: int) -> Error:
 	var noray: _Noray = get_node("/root/Noray")
-	var err = await noray.connect_to_host(noray_address, noray_port)
+	var err = await noray.connect_to_host(noray_ip, noray_port)
 	if err != OK: return err
 		
 	noray.register_host()
@@ -34,12 +31,12 @@ func _setup_noray() -> Error:
 	err = await noray.register_remote()
 	return err
 
-func start_host(players: int) -> void:
+func start_host(players: int, noray_ip: String, noray_port: int) -> void:
 	is_host = true
 	max_players = players
 	var noray: _Noray = get_node("/root/Noray")
 	
-	var err: Error = await _setup_noray()
+	var err: Error = await _setup_noray(noray_ip, noray_port)
 	if err != OK:
 		host_failed.emit("Failed to setup Noray connection.")
 		return
@@ -64,12 +61,12 @@ func start_host(players: int) -> void:
 		await noray.on_oid
 		host_ready.emit(str(noray.oid))
 
-func start_client(oid: String) -> void:
+func start_client(oid: String, noray_ip: String, noray_port: int) -> void:
 	is_host = false
 	current_target_oid = oid
 	var noray: _Noray = get_node("/root/Noray")
 	
-	var err = await _setup_noray()
+	var err = await _setup_noray(noray_ip, noray_port)
 	if err != OK:
 		client_failed.emit("Failed to setup Noray client connection.")
 		return
