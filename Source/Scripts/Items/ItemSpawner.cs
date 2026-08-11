@@ -4,7 +4,7 @@ public partial class ItemSpawner : Sprite2D{
 	public static byte TotalSpawners;
 	public byte SpawnerId;
 	public bool ItemSpawned = false;
-	private static PackedScene itemBoxScene;
+	private static readonly PackedScene ITEM_BOX_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Items/ItemBox.tscn");
 	private ItemBox itemBoxNode;
 	private float spawnTime;
 	private float timer;
@@ -15,7 +15,6 @@ public partial class ItemSpawner : Sprite2D{
 		SpawnerId = TotalSpawners;
 		TotalSpawners++;
 		Texture = null;
-		if(itemBoxScene == null) itemBoxScene = GD.Load<PackedScene>("res://Source/Scenes/Items/ItemBox.tscn");
 		if(Online.IsHost()) spawnTime = Game.Random.Next(3,13);
 		breakSound = GetNode<AudioStreamPlayer2D>("SFX");
 		float zoomScale = 1 + (1-(GetParent() as Level).CameraZoom);
@@ -41,7 +40,7 @@ public partial class ItemSpawner : Sprite2D{
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void SpawnItemBox(){
 		ItemSpawned = true;
-		itemBoxNode = itemBoxScene.Instantiate<ItemBox>();
+		itemBoxNode = ITEM_BOX_SCENE.Instantiate<ItemBox>();
 		itemBoxNode.Creator = this;
 		itemBoxNode.Rb = itemBoxNode.GetNode<InterpolatedBody>("RigidBody2D");
         itemBoxNode.Rb.GlobalPosition = GlobalPosition;

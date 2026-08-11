@@ -20,6 +20,7 @@ script = ExtResource("2_gp4e6")
 physics_interpolation_mode = 1
 physics_material_override = ExtResource("1_u2pas")
 gravity_scale = 2.0
+can_sleep = false
 continuous_cd = 2
 contact_monitor = true
 max_contacts_reported = 6
