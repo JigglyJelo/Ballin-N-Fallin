@@ -44,4 +44,4 @@ RichTextLabel/font_sizes/bold_italics_font_size = 200
 RichTextLabel/font_sizes/italics_font_size = 200
 RichTextLabel/font_sizes/mono_font_size = 200
 RichTextLabel/font_sizes/normal_font_size = 200
-VBoxContainer/constants/separation = 16
+VBoxContainer/constants/separation = 8

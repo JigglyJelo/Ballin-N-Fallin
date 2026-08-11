@@ -84,6 +84,7 @@ public partial class Online{
         Engine.TimeScale = 1;
         Game.Paused = false;
         PingGetter.LastPing = 0;
+		InGameChat.DeleteInGameChat();
         SceneTransitioner.SwitchToScene(Game.SceneType.Menu);
     }
 
