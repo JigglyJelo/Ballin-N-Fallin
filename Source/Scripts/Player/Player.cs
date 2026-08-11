@@ -217,29 +217,34 @@ public partial class Player : Node2D{
 		}else if(!Mode.Finished){
 			if(CanLaunch && InputVector != Vector2.Zero){
 				int ping = PingGetter.GetMedianPing();
-				if(Online.Buffer >= 0.5f){
-					byte ticks = (byte)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
-					if(!Mode.Finished) RpcId(1,nameof(LaunchOnServer),InputVector.Angle(),LaunchPower,ticks);
+				if(SettingsOnlineMenu.UsePlayerPrediction){
+					if(Online.Buffer >= 0.5f){
+						byte ticks = (byte)PingGetter.PingToRecommendedTicks(ping);
+						if(!Mode.Finished) RpcId(1,nameof(LaunchOnServer),InputVector.Angle(),LaunchPower,ticks);
+						if(InputVector.X < 0) Visuals.Flip(true,InputVector.Angle() + MathF.PI);
+						else Visuals.Flip(false,InputVector.Angle());
+						TicksToIgnore = (int)Math.Ceiling((1-Online.Buffer)*(ping / (1000.0/Engine.PhysicsTicksPerSecond)));
+					}else{
+						GD.Print("Ping: " + ping);
+						if(!Level.IsPositionOffscreen(Rb.GlobalPosition)){
+							TicksToIgnore = PingGetter.PingToTicks(ping);
+							if (!Mode.Finished) RpcId(1, nameof(LaunchOnServerNRewind), InputVector.Angle(), LaunchPower, (byte)TicksToIgnore);
+							if (InputVector.X < 0) Visuals.Flip(true, InputVector.Angle() + MathF.PI);
+							else Visuals.Flip(false, InputVector.Angle());
+							TicksToIgnore++;
+						}
+					}
+
+					if(Online.Buffer != 1){
+						double timerTime = (ping / 1000.0) * Online.Buffer;
+						await ToSignal(GetTree().CreateTimer(timerTime,false,true), "timeout");
+						Physics.ApplyLaunch();
+					}
+				}else{
+					if(!Mode.Finished) RpcId(1,nameof(LaunchOnServer),InputVector.Angle(),LaunchPower,0);
 					if(InputVector.X < 0) Visuals.Flip(true,InputVector.Angle() + MathF.PI);
 					else Visuals.Flip(false,InputVector.Angle());
-					TicksToIgnore = (int)Math.Ceiling((1-Online.Buffer)*(ping / (1000.0/Engine.PhysicsTicksPerSecond)));
-				}else{
-					GD.Print("Ping: " + ping);
-					if(!Level.IsPositionOffscreen(Rb.GlobalPosition)){
-						TicksToIgnore = PingGetter.PingToTicks(ping);
-						if (!Mode.Finished) RpcId(1, nameof(LaunchOnServerNRewind), InputVector.Angle(), LaunchPower, (byte)TicksToIgnore);
-						if (InputVector.X < 0) Visuals.Flip(true, InputVector.Angle() + MathF.PI);
-						else Visuals.Flip(false, InputVector.Angle());
-						TicksToIgnore++;
-					}
 				}
-
-				if(Online.Buffer != 1){
-					double timerTime = (ping / 1000.0) * Online.Buffer;
-					await ToSignal(GetTree().CreateTimer(timerTime,false,true), "timeout");
-					Physics.ApplyLaunch();
-				}
-				
 				CanLaunch = false;
 			}
 			PlayerInput.SetWeakVibration(0);
@@ -274,18 +279,22 @@ public partial class Player : Node2D{
 				IsStomping = true;
 			}
 		}else if(CanSlam && !Mode.Finished){
-			int ping = PingGetter.GetMedianPing();
-			if(Online.Buffer < 0.5f){
-				TicksToIgnore = PingGetter.PingToTicks(ping);
-				if(!Level.IsPositionOffscreen(Rb.GlobalPosition))
-					if(!Mode.Finished) RpcId(1,nameof(SendSlamToServerNRewind),(byte)TicksToIgnore);
+			if(SettingsOnlineMenu.UsePlayerPrediction){
+				int ping = PingGetter.GetMedianPing();
+				if(Online.Buffer < 0.5f){
+					TicksToIgnore = PingGetter.PingToTicks(ping);
+					if(!Level.IsPositionOffscreen(Rb.GlobalPosition))
+						if(!Mode.Finished) RpcId(1,nameof(SendSlamToServerNRewind),(byte)TicksToIgnore);
+				}else{
+					byte ticks = (byte)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
+					if(!Mode.Finished) RpcId(1,nameof(SendSlamToServer),ticks);
+				}
+				double timerTime = (ping / 1000.0) * Online.Buffer;
+				await ToSignal(GetTree().CreateTimer(timerTime,false,true), "timeout");
+				if(Online.Buffer >= 0.5f) TicksToIgnore = (int)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
 			}else{
-				byte ticks = (byte)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
-				if(!Mode.Finished) RpcId(1,nameof(SendSlamToServer),ticks);
+				if(!Mode.Finished) RpcId(1,nameof(SendSlamToServer),0);
 			}
-			double timerTime = (ping / 1000.0) * Online.Buffer;
-			await ToSignal(GetTree().CreateTimer(timerTime,false,true), "timeout");
-			if(Online.Buffer >= 0.5f) TicksToIgnore = (int)((1-Online.Buffer) * PingGetter.PingToTicks(ping));
 			CanSlam = false;
 			Physics.ApplySlam();
 		}

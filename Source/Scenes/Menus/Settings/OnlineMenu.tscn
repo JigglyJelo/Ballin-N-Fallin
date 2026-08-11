@@ -1,0 +1,126 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhegxycebo71m"]
+
+[ext_resource type="Script" path="res://Source/Scripts/Menus/Settings Menu/SettingsOnlineMenu.cs" id="1_qer8i"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_tdqx3"]
+[ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="3_4oytf"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_52tca"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="4_vdux5"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_j6qsr"]
+
+[node name="Online Menu" type="Node2D"]
+script = ExtResource("1_qer8i")
+
+[node name="Settings Text" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -1030.0
+offset_right = 1920.0
+offset_bottom = -790.0
+text = "Online Settings"
+label_settings = ExtResource("2_tdqx3")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="ArrowSelections" parent="." instance=ExtResource("3_4oytf")]
+
+[node name="Selections" type="Node2D" parent="."]
+position = Vector2(215, 0)
+
+[node name="Chat Text" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -800.0
+offset_right = 56.0
+offset_bottom = -560.0
+text = "Chat: Filtered"
+label_settings = ExtResource("2_tdqx3")
+vertical_alignment = 1
+metadata/setting = true
+metadata/nonclickable = true
+
+[node name="Prediction Text" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -500.0
+offset_right = -302.0
+offset_bottom = -260.0
+text = "Prediction: Allowed"
+label_settings = ExtResource("2_tdqx3")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="NorayIPText" type="Label" parent="."]
+offset_left = -1705.0
+offset_top = -200.0
+offset_right = -87.0
+offset_bottom = 40.0
+text = "Noray IP"
+label_settings = ExtResource("2_tdqx3")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="NorayPortText" type="Label" parent="."]
+offset_left = -1705.0
+offset_top = 100.0
+offset_right = -87.0
+offset_bottom = 340.0
+text = "Noray Port"
+label_settings = ExtResource("2_tdqx3")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="NohubIPText" type="Label" parent="."]
+offset_left = -1705.0
+offset_top = 400.0
+offset_right = -87.0
+offset_bottom = 640.0
+text = "Nohub IP"
+label_settings = ExtResource("2_tdqx3")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="NohubPortText" type="Label" parent="."]
+offset_left = -1705.0
+offset_top = 700.0
+offset_right = -87.0
+offset_bottom = 940.0
+text = "Nohub Port"
+label_settings = ExtResource("2_tdqx3")
+vertical_alignment = 1
+metadata/setting = true
+
+[node name="NorayIPEntry" type="LineEdit" parent="."]
+offset_left = -700.0
+offset_top = -200.0
+offset_right = 1032.0
+offset_bottom = 74.0
+theme = ExtResource("4_vdux5")
+placeholder_text = "Enter Noray IP"
+
+[node name="NorayPortEntry" type="LineEdit" parent="."]
+offset_left = -700.0
+offset_top = 100.0
+offset_right = 1032.0
+offset_bottom = 374.0
+theme = ExtResource("4_vdux5")
+placeholder_text = "Enter Noray Port"
+
+[node name="NohubIPEntry" type="LineEdit" parent="."]
+offset_left = -700.0
+offset_top = 400.0
+offset_right = 1032.0
+offset_bottom = 674.0
+theme = ExtResource("4_vdux5")
+placeholder_text = "Enter Nohub IP"
+
+[node name="NohubPortEntry" type="LineEdit" parent="."]
+offset_left = -700.0
+offset_top = 700.0
+offset_right = 1032.0
+offset_bottom = 974.0
+theme = ExtResource("4_vdux5")
+placeholder_text = "Enter Nohub Port"
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_52tca")]
+position = Vector2(1750, 970)
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_j6qsr")]

@@ -165,6 +165,7 @@ public abstract partial class TeamSportsMode : TeamMode, ILevelLoadedEvent, IMod
                 TeamBScore = 0;
             }
         }
+		teamALabel.Text = TeamAScore.ToString();
         teamBLabel.Text = TeamBScore.ToString();
     }
 }
