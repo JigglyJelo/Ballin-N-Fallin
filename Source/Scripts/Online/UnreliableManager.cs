@@ -7,7 +7,7 @@ public partial class UnreliableManager{
 	private static Dictionary<UnreliableChannel,ushort> transferChannelLastUpdate = GetResetTransferChannelLastUpdate();
 	private static Dictionary<UnreliableChannel,ushort> GetResetTransferChannelLastUpdate(){
 		return new Dictionary<UnreliableChannel, ushort>{
-			{UnreliableChannel.PlayerVelocity,ushort.MaxValue},{UnreliableChannel.PlayerPosition,ushort.MaxValue},{UnreliableChannel.PlayerArrow,ushort.MaxValue},{UnreliableChannel.PlayerDirection,ushort.MaxValue},
+			{UnreliableChannel.PlayerPhysics,ushort.MaxValue},{UnreliableChannel.PlayerArrow,ushort.MaxValue},{UnreliableChannel.PlayerDirection,ushort.MaxValue},
 			{UnreliableChannel.SpawnedBoxes,ushort.MaxValue}, {UnreliableChannel.SpawnedItems,ushort.MaxValue},
 			{UnreliableChannel.SportBall,ushort.MaxValue},{UnreliableChannel.TrashPosition,ushort.MaxValue},{UnreliableChannel.TrashRotation,ushort.MaxValue},
 			{UnreliableChannel.Payload,ushort.MaxValue}
@@ -36,7 +36,7 @@ public partial class UnreliableManager{
 		return transferChannelLastUpdate[transferChannel];
 	}
 	public enum UnreliableChannel : int{
-		PlayerPosition,PlayerVelocity,PlayerDirection,PlayerArrow,
+		PlayerPhysics,PlayerDirection,PlayerArrow,
 		SpawnedItems, SpawnedBoxes,
 		SportBall, TrashPosition, TrashRotation,
 		Payload

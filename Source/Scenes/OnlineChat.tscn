@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://6khvvot1hckv"]
+
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_hggle"]
+[ext_resource type="Script" path="res://Source/Scripts/InGameChat.cs" id="2_wg7qd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrtvp"]
+bg_color = Color(0, 0, 0, 0.784314)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7jotm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ry7o4"]
+
+[node name="OnlineChat" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 3840.0
+offset_bottom = 2160.0
+
+[node name="ChatMessages" type="VBoxContainer" parent="Control"]
+layout_mode = 2
+offset_left = 2517.0
+offset_right = 3840.0
+offset_bottom = 753.0
+theme = ExtResource("1_hggle")
+alignment = 2
+script = ExtResource("2_wg7qd")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/ChatMessages"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="MessageList" type="VBoxContainer" parent="Control/ChatMessages/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="Control/ChatMessages"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_xrtvp")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_7jotm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ry7o4")
+alignment = 2

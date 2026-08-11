@@ -24,9 +24,9 @@ metadata/nonclickable = true
 
 [node name="Video Text" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = -499.0
+offset_top = -500.0
 offset_right = 1920.0
-offset_bottom = -259.0
+offset_bottom = -260.0
 pivot_offset = Vector2(1920, 120)
 text = "Video"
 label_settings = ExtResource("2_a7hwm")
@@ -46,9 +46,9 @@ vertical_alignment = 1
 
 [node name="Controls Text" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 101.0
+offset_top = 100.0
 offset_right = 1920.0
-offset_bottom = 341.0
+offset_bottom = 340.0
 pivot_offset = Vector2(1920, 120)
 text = "Controls"
 label_settings = ExtResource("2_a7hwm")
@@ -57,11 +57,22 @@ vertical_alignment = 1
 
 [node name="Accessibility Text" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 401.0
+offset_top = 400.0
 offset_right = 1920.0
-offset_bottom = 641.0
+offset_bottom = 640.0
 pivot_offset = Vector2(1920, 120)
 text = "Accessibility"
+label_settings = ExtResource("2_a7hwm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Online Text" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = 700.0
+offset_right = 1920.0
+offset_bottom = 940.0
+pivot_offset = Vector2(1920, 120)
+text = "Online"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1

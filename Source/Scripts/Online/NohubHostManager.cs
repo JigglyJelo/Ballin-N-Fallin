@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 
 public partial class NohubHostManager : Node{
+	public static string NohubIP;
+	public static ushort NohubPort;
     public static readonly Dictionary<string, Variant.Type> LOBBY_SCHEMA = new(){
         {"name", Variant.Type.String},
         {"player_count", Variant.Type.Int},
@@ -52,11 +54,8 @@ func call_async(target: Object, method: String, args: Array = []):
     }
 
     private async void ConnectAndRegister(){
-        string host = "foxssake.studio"; 
-        int port = 12980;
-
         nohubConnection = (GodotObject)ClassDB.Instantiate("StreamPeerTCP");
-        Error err = (Error)(int)nohubConnection.Call("connect_to_host",host,port);
+        Error err = (Error)(int)nohubConnection.Call("connect_to_host",NohubIP,NohubPort);
 
         if(err != Error.Ok){
             GD.PrintErr("NohubHostManager: Failed to connect to matchmaking server.");

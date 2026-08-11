@@ -13,6 +13,7 @@ public static class WordFilter{
     // Both regexes pre-compiled for maximum game performance
     private static Regex chatFilterRegex;
     private static Regex stripRegex = new Regex(@"[^a-zA-Z0-9]", RegexOptions.Compiled);
+    private static Regex chatCensorRegex;
 
     /// <summary>
     /// Loads banned substrings and full words from the game's Assets folder and compiles them into a single Regex.
@@ -76,6 +77,23 @@ public static class WordFilter{
             string finalPattern = string.Join("|", regexPatterns);
             chatFilterRegex = new Regex(finalPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
+
+        // Build the Censor Regex for chat sentences
+        List<string> censorPatterns = new List<string>();
+        
+        if(tempSubstrings.Count > 0){
+            censorPatterns.Add(string.Join("|", tempSubstrings.Select(w => Regex.Escape(w.ToLower()))));
+        }
+        
+        if(tempFullWords.Count > 0){
+            // For replacing in sentences, full words need \b (word boundaries) instead of ^ and $
+            censorPatterns.Add(string.Join("|", tempFullWords.Select(w => @"\b" + Regex.Escape(w.ToLower()) + @"\b")));
+        }
+
+        if(censorPatterns.Count > 0){
+            string censorPattern = string.Join("|", censorPatterns);
+            chatCensorRegex = new Regex(censorPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        }
     }
 
     /// <summary>
@@ -98,5 +116,17 @@ public static class WordFilter{
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Filters a full chat message, replacing any banned words or substrings with asterisks.
+    /// Preserves spaces and punctuation so the sentence structure remains intact.
+    /// </summary>
+    public static string FilterChatMessage(string message){
+        if(string.IsNullOrWhiteSpace(message)) return message;
+        if(chatCensorRegex == null) return message;
+
+        // Replaces the matched bad word with an equivalent number of asterisks
+        return chatCensorRegex.Replace(message, match => new string('*', match.Length));
     }
 }
