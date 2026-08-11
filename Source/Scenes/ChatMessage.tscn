@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c45e7hb3xpgch"]
+
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_rb14q"]
+
+[node name="ChatMessage" type="Panel"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_vertical = 3
+theme = ExtResource("1_rb14q")

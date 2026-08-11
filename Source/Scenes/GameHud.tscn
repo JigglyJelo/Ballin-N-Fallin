@@ -1,4 +1,17 @@
-[gd_scene format=3 uid="uid://6khvvot1hckv"]
+[gd_scene load_steps=5 format=3 uid="uid://6khvvot1hckv"]
+
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_5e7yp"]
+[ext_resource type="Script" path="res://Source/Scripts/InGameChat.cs" id="2_hg3xi"]
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="2_ia0mo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vuvyc"]
+font = ExtResource("2_ia0mo")
+font_size = 50
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(4, 4)
 
 [node name="GameHUD" type="CanvasLayer"]
 
@@ -7,3 +20,30 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 3840.0
 offset_bottom = 2160.0
+
+[node name="ChatMessages" type="VBoxContainer" parent="Control"]
+layout_mode = 2
+offset_left = 2517.0
+offset_right = 3840.0
+offset_bottom = 753.0
+theme = ExtResource("1_5e7yp")
+alignment = 2
+script = ExtResource("2_hg3xi")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/ChatMessages"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MessageList" type="VBoxContainer" parent="Control/ChatMessages/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChatMessage" type="Label" parent="Control/ChatMessages/ScrollContainer/MessageList"]
+custom_minimum_size = Vector2(1291, 117)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Player: Hi how are you"
+label_settings = SubResource("LabelSettings_vuvyc")
+horizontal_alignment = 2
+autowrap_mode = 3
