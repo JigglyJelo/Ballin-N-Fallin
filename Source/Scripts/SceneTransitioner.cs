@@ -2,13 +2,12 @@ using Godot;
 
 public partial class SceneTransitioner : Node{
 	public static SceneTransitioner SceneTransNode;
-	private static PackedScene gameScene,menuScene,scoreScene;
+	private static readonly PackedScene MENU_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Main Scenes/Menu Scene.tscn");
+	private static readonly PackedScene GAME_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Main Scenes/Game Scene.tscn");
+	private static readonly PackedScene SCORE_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Main Scenes/Score Scene.tscn");
 	public override void _Ready(){
 		Game.DisableProcesses(this);
 		SceneTransNode = this;
-		gameScene = GD.Load<PackedScene>("res://Source/Scenes/Main Scenes/Game Scene.tscn");
-        menuScene = GD.Load<PackedScene>("res://Source/Scenes/Main Scenes/Menu Scene.tscn");
-        scoreScene = GD.Load<PackedScene>("res://Source/Scenes/Main Scenes/Score Scene.tscn");
 	}
 
 	//Switches to the given scene "Game" for Game Scene "Menu" for Menu Scene
@@ -27,19 +26,19 @@ public partial class SceneTransitioner : Node{
 		MenuScene.CurrentMenuNode = null;
 		switch(scene){
 			case Game.SceneType.Game:
-				newPackedScene = gameScene;
+				newPackedScene = GAME_SCENE;
             	if(Game.MouseMode != Game.MouseModeEnum.Cursor) Input.MouseMode = Input.MouseModeEnum.Hidden;
 				break;
 			case Game.SceneType.ScoreScreen:
 				//Set background new size
             	Game.Players = null;
             	Game.GameNode.GetNodeOrNull<CanvasLayer>("BackgroundLayer").Scale = new Vector2(Game.Resolution / 2160f,Game.Resolution / 2160f);
-            	newPackedScene = scoreScene;
+            	newPackedScene = SCORE_SCENE;
             	Input.MouseMode = Input.MouseModeEnum.Visible;
 				break;
 			default:
 				Game.Players = null;
-            	newPackedScene = menuScene;
+            	newPackedScene = MENU_SCENE;
             	Input.MouseMode = Input.MouseModeEnum.Visible;
 				break;
 		}

@@ -95,16 +95,16 @@ public partial class InGameChat : VBoxContainer{
 	}
 
 	public static void SpawnInGameChat(){
-		if(InGameChatNode != null){
+		if(InGameChatNode != null && !InGameChatNode.IsQueuedForDeletion()){
 			InGameChatNode.QueueFree();
 		}
 		Game.GameNode.AddChild(IN_GAME_CHAT_SCENE.Instantiate());
 	}
 
 	public static void DeleteInGameChat(){
-		if(InGameChatNode != null){
+		if(InGameChatNode != null && !InGameChatNode.IsQueuedForDeletion()){
 			InGameChatNode.QueueFree();
-		}else if(Game.GameNode.GetNode("OnlineChat") != null){
+		}else if(Game.GameNode.GetNode("OnlineChat") != null && !Game.GameNode.GetNode("OnlineChat").IsQueuedForDeletion()){
 			Game.GameNode.GetNode("OnlineChat").QueueFree();
 		}
 	}
