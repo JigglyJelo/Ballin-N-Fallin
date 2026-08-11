@@ -1,10 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://c45e7hb3xpgch"]
+[gd_scene load_steps=3 format=3 uid="uid://c45e7hb3xpgch"]
 
-[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_rb14q"]
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="1_hwwmt"]
 
-[node name="ChatMessage" type="Panel"]
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-size_flags_vertical = 3
-theme = ExtResource("1_rb14q")
+[sub_resource type="LabelSettings" id="LabelSettings_vuvyc"]
+font = ExtResource("1_hwwmt")
+font_size = 50
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(4, 4)
+
+[node name="ChatMessage" type="Label"]
+custom_minimum_size = Vector2(1291, 67)
+offset_right = 1291.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 50
+text = "Player: Hi how are you"
+label_settings = SubResource("LabelSettings_vuvyc")
+horizontal_alignment = 2
+autowrap_mode = 3

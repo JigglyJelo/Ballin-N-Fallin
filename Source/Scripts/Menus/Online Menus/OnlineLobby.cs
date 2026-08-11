@@ -44,6 +44,7 @@ public partial class OnlineLobby : Node{
         
         GD.Print(Online.IsOnline);
         if(!Online.IsOnline){
+			InGameChat.SpawnInGameChat();
             if(IsHost) HostLobby();
             else JoinLobby();
         }else if(Online.IsHost()){
