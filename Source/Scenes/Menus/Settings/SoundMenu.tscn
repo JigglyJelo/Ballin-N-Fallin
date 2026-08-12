@@ -72,3 +72,10 @@ vertical_alignment = 1
 position = Vector2(1750, 970)
 
 [node name="InputPrompts" parent="." instance=ExtResource("5_bxbap")]
+offset_left = 184.0
+offset_right = 3718.0
+InputMessages = {
+0: "Set to Default",
+2: "Confirm",
+3: "Back"
+}
