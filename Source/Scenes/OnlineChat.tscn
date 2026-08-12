@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://6khvvot1hckv"]
+[gd_scene load_steps=7 format=3 uid="uid://6khvvot1hckv"]
 
+[ext_resource type="Script" path="res://Source/Scripts/GameCanvasLayer.cs" id="1_5fxsi"]
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_hggle"]
 [ext_resource type="Script" path="res://Source/Scripts/InGameChat.cs" id="2_wg7qd"]
 
@@ -15,6 +16,7 @@ corner_radius_bottom_left = 16
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ry7o4"]
 
 [node name="OnlineChat" type="CanvasLayer"]
+script = ExtResource("1_5fxsi")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

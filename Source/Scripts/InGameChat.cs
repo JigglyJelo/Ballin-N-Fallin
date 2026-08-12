@@ -2,19 +2,24 @@ using Godot;
 using System.Collections.Generic;
 
 public partial class InGameChat : VBoxContainer{
-	private static InGameChat InGameChatNode;
+	public static InGameChat InGameChatNode = null;
+	[Export]
+	private bool isLobbyChat = false;
 	private ScrollContainer scrollContainer;
 	private VBoxContainer messageList;
 	private LineEdit textEntry;
 	private readonly static PackedScene IN_GAME_CHAT_SCENE = GD.Load<PackedScene>("res://Source/Scenes/OnlineChat.tscn");
-	private readonly static PackedScene CHAT_MESSAGE_SCENE = GD.Load<PackedScene>("res://Source/Scenes/ChatMessage.tscn");
+	private readonly static PackedScene LOBBY_CHAT_MESSAGE_SCENE = GD.Load<PackedScene>("res://Source/Scenes/LobbyChatMessage.tscn");
+	private readonly static PackedScene IN_GAME_CHAT_MESSAGE_SCENE = GD.Load<PackedScene>("res://Source/Scenes/ChatMessage.tscn");
 	
 	private const float MESSAGE_LIFETIME = 10;
 	private const float FADE_TIME = 1;
 	private Dictionary<Label, float> messageTimers = new Dictionary<Label, float>();
 
 	public override void _Ready(){
-		(GetParent().GetParent() as CanvasLayer).Scale = Game.ContentScaleVector2;
+		if(InGameChatNode != null && !InGameChatNode.IsQueuedForDeletion()){
+			InGameChatNode.QueueFree();
+		}
 		InGameChatNode = this;
 		scrollContainer = GetNode<ScrollContainer>("ScrollContainer");
 		messageList = scrollContainer.GetNode<VBoxContainer>("MessageList");
@@ -75,7 +80,7 @@ public partial class InGameChat : VBoxContainer{
 					if(SettingsOnlineMenu.OnlineChatSetting == SettingsOnlineMenu.ChatSetting.Filtered){
 						message = WordFilter.FilterChatMessage(message);
 					}
-					Label messageLabel = CHAT_MESSAGE_SCENE.Instantiate<Label>();
+					Label messageLabel = (InGameChatNode.isLobbyChat ? LOBBY_CHAT_MESSAGE_SCENE : IN_GAME_CHAT_MESSAGE_SCENE).Instantiate<Label>();
 					messageLabel.Text = $"{playerData.Username}: {message}";
 					messageLabel.SelfModulate = playerData.PlayerColor;
 					InGameChatNode.AddMessageToUI(messageLabel);
@@ -95,17 +100,23 @@ public partial class InGameChat : VBoxContainer{
 	}
 
 	public static void SpawnInGameChat(){
-		if(InGameChatNode != null && !InGameChatNode.IsQueuedForDeletion()){
-			InGameChatNode.QueueFree();
+		if(InGameChatNode != null){
+			if(!InGameChatNode.IsQueuedForDeletion()){
+				InGameChatNode.QueueFree();
+				InGameChatNode = null;
+			}
 		}
 		Game.GameNode.AddChild(IN_GAME_CHAT_SCENE.Instantiate());
 	}
 
 	public static void DeleteInGameChat(){
-		if(InGameChatNode != null && !InGameChatNode.IsQueuedForDeletion()){
-			InGameChatNode.QueueFree();
-		}else if(Game.GameNode.GetNode("OnlineChat") != null && !Game.GameNode.GetNode("OnlineChat").IsQueuedForDeletion()){
+		if(InGameChatNode != null){
+			if(!InGameChatNode.IsQueuedForDeletion()){
+				InGameChatNode.QueueFree();
+			}
+		}else if(Game.GameNode.GetNodeOrNull("OnlineChat") != null && !Game.GameNode.GetNodeOrNull("OnlineChat").IsQueuedForDeletion()){
 			Game.GameNode.GetNode("OnlineChat").QueueFree();
 		}
+		InGameChatNode = null;
 	}
 }
