@@ -23,6 +23,15 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
         UpdateTexts();
     }
 
+	public override void _Process(double delta){
+		base._Process(delta);
+		for(int i = 0; i < Game.MAX_PLAYERS; i++){
+			if(Input.IsActionJustReleased("Y"+i)){
+				SetToDefaultSettings();
+			}
+		}
+	}
+
     protected override void MenuChoose(int choice){
         if(choice == 4){
             ToggleFullscreen();
@@ -124,6 +133,16 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
         }
         Game.SetResolution();
     }
+
+	private void SetToDefaultSettings(){
+		resolutionIndex = (byte)GetDefaultResolution();
+        Game.Resolution = RESOLUTIONS[resolutionIndex];
+		fpsCap = GetDefaultFPS();
+		vSyncEnabled = true;
+		DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+		Game.SetResolution();
+		UpdateTexts();
+	}
 
     public static int GetDefaultResolution(){
         int resolution = DisplayServer.ScreenGetSize().Y;

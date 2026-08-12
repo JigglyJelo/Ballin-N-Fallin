@@ -124,3 +124,10 @@ placeholder_text = "Enter Nohub Port"
 position = Vector2(1750, 970)
 
 [node name="InputPrompts" parent="." instance=ExtResource("5_j6qsr")]
+offset_left = 207.0
+offset_right = 3695.0
+InputMessages = {
+0: "Set to Default",
+2: "Confirm",
+3: "Back"
+}

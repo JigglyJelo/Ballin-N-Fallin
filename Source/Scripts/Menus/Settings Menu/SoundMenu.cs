@@ -21,7 +21,14 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
     }
 
     public override void _Process(double delta){
-        if(!InMusicSelection) base._Process(delta);
+        if(!InMusicSelection){
+			base._Process(delta);
+			for(int i = 0; i < Game.MAX_PLAYERS; i++){
+				if(Input.IsActionJustReleased("Y"+i)){
+					SetToDefaultSettings();
+				}
+			}
+		}
     }
 
     protected override void MenuChoose(int choice){
@@ -87,6 +94,14 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
         SaveData();
         LoadData();
     }
+
+	private void SetToDefaultSettings(){
+		Game.MasterVolume = 50;
+		Game.MusicVolume = 50;
+		Game.SFXVolume = 50;
+		Game.CustomSoundtrack = "";
+		UpdateTexts();
+	}
 
     private void SaveData(){
         Game.Save.SetValue("Sound","Master Volume",Game.MasterVolume);
