@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsf4f418av3c2"]
+
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="1_pq7xk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nwb1u"]
+font = ExtResource("1_pq7xk")
+font_size = 75
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[node name="Label" type="Label"]
+size_flags_horizontal = 3
+text = "farts: I hate you die in a fire before I kill you"
+label_settings = SubResource("LabelSettings_nwb1u")
+autowrap_mode = 3
