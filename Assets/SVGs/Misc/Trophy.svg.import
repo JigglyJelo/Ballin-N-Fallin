@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ytpljltjqyub"
-path="res://.godot/imported/Trophy.png-5e60e7f8f5a363384e38ef210525b716.ctex"
+uid="uid://d1harb80wgh2b"
+path="res://.godot/imported/Trophy.svg-6491fa2a6c6f7b4f701d94281d3ac5d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Menus/Trophy.png"
-dest_files=["res://.godot/imported/Trophy.png-5e60e7f8f5a363384e38ef210525b716.ctex"]
+source_file="res://Assets/SVGs/Misc/Trophy.svg"
+dest_files=["res://.godot/imported/Trophy.svg-6491fa2a6c6f7b4f701d94281d3ac5d5.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
