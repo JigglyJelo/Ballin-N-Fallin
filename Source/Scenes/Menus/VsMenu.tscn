@@ -35,9 +35,9 @@ width = 20.0
 default_color = Color(0, 0, 0, 1)
 
 [node name="Orange" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(-330, -330)
+position = Vector2(-300, -300)
 rotation = 0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Orange" index="0"]
 self_modulate = Color(1, 0.290196, 0, 1)
@@ -62,9 +62,9 @@ scale = Vector2(1.333, 1.333)
 texture = ExtResource("7_wntgp")
 
 [node name="Lime" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(330, -330)
+position = Vector2(300, -300)
 rotation = -0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Lime" index="0"]
 self_modulate = Color(0, 1, 0.231373, 1)
@@ -93,9 +93,9 @@ texture = ExtResource("7_wntgp")
 flip_h = true
 
 [node name="Cyan" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(-330, 330)
+position = Vector2(-300, 300)
 rotation = -0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Cyan" index="0"]
 self_modulate = Color(0, 0.65098, 1, 1)
@@ -121,9 +121,9 @@ texture = ExtResource("7_wntgp")
 flip_h = true
 
 [node name="Pink" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(330, 330)
+position = Vector2(300, 300)
 rotation = 0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Pink" index="0"]
 self_modulate = Color(1, 0.396078, 0.858824, 1)
@@ -151,10 +151,6 @@ scale = Vector2(1.333, 1.333)
 texture = ExtResource("7_wntgp")
 flip_h = true
 
-[node name="TrophySprite" type="Sprite2D" parent="Selections/TourButton"]
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("3_o456u")
-
 [node name="TourText" type="Label" parent="Selections/TourButton"]
 offset_left = -540.0
 offset_top = 280.0
@@ -165,6 +161,13 @@ label_settings = ExtResource("5_tbmwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Trophy" type="Sprite2D" parent="Selections/TourButton"]
+texture_repeat = 3
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_o456u")
+region_enabled = true
+region_rect = Rect2(0, 0, 512, 512)
 
 [node name="FreeplayButton" type="Polygon2D" parent="Selections"]
 position = Vector2(0, 95)
