@@ -300,9 +300,9 @@ offset_bottom = 1467.0
 
 [node name="HeaderText" type="Label" parent="."]
 offset_left = -2400.0
-offset_top = -849.0
+offset_top = -850.0
 offset_right = 1440.0
-offset_bottom = -615.0
+offset_bottom = -616.0
 scale = Vector2(1.5, 1.5)
 text = "Select a gameplay mode"
 label_settings = ExtResource("5_tbmwm")
