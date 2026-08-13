@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://o4cw4adu2ry1"]
+[gd_scene load_steps=15 format=3 uid="uid://o4cw4adu2ry1"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/VsMenu.cs" id="1_n6mne"]
 [ext_resource type="Texture2D" uid="uid://ytpljltjqyub" path="res://Assets/Sprites/Menus/Trophy.png" id="3_o456u"]
@@ -11,7 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="8_ddswx"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="8_ldtqb"]
 [ext_resource type="Texture2D" uid="uid://2r1hf8bgmhew" path="res://Assets/Sprites/Player/380/Eyes/AngryEyes.png" id="9_4m6qy"]
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="10_vo5ex"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="12_8jqmn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hj38g"]
+font = ExtResource("10_vo5ex")
+font_size = 200
+font_color = Color(0.287526, 0.287526, 0, 1)
 
 [node name="VsMenu" type="Node2D"]
 position = Vector2(-480, -270)
@@ -168,6 +174,14 @@ scale = Vector2(0.8, 0.8)
 texture = ExtResource("3_o456u")
 region_enabled = true
 region_rect = Rect2(0, 0, 512, 512)
+
+[node name="Label" type="Label" parent="Selections/TourButton/Trophy"]
+offset_left = -82.5
+offset_top = -151.25
+offset_right = 80.5
+offset_bottom = 82.75
+text = "#1"
+label_settings = SubResource("LabelSettings_hj38g")
 
 [node name="FreeplayButton" type="Polygon2D" parent="Selections"]
 position = Vector2(0, 95)
