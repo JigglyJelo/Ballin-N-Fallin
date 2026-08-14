@@ -7,8 +7,9 @@ public partial class DynamicCamera : Camera2D{
 	private float zoomOutSpeed = 3f;
 	private float zoomInSpeed = 1.5f;   
 
-	private float minZoomMultiplier = 0.5f; 
-	private float maxZoomMultiplier = 1.1f;
+	// CAP YOUR ZOOM HERE:
+	private float maxZoomLimit = 0.75f; // How zoomed IN it can be (Lower this if the camera gets too close!)
+	
 	private Vector2 margin = new Vector2(300, 300);
 
 	//Makes the camera push further ahead of moving players
@@ -48,49 +49,58 @@ public partial class DynamicCamera : Camera2D{
 	}
 
 	private void CameraMovements(float fDelta){
-		if(currentLevel != Level.LevelNode || !AccessibilityMenu.DynamicCameraEnabled){
-			currentLevel = Level.LevelNode;
-			
-			Node initBounds = Level.LevelNode.GetNodeOrNull<Node>("CameraBoundary");
-			if(initBounds == null) return;
-			
-			if(initBounds is CollisionShape2D initCol){
-				GlobalPosition = initCol.GlobalPosition;
-			}else if(initBounds is ReferenceRect initRef){
-				GlobalPosition = initRef.GlobalPosition + (initRef.Size / 2f);
-			}
-			
-			targetPosition = GlobalPosition;
-			Zoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
-			targetZoom = Zoom;
-			smoothedVelocity = Vector2.Zero; 
-			if(!AccessibilityMenu.DynamicCameraEnabled) return;
-		}
-		
-		//Grab visual rectangle limits and zoom floor
+		if(Level.LevelNode == null) return;
+
+		// Check for boundary dynamically
 		Node bounds = Level.LevelNode.GetNodeOrNull<Node>("CameraBoundary");
-		if(bounds == null) return;
+		bool hasBounds = false;
 		
 		Vector2 trueCenter = Vector2.Zero;
 		Vector2 mapExtents = Vector2.Zero;
 		
-		if(bounds is CollisionShape2D colShape){
-			RectangleShape2D rectShape = (RectangleShape2D)colShape.Shape;
-			trueCenter = colShape.GlobalPosition;
-			mapExtents = rectShape.Size / 2f;
-		}else if(bounds is ReferenceRect refRect){
-			mapExtents = refRect.Size / 2f;
-			trueCenter = refRect.GlobalPosition + mapExtents;
-		}else{
-			return;
+		if(bounds != null){
+			if(bounds is CollisionShape2D colShape && colShape.Shape is RectangleShape2D rectShape){
+				trueCenter = colShape.GlobalPosition;
+				mapExtents = rectShape.Size / 2f;
+				hasBounds = true;
+			}else if(bounds is ReferenceRect refRect){
+				mapExtents = refRect.Size / 2f;
+				trueCenter = refRect.GlobalPosition + mapExtents;
+				hasBounds = true;
+			}
 		}
 
 		Vector2 viewportSize = GetViewportRect().Size;
-		Vector2 mapSize = mapExtents * 2f;
-		
-		float minAllowedZoomX = viewportSize.X / mapSize.X;
-		float minAllowedZoomY = viewportSize.Y / mapSize.Y;
-		float absoluteMinZoomFloor = Mathf.Max(minAllowedZoomX, minAllowedZoomY);
+		float absoluteMinZoomFloor = 0.1f; // Safe fallback
+
+		if(hasBounds){
+			Vector2 mapSize = mapExtents * 2f;
+			float minAllowedZoomX = viewportSize.X / mapSize.X;
+			float minAllowedZoomY = viewportSize.Y / mapSize.Y;
+			absoluteMinZoomFloor = Mathf.Max(minAllowedZoomX, minAllowedZoomY);
+		}
+
+		if(currentLevel != Level.LevelNode || !AccessibilityMenu.DynamicCameraEnabled){
+			currentLevel = Level.LevelNode;
+			
+			if(hasBounds){
+				if(bounds is CollisionShape2D initCol){
+					GlobalPosition = initCol.GlobalPosition;
+				}else if(bounds is ReferenceRect initRef){
+					GlobalPosition = initRef.GlobalPosition + (initRef.Size / 2f);
+				}
+				// Start perfectly capped at your max zoom limit
+				Zoom = Game.ContentScaleVector2 * maxZoomLimit; 
+			}else{
+				// FALLBACK: No boundary, rely on LevelZoom
+				Zoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
+			}
+			
+			targetPosition = GlobalPosition;
+			targetZoom = Zoom;
+			smoothedVelocity = Vector2.Zero; 
+			if(!AccessibilityMenu.DynamicCameraEnabled) return;
+		}
 
 		//Gather target data
 		Vector2 minPos = new Vector2(float.MaxValue, float.MaxValue);
@@ -132,7 +142,7 @@ public partial class DynamicCamera : Camera2D{
 				
 				activeTargets++;
 				
-				if (targetNode is RigidBody2D rb) {
+				if(targetNode is RigidBody2D rb){
 					totalRawVelocity += rb.LinearVelocity;
 					velocityContributors++;
 				}
@@ -141,8 +151,12 @@ public partial class DynamicCamera : Camera2D{
 
 		//Handle targets and zoom
 		if(activeTargets == 0 || Mode.Finished){
-			targetPosition = trueCenter;
-			targetZoom = new Vector2(absoluteMinZoomFloor, absoluteMinZoomFloor);
+			if(hasBounds){
+				targetPosition = trueCenter;
+				targetZoom = new Vector2(absoluteMinZoomFloor, absoluteMinZoomFloor);
+			}else{
+				targetZoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
+			}
 			smoothedVelocity = Vector2.Zero;
 		}else{
 			//Calculate look ahead with velocity smoothing
@@ -156,40 +170,48 @@ public partial class DynamicCamera : Camera2D{
 
 			targetPosition = ((minPos + maxPos) / 2f) + lookAheadOffset;
 
-			//Padding scales gently so the camera doesn't violently zoom out when moving fast
-			Vector2 lookAheadPadding = new Vector2(Mathf.Abs(lookAheadOffset.X), Mathf.Abs(lookAheadOffset.Y)) * velocityZoomInfluence;
-			Vector2 requiredSize = maxPos - minPos + margin + lookAheadPadding;
+			if(hasBounds){
+				//Padding scales gently so the camera doesn't violently zoom out when moving fast
+				Vector2 lookAheadPadding = new Vector2(Mathf.Abs(lookAheadOffset.X), Mathf.Abs(lookAheadOffset.Y)) * velocityZoomInfluence;
+				Vector2 requiredSize = maxPos - minPos + margin + lookAheadPadding;
 
-			//Calculate zoom
-			Vector2 baseZoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
-			
-			float screenSafeZone = 0.8f; 
-			Vector2 usableWorldSize = (viewportSize / baseZoom) * screenSafeZone;
+				// Calculate standard required zoom based on targets
+				Vector2 baseScale = Game.ContentScaleVector2; 
+				float screenSafeZone = 0.8f; 
+				Vector2 usableWorldSize = (viewportSize / baseScale) * screenSafeZone;
 
-			float zoomX = usableWorldSize.X / requiredSize.X;
-			float zoomY = usableWorldSize.Y / requiredSize.Y;
-			
-			float calculatedZoom = Mathf.Min(zoomX, zoomY);
-			float relativeZoom = Mathf.Clamp(calculatedZoom, minZoomMultiplier, maxZoomMultiplier);
-			Vector2 desiredZoom = baseZoom * relativeZoom;
+				float zoomX = usableWorldSize.X / requiredSize.X;
+				float zoomY = usableWorldSize.Y / requiredSize.Y;
+				float calculatedZoom = Mathf.Min(zoomX, zoomY);
+				
+				// HARD CAP: Never zoom in further than maxZoomLimit, but let it zoom out to the boundary
+				float clampedZoom = Mathf.Min(calculatedZoom, maxZoomLimit);
+				Vector2 desiredZoom = baseScale * clampedZoom;
 
-			targetZoom.X = Mathf.Max(desiredZoom.X, absoluteMinZoomFloor);
-			targetZoom.Y = Mathf.Max(desiredZoom.Y, absoluteMinZoomFloor);
+				// Guarantee we never zoom out further than the absolute size of the room boundary
+				targetZoom.X = Mathf.Max(desiredZoom.X, absoluteMinZoomFloor);
+				targetZoom.Y = Mathf.Max(desiredZoom.Y, absoluteMinZoomFloor);
+			}else{
+				// NO BOUNDS FALLBACK: Use Level.LevelNode.CameraZoom
+				targetZoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
+			}
 		}
 
-		//Limits
-		Vector2 currentLensExtents = (viewportSize / targetZoom) / 2f;
+		// Limits (Only applies if a boundary limits the camera)
+		if(hasBounds){
+			Vector2 currentLensExtents = (viewportSize / targetZoom) / 2f;
 
-		float minCamX = trueCenter.X - mapExtents.X + currentLensExtents.X;
-		float maxCamX = trueCenter.X + mapExtents.X - currentLensExtents.X;
-		float minCamY = trueCenter.Y - mapExtents.Y + currentLensExtents.Y;
-		float maxCamY = trueCenter.Y + mapExtents.Y - currentLensExtents.Y;
+			float minCamX = trueCenter.X - mapExtents.X + currentLensExtents.X;
+			float maxCamX = trueCenter.X + mapExtents.X - currentLensExtents.X;
+			float minCamY = trueCenter.Y - mapExtents.Y + currentLensExtents.Y;
+			float maxCamY = trueCenter.Y + mapExtents.Y - currentLensExtents.Y;
 
-		if(minCamX > maxCamX) targetPosition.X = trueCenter.X;
-		else targetPosition.X = Mathf.Clamp(targetPosition.X, minCamX, maxCamX);
+			if(minCamX > maxCamX) targetPosition.X = trueCenter.X;
+			else targetPosition.X = Mathf.Clamp(targetPosition.X, minCamX, maxCamX);
 
-		if(minCamY > maxCamY) targetPosition.Y = trueCenter.Y;
-		else targetPosition.Y = Mathf.Clamp(targetPosition.Y, minCamY, maxCamY);
+			if(minCamY > maxCamY) targetPosition.Y = trueCenter.Y;
+			else targetPosition.Y = Mathf.Clamp(targetPosition.Y, minCamY, maxCamY);
+		}
 
 		//Apply zoom lerp
 		GlobalPosition = GlobalPosition.Lerp(targetPosition, moveSpeed * fDelta);
