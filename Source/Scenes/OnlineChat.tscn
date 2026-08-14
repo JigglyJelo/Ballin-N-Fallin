@@ -23,6 +23,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 3840.0
 offset_bottom = 2160.0
+scale = Vector2(1, 0.992757)
 
 [node name="ChatMessages" type="VBoxContainer" parent="Control"]
 layout_mode = 2
