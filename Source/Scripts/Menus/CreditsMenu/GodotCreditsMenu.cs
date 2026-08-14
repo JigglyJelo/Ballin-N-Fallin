@@ -1,7 +1,7 @@
 using Godot;
 using System.Text;
 
-public partial class GodotCreditsMenu : Node2D{
+public partial class GodotCreditsMenu : Menu{
 	[Export]
 	public float VisibleAreaHeight = 600f;
 
@@ -41,7 +41,12 @@ public partial class GodotCreditsMenu : Node2D{
 		}
 	}
 
-	public void MenuBack(){
+	protected override void InputChecks(double delta, int inputId){}
+	protected override void InputChecks(double delta){}
+	protected override void UpdateSelectionVisual(){}
+	protected override void MenuChoose(int choice){}
+
+	public override void MenuBack(){
 		MenuScene.LoadMenu("Credits/CreditsMenu");
 	}
 
