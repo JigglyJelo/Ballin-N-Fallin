@@ -33,9 +33,9 @@ size = Vector2(576, 128)
 [node name="Level" type="Node2D"]
 script = ExtResource("1_2cuga")
 LevelUnit = 4
-CameraZoom = 0.8
 background = ExtResource("2_p4773")
 metadata/medals = PackedFloat32Array(50, 42, 35, 30)
+metadata/Laps = 4
 
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_f1ulb")

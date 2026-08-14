@@ -6,8 +6,6 @@ using System.Collections.Generic;
 [Tool]
 public partial class Level : Node2D {
 	[Export]
-	public int LevelUnit; //Laps for Race or Par for Golf (Par should be set based on an itemless hole)
-	[Export]
 	private Color floorColorOverride = Game.ZEROES;
 	[Export]
 	public Color InsideColorOverride = Game.ZEROES;

@@ -23,8 +23,8 @@ size = Vector2(256, 128)
 position = Vector2(-128, -768)
 script = ExtResource("1_jt4cu")
 LevelUnit = 3
-CameraZoom = 0.725
 background = ExtResource("2_1usdm")
+metadata/Par = 3
 
 [node name="CameraBoundary" type="ReferenceRect" parent="."]
 offset_left = -2560.0
