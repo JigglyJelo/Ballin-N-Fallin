@@ -43,8 +43,8 @@ point_count = 24
 position = Vector2(64, 960)
 script = ExtResource("1_m3vll")
 LevelUnit = 2
-CameraZoom = 0.6
 background = ExtResource("2_o2kmg")
+metadata/Laps = 2
 
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
 position = Vector2(-128, -864)

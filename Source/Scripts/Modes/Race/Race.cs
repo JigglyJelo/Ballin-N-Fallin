@@ -12,13 +12,14 @@ public partial class Race : Mode, ILevelLoadedEvent{
     private Vector2[] racePathBakedPoints;
     public static int[] PlayerCheckpoints;
     public static int[] PlayerLaps;
+	private const int UNSPECIFIED_LAP_COUNT = 3;
 
 	public override void _Ready(){
         base._Ready();
         Level level = GetNode<Level>("Level");
         racePath = level.GetNode<Path2D>("RacePath");
         racePath.Curve.BakeInterval = 200;
-        TotalLaps = level.LevelUnit;
+        TotalLaps = (int)level.GetMeta("Laps",UNSPECIFIED_LAP_COUNT);
         Instructions = "Complete " + TotalLaps + " Laps";
         AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/InstructionText.tscn").Instantiate());
         RaceCheckpoint.TotalCheckpoints = 0;
@@ -55,7 +56,7 @@ public partial class Race : Mode, ILevelLoadedEvent{
 
     public void OnLevelLoaded(){
         if(Game.TotalPlayers == 1)
-            Game.Players[0].Inventory.Item = new Pepper(Game.Players[0],(byte)Level.LevelNode.LevelUnit);
+            Game.Players[0].Inventory.Item = new Pepper(Game.Players[0],(byte)Level.LevelNode.GetMeta("Laps",UNSPECIFIED_LAP_COUNT));
         else
             foreach(Player player in Game.Players) player.Invulnerable = true;
     }

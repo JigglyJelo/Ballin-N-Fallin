@@ -90,8 +90,8 @@ point_count = 13
 position = Vector2(64, 960)
 script = ExtResource("1_lc3dx")
 LevelUnit = 2
-CameraZoom = 0.55
 background = ExtResource("2_3ula8")
+metadata/Laps = 2
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 visible = false
