@@ -88,13 +88,8 @@ public partial class DynamicCamera : Camera2D{
 					GlobalPosition = initRef.GlobalPosition + (initRef.Size / 2f);
 				}
 				
-				if(!AccessibilityMenu.DynamicCameraEnabled){
-					//Show the whole room statically if dynamic tracking is off
-					Zoom = new Vector2(absoluteMinZoomFloor, absoluteMinZoomFloor);
-				}else{
-					// Start perfectly capped at your max zoom limit
-					Zoom = Game.ContentScaleVector2 * maxZoomLimit; 
-				}
+				//Start fully zoomed out so the camera zooms in on the players or stays if disabled
+				Zoom = new Vector2(absoluteMinZoomFloor, absoluteMinZoomFloor);
 			}else{
 				//No boundary, rely on LevelZoom
 				Zoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
@@ -188,8 +183,11 @@ public partial class DynamicCamera : Camera2D{
 				float zoomY = usableWorldSize.Y / requiredSize.Y;
 				float calculatedZoom = Mathf.Min(zoomX, zoomY);
 				
-				//Never zoom in further than maxZoomLimit, but let it zoom out to the boundary
-				float clampedZoom = Mathf.Min(calculatedZoom, maxZoomLimit);
+				//Dynamically raise the max zoom limit on smaller maps so it doesn't get stuck zooming out
+				float dynamicMaxZoom = Mathf.Max(maxZoomLimit, Level.LevelNode.CameraZoom * 1.25f);
+				
+				//Never zoom in further than the dynamic limit, but let it zoom out to the boundary
+				float clampedZoom = Mathf.Min(calculatedZoom, dynamicMaxZoom);
 				Vector2 desiredZoom = baseScale * clampedZoom;
 
 				//Guarantee we never zoom out further than the absolute size of the room boundary
