@@ -1,233 +1,177 @@
-[gd_scene load_steps=15 format=3 uid="uid://bp1f8nj6sltaw"]
+[gd_scene load_steps=11 format=3 uid="uid://b1h8sqxuxipah"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_u7ck4"]
-[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_0tdri"]
-[ext_resource type="Texture2D" uid="uid://dl6c0u37pwxhv" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Race Tile.png" id="2_2aa68"]
-[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_iisj8"]
-[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="3_v80wr"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="4_lvqhf"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="5_b8y60"]
-[ext_resource type="Texture2D" uid="uid://cl7m6s4mcdctv" path="res://Assets/Sprites/Input Prompts/LeftStick.png" id="6_3t3lx"]
-[ext_resource type="Texture2D" uid="uid://cbnguvlc7876c" path="res://Assets/Sprites/Input Prompts/FaceButton.png" id="7_5agpm"]
-[ext_resource type="Texture2D" uid="uid://dfj1o3debqtee" path="res://Assets/Sprites/Input Prompts/Trigger.png" id="8_mktw5"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_xs3ed"]
-[ext_resource type="Texture2D" uid="uid://daoqrxh36qjqi" path="res://Assets/Sprites/Input Prompts/LT.png" id="9_gmx4e"]
-[ext_resource type="Texture2D" uid="uid://i72vkh4su701" path="res://Assets/Sprites/Input Prompts/RT.png" id="10_3hy2x"]
-[ext_resource type="AudioStream" uid="uid://cie2v6uyo5syk" path="res://Assets/Music/Score.ogg" id="13_rxa1k"]
+[ext_resource type="PackedScene" uid="uid://3bryswakmbir" path="res://Levels/_Base Levels/Testing Grounds.tscn" id="1_asyk1"]
+[ext_resource type="AudioStream" uid="uid://cie2v6uyo5syk" path="res://Assets/Music/Score.ogg" id="2_5568q"]
+[ext_resource type="Texture2D" uid="uid://dl6c0u37pwxhv" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Race Tile.png" id="2_ltdpt"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_88v1r"]
+[ext_resource type="Texture2D" uid="uid://cl7m6s4mcdctv" path="res://Assets/Sprites/Input Prompts/LeftStick.png" id="4_ipb5a"]
+[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="4_l48nl"]
+[ext_resource type="Texture2D" uid="uid://cbnguvlc7876c" path="res://Assets/Sprites/Input Prompts/FaceButton.png" id="5_n0bqy"]
+[ext_resource type="Texture2D" uid="uid://dfj1o3debqtee" path="res://Assets/Sprites/Input Prompts/Trigger.png" id="6_8ffyt"]
+[ext_resource type="Texture2D" uid="uid://daoqrxh36qjqi" path="res://Assets/Sprites/Input Prompts/LT.png" id="7_sp43o"]
+[ext_resource type="Texture2D" uid="uid://i72vkh4su701" path="res://Assets/Sprites/Input Prompts/RT.png" id="8_t7tty"]
 
-[node name="Level" type="Node2D"]
-position = Vector2(-64, -512)
-script = ExtResource("1_u7ck4")
+[node name="Level" instance=ExtResource("1_asyk1")]
 floorColorOverride = Color(1, 0.678431, 0.129412, 1)
 InsideColorOverride = Color(1, 0.466667, 0, 1)
 OutlineColorOverride = Color(0, 0, 0, 1)
-groundTexture = ExtResource("2_2aa68")
-background = ExtResource("3_v80wr")
+groundTexture = ExtResource("2_ltdpt")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="CameraBoundary" parent="." index="0"]
+offset_left = -1984.0
+offset_right = 2112.0
+
+[node name="StaticBody2D" parent="." index="1"]
+visible = false
+
+[node name="Polygon2D" type="Polygon2D" parent="." index="13"]
 z_index = -10
 color = Color(1, 0.764706, 0.388235, 0.501961)
 polygon = PackedVector2Array(-1728, -512, 1856, -512, 1856, 1472, -1728, 1472)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
-visible = false
-collision_layer = 3
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-1856, 1664, -1856, -640, -1728, -640, -1728, 1472, 0, 1472, 384, 1152, 832, 1152, 1408, 896, 1856, 896, 1856, -64, 1472, -512, -1728, -512, -1728, -640, 1024, -640, 1984, -640, 1984, 1664)
-metadata/invert = true
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-1344, 512, -1344, 256, -1216, 384, -448, 384, -448, 512)
-
-[node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
-texture = ExtResource("2_0tdri")
-
-[node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1408, 1088)
-texture = ExtResource("3_iisj8")
-
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1088, 1280)
-texture = ExtResource("3_iisj8")
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1088, 192)
-texture = ExtResource("3_iisj8")
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-704, 192)
-texture = ExtResource("3_iisj8")
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(704, 896)
-texture = ExtResource("3_iisj8")
-flip_h = true
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(1600, 384)
-texture = ExtResource("3_iisj8")
-flip_h = true
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-128, 1280)
-texture = ExtResource("3_iisj8")
-flip_h = true
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(1024, 768)
-texture = ExtResource("3_iisj8")
-flip_h = true
-
-[node name="ItemSpawner" parent="." instance=ExtResource("4_lvqhf")]
-position = Vector2(640, -64)
-
-[node name="ItemSpawner2" parent="." instance=ExtResource("4_lvqhf")]
-position = Vector2(-960, -320)
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_rxa1k")
+[node name="Music" type="AudioStreamPlayer" parent="." index="14"]
+stream = ExtResource("2_5568q")
 autoplay = true
 bus = &"Music"
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="15" groups=["BakedLevelGeometry", "Regain"]]
 collision_layer = 3
 
-[node name="@CollisionPolygon2D@262685" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+[node name="@CollisionPolygon2D@50225" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]
 polygon = PackedVector2Array(-1856, 1647, -1856, -657, -1728, -657, -1728, 1455, 0, 1455, 384, 1135, 832, 1135, 1408, 879, 1856, 879, 1856, -81, 1472, -529, -1728, -529, -1728, -657, 1024, -657, 1984, -657, 1984, 1647)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="1"]
 polygon = PackedVector2Array(-1856, 1664, -1856, -640, -1728, -640, -1728, 1472, 0, 1472, 384, 1152, 832, 1152, 1408, 896, 1856, 896, 1856, -64, 1472, -512, -1728, -512, -1728, -640, 1024, -640, 1984, -640, 1984, 1664)
 metadata/invert = true
 
-[node name="@Polygon2D@262686" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@50226" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="0"]
 texture_repeat = 2
 color = Color(1, 0.466667, 0, 1)
-texture = ExtResource("2_2aa68")
+texture = ExtResource("2_ltdpt")
 invert_enabled = true
 invert_border = 768.0
 polygon = PackedVector2Array(-1728, -512, 1472, -512, 1856, -64, 1856, 896, 1408, 896, 832, 1152, 384, 1152, 0, 1472, -1728, 1472)
-script = ExtResource("8_xs3ed")
+script = ExtResource("4_l48nl")
 stroke_color = Color(0, 0, 0, 1)
 
-[node name="@Polygon2D@262688" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@50228" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="1"]
 light_mask = 3
 z_index = -2
 color = Color(1, 0.678431, 0.129412, 1)
 invert_enabled = true
 invert_border = 768.0
 polygon = PackedVector2Array(-1728, -544, 1472, -544, 1856, -96, 1856, 864, 1408, 864, 832, 1120, 384, 1120, 0, 1440, -1728, 1440)
-script = ExtResource("8_xs3ed")
+script = ExtResource("4_l48nl")
 stroke_color = Color(0, 0, 0, 1)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="2"]
 polygon = PackedVector2Array(-1216, 367, -448, 367, -448, 512, -1344, 512, -1344, 239)
 
-[node name="@Polygon2D@262690" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+[node name="@Polygon2D@50230" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="0"]
 texture_repeat = 2
 color = Color(1, 0.466667, 0, 1)
-texture = ExtResource("2_2aa68")
+texture = ExtResource("2_ltdpt")
 polygon = PackedVector2Array(-1344, 512, -1344, 256, -1216, 384, -448, 384, -448, 512)
-script = ExtResource("8_xs3ed")
+script = ExtResource("4_l48nl")
 stroke_color = Color(0, 0, 0, 1)
 
-[node name="@Polygon2D@262692" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2"]
+[node name="@Polygon2D@50232" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="1"]
 light_mask = 3
 z_index = -2
 color = Color(1, 0.678431, 0.129412, 1)
 polygon = PackedVector2Array(-1344, 480, -1344, 224, -1216, 352, -448, 352, -448, 480)
-script = ExtResource("8_xs3ed")
+script = ExtResource("4_l48nl")
 stroke_color = Color(0, 0, 0, 1)
 
-[node name="Controls" type="Node2D" parent="."]
+[node name="Controls" type="Node2D" parent="." index="16"]
 
-[node name="Aim" type="Label" parent="Controls"]
+[node name="Aim" type="Label" parent="Controls" index="0"]
 offset_left = 1278.0
 offset_top = 960.0
 offset_right = 1986.0
 offset_bottom = 1194.0
 scale = Vector2(0.5, 0.5)
 text = "Aim"
-label_settings = ExtResource("5_b8y60")
+label_settings = ExtResource("3_88v1r")
 horizontal_alignment = 2
 
-[node name="Joystick" type="Sprite2D" parent="Controls"]
+[node name="Joystick" type="Sprite2D" parent="Controls" index="1"]
 position = Vector2(1728, 1024)
-texture = ExtResource("6_3t3lx")
+texture = ExtResource("4_ipb5a")
 
-[node name="Charge" type="Label" parent="Controls"]
+[node name="Charge" type="Label" parent="Controls" index="2"]
 offset_left = 1118.0
 offset_top = 1088.48
 offset_right = 2146.0
 offset_bottom = 1322.48
 scale = Vector2(0.5, 0.5)
 text = "Charge Hold"
-label_settings = ExtResource("5_b8y60")
+label_settings = ExtResource("3_88v1r")
 horizontal_alignment = 2
 
-[node name="A" type="Sprite2D" parent="Controls"]
+[node name="A" type="Sprite2D" parent="Controls" index="3"]
 texture_repeat = 3
 position = Vector2(1728, 1152.48)
-texture = ExtResource("7_5agpm")
+texture = ExtResource("5_n0bqy")
 region_enabled = true
 region_rect = Rect2(0, 0, 98, 98)
 
-[node name="Launch" type="Label" parent="Controls"]
+[node name="Launch" type="Label" parent="Controls" index="4"]
 offset_left = 968.0
 offset_top = 1216.48
 offset_right = 2298.0
 offset_bottom = 1450.48
 scale = Vector2(0.5, 0.5)
 text = "Launch Release"
-label_settings = ExtResource("5_b8y60")
+label_settings = ExtResource("3_88v1r")
 horizontal_alignment = 2
 
-[node name="A2" type="Sprite2D" parent="Controls"]
+[node name="A2" type="Sprite2D" parent="Controls" index="5"]
 texture_repeat = 3
 position = Vector2(1728, 1280.48)
-texture = ExtResource("7_5agpm")
+texture = ExtResource("5_n0bqy")
 region_enabled = true
 region_rect = Rect2(0, 0, 98, 98)
 
-[node name="Slam" type="Label" parent="Controls"]
+[node name="Slam" type="Label" parent="Controls" index="6"]
 offset_left = 1214.0
 offset_top = 1344.48
 offset_right = 2046.0
 offset_bottom = 1578.48
 scale = Vector2(0.5, 0.5)
 text = "Slam"
-label_settings = ExtResource("5_b8y60")
+label_settings = ExtResource("3_88v1r")
 horizontal_alignment = 2
 
-[node name="X" type="Sprite2D" parent="Controls"]
+[node name="X" type="Sprite2D" parent="Controls" index="7"]
 texture_repeat = 3
 position = Vector2(1728, 1408.48)
 rotation = 1.5708
-texture = ExtResource("7_5agpm")
+texture = ExtResource("5_n0bqy")
 region_enabled = true
 region_rect = Rect2(0, 0, 98, 98)
 
-[node name="Item" type="Label" parent="Controls"]
+[node name="Item" type="Label" parent="Controls" index="8"]
 offset_left = 1182.0
 offset_top = 1472.48
 offset_right = 2014.0
 offset_bottom = 1706.48
 scale = Vector2(0.5, 0.5)
 text = "Item"
-label_settings = ExtResource("5_b8y60")
+label_settings = ExtResource("3_88v1r")
 horizontal_alignment = 2
 
-[node name="LeftTrigger" type="Sprite2D" parent="Controls"]
+[node name="LeftTrigger" type="Sprite2D" parent="Controls" index="9"]
 position = Vector2(1664, 1536.48)
-texture = ExtResource("8_mktw5")
+texture = ExtResource("6_8ffyt")
 flip_h = true
 
-[node name="LT" type="Sprite2D" parent="Controls/LeftTrigger"]
-texture = ExtResource("9_gmx4e")
+[node name="LT" type="Sprite2D" parent="Controls/LeftTrigger" index="0"]
+texture = ExtResource("7_sp43o")
 
-[node name="RightTrigger" type="Sprite2D" parent="Controls"]
+[node name="RightTrigger" type="Sprite2D" parent="Controls" index="10"]
 position = Vector2(1792, 1536.48)
-texture = ExtResource("8_mktw5")
+texture = ExtResource("6_8ffyt")
 
-[node name="RT" type="Sprite2D" parent="Controls/RightTrigger"]
-texture = ExtResource("10_3hy2x")
+[node name="RT" type="Sprite2D" parent="Controls/RightTrigger" index="0"]
+texture = ExtResource("8_t7tty")
