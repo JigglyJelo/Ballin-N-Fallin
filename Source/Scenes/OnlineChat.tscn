@@ -46,6 +46,7 @@ size_flags_vertical = 3
 
 [node name="LineEdit" type="LineEdit" parent="Control/ChatMessages"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/focus = SubResource("StyleBoxFlat_xrtvp")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_7jotm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_ry7o4")
