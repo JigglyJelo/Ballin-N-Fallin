@@ -32,7 +32,6 @@ public partial class ItemSynchronizer : Node{
 
     [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]
     private void SyncBoxes(byte[] boxData){
-		GD.Print("box");
         ushort update = BitConverter.ToUInt16(boxData, boxData.Length-2);
         if(UnreliableManager.IsNewerRpc(UnreliableManager.UnreliableChannel.SpawnedBoxes,update)){
             int offset = 0;
@@ -105,18 +104,15 @@ public partial class ItemSynchronizer : Node{
     private void SyncBalls(byte[] ballData){
         ushort update = BitConverter.ToUInt16(ballData, ballData.Length-2);
 		if(UnreliableManager.IsNewerRpc(UnreliableManager.UnreliableChannel.SpawnedItems,update)){
-			GD.Print("Ball1");
             int offset = 0;
             while(offset < ballData.Length-2){
                 try{
-					GD.Print("Ball2");
                     byte id = ballData[offset++];
                     float posX = BitConverter.ToSingle(ballData, offset); offset += 4;
                     float posY = BitConverter.ToSingle(ballData, offset); offset += 4;
                     float velX = BitConverter.ToSingle(ballData, offset); offset += 4;
                     float velY = BitConverter.ToSingle(ballData, offset); offset += 4;
                     if(SpawnedItems.TryGetValue(id, out SpawnableItemScript item) && item is BallScript ball){
-						GD.Print("Ball3");
                         ball.Rb.NetworkPosition = new Vector2(posX, posY);
                         ball.Rb.NetworkVelocity = new Vector2(velX, velY);
                     }
