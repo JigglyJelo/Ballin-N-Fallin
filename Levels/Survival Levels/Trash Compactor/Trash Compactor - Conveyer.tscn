@@ -29,14 +29,20 @@ size = Vector2(1664, 128)
 [node name="Level" type="Node2D"]
 position = Vector2(-384, -448)
 script = ExtResource("1_66h86")
-CameraZoom = 0.75
 floorColorOverride = Color(0.294118, 0.294118, 0.294118, 1)
 InsideColorOverride = Color(0, 0.333333, 0, 1)
 OutlineColorOverride = Color(0, 0.117647, 0, 1)
 groundTexture = ExtResource("2_nvooh")
 background = ExtResource("3_eji3x")
 
+[node name="CameraBoundary" type="ReferenceRect" parent="."]
+offset_left = -2176.0
+offset_top = -820.0
+offset_right = 2560.0
+offset_bottom = 1844.0
+
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-2944, -1088, 4224, -1088, 4224, 1984, -2944, 1984, -2944, 1344, 4096, 1344, 4096, -320, -2944, -320)
@@ -144,7 +150,7 @@ collision_layer = 3
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(4224, 1984, -2944, 1984, -2944, 1327, 4096, 1327, 4096, -320, -2944, -320, -2944, -1105, 4224, -1105)
 
-[node name="@Polygon2D@343976" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@114996" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 texture_repeat = 2
 color = Color(0, 0.333333, 0, 1)
 texture = ExtResource("2_nvooh")
@@ -152,7 +158,7 @@ polygon = PackedVector2Array(-2944, -1088, 4224, -1088, 4224, 1984, -2944, 1984,
 script = ExtResource("13_va0fi")
 stroke_color = Color(0, 0.117647, 0, 1)
 
-[node name="@Polygon2D@343978" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@114998" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 light_mask = 3
 z_index = -2
 color = Color(0.294118, 0.294118, 0.294118, 1)

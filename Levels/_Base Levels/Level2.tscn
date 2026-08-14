@@ -12,10 +12,9 @@ size = Vector2(4864, 2688)
 [node name="Level" type="Node2D"]
 position = Vector2(0, -320)
 script = ExtResource("1_hy3d5")
-CameraZoom = 0.8
 background = ExtResource("2_xccpt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CameraBoundary" type="CollisionShape2D" parent="."]
 position = Vector2(0, 320)
 shape = SubResource("RectangleShape2D_8jebk")
 
