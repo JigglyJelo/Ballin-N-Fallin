@@ -7,8 +7,7 @@ public partial class DynamicCamera : Camera2D{
 	private float zoomOutSpeed = 3f;
 	private float zoomInSpeed = 1.5f;   
 
-	// CAP YOUR ZOOM HERE:
-	private float maxZoomLimit = 0.75f; // How zoomed IN it can be (Lower this if the camera gets too close!)
+	private float maxZoomLimit = 0.75f;
 	
 	private Vector2 margin = new Vector2(300, 300);
 
@@ -51,7 +50,6 @@ public partial class DynamicCamera : Camera2D{
 	private void CameraMovements(float fDelta){
 		if(Level.LevelNode == null) return;
 
-		// Check for boundary dynamically
 		Node bounds = Level.LevelNode.GetNodeOrNull<Node>("CameraBoundary");
 		bool hasBounds = false;
 		
@@ -71,7 +69,7 @@ public partial class DynamicCamera : Camera2D{
 		}
 
 		Vector2 viewportSize = GetViewportRect().Size;
-		float absoluteMinZoomFloor = 0.1f; // Safe fallback
+		float absoluteMinZoomFloor = 0.1f; //Safe fallback
 
 		if(hasBounds){
 			Vector2 mapSize = mapExtents * 2f;
@@ -89,10 +87,16 @@ public partial class DynamicCamera : Camera2D{
 				}else if(bounds is ReferenceRect initRef){
 					GlobalPosition = initRef.GlobalPosition + (initRef.Size / 2f);
 				}
-				// Start perfectly capped at your max zoom limit
-				Zoom = Game.ContentScaleVector2 * maxZoomLimit; 
+				
+				if(!AccessibilityMenu.DynamicCameraEnabled){
+					//Show the whole room statically if dynamic tracking is off
+					Zoom = new Vector2(absoluteMinZoomFloor, absoluteMinZoomFloor);
+				}else{
+					// Start perfectly capped at your max zoom limit
+					Zoom = Game.ContentScaleVector2 * maxZoomLimit; 
+				}
 			}else{
-				// FALLBACK: No boundary, rely on LevelZoom
+				//No boundary, rely on LevelZoom
 				Zoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
 			}
 			
@@ -175,7 +179,7 @@ public partial class DynamicCamera : Camera2D{
 				Vector2 lookAheadPadding = new Vector2(Mathf.Abs(lookAheadOffset.X), Mathf.Abs(lookAheadOffset.Y)) * velocityZoomInfluence;
 				Vector2 requiredSize = maxPos - minPos + margin + lookAheadPadding;
 
-				// Calculate standard required zoom based on targets
+				//Calculate standard required zoom based on targets
 				Vector2 baseScale = Game.ContentScaleVector2; 
 				float screenSafeZone = 0.8f; 
 				Vector2 usableWorldSize = (viewportSize / baseScale) * screenSafeZone;
@@ -184,20 +188,20 @@ public partial class DynamicCamera : Camera2D{
 				float zoomY = usableWorldSize.Y / requiredSize.Y;
 				float calculatedZoom = Mathf.Min(zoomX, zoomY);
 				
-				// HARD CAP: Never zoom in further than maxZoomLimit, but let it zoom out to the boundary
+				//Never zoom in further than maxZoomLimit, but let it zoom out to the boundary
 				float clampedZoom = Mathf.Min(calculatedZoom, maxZoomLimit);
 				Vector2 desiredZoom = baseScale * clampedZoom;
 
-				// Guarantee we never zoom out further than the absolute size of the room boundary
+				//Guarantee we never zoom out further than the absolute size of the room boundary
 				targetZoom.X = Mathf.Max(desiredZoom.X, absoluteMinZoomFloor);
 				targetZoom.Y = Mathf.Max(desiredZoom.Y, absoluteMinZoomFloor);
 			}else{
-				// NO BOUNDS FALLBACK: Use Level.LevelNode.CameraZoom
+				//NO BOUNDS FALLBACK: Use Level.LevelNode.CameraZoom
 				targetZoom = Game.ContentScaleVector2 * Level.LevelNode.CameraZoom;
 			}
 		}
 
-		// Limits (Only applies if a boundary limits the camera)
+		//Limits (Only applies if a boundary limits the camera)
 		if(hasBounds){
 			Vector2 currentLensExtents = (viewportSize / targetZoom) / 2f;
 
