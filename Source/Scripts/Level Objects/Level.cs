@@ -89,7 +89,7 @@ public partial class Level : Node2D {
 		foreach (StaticBody2D body in editorBodies) {
 			body.Visible = false; 
 		}
-
+		AdjustCameraBoundaryTo16x9();
 		GD.Print("Bake Complete! Save the scene (Ctrl+S).");
 	}
 
@@ -306,6 +306,58 @@ public partial class Level : Node2D {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	private void AdjustCameraBoundaryTo16x9(){
+		Node boundaryNode = GetNodeOrNull("CameraBoundary");
+		if (boundaryNode == null){
+			GD.Print("No 'CameraBoundary' node found. Skipping 16:9 adjustment.");
+			return;
+		}
+
+		const float TARGET_ASPECT = 16f / 9f;
+
+		if(boundaryNode is Control control){
+			Vector2 size = control.Size;
+			if(size.Y == 0) return;
+
+			float currentAspect = size.X / size.Y;
+
+			//Use a small epsilon allowance to prevent unnecessary micro-adjustments
+			if(MathF.Abs(currentAspect - TARGET_ASPECT) < 0.01f) return; 
+
+			if(currentAspect < TARGET_ASPECT){
+				//Too short on X Axis.
+				float newWidth = size.Y * TARGET_ASPECT;
+				//Shift position left by to keep the box centered
+				control.Position -= new Vector2((newWidth - size.X) / 2f, 0);
+				control.Size = new Vector2(newWidth, size.Y);
+				GD.Print($"Adjusted CameraBoundary Width to {newWidth} for 16:9 ratio.");
+			}else if(currentAspect > TARGET_ASPECT){
+				//Too short on Y Axis
+				float newHeight = size.X / TARGET_ASPECT;
+				//Shift position up to keep the box centered
+				control.Position -= new Vector2(0, (newHeight - size.Y) / 2f);
+				control.Size = new Vector2(size.X, newHeight);
+				GD.Print($"Adjusted CameraBoundary Height to {newHeight} for 16:9 ratio.");
+			}
+		}else if(boundaryNode is CollisionShape2D colShape && colShape.Shape is RectangleShape2D rectShape){
+			Vector2 size = rectShape.Size;
+			if (size.Y == 0) return;
+
+			float currentAspect = size.X / size.Y;
+			if (MathF.Abs(currentAspect - TARGET_ASPECT) < 0.01f) return;
+
+			if(currentAspect < TARGET_ASPECT){
+				float newWidth = size.Y * TARGET_ASPECT;
+				rectShape.Size = new Vector2(newWidth, size.Y);
+				GD.Print($"Adjusted CameraBoundary Width to {newWidth} for 16:9 ratio.");
+			}else if (currentAspect > TARGET_ASPECT){
+				float newHeight = size.X / TARGET_ASPECT;
+				rectShape.Size = new Vector2(size.X, newHeight);
+				GD.Print($"Adjusted CameraBoundary Height to {newHeight} for 16:9 ratio.");
 			}
 		}
 	}
