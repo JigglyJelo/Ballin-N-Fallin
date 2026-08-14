@@ -8,8 +8,6 @@ public partial class Level : Node2D {
 	[Export]
 	public int LevelUnit; //Laps for Race or Par for Golf (Par should be set based on an itemless hole)
 	[Export]
-	public float CameraZoom = 1;
-	[Export]
 	private Color floorColorOverride = Game.ZEROES;
 	[Export]
 	public Color InsideColorOverride = Game.ZEROES;
@@ -31,6 +29,8 @@ public partial class Level : Node2D {
 	private static readonly StringName GROUP_NO_REGAIN = new StringName("NoRegain");
 	private static readonly StringName META_TEAM = new StringName("team");
 	public static Level LevelNode;
+
+	public float CameraZoom { get; private set; } = 0.75f;
 
 	[ExportGroup("Level Generation")]
 	[Export]
@@ -55,6 +55,9 @@ public partial class Level : Node2D {
 
 		LevelNode = this;
 		Game.DisableProcesses(this);
+		
+		CalculateCameraZoom();
+		
 		SetupCamera();
 		CheckForColorOverrides();
 		SetupBackground();
@@ -66,6 +69,37 @@ public partial class Level : Node2D {
 			Game.Players = Array.Empty<Player>();
 			Mode.ModeNode.AddChild(GD.Load<PackedScene>("res://Source/Scenes/Players/PlayerSynchronizer.tscn").Instantiate());
 		}
+	}
+
+	private void CalculateCameraZoom(){
+		Node bounds = GetNodeOrNull("CameraBoundary");
+		if(bounds == null){
+			CameraZoom = 0.75f;
+			return;
+		}
+
+		Vector2 mapSize = Vector2.Zero;
+
+		if(bounds is Control control){
+			mapSize = control.Size;
+		}else if(bounds is CollisionShape2D colShape && colShape.Shape is RectangleShape2D rectShape){
+			mapSize = rectShape.Size;
+		}else if(bounds is ReferenceRect refRect){
+			mapSize = refRect.Size;
+		}
+
+		if(mapSize.X == 0 || mapSize.Y == 0){
+			CameraZoom = 0.75f;
+			return;
+		}
+
+		// Calculate the absolute zoom relative to the base 4K resolution
+		float zoomX = 3840f / mapSize.X;
+		float zoomY = 2160f / mapSize.Y;
+
+		// Use Max so the zoom tightly fits the boundary into the screen
+		CameraZoom = Mathf.Max(zoomX, zoomY);
+		DynamicCamera.CameraNode.Zoom = new Vector2(CameraZoom,CameraZoom);
 	}
 
 	private void BakeLevel(){
