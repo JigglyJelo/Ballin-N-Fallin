@@ -117,6 +117,7 @@ public partial class OnlineLobby : Node{
     }
 
     private void HostLobby() {
+		ChatManager.ResetMutedPlayers();
         PingGetter.LastPing = 0;
         PingGetter.Pings[0] = 0;
         GD.Print("Host");
@@ -167,7 +168,7 @@ public partial class OnlineLobby : Node{
 
     private void JoinLobby() {
         bool joinSuccess = false;
-        
+        ChatManager.ResetMutedPlayers();
         switch (Online.Network) {
             case Online.NetworkType.Direct:
                 joinSuccess = EnetSetup.EnetJoin();

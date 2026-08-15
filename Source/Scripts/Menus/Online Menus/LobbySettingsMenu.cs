@@ -47,7 +47,6 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 							}
 						}
 					}catch{}
-					if(Input.IsKeyPressed(Key.B)) EnterSpectatorMode();
 				}
 			}else if(OnlineLobby.Lobby.LobbyShown){
 				if(Game.UsingMouse()){
@@ -235,7 +234,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		}
 	}
 
-	private void EnterSpectatorMode(){
+	public void EnterSpectatorMode(){
 		GD.Print("Spectatin");
 		PlayerData yourPlayerInfo;
 		foreach(PlayerData playerInfo in Game.PlayerDatas){
