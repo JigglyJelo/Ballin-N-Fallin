@@ -8,7 +8,7 @@
 
 ## Built With
 
-* **Engine:** [Godot 4.3](https://godotengine.org/license/)
+* **Engine:** [Godot 4.5.2](https://godotengine.org/license/)
 * **Language:** C#
 
 ---
