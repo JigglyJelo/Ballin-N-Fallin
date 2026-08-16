@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 public partial class OnlineMenu : Menu2D{
 	private LineEdit usernameInput;
-	private Label hostText,joinText,directText;
+	private Label hostText,joinText,directText,subheaderText;
 	private Polygon2D hostButton,joinButton,directButton;
 	public override void _Ready(){
 		base._Ready();
@@ -14,6 +14,7 @@ public partial class OnlineMenu : Menu2D{
 		joinButton = GetNode<Polygon2D>("Selections/JoinButton");
 		directText = GetNode<Label>("Selections/DirectButton/DirectText");
 		directButton = GetNode<Polygon2D>("Selections/DirectButton");
+		subheaderText = GetNode<Label>("SubHeaderText");
 		usernameInput.Text = Online.Username.Equals("Player") ? "" : Online.Username;
 		Online.InputId = PlayerData.PlayerInputDevice.None;
 		UpdateSelectionVisual();
@@ -100,6 +101,7 @@ public partial class OnlineMenu : Menu2D{
 				joinButton.Color = BUTTON_COLOR;
 				directText.SelfModulate = Colors.White;
 				directButton.Color = BUTTON_COLOR;
+				subheaderText.Text = "Create your own lobby for others to join.";
 				break;
 			case 2:
 				//Selected
@@ -110,6 +112,7 @@ public partial class OnlineMenu : Menu2D{
 				hostButton.Color = BUTTON_COLOR;
 				directText.SelfModulate = Colors.White;
 				directButton.Color = BUTTON_COLOR;
+				subheaderText.Text = "Find another person's lobby to join.";
 				break;
 			default:
 				//Selected
@@ -120,6 +123,7 @@ public partial class OnlineMenu : Menu2D{
 				hostButton.Color = BUTTON_COLOR;
 				joinText.SelfModulate = Colors.White;
 				joinButton.Color = BUTTON_COLOR;
+				subheaderText.Text = "Connect to or host a lobby directly from an IP Address. (Requires host to Port Forward)";
 				break;
 		}
 	}

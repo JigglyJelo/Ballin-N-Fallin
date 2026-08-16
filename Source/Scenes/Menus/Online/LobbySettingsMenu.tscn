@@ -1,20 +1,169 @@
-[gd_scene load_steps=6 format=3 uid="uid://dn5tuyi0fexhi"]
+[gd_scene load_steps=11 format=3 uid="uid://dn5tuyi0fexhi"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/LobbySettingsMenu.cs" id="1_geijo"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_jfy81"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="2_xpvv8"]
+[ext_resource type="Script" path="res://Source/Scripts/InGameChat.cs" id="3_iadom"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_na08j"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3iktt"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="6_dgd7k"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjqkx"]
+bg_color = Color(0, 0, 0, 0.784314)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebldv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tksag"]
+
 [node name="LobbySettingsMenu" type="Node2D"]
 script = ExtResource("1_geijo")
 
-[node name="LobbyText" type="Label" parent="."]
-offset_left = -982.0
-offset_top = -1008.0
-offset_right = 1018.0
-offset_bottom = -541.0
+[node name="Screen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Panel" type="Panel" parent="Screen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -532.0
+offset_top = -487.0
+offset_right = 532.0
+offset_bottom = 906.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1500, 14)
+theme = ExtResource("2_xpvv8")
+
+[node name="ChatMessages" type="VBoxContainer" parent="Screen/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_xpvv8")
+alignment = 2
+script = ExtResource("3_iadom")
+isLobbyChat = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Screen/Panel/ChatMessages"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="MessageList" type="VBoxContainer" parent="Screen/Panel/ChatMessages/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="Screen/Panel/ChatMessages"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_xjqkx")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_ebldv")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tksag")
+alignment = 2
+
+[node name="Header" type="Control" parent="Screen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -1920.0
+offset_right = 1920.0
+offset_bottom = 637.0
+grow_horizontal = 2
+
+[node name="SettingsText" type="Label" parent="Screen/Header"]
+self_modulate = Color(0.643137, 0.643137, 0.643137, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -116.5
+offset_right = 1186.0
+offset_bottom = 117.5
+grow_vertical = 2
+text = "Settings"
+label_settings = ExtResource("2_jfy81")
+horizontal_alignment = 1
+
+[node name="LobbyText" type="Label" parent="Screen/Header"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -253.5
+offset_right = 253.5
+offset_bottom = 234.0
+grow_horizontal = 2
 text = "Lobby"
+label_settings = ExtResource("2_jfy81")
+horizontal_alignment = 1
+
+[node name="PlayersText" type="Label" parent="Screen/Header"]
+self_modulate = Color(0.643137, 0.643137, 0.643137, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1420.0
+offset_top = -117.0
+offset_bottom = 117.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Players"
+label_settings = ExtResource("2_jfy81")
+horizontal_alignment = 1
+
+[node name="ChatText" type="Label" parent="Screen/Header"]
+self_modulate = Color(0.643137, 0.643137, 0.643137, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -117.0
+offset_right = 340.0
+offset_bottom = 117.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Chat"
+label_settings = ExtResource("2_jfy81")
+horizontal_alignment = 1
+
+[node name="ChatText2" type="Label" parent="."]
+self_modulate = Color(0.545098, 0.545098, 0.545098, 0.772549)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -814.5
+offset_top = -1035.5
+offset_right = 814.5
+offset_bottom = -801.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(814.5, 814.5)
+text = "Press T to chat"
 label_settings = ExtResource("2_jfy81")
 horizontal_alignment = 1
 
@@ -32,84 +181,83 @@ horizontal_alignment = 2
 
 [node name="Selections" type="Node" parent="."]
 
-[node name="ModeText066" type="Label" parent="Selections"]
+[node name="ModeText050" type="Label" parent="Selections"]
 anchors_preset = -1
 anchor_right = 0.20651
-offset_left = -1500.0
-offset_top = -650.0
-offset_right = -564.0
-offset_bottom = -350.0
-scale = Vector2(0.66, 0.66)
+offset_left = -1672.0
+offset_top = -599.0
+offset_right = -736.0
+offset_bottom = -299.0
+scale = Vector2(0.5, 0.5)
 text = "Mode: Tour"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
-[node name="ScoreText066" type="Label" parent="Selections"]
+[node name="ScoreText050" type="Label" parent="Selections"]
 anchors_preset = -1
 anchor_right = 0.184375
-offset_left = -1500.0
-offset_top = -450.0
-offset_right = -731.0
-offset_bottom = -150.0
-scale = Vector2(0.66, 0.66)
+offset_left = -1672.0
+offset_top = -399.0
+offset_right = -903.0
+offset_bottom = -99.0
+scale = Vector2(0.5, 0.5)
 text = "Score: 50"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
-[node name="ItemsText066" type="Label" parent="Selections"]
+[node name="ItemsText050" type="Label" parent="Selections"]
 anchors_preset = -1
 anchor_right = 0.166667
-offset_left = -1500.0
-offset_top = -250.0
-offset_right = -702.0
-offset_bottom = 50.0
-scale = Vector2(0.66, 0.66)
+offset_left = -1672.0
+offset_top = -199.0
+offset_right = -874.0
+offset_bottom = 101.0
+scale = Vector2(0.5, 0.5)
 text = "Items: On"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
-[node name="StompText066" type="Label" parent="Selections"]
+[node name="StompText050" type="Label" parent="Selections"]
 anchors_preset = -1
 anchor_right = 0.166667
-offset_left = -1500.0
-offset_top = -50.0
-offset_right = -702.0
-offset_bottom = 250.0
-scale = Vector2(0.66, 0.66)
+offset_left = -1672.0
+offset_top = 1.0
+offset_right = -874.0
+offset_bottom = 301.0
+scale = Vector2(0.5, 0.5)
 text = "Stomping: On"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
-[node name="ModesText066" type="Label" parent="Selections"]
+[node name="ModesText050" type="Label" parent="Selections"]
 anchors_preset = -1
 anchor_right = 0.166667
-offset_left = -1500.0
-offset_top = 150.0
-offset_right = -702.0
-offset_bottom = 450.0
-scale = Vector2(0.66, 0.66)
+offset_left = -1672.0
+offset_top = 201.0
+offset_right = -874.0
+offset_bottom = 501.0
+scale = Vector2(0.5, 0.5)
 text = "Mode Toggle"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BufferText066" type="Label" parent="Selections"]
+[node name="BufferText050" type="Label" parent="Selections"]
 anchors_preset = -1
 anchor_right = 0.150521
 anchor_bottom = 0.140741
-offset_left = -1500.0
-offset_top = 350.0
-offset_right = -790.0
-offset_bottom = 345.999
-scale = Vector2(0.66, 0.66)
+offset_left = -1672.0
+offset_top = 401.0
+offset_right = -962.0
+offset_bottom = 396.999
+scale = Vector2(0.5, 0.5)
 text = "Buffer: Full"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
@@ -117,14 +265,13 @@ metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
 [node name="StartText" type="Label" parent="Selections"]
-offset_left = -1500.0
-offset_top = 400.0
-offset_right = -933.0
-offset_bottom = 867.0
+offset_left = -1672.0
+offset_top = 451.0
+offset_right = -1105.0
+offset_bottom = 918.0
 text = "Start"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="MenuBackButton" parent="." instance=ExtResource("5_3iktt")]
 position = Vector2(1750, 970)

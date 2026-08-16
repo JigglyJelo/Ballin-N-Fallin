@@ -12,6 +12,7 @@ public partial class AddonCreditsMenu : VerticalMenu{
 
 	public override void _Ready(){
 		base._Ready();
+		Selection = 1;
 		totalSelections = 5;
 		subheaderLabel = GetNode<Label>("LinkSubheader");
 		licenseLabel = GetNode<Label>("LicenseLabel");
@@ -19,6 +20,7 @@ public partial class AddonCreditsMenu : VerticalMenu{
 		
 		// Capture the initial Y position as our top boundary
 		startY = licenseLabel.Position.Y;
+		UpdateSelectionVisual();
 	}
 
 	public override void _Process(double delta){

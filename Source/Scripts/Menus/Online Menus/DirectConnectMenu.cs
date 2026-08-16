@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 
 public partial class DirectConnectMenu : VerticalMenu{
-	private Label joinLabel,hostLabel;
+	private Label joinLabel,hostLabel,subheaderLabel;
 	private LineEdit ipInput, portInput;
 
 	public override void _Ready(){
@@ -11,15 +11,16 @@ public partial class DirectConnectMenu : VerticalMenu{
 		Online.IsOnline = false;
 		Game.PlayerDatas = new List<PlayerData>();
 		Game.SpectatorDatas = new List<PlayerData>();
-		hostLabel = GetNode<Label>("Selections/Host200");
-		joinLabel = GetNode<Label>("Selections/Join200");
+		hostLabel = GetNode<Label>("Selections/Host150");
+		joinLabel = GetNode<Label>("Selections/Join150");
+		subheaderLabel = GetNode<Label>("SubHeaderText");
 		ipInput = GetNode<LineEdit>("IPEntry");
 		portInput = GetNode<LineEdit>("PortEntry");
 		ipInput.Text = Online.Address;
 		portInput.Text = Online.Port.ToString();
 		
 		totalSelections = 2;
-		defaultFontSize = 2;
+		defaultFontSize = 1.5f;
 		UpdateSelectionVisual();
 		if(Game.IsDedicatedServer) MenuChoose(1);
 	}
@@ -75,4 +76,10 @@ public partial class DirectConnectMenu : VerticalMenu{
 		Online.IsOnline = false;
 		MenuScene.LoadMenu("Online/OnlineMenu");
     }
+
+	protected override void UpdateSelectionVisual(){
+		base.UpdateSelectionVisual();
+		subheaderLabel.Text = Selection == 1 ? "Host a lobby that others can connect to from your IP Address. (Requires Port Forwarding)" : "Join a lobby from an IP Address and Port.";
+	}
+
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://o4cw4adu2ry1"]
+[gd_scene load_steps=15 format=3 uid="uid://o4cw4adu2ry1"]
 
 [ext_resource type="Script" path="res://Source/Scripts/Menus/VsMenu.cs" id="1_n6mne"]
 [ext_resource type="Texture2D" uid="uid://ytpljltjqyub" path="res://Assets/Sprites/Menus/Trophy.png" id="3_o456u"]
@@ -11,7 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="8_ddswx"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="8_ldtqb"]
 [ext_resource type="Texture2D" uid="uid://2r1hf8bgmhew" path="res://Assets/Sprites/Player/380/Eyes/AngryEyes.png" id="9_4m6qy"]
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="10_vo5ex"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="12_8jqmn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hj38g"]
+font = ExtResource("10_vo5ex")
+font_size = 200
+font_color = Color(0.287526, 0.287526, 0, 1)
 
 [node name="VsMenu" type="Node2D"]
 position = Vector2(-480, -270)
@@ -35,9 +41,9 @@ width = 20.0
 default_color = Color(0, 0, 0, 1)
 
 [node name="Orange" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(-330, -330)
+position = Vector2(-300, -300)
 rotation = 0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Orange" index="0"]
 self_modulate = Color(1, 0.290196, 0, 1)
@@ -62,9 +68,9 @@ scale = Vector2(1.333, 1.333)
 texture = ExtResource("7_wntgp")
 
 [node name="Lime" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(330, -330)
+position = Vector2(300, -300)
 rotation = -0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Lime" index="0"]
 self_modulate = Color(0, 1, 0.231373, 1)
@@ -93,9 +99,9 @@ texture = ExtResource("7_wntgp")
 flip_h = true
 
 [node name="Cyan" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(-330, 330)
+position = Vector2(-300, 300)
 rotation = -0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Cyan" index="0"]
 self_modulate = Color(0, 0.65098, 1, 1)
@@ -121,9 +127,9 @@ texture = ExtResource("7_wntgp")
 flip_h = true
 
 [node name="Pink" parent="Selections/TourButton" instance=ExtResource("8_ddswx")]
-position = Vector2(330, 330)
+position = Vector2(300, 300)
 rotation = 0.785398
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.75, 0.667)
 
 [node name="BallSprite" parent="Selections/TourButton/Pink" index="0"]
 self_modulate = Color(1, 0.396078, 0.858824, 1)
@@ -151,10 +157,6 @@ scale = Vector2(1.333, 1.333)
 texture = ExtResource("7_wntgp")
 flip_h = true
 
-[node name="TrophySprite" type="Sprite2D" parent="Selections/TourButton"]
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("3_o456u")
-
 [node name="TourText" type="Label" parent="Selections/TourButton"]
 offset_left = -540.0
 offset_top = 280.0
@@ -165,6 +167,21 @@ label_settings = ExtResource("5_tbmwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Trophy" type="Sprite2D" parent="Selections/TourButton"]
+texture_repeat = 3
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_o456u")
+region_enabled = true
+region_rect = Rect2(0, 0, 512, 512)
+
+[node name="Label" type="Label" parent="Selections/TourButton/Trophy"]
+offset_left = -82.5
+offset_top = -151.25
+offset_right = 80.5
+offset_bottom = 82.75
+text = "#1"
+label_settings = SubResource("LabelSettings_hj38g")
 
 [node name="FreeplayButton" type="Polygon2D" parent="Selections"]
 position = Vector2(0, 95)
@@ -283,9 +300,9 @@ offset_bottom = 1467.0
 
 [node name="HeaderText" type="Label" parent="."]
 offset_left = -2400.0
-offset_top = -849.0
+offset_top = -850.0
 offset_right = 1440.0
-offset_bottom = -615.0
+offset_bottom = -616.0
 scale = Vector2(1.5, 1.5)
 text = "Select a gameplay mode"
 label_settings = ExtResource("5_tbmwm")

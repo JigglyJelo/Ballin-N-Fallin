@@ -11,12 +11,17 @@
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_1v5xd")
-CameraZoom = 0.65
 floorColorOverride = Color(0.952941, 0.788235, 0.545098, 1)
 InsideColorOverride = Color(0.854902, 0.647059, 0.533333, 1)
 OutlineColorOverride = Color(0.768627, 0.427451, 0.368627, 1)
 groundTexture = ExtResource("2_wu6n2")
 background = ExtResource("3_qq0is")
+
+[node name="CameraBoundary" type="ReferenceRect" parent="."]
+offset_left = -2824.44
+offset_top = -1600.0
+offset_right = 2864.44
+offset_bottom = 1600.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 visible = false
@@ -76,14 +81,14 @@ scale = Vector2(1.1, 1.1)
 [node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
 collision_layer = 3
 
-[node name="@CollisionPolygon2D@342679" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+[node name="@CollisionPolygon2D@97224" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(-2880, -1489, -2880, 2095, 2880, 2095, 2880, -1681, -2880, -1681, -2880, -1489, 2432, -1489, 2432, 1519, 1664, 1519, 1408, 623, 1088, 623, 896, 239, -896, 239, -1088, 623, -1408, 623, -1664, 1519, -2368, 1519, -2368, -1489)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(-2880, -1472, -2880, 2112, 2880, 2112, 2880, -1664, -2880, -1664, -2880, -1472, 2432, -1472, 2432, 1536, 1664, 1536, 1408, 640, 1088, 640, 896, 256, -896, 256, -1088, 640, -1408, 640, -1664, 1536, -2368, 1536, -2368, -1472)
 metadata/invert = true
 
-[node name="@Polygon2D@342680" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+[node name="@Polygon2D@97225" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
 texture_repeat = 2
 color = Color(0.854902, 0.647059, 0.533333, 1)
 texture = ExtResource("2_wu6n2")
@@ -93,7 +98,7 @@ polygon = PackedVector2Array(2432, -1472, 2432, 1536, 1664, 1536, 1408, 640, 108
 script = ExtResource("8_0su4k")
 stroke_color = Color(0.768627, 0.427451, 0.368627, 1)
 
-[node name="@Polygon2D@342682" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+[node name="@Polygon2D@97227" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
 light_mask = 3
 z_index = -2
 color = Color(0.952941, 0.788235, 0.545098, 1)

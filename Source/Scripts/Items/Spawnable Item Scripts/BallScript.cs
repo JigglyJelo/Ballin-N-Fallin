@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 public partial class BallScript : SpawnableItemScript{
+	public static readonly PackedScene BALL_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Items/Ball.tscn");
     public Player Player;
     public InterpolatedBody Rb;
     private AudioStreamPlayer2D bounceSound;

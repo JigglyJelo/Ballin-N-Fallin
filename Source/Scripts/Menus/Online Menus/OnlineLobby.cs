@@ -17,9 +17,14 @@ public partial class OnlineLobby : Node{
     private static Gradient pingGradient = GD.Load<Gradient>("res://Assets/Gradients/Ping.tres");
     private Sprite2D banButton;
     public long LobbyID = -1;
+	private const float PLAYER_TEXT_X_POS = 450;
+	private const float PLAYER_TEXT_Y_START_POS = -600;
+	private const float PLAYER_TEXT_WIDTH = 1024;
+	private const float BAN_BUTTON_WIDTH = 128;
 
     public override void _Ready(){
         Lobby = this;
+		InGameChat.DeleteInGameChat();
         if(!Online.IsOnline) Game.PlayerDatas = new List<PlayerData>();
         else if(IsHost){
             Game.PlayerDatas = new List<PlayerData>();
@@ -35,7 +40,7 @@ public partial class OnlineLobby : Node{
         for(int i = 0; i < playerTexts.Length; i++){
             OnlinePlayerText playerText = playerTextScene.Instantiate<OnlinePlayerText>();
             playerText.Name = "Player " + (i+1) + " Text";
-            playerText.Position = new Vector2(450,(200*i) - 750);
+            playerText.Position = new Vector2(PLAYER_TEXT_X_POS,(200*i) + PLAYER_TEXT_Y_START_POS);
             GetNode("PlayerTexts").AddChild(playerText);
             playerTexts[i] = playerText;
             playerText.Id = i;
@@ -44,7 +49,6 @@ public partial class OnlineLobby : Node{
         
         GD.Print(Online.IsOnline);
         if(!Online.IsOnline){
-			InGameChat.SpawnInGameChat();
             if(IsHost) HostLobby();
             else JoinLobby();
         }else if(Online.IsHost()){
@@ -63,6 +67,8 @@ public partial class OnlineLobby : Node{
             if(startTimer >= 1){
                 MenuScene.MenuBackgroundFadeout();
                 GetTree().Paused = true;
+				InGameChat.InGameChatNode = null;
+				InGameChat.SpawnInGameChat();
                 SceneTransitioner.SwitchToScene(Game.SceneType.Game);
             }
         }
@@ -82,7 +88,7 @@ public partial class OnlineLobby : Node{
 
     private void KickBanPlayerButtons(){
         Vector2 globalMousePosition = banButton.GetGlobalMousePosition();
-        if(globalMousePosition.X > 192 + 450 && globalMousePosition.X < 1920){
+        if(globalMousePosition.X > 192 + PLAYER_TEXT_X_POS && globalMousePosition.X < 192 + PLAYER_TEXT_X_POS + PLAYER_TEXT_WIDTH + BAN_BUTTON_WIDTH){
             for(int i = 0; i < Game.PlayerDatas.Count; i++){
                 if(globalMousePosition.Y > playerTexts[i].GlobalPosition.Y && globalMousePosition.Y < playerTexts[i].GlobalPosition.Y + 128){
                     banButton.GlobalPosition = new Vector2(banButton.GlobalPosition.X, playerTexts[i].GlobalPosition.Y);
@@ -111,6 +117,7 @@ public partial class OnlineLobby : Node{
     }
 
     private void HostLobby() {
+		ChatManager.ResetMutedPlayers();
         PingGetter.LastPing = 0;
         PingGetter.Pings[0] = 0;
         GD.Print("Host");
@@ -161,7 +168,7 @@ public partial class OnlineLobby : Node{
 
     private void JoinLobby() {
         bool joinSuccess = false;
-        
+        ChatManager.ResetMutedPlayers();
         switch (Online.Network) {
             case Online.NetworkType.Direct:
                 joinSuccess = EnetSetup.EnetJoin();

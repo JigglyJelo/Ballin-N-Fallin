@@ -8,12 +8,12 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 	public override void _Ready(){
 		base._Ready();
 		totalSelections = 7;
-		lobbbyText = GetNode<Label>("LobbyText");
-		modeText = GetNode<Label>("Selections/ModeText066");
-		pointsText = GetNode<Label>("Selections/ScoreText066");
-		itemsText = GetNode<Label>("Selections/ItemsText066");
-		stompText = GetNode<Label>("Selections/StompText066");
-		bufferText = GetNode<Label>("Selections/BufferText066");
+		lobbbyText = GetNode<Label>("Screen/Header/LobbyText");
+		modeText = GetNode<Label>("Selections/ModeText050");
+		pointsText = GetNode<Label>("Selections/ScoreText050");
+		itemsText = GetNode<Label>("Selections/ItemsText050");
+		stompText = GetNode<Label>("Selections/StompText050");
+		bufferText = GetNode<Label>("Selections/BufferText050");
 		startText = GetNode<Label>("Selections/StartText");
 		colorText = GetNode<Label>("ColorText");
 		if(!Game.UsingMouse()){
@@ -47,7 +47,6 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 							}
 						}
 					}catch{}
-					if(Input.IsKeyPressed(Key.B)) EnterSpectatorMode();
 				}
 			}else if(OnlineLobby.Lobby.LobbyShown){
 				if(Game.UsingMouse()){
@@ -235,7 +234,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		}
 	}
 
-	private void EnterSpectatorMode(){
+	public void EnterSpectatorMode(){
 		GD.Print("Spectatin");
 		PlayerData yourPlayerInfo;
 		foreach(PlayerData playerInfo in Game.PlayerDatas){

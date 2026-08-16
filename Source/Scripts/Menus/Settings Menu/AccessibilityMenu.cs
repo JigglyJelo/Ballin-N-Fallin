@@ -17,6 +17,15 @@ public partial class AccessibilityMenu : VerticalMenu{
         UpdateTexts();
     }
 
+	public override void _Process(double delta){
+		base._Process(delta);
+		for(int i = 0; i < Game.MAX_PLAYERS; i++){
+			if(Input.IsActionJustReleased("Y"+i)){
+				SetToDefaultSettings();
+			}
+		}
+	}
+
     protected override void MenuChoose(int choice){
         switch(choice){
             case 1: DynamicCameraEnabled = !DynamicCameraEnabled; break;
@@ -37,6 +46,12 @@ public partial class AccessibilityMenu : VerticalMenu{
         SaveData();
         LoadData();
     }
+
+	private void SetToDefaultSettings(){
+		DynamicCameraEnabled = true;
+		AlwaysShowNames = false;
+		UpdateTexts();
+	}
 
     private void SaveData(){
         Game.Save.SetValue("Accessibility","Dynamic Camera",DynamicCameraEnabled);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public partial class ItemSynchronizer : Node{
 	public static ItemSynchronizer SyncNode;
+	private static byte lastAllocatedId = 255; 
 	private const int ITEM_SYNC_RATE = 2;
     private int itemSyncTimer = 0;
     private const int ITEM_BOX_SYNC_RATE = 4;
@@ -43,8 +44,6 @@ public partial class ItemSynchronizer : Node{
                     float velY = BitConverter.ToSingle(boxData, offset); offset += 4;
                     
                     if(SpawnedBoxes.TryGetValue(id, out ItemBox box)){
-                        // If your ItemBox RigidBody uses the same custom NetworkPosition/Velocity logic as your Balls,
-                        // change these to box.Rb.NetworkPosition / box.Rb.NetworkVelocity
                         box.Rb.NetworkPosition = new Vector2(posX, posY);
                         box.Rb.NetworkVelocity = new Vector2(velX, velY);
                     }
@@ -83,13 +82,14 @@ public partial class ItemSynchronizer : Node{
                 ushort update = UnreliableManager.GetChannelLastUpdate(UnreliableManager.UnreliableChannel.SpawnedBoxes);
                 BitConverter.GetBytes(update).CopyTo(boxData, boxData.Length-2);
                 Rpc(nameof(SyncBoxes), boxData);
+				UnreliableManager.HostIncrementLastUpdate(UnreliableManager.UnreliableChannel.SpawnedBoxes);
             }
         }
     }
 
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public void SpawnBall(byte playerId,byte id){
-        BallScript ball = GD.Load<PackedScene>("res://Source/Scenes/Items/Ball.tscn").Instantiate<BallScript>();
+		BallScript ball = BallScript.BALL_SCENE.Instantiate<BallScript>();
         ball.SetMultiplayerAuthority(1);
         ball.Player = Game.Players[playerId-1];
         ball.Name = "SpawnedItem" + id;
@@ -113,9 +113,6 @@ public partial class ItemSynchronizer : Node{
                     float velX = BitConverter.ToSingle(ballData, offset); offset += 4;
                     float velY = BitConverter.ToSingle(ballData, offset); offset += 4;
                     if(SpawnedItems.TryGetValue(id, out SpawnableItemScript item) && item is BallScript ball){
-                        //ball.Rb.GlobalPosition = new Vector2(posX, posY);
-                        //ball.Rb.GlobalPosition = ball.Rb.GlobalPosition; // Fix for quantum superposition
-                        //ball.Rb.LinearVelocity = new Vector2(velX, velY);
                         ball.Rb.NetworkPosition = new Vector2(posX, posY);
                         ball.Rb.NetworkVelocity = new Vector2(velX, velY);
                     }
@@ -158,6 +155,7 @@ public partial class ItemSynchronizer : Node{
                 ushort update = UnreliableManager.GetChannelLastUpdate(UnreliableManager.UnreliableChannel.SpawnedItems);
                 BitConverter.GetBytes(update).CopyTo(ballData, ballData.Length-2);
                 Rpc(nameof(SyncBalls), ballData);
+				UnreliableManager.HostIncrementLastUpdate(UnreliableManager.UnreliableChannel.SpawnedItems);
             }
         }
     }
@@ -169,21 +167,20 @@ public partial class ItemSynchronizer : Node{
         SpawnedItems.Remove(itemId);
         item.QueueFree();
     }
-    
-    //Returns the first byte value not present in the hashset
-    //If all values (0-255) are used null is returned
-    public static byte? GetUnusedItemId(HashSet<byte> keys){
-        int keyCount = keys.Count;
-        if(keyCount > byte.MaxValue) return null;
-        byte newItemId = (byte)keyCount;
-        if(keyCount != 0){
-            int attempts = 0;
-            while(keys.Contains(newItemId)){
-                newItemId++;
-                attempts++;
-                if(attempts == byte.MaxValue) return null;
+
+
+    public static byte? GetUnusedItemId(ICollection<byte> keys){
+        if(keys.Count >= 256) return null;
+        
+        for(int i = 1; i <= 256; i++){
+            unchecked {
+                byte checkId = (byte)(lastAllocatedId + i);
+                if(!keys.Contains(checkId)){
+                    lastAllocatedId = checkId;
+                    return checkId;
+                }
             }
         }
-        return newItemId;
+        return null;
     }
 }

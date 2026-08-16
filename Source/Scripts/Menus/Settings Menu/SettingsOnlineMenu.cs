@@ -5,6 +5,10 @@ public partial class SettingsOnlineMenu : VerticalMenu, ILeftRightSelections{
 	public static bool UsePlayerPrediction;
 	private Label chatText, predictionText;
 	private LineEdit norayEntry, norayPortEntry, nohubEntry, nohubPortEntry;
+	private const string DEFAULT_NORAY_IP = "127.0.0.1";
+	private const ushort DEFAULT_NORAY_PORT = 8890;
+	private const string DEFAULT_NOHUB_IP = "foxssake.studio";
+	private const ushort DEFAULT_NOHUB_PORT = 12980;
 	public override void _Ready(){
 		base._Ready();
 		Selection = 1;
@@ -20,6 +24,15 @@ public partial class SettingsOnlineMenu : VerticalMenu, ILeftRightSelections{
 		LoadData();
 		UpdateTexts();
 		UpdateSelectionVisual();
+	}
+
+	public override void _Process(double delta){
+		base._Process(delta);
+		for(int i = 0; i < Game.MAX_PLAYERS; i++){
+			if(Input.IsActionJustReleased("Y"+i)){
+				SetToDefaultSettings();
+			}
+		}
 	}
 
 	protected override void MenuChoose(int choice){
@@ -80,6 +93,17 @@ public partial class SettingsOnlineMenu : VerticalMenu, ILeftRightSelections{
 		nohubEntry.Text = NohubHostManager.NohubIP;
 		nohubPortEntry.Text = NohubHostManager.NohubPort.ToString();
 		SaveData();
+		LoadData();
+	}
+
+	private void SetToDefaultSettings(){
+		OnlineChatSetting = ChatSetting.Filtered;
+		UsePlayerPrediction = true;
+		NoraySetup.NorayIP = DEFAULT_NORAY_IP;
+		NoraySetup.NorayPort = DEFAULT_NORAY_PORT;
+		NohubHostManager.NohubIP = DEFAULT_NOHUB_IP;
+		NohubHostManager.NohubPort = DEFAULT_NOHUB_PORT;
+		UpdateTexts();
 	}
 
 	private void SaveData(){
@@ -105,10 +129,10 @@ public partial class SettingsOnlineMenu : VerticalMenu, ILeftRightSelections{
 		//Volume
 		OnlineChatSetting = (ChatSetting)(int)Game.Save.GetValue("Online", "Chat", (int)ChatSetting.Filtered);
 		UsePlayerPrediction = (bool)Game.Save.GetValue("Online", "Prediction", true);
-		NoraySetup.NorayIP = (string)Game.Save.GetValue("Online", "noray IP", "127.0.0.1");
-		NoraySetup.NorayPort = (ushort)Game.Save.GetValue("Online", "noray Port", 8890);
-		NohubHostManager.NohubIP = (string)Game.Save.GetValue("Online", "nohub IP", "foxssake.studio");
-		NohubHostManager.NohubPort = (ushort)Game.Save.GetValue("Online", "nohub Port", 12980);
+		NoraySetup.NorayIP = (string)Game.Save.GetValue("Online", "noray IP", DEFAULT_NORAY_IP);
+		NoraySetup.NorayPort = (ushort)Game.Save.GetValue("Online", "noray Port", DEFAULT_NORAY_PORT);
+		NohubHostManager.NohubIP = (string)Game.Save.GetValue("Online", "nohub IP", DEFAULT_NOHUB_IP);
+		NohubHostManager.NohubPort = (ushort)Game.Save.GetValue("Online", "nohub Port", DEFAULT_NOHUB_PORT);
 	}
 
 	public enum ChatSetting : int{
