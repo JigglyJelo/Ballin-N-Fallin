@@ -14,7 +14,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
         base._Ready();
         FinishedPlayers = 0;
         Game.CurrentMode = Mode.GameMode.Golf;
-        Par = (sbyte)GetNode<Level>("Level").LevelUnit;
+		Par = (sbyte)GetNode<Level>("Level").GetMeta("Par",6);
         FinishedPlayerStrokes = new sbyte[Game.MAX_PLAYERS];
         for (int i = 0; i < FinishedPlayerStrokes.Length; i++) FinishedPlayerStrokes[i] = sbyte.MaxValue;
         if (Game.TotalPlayers == 1) AddChild(GD.Load<PackedScene>("res://Source/Scenes/Mode Stuff/Golf/GolfHud.tscn").Instantiate());

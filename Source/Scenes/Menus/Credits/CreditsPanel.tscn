@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc551o4gjyk00"]
+
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_j5yr6"]
+[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="2_yionq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4g2nv"]
+font = ExtResource("2_yionq")
+font_size = 75
+shadow_size = 20
+
+[node name="Panel" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1361.5
+offset_top = -1012.0
+offset_right = 1361.5
+offset_bottom = 1012.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_j5yr6")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CreditsLabel" type="Label" parent="ScrollContainer"]
+custom_minimum_size = Vector2(1000, 1000)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_4g2nv")
+horizontal_alignment = 1
+autowrap_mode = 2

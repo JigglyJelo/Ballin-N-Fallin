@@ -21,9 +21,8 @@ size = Vector2(384, 128)
 [node name="Level" type="Node2D"]
 position = Vector2(-128, -768)
 script = ExtResource("1_6ixva")
-LevelUnit = 4
-CameraZoom = 0.7
 background = ExtResource("2_e5np4")
+metadata/Par = 4
 
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
 position = Vector2(128, 720)

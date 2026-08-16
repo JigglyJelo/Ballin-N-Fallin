@@ -97,7 +97,7 @@ offset_left = -1735.0
 offset_top = 315.0
 offset_right = -674.0
 offset_bottom = 555.0
-text = "Mode Toggle"
+text = "Mini-Game Toggle"
 label_settings = ExtResource("2_6fscv")
 vertical_alignment = 1
 
@@ -107,10 +107,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -960.0
-offset_top = 500.0
+offset_left = 319.0
+offset_top = 690.0
 offset_right = 960.0
-offset_bottom = 750.0
+offset_bottom = 940.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
@@ -124,3 +124,12 @@ vertical_alignment = 1
 position = Vector2(1750, 970)
 
 [node name="InputPrompts" parent="." instance=ExtResource("6_huxux")]
+
+[node name="InfoText" type="Label" parent="."]
+offset_left = 591.0
+offset_top = -555.0
+offset_right = 1971.0
+offset_bottom = 828.0
+label_settings = ExtResource("2_6fscv")
+horizontal_alignment = 1
+autowrap_mode = 3

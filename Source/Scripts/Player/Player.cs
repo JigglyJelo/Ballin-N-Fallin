@@ -218,7 +218,11 @@ public partial class Player : Node2D{
 			if(CanLaunch && InputVector != Vector2.Zero){
 				int ping = PingGetter.GetMedianPing();
 				if(SettingsOnlineMenu.UsePlayerPrediction){
-					if(Online.Buffer >= 0.5f){
+					if(Online.Buffer == 1){
+						if(!Mode.Finished) RpcId(1,nameof(LaunchOnServer),InputVector.Angle(),LaunchPower,0);
+						if(InputVector.X < 0) Visuals.Flip(true,InputVector.Angle() + MathF.PI);
+						else Visuals.Flip(false,InputVector.Angle());
+					}else if(Online.Buffer >= 0.5f){
 						byte ticks = (byte)PingGetter.PingToRecommendedTicks(ping);
 						if(!Mode.Finished) RpcId(1,nameof(LaunchOnServer),InputVector.Angle(),LaunchPower,ticks);
 						if(InputVector.X < 0) Visuals.Flip(true,InputVector.Angle() + MathF.PI);

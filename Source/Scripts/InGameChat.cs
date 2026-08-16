@@ -1,20 +1,27 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class InGameChat : VBoxContainer{
-	private static InGameChat InGameChatNode;
+	public static InGameChat InGameChatNode = null;
+	[Export]
+	private bool isLobbyChat = false;
 	private ScrollContainer scrollContainer;
 	private VBoxContainer messageList;
 	private LineEdit textEntry;
 	private readonly static PackedScene IN_GAME_CHAT_SCENE = GD.Load<PackedScene>("res://Source/Scenes/OnlineChat.tscn");
-	private readonly static PackedScene CHAT_MESSAGE_SCENE = GD.Load<PackedScene>("res://Source/Scenes/ChatMessage.tscn");
+	private readonly static PackedScene LOBBY_CHAT_MESSAGE_SCENE = GD.Load<PackedScene>("res://Source/Scenes/LobbyChatMessage.tscn");
+	private readonly static PackedScene IN_GAME_CHAT_MESSAGE_SCENE = GD.Load<PackedScene>("res://Source/Scenes/ChatMessage.tscn");
 	
 	private const float MESSAGE_LIFETIME = 10;
 	private const float FADE_TIME = 1;
 	private Dictionary<Label, float> messageTimers = new Dictionary<Label, float>();
+	public static readonly Color ERROR_COLOR = Colors.Red;
 
 	public override void _Ready(){
-		(GetParent().GetParent() as CanvasLayer).Scale = Game.ContentScaleVector2;
+		if(InGameChatNode != null && !InGameChatNode.IsQueuedForDeletion()){
+			InGameChatNode.QueueFree();
+		}
 		InGameChatNode = this;
 		scrollContainer = GetNode<ScrollContainer>("ScrollContainer");
 		messageList = scrollContainer.GetNode<VBoxContainer>("MessageList");
@@ -51,7 +58,11 @@ public partial class InGameChat : VBoxContainer{
 
 	private void OnTextSubmitted(string message){
 		if(!string.IsNullOrWhiteSpace(message)){
-			ChatManager.SendChat(message);
+			if(message.StartsWith("/")){
+				RunCommand(message);
+			}else{
+				ChatManager.SendChat(message);
+			}
 		}
 		textEntry.Clear();
 		textEntry.ReleaseFocus();
@@ -68,6 +79,98 @@ public partial class InGameChat : VBoxContainer{
 		}
 	}
 
+	private void RunCommand(string message){
+		string[] parts = message.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+		if(parts.Length == 0) return;
+
+		string command = parts[0].ToLower();
+		string argument = "";
+
+		if(parts.Length > 1){
+			argument = string.Join(" ", parts, 1, parts.Length - 1);
+		}
+
+		switch(command){
+			case "/spectate":
+				if(isLobbyChat && GetParent().GetParent().GetParent() is LobbySettingsMenu lobbySettingsMenu){
+					lobbySettingsMenu.EnterSpectatorMode();
+				}else{
+					CreateNonChatMessage(ERROR_COLOR, "Can't enter spectator mode currently.");
+				}
+				break;
+			case "/kick":
+				if(Online.IsHost()){
+					if(argument != ""){
+						bool kickedPlayer = false;
+						foreach(PlayerData player in Game.PlayerDatas){
+							if(player.Username == argument){
+								Online.KickPlayer(player.UUID);
+								kickedPlayer = true;
+							}
+						}
+						if(!kickedPlayer) CreateNonChatMessage(ERROR_COLOR, $"No player named {argument} in the lobby.");
+					}else{
+						CreateNonChatMessage(ERROR_COLOR, "Usage: /kick <playername>");
+					}
+				}else{
+					CreateNonChatMessage(ERROR_COLOR, "Only the host can kick players.");
+				}
+				break;
+			case "/ban":
+				if(Online.IsHost()){
+					if(argument != ""){
+						bool bannedPlayer = false;
+						foreach(PlayerData player in Game.PlayerDatas){
+							if(player.Username == argument){
+								Online.BanPlayer(player.UUID);
+								bannedPlayer = true;
+							}
+						}
+						if(!bannedPlayer) CreateNonChatMessage(ERROR_COLOR, $"No player named {argument} in the lobby.");
+					}else{
+						CreateNonChatMessage(ERROR_COLOR, "Usage: /ban <playername>");
+					}
+				}else{
+					CreateNonChatMessage(ERROR_COLOR, "Only the host can ban players.");
+				}
+				break;
+			case "/mute":
+				if(argument != ""){
+					ChatManager.MutePlayer(argument);
+				}else{
+					CreateNonChatMessage(ERROR_COLOR, "Usage: /mute <playername>");
+				}
+				break;
+			case "/unmute":
+				if(argument != ""){
+					ChatManager.UnmutePlayer(argument);
+				}else{
+					CreateNonChatMessage(ERROR_COLOR, "Usage: /unmute <playername>");
+				}
+				break;
+			case "/help":
+				CreateNonChatMessage(Colors.White, @"Command List:
+				/spectate - Enter spectator mode.
+				/mute <player> - Hide all messages from a player.
+				/unmute <player> - Unmute a player.
+				Host Commands:
+				/ban <player> - Ban a player from the lobby.
+				/kick <player> - Kick a player from the lobby.");
+				break;
+			default:
+				CreateNonChatMessage(ERROR_COLOR, "Unknown command. Type /help for list of commands.");
+				break;
+		}
+	}
+
+	public static void CreateNonChatMessage(Color messageColor, string message){
+		Label label = (InGameChatNode.isLobbyChat ? LOBBY_CHAT_MESSAGE_SCENE : IN_GAME_CHAT_MESSAGE_SCENE).Instantiate<Label>();
+		label.Text = message;
+		label.SelfModulate = messageColor;
+		InGameChatNode.AddMessageToUI(label);
+	}
+
 	public static void CreateChatMessage(int senderUUID, string message){
 		if(SettingsOnlineMenu.OnlineChatSetting != SettingsOnlineMenu.ChatSetting.Disabled){
 			foreach(PlayerData playerData in Game.PlayerDatas){
@@ -75,7 +178,7 @@ public partial class InGameChat : VBoxContainer{
 					if(SettingsOnlineMenu.OnlineChatSetting == SettingsOnlineMenu.ChatSetting.Filtered){
 						message = WordFilter.FilterChatMessage(message);
 					}
-					Label messageLabel = CHAT_MESSAGE_SCENE.Instantiate<Label>();
+					Label messageLabel = (InGameChatNode.isLobbyChat ? LOBBY_CHAT_MESSAGE_SCENE : IN_GAME_CHAT_MESSAGE_SCENE).Instantiate<Label>();
 					messageLabel.Text = $"{playerData.Username}: {message}";
 					messageLabel.SelfModulate = playerData.PlayerColor;
 					InGameChatNode.AddMessageToUI(messageLabel);
@@ -96,16 +199,22 @@ public partial class InGameChat : VBoxContainer{
 
 	public static void SpawnInGameChat(){
 		if(InGameChatNode != null){
-			InGameChatNode.QueueFree();
+			if(!InGameChatNode.IsQueuedForDeletion()){
+				InGameChatNode.QueueFree();
+				InGameChatNode = null;
+			}
 		}
 		Game.GameNode.AddChild(IN_GAME_CHAT_SCENE.Instantiate());
 	}
 
 	public static void DeleteInGameChat(){
 		if(InGameChatNode != null){
-			InGameChatNode.QueueFree();
-		}else if(Game.GameNode.GetNode("OnlineChat") != null){
+			if(!InGameChatNode.IsQueuedForDeletion()){
+				InGameChatNode.QueueFree();
+			}
+		}else if(Game.GameNode.GetNodeOrNull("OnlineChat") != null && !Game.GameNode.GetNodeOrNull("OnlineChat").IsQueuedForDeletion()){
 			Game.GameNode.GetNode("OnlineChat").QueueFree();
 		}
+		InGameChatNode = null;
 	}
 }

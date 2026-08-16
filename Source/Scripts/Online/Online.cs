@@ -39,6 +39,16 @@ public partial class Online{
         return Game.GameNode.Multiplayer.GetUniqueId();
     }
 
+	public static List<int> UsernameToUUIDs(string username){
+		List<int> uuidList = new List<int>();
+		foreach(PlayerData playerData in Game.PlayerDatas){
+			if(playerData.Username == username){
+				uuidList.Add(playerData.UUID);
+			}
+		}
+		return uuidList;
+	}
+
     public static bool IsHost(){
         if(!IsOnlinePeer()) return true;
         else if(PeerIsActive()) return Game.GameNode.Multiplayer.GetUniqueId() == 1;

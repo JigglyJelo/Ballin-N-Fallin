@@ -45,9 +45,9 @@ point_count = 14
 position = Vector2(64, 832)
 script = ExtResource("1_tjuey")
 LevelUnit = 3
-CameraZoom = 0.75
 background = ExtResource("2_u1mgd")
 metadata/medals = PackedFloat32Array(80, 60, 45, 40)
+metadata/Laps = 3
 
 [node name="CameraBoundary" type="ReferenceRect" parent="."]
 offset_left = -2624.0

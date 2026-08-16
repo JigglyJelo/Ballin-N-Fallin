@@ -1,7 +1,7 @@
 using Godot;
 
 public partial class TourMenu : VerticalMenu, ILeftRightSelections{
-	private Label pointsText,itemsText,stompText,eventsText,teamsText,advancedText,startText;
+	private Label pointsText,itemsText,stompText,eventsText,teamsText,advancedText,startText,infoText;
 	
 	public override void _Ready(){
 		base._Ready();
@@ -13,6 +13,7 @@ public partial class TourMenu : VerticalMenu, ILeftRightSelections{
 		teamsText = GetNode<Label>("TeamsText");
 		advancedText = GetNode<Label>("AdvancedText");
 		startText = GetNode<Label>("Selections/StartText200");
+		infoText = GetNode<Label>("InfoText");
 		UpdateSelectionVisual();
 		UpdateTexts();
 	}
@@ -91,5 +92,17 @@ public partial class TourMenu : VerticalMenu, ILeftRightSelections{
 		itemsText.Text = Tour.CurrentTour.ItemsEnabled ? "Items: On" : "Items: Off";
 		eventsText.Text = Tour.CurrentTour.EventsEnabled ? "Events: On" : "Events: Off";
 		stompText.Text = "Stomping: " + Game.StompEnumToString(Game.StompSetting);
+	}
+
+	protected override void UpdateSelectionVisual(){
+		base.UpdateSelectionVisual();
+		infoText.Text = Selection switch{
+			1 => "How many points a player needs to win the Tour.",
+			2 => "Whether Item Boxes spawn during rounds.",
+			3 => "Whether you are able to kill other players by slamming on top of them.",
+			4 => "Choose which mini-games appear in the Tour.",
+			5 => "Start the Tour?",
+			_ => ""
+		};
 	}
 }

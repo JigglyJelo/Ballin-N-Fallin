@@ -7,12 +7,14 @@ public partial class CreditsMenu : VerticalMenu{
 	
 	public override void _Ready(){
 		base._Ready();
+		Selection = 1;
 		headerLabel = GetNode<Label>("CreditsHeader");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
 		codeLabel = GetNode<Label>("CodeCredits");
 		musicLabel = GetNode<Label>("MusicCredits");
 		sfxLabel = GetNode<Label>("SFXCredits");
 		totalSelections = 5;
+		UpdateSelectionVisual();
 	}
 
 	public override void _Process(double delta){
