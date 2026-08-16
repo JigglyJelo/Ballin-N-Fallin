@@ -1,0 +1,96 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqedet5t8itwa"]
+
+[ext_resource type="Script" uid="uid://c785sy6ssy4t8" path="res://Source/Scripts/Menus/CreditsMenu/CodeCreditsMenu.cs" id="1_y0k5l"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_eai1i"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="3_s1tew"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="4_ow10g"]
+
+[node name="CodeCreditsMenu" type="Node2D"]
+script = ExtResource("1_y0k5l")
+
+[node name="CreditsHeader" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -1090.0
+offset_right = 1152.0
+offset_bottom = -856.0
+scale = Vector2(1.25, 1.25)
+text = "Code Credits"
+label_settings = ExtResource("2_eai1i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinkSubheader" type="Label" parent="."]
+self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
+offset_left = -935.0
+offset_top = -762.0
+offset_right = 2807.0
+offset_bottom = -291.0
+scale = Vector2(0.5, 0.5)
+text = "https://github.com/JigglyJelo/Ballin-N-Fallin
+for more info and credits"
+label_settings = ExtResource("2_eai1i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LicenseLabel" type="Label" parent="."]
+offset_left = -1920.0
+offset_top = -838.0
+offset_right = 5750.0
+offset_bottom = 2084.0
+scale = Vector2(0.5, 0.5)
+label_settings = ExtResource("2_eai1i")
+autowrap_mode = 2
+
+[node name="MenuBackButton" parent="." instance=ExtResource("3_s1tew")]
+position = Vector2(1750, 970)
+
+[node name="Selections" type="Node2D" parent="."]
+
+[node name="SourceText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -480.0
+offset_right = 1920.0
+offset_bottom = -246.0
+pivot_offset = Vector2(1920, 117)
+text = "Source License | AGPLv3-or-later"
+label_settings = ExtResource("2_eai1i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AdditionalPermissionText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = -180.0
+offset_right = 1920.0
+offset_bottom = 54.0
+pivot_offset = Vector2(1920, 117)
+text = "Source Additional Permissions"
+label_settings = ExtResource("2_eai1i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelText" type="Label" parent="Selections"]
+offset_left = -1920.0
+offset_top = 120.0
+offset_right = 1920.0
+offset_bottom = 354.0
+pivot_offset = Vector2(1920, 117)
+text = "Levels License | MPL-2.0"
+label_settings = ExtResource("2_eai1i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copyright" type="Label" parent="."]
+self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
+offset_left = -1920.0
+offset_top = 1008.0
+offset_right = -391.0
+offset_bottom = 1242.0
+scale = Vector2(0.333, 0.333)
+text = "© 2026 JigglyJello. Some rights reserved"
+label_settings = ExtResource("2_eai1i")
+
+[node name="InputPrompts" parent="." instance=ExtResource("4_ow10g")]
+InputMessages = Dictionary[int, String]({
+2: "View License",
+3: "Back"
+})

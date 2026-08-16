@@ -2,7 +2,7 @@ using Godot;
 
 public partial class CreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
-	private Label headerLabel, subheaderLabel, codeLabel, musicLabel,sfxLabel;
+	private Label headerLabel, subheaderLabel, musicLabel,sfxLabel;
 	private const float VISIBLE_AREA_HEIGHT = 600f;
 	
 	public override void _Ready(){
@@ -10,7 +10,6 @@ public partial class CreditsMenu : VerticalMenu{
 		Selection = 1;
 		headerLabel = GetNode<Label>("CreditsHeader");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
-		codeLabel = GetNode<Label>("CodeCredits");
 		musicLabel = GetNode<Label>("MusicCredits");
 		sfxLabel = GetNode<Label>("SFXCredits");
 		totalSelections = 5;
@@ -53,6 +52,7 @@ public partial class CreditsMenu : VerticalMenu{
 	protected override void MenuChoose(int choice){
 		SFX.Play("Confirm");
 		switch(Selection){
+			case 1: MenuScene.LoadMenu("Credits/CodeCreditsMenu"); break;
 			case 4: MenuScene.LoadMenu("Credits/AddonCreditsMenu"); break;
 			case 5: MenuScene.LoadMenu("Credits/GodotCreditsMenu"); break;
 			default: ShowSubCredits(choice); break;
@@ -77,7 +77,6 @@ public partial class CreditsMenu : VerticalMenu{
 			}
 		}
 		subheaderLabel.Visible = !displayingSubCredits;
-		codeLabel.Visible = subCredits == 1;
 		musicLabel.Visible = subCredits == 2;
 		sfxLabel.Visible = subCredits == 3;
 		switch(subCredits){
