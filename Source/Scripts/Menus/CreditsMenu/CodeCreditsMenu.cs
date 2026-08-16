@@ -101,8 +101,8 @@ public partial class CodeCreditsMenu : VerticalMenu{
 					}
 					break;
 				case 2:
-					if(FileAccess.FileExists("res://LICENSE-ADDENDUM.md")){
-						using FileAccess file = FileAccess.Open("res://LICENSE-ADDENDUM.md", FileAccess.ModeFlags.Read);
+					if(FileAccess.FileExists("res://LICENSE-ADDENDUM.txt")){
+						using FileAccess file = FileAccess.Open("res://LICENSE-ADDENDUM.txt", FileAccess.ModeFlags.Read);
 						return file.GetAsText();
 					}
 					break;
@@ -111,9 +111,10 @@ public partial class CodeCreditsMenu : VerticalMenu{
 					if(FileAccess.FileExists("res://Levels/README.txt")){
 						using FileAccess file = FileAccess.Open("res://Levels/README.txt", FileAccess.ModeFlags.Read);
 						returnText += file.GetAsText();
+						returnText += "\n";
 					}
-					if(FileAccess.FileExists("res://Levels/LICENSE.md")){
-						using FileAccess file = FileAccess.Open("res://Levels/LICENSE.md", FileAccess.ModeFlags.Read);
+					if(FileAccess.FileExists("res://Levels/LICENSE.txt")){
+						using FileAccess file = FileAccess.Open("res://Levels/LICENSE.txt", FileAccess.ModeFlags.Read);
 						returnText += file.GetAsText();
 					}
 					if(returnText != ""){
@@ -121,7 +122,7 @@ public partial class CodeCreditsMenu : VerticalMenu{
 					}
 					break;
 			}
-			return "No license found";
+			return "Error: License file not found";
 		}
 	}
 }
