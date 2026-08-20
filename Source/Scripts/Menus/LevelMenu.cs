@@ -136,7 +136,7 @@ public partial class LevelMenu : ScrollableMenu{
 	}
 
 	private void LoadLevelVisual(){
-		if (levelVisual != null){
+		if(levelVisual != null){
 			levelVisual.QueueFree();
 			levelVisual = null;
 		}
@@ -146,16 +146,16 @@ public partial class LevelMenu : ScrollableMenu{
 		if (!currentOption.EndsWith("/")){
 			string folderPath = string.Join("", FoldersOpened);
 			string fullPath = Game.LEVELS_PATH + Mode.EnumToString(Game.CurrentMode) + " Levels/" + folderPath + currentOption;
-			
+
 			try{
 				PackedScene scene = GD.Load<PackedScene>(fullPath);
 				if(scene != null){
 					Node tempLevel = scene.Instantiate();
-					
+
 					//Get CameraBoundary Data
 					Vector2 levelSize = new Vector2(3840, 2160); 
 					Vector2 levelCenter = Vector2.Zero;
-					
+
 					Node bounds = tempLevel.GetNodeOrNull("CameraBoundary");
 					if(bounds != null){
 						if(bounds is CollisionShape2D colShape && colShape.Shape is RectangleShape2D rectShape){
@@ -169,13 +169,13 @@ public partial class LevelMenu : ScrollableMenu{
 							levelCenter = control.Position + (levelSize / 2f);
 						}
 					}
-					
+
 					if(levelSize.X == 0 || levelSize.Y == 0) levelSize = new Vector2(3840, 2160);
 
 					Polygon2D previewPoly = GetNode<Polygon2D>("LevelPreview");
 					Vector2 previewMin = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
 					Vector2 previewMax = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
-					
+
 					if(previewPoly.Polygon != null && previewPoly.Polygon.Length > 0){
 						foreach(Vector2 pt in previewPoly.Polygon){
 							previewMin.X = Mathf.Min(previewMin.X, pt.X);
@@ -187,14 +187,14 @@ public partial class LevelMenu : ScrollableMenu{
 						previewMin = Vector2.Zero;
 						previewMax = new Vector2(1920, 1080);
 					}
-					
+
 					Vector2 previewSize = previewMax - previewMin;
 					Vector2 previewCenter = previewMin + (previewSize / 2f);
 
 					//Get bodies and bounds
 					Godot.Collections.Array<Node> staticBodies = tempLevel.FindChildren("*", "StaticBody2D");
 					List<StaticBody2D> validBodies = new List<StaticBody2D>();
-					
+
 					Vector2 minVisual = new Vector2(float.MaxValue, float.MaxValue);
 					Vector2 maxVisual = new Vector2(float.MinValue, float.MinValue);
 					bool hasVisuals = false;
@@ -204,7 +204,7 @@ public partial class LevelMenu : ScrollableMenu{
 						if(node.IsInGroup("BakedLevelGeometry")){
 							StaticBody2D body = node as StaticBody2D;
 							validBodies.Add(body);
-							
+
 							// Search this body's direct collision polygons
 							foreach(Node child in body.FindChildren("*", "CollisionPolygon2D")){
 								if(child is CollisionPolygon2D colPoly && colPoly.Polygon != null && colPoly.Polygon.Length > 0){
@@ -212,7 +212,7 @@ public partial class LevelMenu : ScrollableMenu{
 									if(colPoly.HasMeta("invert") && (bool)colPoly.GetMeta("invert")){
 										hasInverted = true;
 									}
-									
+
 									// Combine the transforms so we get the absolute point in Level Space
 									Transform2D absoluteTransform = body.Transform * colPoly.Transform;
 
@@ -228,20 +228,20 @@ public partial class LevelMenu : ScrollableMenu{
 						}
 					}
 
-					if (!hasVisuals){ 
+					if(!hasVisuals){ 
 						// Minor correction: factored in levelCenter rather than assuming 0,0
 						minVisual = levelCenter - (levelSize / 2f);
 						maxVisual = levelCenter + (levelSize / 2f);
 					}
 
 					// Combine polygon limits and camera boundaries if there are no inverted polygons
-					if (!hasInverted) {
+					if(!hasInverted){
 						Vector2 camMin = levelCenter - (levelSize / 2f);
 						Vector2 camMax = levelCenter + (levelSize / 2f);
 
 						minVisual = new Vector2(Mathf.Min(minVisual.X, camMin.X), Mathf.Min(minVisual.Y, camMin.Y));
 						maxVisual = new Vector2(Mathf.Max(maxVisual.X, camMax.X), Mathf.Max(maxVisual.Y, camMax.Y));
-						
+
 						// Update levelSize and levelCenter so the final scale wrapper fits this combined max size
 						levelSize = maxVisual - minVisual;
 						levelCenter = minVisual + (levelSize / 2f);
@@ -249,19 +249,30 @@ public partial class LevelMenu : ScrollableMenu{
 
 					//Background
 					Node2D levelWrapper = new Node2D();
-					
+
 					Polygon2D backgroundPoly = new Polygon2D();
 					string bgPath = $"res://Assets/Gradients/{Mode.EnumToString(Game.CurrentMode)}.tres";
 					if(ResourceLoader.Exists(bgPath)){
-						backgroundPoly.Texture = GD.Load<GradientTexture2D>(bgPath);
+						GradientTexture2D tex = GD.Load<GradientTexture2D>(bgPath);
+						backgroundPoly.Texture = tex;
+
+						// Assign UVs so the gradient scales perfectly across your background
+						Vector2 texSize = tex.GetSize();
+						backgroundPoly.UV = new Vector2[]{
+							new Vector2(0, 0),
+							new Vector2(texSize.X, 0),
+							new Vector2(texSize.X, texSize.Y),
+							new Vector2(0, texSize.Y)
+						};
 					}
-					backgroundPoly.Polygon = new Vector2[] {
+
+					backgroundPoly.Polygon = new Vector2[]{
 						new Vector2(minVisual.X, minVisual.Y), //Top Left
 						new Vector2(maxVisual.X, minVisual.Y), //Top Right
 						new Vector2(maxVisual.X, maxVisual.Y), //Bottom Right
 						new Vector2(minVisual.X, maxVisual.Y)  //Bottom Left
 					};
-					
+
 					// Add background first so it draws strictly behind everything
 					levelWrapper.AddChild(backgroundPoly);
 
@@ -275,17 +286,38 @@ public partial class LevelMenu : ScrollableMenu{
 						levelWrapper.AddChild(body);
 					}
 
-					// SCALE AND POSITION THE ENTIRE WRAPPER 
-					float scaleX = previewSize.X / levelSize.X;
-					float scaleY = previewSize.Y / levelSize.Y;
-					float scale = Mathf.Min(scaleX, scaleY);
-					
-					levelWrapper.Scale = new Vector2(scale, scale);
-					levelWrapper.Position = previewCenter - (levelCenter * scale);
-					
+
+					// Get the parent's scale (LevelPreview might be stretched in the editor)
+					Vector2 parentScale = previewPoly.Scale;
+					if (parentScale.X == 0) parentScale.X = 1f; // Prevent divide by zero
+					if (parentScale.Y == 0) parentScale.Y = 1f;
+
+					// Calculate the true visual size of the preview polygon on screen
+					Vector2 truePreviewSize = previewSize * parentScale;
+
+					// Find the uniform scale required to fit the level perfectly
+					float scaleX = truePreviewSize.X / levelSize.X;
+					float scaleY = truePreviewSize.Y / levelSize.Y;
+					float uniformScale = Mathf.Min(scaleX, scaleY);
+
+					// Counter-scale the wrapper so it doesn't inherit parent stretching
+					Vector2 wrapperScale = new Vector2(uniformScale / parentScale.X, uniformScale / parentScale.Y);
+
+					// Calculate Right-Alignment for X and Center-Alignment for Y
+					float rightEdgeOfLevel = levelCenter.X + (levelSize.X / 2f);
+
+					// Position X = Right edge of preview polygon minus the scaled right edge of the level
+					float positionX = previewMax.X - (rightEdgeOfLevel * wrapperScale.X);
+
+					// Position Y = Center of preview polygon minus the scaled center of the level
+					float positionY = previewCenter.Y - (levelCenter.Y * wrapperScale.Y);
+
+					levelWrapper.Scale = wrapperScale;
+					levelWrapper.Position = new Vector2(positionX, positionY);
+
 					levelVisual = levelWrapper;
 					previewPoly.AddChild(levelVisual);
-					
+
 					tempLevel.QueueFree();
 				}
 			}catch(Exception ex){
