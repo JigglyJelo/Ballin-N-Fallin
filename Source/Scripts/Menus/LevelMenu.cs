@@ -229,20 +229,32 @@ public partial class LevelMenu : ScrollableMenu{
 					}
 
 					if (!hasVisuals){ 
-						minVisual = -levelSize / 2f;
-						maxVisual = levelSize / 2f;
+						// Minor correction: factored in levelCenter rather than assuming 0,0
+						minVisual = levelCenter - (levelSize / 2f);
+						maxVisual = levelCenter + (levelSize / 2f);
 					}
 
-					//Expand the background a bit if the level is not inverted/inside
-					float padding = hasInverted ? 64f : 300f; 
-					minVisual -= new Vector2(padding, padding);
-					maxVisual += new Vector2(padding, padding);
+					// Combine polygon limits and camera boundaries if there are no inverted polygons
+					if (!hasInverted) {
+						Vector2 camMin = levelCenter - (levelSize / 2f);
+						Vector2 camMax = levelCenter + (levelSize / 2f);
+
+						minVisual = new Vector2(Mathf.Min(minVisual.X, camMin.X), Mathf.Min(minVisual.Y, camMin.Y));
+						maxVisual = new Vector2(Mathf.Max(maxVisual.X, camMax.X), Mathf.Max(maxVisual.Y, camMax.Y));
+						
+						// Update levelSize and levelCenter so the final scale wrapper fits this combined max size
+						levelSize = maxVisual - minVisual;
+						levelCenter = minVisual + (levelSize / 2f);
+					}
 
 					//Background
 					Node2D levelWrapper = new Node2D();
 					
 					Polygon2D backgroundPoly = new Polygon2D();
-					
+					string bgPath = $"res://Assets/Gradients/{Mode.EnumToString(Game.CurrentMode)}.tres";
+					if(ResourceLoader.Exists(bgPath)){
+						backgroundPoly.Texture = GD.Load<GradientTexture2D>(bgPath);
+					}
 					backgroundPoly.Polygon = new Vector2[] {
 						new Vector2(minVisual.X, minVisual.Y), //Top Left
 						new Vector2(maxVisual.X, minVisual.Y), //Top Right
