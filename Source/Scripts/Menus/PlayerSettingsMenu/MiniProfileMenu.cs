@@ -8,7 +8,7 @@ public partial class MiniProfileMenu : ScrollableMenu{
 	private const float LABEL_X_POS = -1920f;
 	private const float LABEL_Y_POS = -400;
 	private const float LABEL_SPACING = 200;
-	private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn");
+	private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "ProfileLabel.tscn");
 
 	private Keypad keypadPopup;
 	public bool IsKeypadOpen = false; 

@@ -3,7 +3,7 @@ using Godot;
 public partial class ProfileMenu : ScrollableMenu{
     private const float LABEL_X_POS = -1920;
     private const float LABEL_SPACING = 200f;
-    private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn");
+    private PackedScene profileLabelScene = GD.Load<PackedScene>(MenuScene.MENU_PATH + "ProfileLabel.tscn");
 
     private Keypad keypadPopup;
     private bool isKeypadOpen = false;
