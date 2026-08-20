@@ -6,8 +6,6 @@ public partial class AddonCreditsMenu : VerticalMenu{
 	private Node2D selectionsNode;
 	
 	private float startY;
-	// Adjust this value if the bottom of the text gets cut off or has too much empty space. 
-	// It represents the height of the visible area for the license text.
 	private float visibleTextHeight = 400f; 
 
 	public override void _Ready(){
@@ -28,7 +26,6 @@ public partial class AddonCreditsMenu : VerticalMenu{
 			// Dynamically calculate the bottom limit based on the label's actual height and scale
 			float bottomLimit = startY - Mathf.Max(0, (licenseLabel.Size.Y * licenseLabel.Scale.Y) - visibleTextHeight);
 
-			//Only check for back button
 			for(int i = 0; i < Game.MAX_PLAYERS; i++){
 				if(Input.IsActionJustReleased("B" + i)){
 					MenuBack();

@@ -165,7 +165,7 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
             targetFps = (int)Math.Round(refreshRate); // Round so 143.99 snaps to 144
             if(targetFps > 1000) targetFps = 1000;
         }else if(refreshRate > 0f){
-            targetFps = 60; //Fallback for 59Hz/50Hz screens
+            targetFps = 60;
         }
 
         GD.Print("Monitor Refresh Rate: " + (refreshRate > 0 ? refreshRate : "UNABLE TO DETECT ") + " Setting FPS Cap to " + (targetFps == 0 ? "Unlimited" : targetFps.ToString()));

@@ -243,11 +243,11 @@ public partial class Online{
 					
 					Vector2 preBounceVelocity = currentVelocity; 
 					
-					// FIX: Safely extract bounce values to prevent NullReferenceExceptions
+					// Safely extract bounce values to prevent NullReferenceExceptions
 					float playerBounce = rb.PhysicsMaterialOverride != null ? rb.PhysicsMaterialOverride.Bounce : 0f;
 					currentVelocity = preBounceVelocity.Bounce(collision.GetNormal()) * playerBounce; 
 					
-					// FIX: Don't lose the remaining physics delta! Bounce the remainder vector and apply it so fast objects don't stick.
+					// Don't lose the remaining physics delta! Bounce the remainder vector and apply it so fast objects don't stick.
 					Vector2 remainder = collision.GetRemainder();
 					if(remainder.LengthSquared() > 0){
 						Vector2 bouncedRemainder = remainder.Bounce(collision.GetNormal());

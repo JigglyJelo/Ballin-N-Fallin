@@ -1,21 +1,20 @@
 [gd_scene load_steps=10 format=3 uid="uid://clj14g21wifm"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_sjq56"]
+[ext_resource type="Script" uid="uid://csht4xe0ktspv" path="res://Source/Scripts/Level Objects/Level.cs" id="1_sjq56"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_drh0q"]
 [ext_resource type="PackedScene" uid="uid://de4f2l043u44x" path="res://Source/Scenes/Backgrounds/FullBackgrounds/HillsBackgroundClouds.tscn" id="2_ubc2f"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_c5i1a"]
 [ext_resource type="PackedScene" uid="uid://c1i874ym0t6rl" path="res://Source/Scenes/Mode Stuff/Volleyball/VolleyballGround.tscn" id="4_ostg6"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_a2yoy"]
 [ext_resource type="Texture2D" uid="uid://b2ghjmgfs5uoe" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Volleyball Tile.png" id="7_4v5t0"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_2m8c1"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_2m8c1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qrrgm"]
-size = Vector2(4096, 2176)
+size = Vector2(4096, 2304)
 
 [node name="Level" type="Node2D"]
 position = Vector2(0, -448)
 script = ExtResource("1_sjq56")
-CameraZoom = 0.95
 background = ExtResource("2_ubc2f")
 
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
@@ -111,32 +110,31 @@ debug_color = Color(0, 0, 1, 0.501961)
 [node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
 collision_layer = 3
 
-[node name="@CollisionPolygon2D@361041" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+[node name="@CollisionPolygon2D@83236" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(1920, -721, 2176, -721, 2176, 1711, -2176, 1711, -2176, -721, 1920, -721, 1920, -465, -1920, -465, -1920, 1455, -128, 1455, -128, 815, 128, 815, 128, 1455, 1920, 1455, 1920, -465)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(1920, -704, 2176, -704, 2176, 1728, -2176, 1728, -2176, -704, 1920, -704, 1920, -448, -1920, -448, -1920, 1472, -128, 1472, -128, 832, 128, 832, 128, 1472, 1920, 1472, 1920, -448)
 metadata/invert = true
 
-[node name="@Polygon2D@361042" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@83237" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+light_mask = 3
+color = Color(1, 1, 0.8117647, 1)
+invert_enabled = true
+invert_border = 256.0
+polygon = PackedVector2Array(1920, -480, 1920, 1440, 128, 1440, 128, 800, -128, 800, -128, 1440, -1920, 1440, -1920, -480)
+script = ExtResource("8_2m8c1")
+stroke_color = Color(1, 0.78431374, 0, 1)
+
+[node name="@Polygon2D@83239" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 texture_repeat = 2
-color = Color(1, 1, 0.584314, 1)
+color = Color(1, 1, 0.58431375, 1)
 texture = ExtResource("7_4v5t0")
 invert_enabled = true
 invert_border = 256.0
 polygon = PackedVector2Array(1920, -448, 1920, 1472, 128, 1472, 128, 832, -128, 832, -128, 1472, -1920, 1472, -1920, -448)
 script = ExtResource("8_2m8c1")
-stroke_color = Color(1, 0.784314, 0, 1)
-
-[node name="@Polygon2D@361044" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
-light_mask = 3
-z_index = -2
-color = Color(1, 1, 0.811765, 1)
-invert_enabled = true
-invert_border = 256.0
-polygon = PackedVector2Array(1920, -480, 1920, 1440, 128, 1440, 128, 800, -128, 800, -128, 1440, -1920, 1440, -1920, -480)
-script = ExtResource("8_2m8c1")
-stroke_color = Color(1, 0.784314, 0, 1)
+stroke_color = Color(1, 0.78431374, 0, 1)
 
 [editable path="Goal"]
 [editable path="Goal2"]
