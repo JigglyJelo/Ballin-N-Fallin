@@ -76,8 +76,12 @@ public partial class ModeMenu : ScrollableMenu{
         }else{
             LevelMenu.FoldersOpened = new List<string> {""};
             Game.CurrentMode = modes[index]; //Set the selected game mode
-		    MenuScene.MenuNode.AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelMenu" + ".tscn").Instantiate<Node>());
-            QueueFree();
+			if(Online.IsOnline){
+				MenuScene.MenuNode.AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelMenu" + ".tscn").Instantiate<Node>());
+            	QueueFree();
+			}else{
+				MenuScene.LoadMenu("LevelMenu");
+			}
         }
     }
 
