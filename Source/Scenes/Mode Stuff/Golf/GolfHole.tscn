@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://bu3ooc381j7qa"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/Golf/GolfHole.cs" id="1_loe8j"]
+[ext_resource type="Script" uid="uid://cdv0tk56ul5uj" path="res://Source/Scripts/Modes/Golf/GolfHole.cs" id="1_loe8j"]
 [ext_resource type="Texture2D" uid="uid://b2jxsobecogl" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Golf Tile.png" id="3_uj4rw"]
 [ext_resource type="Texture2D" uid="uid://cyoe6ibvomtse" path="res://Assets/Sprites/Mode Stuff/Golf/GolfHoleTop.png" id="4_rtn0q"]
 [ext_resource type="Texture2D" uid="uid://bv3g5m8y0kct" path="res://Assets/Sprites/Mode Stuff/Golf/GolfHoleBottom.png" id="5_r260q"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_regular_polygon2d.gd" id="7_iql3v"]
+[ext_resource type="Script" uid="uid://p1yt5r0ovvlb" path="res://addons/antialiased_line2d/antialiased_regular_polygon2d.gd" id="7_iql3v"]
 [ext_resource type="Texture2D" uid="uid://cv3gwy6b3tyio" path="res://Assets/Sprites/Mode Stuff/Golf/Flag.png" id="7_vmyce"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_xla4e"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_xla4e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kmgy4"]
 size = Vector2(192, 64)
@@ -49,7 +49,7 @@ stroke_width = 17.0
 [node name="PoleTop" type="Polygon2D" parent="Pole"]
 z_index = 1
 position = Vector2(-36, -535)
-polygon = PackedVector2Array(0, -32, 8.28221, -30.9096, 16, -27.7128, 22.6274, -22.6274, 27.7128, -16, 30.9096, -8.28221, 32, 1.39876e-06, 30.9096, 8.28221, 27.7128, 16, 22.6274, 22.6274, 16, 27.7128, 8.28221, 30.9096, -2.79753e-06, 32, -8.28221, 30.9096, -16, 27.7128, -22.6274, 22.6274, -27.7128, 16, -30.9096, 8.28221, -32, -3.81596e-07, -30.9096, -8.28221, -27.7128, -16, -22.6274, -22.6274, -16, -27.7128, -8.2822, -30.9096)
+polygon = PackedVector2Array(0, -32, 8.282209, -30.909626, 16, -27.712812, 22.627417, -22.627417, 27.712814, -15.999999, 30.909626, -8.28221, 32, 1.3987644e-06, 30.909626, 8.282209, 27.712812, 16.000002, 22.627417, 22.627417, 16.000002, 27.712812, 8.282212, 30.909626, -2.7975289e-06, 32, -8.28221, 30.909626, -15.999999, 27.712812, -22.627415, 22.627419, -27.712814, 15.999997, -30.909628, 8.2822075, -32, -3.8159618e-07, -30.909626, -8.282208, -27.712814, -15.999997, -22.62742, -22.627413, -16.000006, -27.71281, -8.282203, -30.909628)
 script = ExtResource("7_iql3v")
 sides = 24
 stroke_color = Color(0, 0, 0, 1)

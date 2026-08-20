@@ -51,6 +51,23 @@ public partial class Level : Node2D {
 			}
 		}
 
+		//Restore runtime Z-indexes for baked visual polygons 
+		//THIS SHOULD BE REMOVED AT SOME POINT AND LEFT AT Z 0 BUT 
+		//THERE IS JUST A LOT OF Z INDEX STUFF THAT NEEDS TO BE UPDATED FOR PROPER LAYERING
+		//MAINLY GOLF HOLE AND SAND THAT HAS TO BE MANUALLY FIXED BEFORE THEN
+		foreach(Node node in GetTree().GetNodesInGroup(GROUP_BAKED_GEOMETRY)){
+			if(node is StaticBody2D body){
+				foreach(Node child in body.FindChildren("*", "CollisionPolygon2D")){
+					if(child.GetChildCount() >= 2){
+						Node floorVisual = child.GetChild(0);
+						Node insideVisual = child.GetChild(1);
+						if(floorVisual is CanvasItem floorItem) floorItem.ZIndex = -2;
+						if(insideVisual is CanvasItem insideItem) insideItem.ZIndex = 0;
+					}
+				}
+			}
+		}
+
 		LevelNode = this;
 		Game.DisableProcesses(this);
 		
@@ -91,11 +108,11 @@ public partial class Level : Node2D {
 			return;
 		}
 
-		// Calculate the absolute zoom relative to the base 4K resolution
+		//Calculate the absolute zoom relative to the base 4K resolution
 		float zoomX = 3840f / mapSize.X;
 		float zoomY = 2160f / mapSize.Y;
 
-		// Use Max so the zoom tightly fits the boundary into the screen
+		//Use Max so the zoom tightly fits the boundary into the screen
 		CameraZoom = Mathf.Max(zoomX, zoomY);
 		DynamicCamera.CameraNode.Zoom = new Vector2(CameraZoom,CameraZoom);
 	}
@@ -113,7 +130,6 @@ public partial class Level : Node2D {
 		List<CollisionPolygon2D>[] collisions = ConvertPathsToPolygons(editorBodies, bakedBodies);
 		ExtractAndCenterCollisions(editorBodies, bakedBodies, collisions);
 		
-		// YOUR RESTORED LOGIC
 		MergeInvertedPolygons(collisions);
 		
 		GenerateLevelVisuals(collisions, bakedBodies);
@@ -232,7 +248,6 @@ public partial class Level : Node2D {
 		}
 	}
 
-	// EXACT ORIGINAL LOGIC RESTORED
 	private void MergeInvertedPolygons(List<CollisionPolygon2D>[] collisions){
 		for(int i = 0; i < collisions.Length; i++){
 			List<CollisionPolygon2D> collisionPolygons = collisions[i];
@@ -249,7 +264,7 @@ public partial class Level : Node2D {
 						CollisionPolygon2D collisionK = collisionPolygons[k];
 
 						if(collisionJ.HasMeta(META_INVERT) && (bool)collisionJ.GetMeta(META_INVERT)){
-							// --- 1. Offset Polygon J's Seam ---
+							//Offset Polygon J's Seam
 							duplicatePointJ = findDuplicatePoint(collisionJ.Polygon);
 							if(duplicatePointJ != Vector2.Inf){
 								Vector2[] points = (Vector2[])collisionJ.Polygon.Clone();
@@ -268,7 +283,7 @@ public partial class Level : Node2D {
 								collisionJ.Polygon = points;
 							}
 
-							// --- 2. Offset Polygon K's Seam ---
+							//Offset Polygon K's Seam
 							duplicatePointK = findDuplicatePoint(collisionK.Polygon);
 							if(duplicatePointK != Vector2.Inf){
 								Vector2[] points = (Vector2[])collisionK.Polygon.Clone();
@@ -288,14 +303,14 @@ public partial class Level : Node2D {
 							}
 						}
 
-						// --- 3. Attempt the Merge ---
+						//Attempt the Merge
 						Godot.Collections.Array<Vector2[]> mergedPolygons = Geometry2D.MergePolygons(collisionJ.Polygon, collisionK.Polygon);
 						
 						if(mergedPolygons.Count == 1){
 							Vector2[] mergedPoints = mergedPolygons[0];
 
 							if(collisionJ.HasMeta(META_INVERT) && (bool)collisionJ.GetMeta(META_INVERT)){
-								// --- 4. Restore BOTH J and K's points inside the newly merged shape! ---
+								//Restore BOTH J and K's points inside the newly merged shape
 								if(duplicatePointJ != Vector2.Inf){
 									int indexJ = Array.IndexOf(mergedPoints, movedDupePointJ);
 									if(indexJ != -1) mergedPoints[indexJ] = duplicatePointJ;
@@ -311,7 +326,7 @@ public partial class Level : Node2D {
 							collisionPolygons[k].Free();
 							collisionPolygons.RemoveAt(k);
 						} else {
-							// If they fail to merge, safely restore both points to their original polygons so visuals aren't ruined
+							//If they fail to merge, safely restore both points to their original polygons so visuals aren't ruined
 							if(collisionJ.HasMeta(META_INVERT) && (bool)collisionJ.GetMeta(META_INVERT)){
 								if(duplicatePointJ != Vector2.Inf){
 									Vector2[] pointsJ = (Vector2[])collisionJ.Polygon.Clone();
@@ -473,7 +488,7 @@ public partial class Level : Node2D {
 				for(int j = 0; j < topPolygonArr.Length; j++){
 					topPolygonArr[j] += new Vector2(0,-32f);
 				}
-				topPolygon.ZIndex = insidePolygon.ZIndex - 1;
+				topPolygon.ZIndex = 0;
 
 				Dictionary<Vector2,Tuple<bool,bool>> newPoints = new Dictionary<Vector2, Tuple<bool,bool>>();
 				for(int j = 0; j < topPolygonArr.Length; j++){
@@ -577,13 +592,11 @@ public partial class Level : Node2D {
 				aaInsidePolygon.Call("set_stroke_width",10);
 				aaInsidePolygon.Call("set_stroke_color",bakeOutline);
 				aaInsidePolygon.Set("color",new Color(bakeInside.R,bakeInside.G,bakeInside.B,bakeInside.A));
-				aaInsidePolygon.Set("z_index",insidePolygon.ZIndex);
+				aaInsidePolygon.Set("z_index", 0);
 				if(invert){
 					(aaInsidePolygon as Polygon2D).InvertEnabled = true;
 					(aaInsidePolygon as Polygon2D).InvertBorder = maxOuterDistance;
 				}
-				collisionPolygon.AddChild(aaInsidePolygon as Node);
-				if (Engine.IsEditorHint()) (aaInsidePolygon as Node).Owner = GetTree().EditedSceneRoot;
 				insidePolygon.Free();
 
 				GodotObject aaTopPolygon = (GodotObject)aaPolygonScript.New();
@@ -592,16 +605,19 @@ public partial class Level : Node2D {
 				aaTopPolygon.Call("set_stroke_width",10);
 				aaTopPolygon.Call("set_stroke_color",bakeOutline);
 				aaTopPolygon.Set("color",new Color(bakeFloor.R,bakeFloor.G,bakeFloor.B,bakeFloor.A));
-				aaTopPolygon.Set("z_index",topPolygon.ZIndex-1);
+				aaTopPolygon.Set("z_index", 0);
 				(aaTopPolygon as Polygon2D).LightMask = 0b11;
 				CallDeferred(nameof(SetDeferredLightmaskForLine), aaTopPolygon as Polygon2D);
 				if(invert){
 					(aaTopPolygon as Polygon2D).InvertEnabled = true;
 					(aaTopPolygon as Polygon2D).InvertBorder = maxOuterDistance;
 				}
+				topPolygon.Free();
+
 				collisionPolygon.AddChild(aaTopPolygon as Node);
 				if (Engine.IsEditorHint()) (aaTopPolygon as Node).Owner = GetTree().EditedSceneRoot;
-				topPolygon.Free();
+				collisionPolygon.AddChild(aaInsidePolygon as Node);
+				if (Engine.IsEditorHint()) (aaInsidePolygon as Node).Owner = GetTree().EditedSceneRoot;
 			}
 		}
 	}

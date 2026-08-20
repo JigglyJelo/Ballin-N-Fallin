@@ -2,13 +2,16 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class LevelMenu : VerticalMenu{
+public partial class LevelMenu : ScrollableMenu{
     private static List<string> optionNames;
 	public static List<string> FoldersOpened;
 	private string lastMenu;
 	private Node selectionsNode;
-	private short yPos = -600;
-	private int inputId = (int)Game.PlayerDatas[0].InputDevice; //Online.IsOnline ? Online.PlayerInfos[0].InputId : Game.InputIds[0];
+	private const float X_POS = -1920;
+	private const float SPACING = 250;
+	private float yPos = -800;
+	private Node2D levelVisual = null;
+	private int inputId = (int)Game.PlayerDatas[0].InputDevice;
 
 	public override void _Ready(){
 		base._Ready();
@@ -26,9 +29,9 @@ public partial class LevelMenu : VerticalMenu{
 			optionNames.Add(folder + "/");
 			folderLabel.Text = folder;
 			folderLabel.Name = "Folder" + index;
-			folderLabel.Position = new Vector2(-1920,yPos);
+			folderLabel.Position = new Vector2(X_POS,yPos);
 			folderLabel.Scale = Vector2.One;
-			yPos += 200;
+			yPos += SPACING;
 			selectionsNode.AddChild(folderLabel);
 			index++;
 		}
@@ -39,9 +42,9 @@ public partial class LevelMenu : VerticalMenu{
 			optionNames.Add(newFile);
 			levelLabel.Text = newFile.Replace(".tscn","");
 			levelLabel.Name = "Level" + index;
-			levelLabel.Position = new Vector2(-1920,yPos);
+			levelLabel.Position = new Vector2(X_POS,yPos);
 			levelLabel.Scale = Vector2.One;
-			yPos += 200;
+			yPos += SPACING;
 			selectionsNode.AddChild(levelLabel);
 			index++;
 		}
@@ -122,6 +125,7 @@ public partial class LevelMenu : VerticalMenu{
 				else label.SelfModulate = new Color(0.5f,0.75f,1);
 			}
 		}
+		if(optionNames.Count > 0) LoadLevelVisual();
 	}
 	
 	///<summary>Opens or closes a folder.</summary><param name="opening">true to open, false to close.</param>
@@ -129,5 +133,152 @@ public partial class LevelMenu : VerticalMenu{
 		if(opening) FoldersOpened.Add(optionNames[Selection - 1]);
 		else FoldersOpened.RemoveAt(FoldersOpened.Count - 1);
 		MenuScene.LoadMenu("LevelMenu");
+	}
+
+	private void LoadLevelVisual(){
+		if (levelVisual != null){
+			levelVisual.QueueFree();
+			levelVisual = null;
+		}
+
+		string currentOption = optionNames[Selection - 1];
+
+		if (!currentOption.EndsWith("/")){
+			string folderPath = string.Join("", FoldersOpened);
+			string fullPath = Game.LEVELS_PATH + Mode.EnumToString(Game.CurrentMode) + " Levels/" + folderPath + currentOption;
+			
+			try{
+				PackedScene scene = GD.Load<PackedScene>(fullPath);
+				if(scene != null){
+					Node tempLevel = scene.Instantiate();
+					
+					//Get CameraBoundary Data
+					Vector2 levelSize = new Vector2(3840, 2160); 
+					Vector2 levelCenter = Vector2.Zero;
+					
+					Node bounds = tempLevel.GetNodeOrNull("CameraBoundary");
+					if(bounds != null){
+						if(bounds is CollisionShape2D colShape && colShape.Shape is RectangleShape2D rectShape){
+							levelSize = rectShape.Size;
+							levelCenter = colShape.Position;
+						}else if(bounds is ReferenceRect refRect){
+							levelSize = refRect.Size;
+							levelCenter = refRect.Position + (levelSize / 2f);
+						}else if(bounds is Control control){
+							levelSize = control.Size;
+							levelCenter = control.Position + (levelSize / 2f);
+						}
+					}
+					
+					if(levelSize.X == 0 || levelSize.Y == 0) levelSize = new Vector2(3840, 2160);
+
+					Polygon2D previewPoly = GetNode<Polygon2D>("LevelPreview");
+					Vector2 previewMin = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+					Vector2 previewMax = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
+					
+					if(previewPoly.Polygon != null && previewPoly.Polygon.Length > 0){
+						foreach(Vector2 pt in previewPoly.Polygon){
+							previewMin.X = Mathf.Min(previewMin.X, pt.X);
+							previewMin.Y = Mathf.Min(previewMin.Y, pt.Y);
+							previewMax.X = Mathf.Max(previewMax.X, pt.X);
+							previewMax.Y = Mathf.Max(previewMax.Y, pt.Y);
+						}
+					}else{
+						previewMin = Vector2.Zero;
+						previewMax = new Vector2(1920, 1080);
+					}
+					
+					Vector2 previewSize = previewMax - previewMin;
+					Vector2 previewCenter = previewMin + (previewSize / 2f);
+
+					//Get bodies and bounds
+					Godot.Collections.Array<Node> staticBodies = tempLevel.FindChildren("*", "StaticBody2D");
+					List<StaticBody2D> validBodies = new List<StaticBody2D>();
+					
+					Vector2 minVisual = new Vector2(float.MaxValue, float.MaxValue);
+					Vector2 maxVisual = new Vector2(float.MinValue, float.MinValue);
+					bool hasVisuals = false;
+					bool hasInverted = false;
+
+					foreach(Node node in staticBodies){
+						if(node.IsInGroup("BakedLevelGeometry")){
+							StaticBody2D body = node as StaticBody2D;
+							validBodies.Add(body);
+							
+							// Search this body's direct collision polygons
+							foreach(Node child in body.FindChildren("*", "CollisionPolygon2D")){
+								if(child is CollisionPolygon2D colPoly && colPoly.Polygon != null && colPoly.Polygon.Length > 0){
+									hasVisuals = true;
+									if(colPoly.HasMeta("invert") && (bool)colPoly.GetMeta("invert")){
+										hasInverted = true;
+									}
+									
+									// Combine the transforms so we get the absolute point in Level Space
+									Transform2D absoluteTransform = body.Transform * colPoly.Transform;
+
+									foreach(Vector2 pt in colPoly.Polygon){
+										Vector2 absolutePt = absoluteTransform * pt; 
+										if(absolutePt.X < minVisual.X) minVisual.X = absolutePt.X;
+										if(absolutePt.Y < minVisual.Y) minVisual.Y = absolutePt.Y;
+										if(absolutePt.X > maxVisual.X) maxVisual.X = absolutePt.X;
+										if(absolutePt.Y > maxVisual.Y) maxVisual.Y = absolutePt.Y;
+									}
+								}
+							}
+						}
+					}
+
+					if (!hasVisuals){ 
+						minVisual = -levelSize / 2f;
+						maxVisual = levelSize / 2f;
+					}
+
+					//Expand the background a bit if the level is not inverted/inside
+					float padding = hasInverted ? 64f : 300f; 
+					minVisual -= new Vector2(padding, padding);
+					maxVisual += new Vector2(padding, padding);
+
+					//Background
+					Node2D levelWrapper = new Node2D();
+					
+					Polygon2D backgroundPoly = new Polygon2D();
+					
+					backgroundPoly.Polygon = new Vector2[] {
+						new Vector2(minVisual.X, minVisual.Y), //Top Left
+						new Vector2(maxVisual.X, minVisual.Y), //Top Right
+						new Vector2(maxVisual.X, maxVisual.Y), //Bottom Right
+						new Vector2(minVisual.X, maxVisual.Y)  //Bottom Left
+					};
+					
+					// Add background first so it draws strictly behind everything
+					levelWrapper.AddChild(backgroundPoly);
+
+					// Re-parent the bodies into the wrapper cleanly
+					foreach(StaticBody2D body in validBodies){
+						body.GetParent().RemoveChild(body);
+						body.Owner = null;
+						foreach(Node child in body.FindChildren("*")){
+							child.Owner = null;
+						}
+						levelWrapper.AddChild(body);
+					}
+
+					// SCALE AND POSITION THE ENTIRE WRAPPER 
+					float scaleX = previewSize.X / levelSize.X;
+					float scaleY = previewSize.Y / levelSize.Y;
+					float scale = Mathf.Min(scaleX, scaleY);
+					
+					levelWrapper.Scale = new Vector2(scale, scale);
+					levelWrapper.Position = previewCenter - (levelCenter * scale);
+					
+					levelVisual = levelWrapper;
+					previewPoly.AddChild(levelVisual);
+					
+					tempLevel.QueueFree();
+				}
+			}catch(Exception ex){
+				GD.PrintErr("Failed to load visual for level: " + currentOption + "\nError: " + ex.Message);
+			}
+		}
 	}
 }

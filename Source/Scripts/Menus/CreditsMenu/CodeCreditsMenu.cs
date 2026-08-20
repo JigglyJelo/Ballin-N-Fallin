@@ -6,8 +6,6 @@ public partial class CodeCreditsMenu : VerticalMenu{
 	private Node2D selectionsNode;
 	
 	private float startY;
-	// Adjust this value if the bottom of the text gets cut off or has too much empty space. 
-	// It represents the height of the visible area for the license text.
 	private float visibleTextHeight = 400f; 
 
 	public override void _Ready(){

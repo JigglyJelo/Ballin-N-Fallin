@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dpetd5su5wr8n" path="res://Source/Scenes/Mode Stuff/Ballin to the Bank/CoinSpawner.tscn" id="2_1x4bi"]
 [ext_resource type="PackedScene" uid="uid://73lg8k8dvblk" path="res://Source/Scenes/Mode Stuff/Ballin to the Bank/Piggy.tscn" id="3_e1kcq"]
 [ext_resource type="Texture2D" uid="uid://c3echgfb5px4b" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Ballin to the Bank Tile.png" id="4_i87wa"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="5_4egly"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="5_4egly"]
 
 [node name="Level" instance=ExtResource("1_mfpqn")]
 
@@ -45,16 +45,25 @@ position = Vector2(728, 592)
 [node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="20" groups=["BakedLevelGeometry", "Regain"]]
 collision_layer = 3
 
-[node name="@CollisionPolygon2D@27364" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]
+[node name="@CollisionPolygon2D@58307" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]
 polygon = PackedVector2Array(-1856, 1647, -1856, -657, -1728, -657, -1728, 1455, 0, 1455, 384, 1135, 832, 1135, 1408, 879, 1856, 879, 1856, -81, 1472, -529, -1728, -529, -1728, -657, 1024, -657, 1984, -657, 1984, 1647)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="1"]
 polygon = PackedVector2Array(-1856, 1664, -1856, -640, -1728, -640, -1728, 1472, 0, 1472, 384, 1152, 832, 1152, 1408, 896, 1856, 896, 1856, -64, 1472, -512, -1728, -512, -1728, -640, 1024, -640, 1984, -640, 1984, 1664)
 metadata/invert = true
 
-[node name="@Polygon2D@27365" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="0"]
+[node name="@Polygon2D@58308" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="0"]
+light_mask = 3
+color = Color(1, 0.9019608, 0, 1)
+invert_enabled = true
+invert_border = 768.0
+polygon = PackedVector2Array(-1728, -544, 1472, -544, 1856, -96, 1856, 864, 1408, 864, 832, 1120, 384, 1120, 0, 1440, -1728, 1440)
+script = ExtResource("5_4egly")
+stroke_color = Color(1, 1, 0, 1)
+
+[node name="@Polygon2D@58310" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="1"]
 texture_repeat = 2
-color = Color(1, 0.768627, 0, 1)
+color = Color(1, 0.76862746, 0, 1)
 texture = ExtResource("4_i87wa")
 invert_enabled = true
 invert_border = 768.0
@@ -62,31 +71,20 @@ polygon = PackedVector2Array(-1728, -512, 1472, -512, 1856, -64, 1856, 896, 1408
 script = ExtResource("5_4egly")
 stroke_color = Color(1, 1, 0, 1)
 
-[node name="@Polygon2D@27367" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D" index="1"]
-light_mask = 3
-z_index = -2
-color = Color(1, 0.901961, 0, 1)
-invert_enabled = true
-invert_border = 768.0
-polygon = PackedVector2Array(-1728, -544, 1472, -544, 1856, -96, 1856, 864, 1408, 864, 832, 1120, 384, 1120, 0, 1440, -1728, 1440)
-script = ExtResource("5_4egly")
-stroke_color = Color(1, 1, 0, 1)
-
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="2"]
 polygon = PackedVector2Array(-1216, 367, -448, 367, -448, 512, -1344, 512, -1344, 239)
 
-[node name="@Polygon2D@27369" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="0"]
-texture_repeat = 2
-color = Color(1, 0.768627, 0, 1)
-texture = ExtResource("4_i87wa")
-polygon = PackedVector2Array(-1344, 512, -1344, 256, -1216, 384, -448, 384, -448, 512)
+[node name="@Polygon2D@58312" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="0"]
+light_mask = 3
+color = Color(1, 0.9019608, 0, 1)
+polygon = PackedVector2Array(-1344, 480, -1344, 224, -1216, 352, -448, 352, -448, 480)
 script = ExtResource("5_4egly")
 stroke_color = Color(1, 1, 0, 1)
 
-[node name="@Polygon2D@27371" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="1"]
-light_mask = 3
-z_index = -2
-color = Color(1, 0.901961, 0, 1)
-polygon = PackedVector2Array(-1344, 480, -1344, 224, -1216, 352, -448, 352, -448, 480)
+[node name="@Polygon2D@58314" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D2" index="1"]
+texture_repeat = 2
+color = Color(1, 0.76862746, 0, 1)
+texture = ExtResource("4_i87wa")
+polygon = PackedVector2Array(-1344, 512, -1344, 256, -1216, 384, -448, 384, -448, 512)
 script = ExtResource("5_4egly")
 stroke_color = Color(1, 1, 0, 1)

@@ -11,10 +11,7 @@ public partial class SelectionArrows : Node2D{
         menu = GetParent<Menu>();
         left = GetNode<Polygon2D>("LeftArrow");
         right = GetNode<Polygon2D>("RightArrow");
-
-        // Check if the menu implements ILeftRightSelections and cast it
         selectionInterface = menu as ILeftRightSelections;
-        // If the menu does not implement ILeftRightSelections, remove this node
         if(selectionInterface == null) QueueFree();
     }
 

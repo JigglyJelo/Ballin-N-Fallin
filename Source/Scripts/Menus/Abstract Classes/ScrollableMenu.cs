@@ -32,7 +32,6 @@ public abstract partial class ScrollableMenu : VerticalMenu{
 
 		if(selectionsContainer == null || Selections == null || Selections.Count == 0) return;
 
-		// --- THE C# DICTIONARY FIX ---
 		// Check the Instance ID of the current labels. If we haven't seen them before, record their starting Y.
 		for(int i = 0; i < Selections.Count; i++){
 			Node node = Selections[i];
@@ -46,11 +45,9 @@ public abstract partial class ScrollableMenu : VerticalMenu{
 
 		int currentIndex = Selection - 1;
 
-		//--- WINDOW LOGIC ---
 		if(currentIndex < visibleWindowStart) visibleWindowStart = currentIndex;
 		else if(currentIndex >= visibleWindowStart + VisibleItems) visibleWindowStart = currentIndex - VisibleItems + 1;
 
-		//--- SCROLLING LOGIC ---
 		// Read from the C# dictionary using the Instance IDs
 		ulong firstItemId = Selections[0].GetInstanceId();
 		ulong targetItemId = Selections[visibleWindowStart].GetInstanceId();

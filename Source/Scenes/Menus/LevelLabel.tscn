@@ -3,10 +3,8 @@
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="1_oit7c"]
 
 [node name="Label" type="Label"]
-offset_right = 3840.0
-offset_bottom = 237.0
-pivot_offset = Vector2(1920, 118.5)
+offset_right = 1856.0
+offset_bottom = 256.0
 text = "Level"
 label_settings = ExtResource("1_oit7c")
-horizontal_alignment = 1
 vertical_alignment = 1

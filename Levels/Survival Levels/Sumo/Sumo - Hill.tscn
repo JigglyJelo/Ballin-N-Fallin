@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://ccj4ns5ys26cp"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Level Objects/Level.cs" id="1_1v5xd"]
+[ext_resource type="Script" uid="uid://csht4xe0ktspv" path="res://Source/Scripts/Level Objects/Level.cs" id="1_1v5xd"]
 [ext_resource type="Texture2D" uid="uid://b2ghjmgfs5uoe" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Volleyball Tile.png" id="2_wu6n2"]
 [ext_resource type="PackedScene" uid="uid://dy6i607ryxmxm" path="res://Source/Scenes/Backgrounds/FullBackgrounds/BlankBackground.tscn" id="3_qq0is"]
 [ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_0hodw"]
 [ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_v4unt"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="6_kr4ne"]
 [ext_resource type="PackedScene" uid="uid://b5lf243tgfp82" path="res://Source/Scenes/Mode Stuff/Survival/Sumo/TheRing.tscn" id="7_ty4st"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_0su4k"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_0su4k"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_1v5xd")
@@ -81,29 +81,28 @@ scale = Vector2(1.1, 1.1)
 [node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
 collision_layer = 3
 
-[node name="@CollisionPolygon2D@97224" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
+[node name="@CollisionPolygon2D@82202" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(-2880, -1489, -2880, 2095, 2880, 2095, 2880, -1681, -2880, -1681, -2880, -1489, 2432, -1489, 2432, 1519, 1664, 1519, 1408, 623, 1088, 623, 896, 239, -896, 239, -1088, 623, -1408, 623, -1664, 1519, -2368, 1519, -2368, -1489)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(-2880, -1472, -2880, 2112, 2880, 2112, 2880, -1664, -2880, -1664, -2880, -1472, 2432, -1472, 2432, 1536, 1664, 1536, 1408, 640, 1088, 640, 896, 256, -896, 256, -1088, 640, -1408, 640, -1664, 1536, -2368, 1536, -2368, -1472)
 metadata/invert = true
 
-[node name="@Polygon2D@97225" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+[node name="@Polygon2D@82203" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
+light_mask = 3
+color = Color(0.952941, 0.788235, 0.545098, 1)
+invert_enabled = true
+invert_border = 576.0
+polygon = PackedVector2Array(2432, -1504, 2432, 1504, 1664, 1504, 1408, 608, 1088, 608, 896, 224, -896, 224, -1088, 608, -1408, 608, -1664, 1504, -2368, 1504, -2368, -1504)
+script = ExtResource("8_0su4k")
+stroke_color = Color(0.768627, 0.427451, 0.368627, 1)
+
+[node name="@Polygon2D@82205" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
 texture_repeat = 2
 color = Color(0.854902, 0.647059, 0.533333, 1)
 texture = ExtResource("2_wu6n2")
 invert_enabled = true
 invert_border = 576.0
 polygon = PackedVector2Array(2432, -1472, 2432, 1536, 1664, 1536, 1408, 640, 1088, 640, 896, 256, -896, 256, -1088, 640, -1408, 640, -1664, 1536, -2368, 1536, -2368, -1472)
-script = ExtResource("8_0su4k")
-stroke_color = Color(0.768627, 0.427451, 0.368627, 1)
-
-[node name="@Polygon2D@97227" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D3"]
-light_mask = 3
-z_index = -2
-color = Color(0.952941, 0.788235, 0.545098, 1)
-invert_enabled = true
-invert_border = 576.0
-polygon = PackedVector2Array(2432, -1504, 2432, 1504, 1664, 1504, 1408, 608, 1088, 608, 896, 224, -896, 224, -1088, 608, -1408, 608, -1664, 1504, -2368, 1504, -2368, -1504)
 script = ExtResource("8_0su4k")
 stroke_color = Color(0.768627, 0.427451, 0.368627, 1)
