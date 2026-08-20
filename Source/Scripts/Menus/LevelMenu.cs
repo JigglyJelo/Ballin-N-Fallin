@@ -143,7 +143,7 @@ public partial class LevelMenu : ScrollableMenu{
 
 		string currentOption = optionNames[Selection - 1];
 
-		if (!currentOption.EndsWith("/")){
+		if(!currentOption.EndsWith("/")){
 			string folderPath = string.Join("", FoldersOpened);
 			string fullPath = Game.LEVELS_PATH + Mode.EnumToString(Game.CurrentMode) + " Levels/" + folderPath + currentOption;
 
@@ -191,10 +191,8 @@ public partial class LevelMenu : ScrollableMenu{
 					Vector2 previewSize = previewMax - previewMin;
 					Vector2 previewCenter = previewMin + (previewSize / 2f);
 
-					//Get bodies and bounds
 					Godot.Collections.Array<Node> staticBodies = tempLevel.FindChildren("*", "StaticBody2D");
 					List<StaticBody2D> validBodies = new List<StaticBody2D>();
-
 					Vector2 minVisual = new Vector2(float.MaxValue, float.MaxValue);
 					Vector2 maxVisual = new Vector2(float.MinValue, float.MinValue);
 					bool hasVisuals = false;
@@ -229,7 +227,6 @@ public partial class LevelMenu : ScrollableMenu{
 					}
 
 					if(!hasVisuals){ 
-						// Minor correction: factored in levelCenter rather than assuming 0,0
 						minVisual = levelCenter - (levelSize / 2f);
 						maxVisual = levelCenter + (levelSize / 2f);
 					}
@@ -256,7 +253,7 @@ public partial class LevelMenu : ScrollableMenu{
 						GradientTexture2D tex = GD.Load<GradientTexture2D>(bgPath);
 						backgroundPoly.Texture = tex;
 
-						// Assign UVs so the gradient scales perfectly across your background
+						// Assign UVs so the gradient scales
 						Vector2 texSize = tex.GetSize();
 						backgroundPoly.UV = new Vector2[]{
 							new Vector2(0, 0),
@@ -264,6 +261,8 @@ public partial class LevelMenu : ScrollableMenu{
 							new Vector2(texSize.X, texSize.Y),
 							new Vector2(0, texSize.Y)
 						};
+					}else{
+						backgroundPoly.Color = Game.CLEAR;
 					}
 
 					backgroundPoly.Polygon = new Vector2[]{
@@ -289,8 +288,8 @@ public partial class LevelMenu : ScrollableMenu{
 
 					// Get the parent's scale (LevelPreview might be stretched in the editor)
 					Vector2 parentScale = previewPoly.Scale;
-					if (parentScale.X == 0) parentScale.X = 1f; // Prevent divide by zero
-					if (parentScale.Y == 0) parentScale.Y = 1f;
+					if(parentScale.X == 0) parentScale.X = 1f; // Prevent divide by zero
+					if(parentScale.Y == 0) parentScale.Y = 1f;
 
 					// Calculate the true visual size of the preview polygon on screen
 					Vector2 truePreviewSize = previewSize * parentScale;
