@@ -32,3 +32,8 @@ clip_children = 1
 position = Vector2(-800, 0)
 scale = Vector2(1.4166667, 1)
 polygon = PackedVector2Array(1920, -704, 1920, 832, 384, 832, 384, -704)
+
+[node name="Border" type="Line2D" parent="LevelPreview"]
+closed = true
+width = 25.0
+default_color = Color(0, 0, 0, 1)

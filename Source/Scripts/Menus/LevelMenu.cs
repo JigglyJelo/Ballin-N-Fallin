@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 public partial class LevelMenu : ScrollableMenu{
-    private static List<string> optionNames;
+	private static List<string> optionNames;
 	public static List<string> FoldersOpened;
 	private string lastMenu;
 	private Node selectionsNode;
@@ -12,11 +12,13 @@ public partial class LevelMenu : ScrollableMenu{
 	private float yPos = -800;
 	private Node2D levelVisual = null;
 	private int inputId = (int)Game.PlayerDatas[0].InputDevice;
+	private Polygon2D previewPoly;
+	private GradientTexture2D bgGradient = null;
 
 	public override void _Ready(){
 		base._Ready();
 		Tour.ResetPlayerScores();
-		if(FoldersOpened == null) FoldersOpened = FoldersOpened = new List<string> {""};
+		if(FoldersOpened == null) FoldersOpened = new List<string> {""};
 		optionNames = new List<string>();
 		if(Game.TotalPlayers > 1 || Online.IsOnline) lastMenu = "ModeMenu";
 		else lastMenu = "SoloMenu";
@@ -50,6 +52,11 @@ public partial class LevelMenu : ScrollableMenu{
 		}
 		Selection = 1;
 		totalSelections = optionNames.Count;
+		previewPoly = GetNode<Polygon2D>("LevelPreview");
+		string bgPath = $"res://Assets/Gradients/{Mode.EnumToString(Game.CurrentMode)}.tres";
+		if(ResourceLoader.Exists(bgPath)){
+			bgGradient = GD.Load<GradientTexture2D>(bgPath);
+		}
 		UpdateSelectionVisual();
 	}
 
@@ -59,9 +66,10 @@ public partial class LevelMenu : ScrollableMenu{
 			if(Input.IsActionJustReleased("Y" + inputId)){
 				Selection = new Random().Next(1,optionNames.Count + 1);
 				UpdateSelectionVisual();
-        	}	
+			}   
 		}else InputChecks(delta);
 	}
+	
 	//Either starts the level that's selected or opens the folder that's selected
 	protected override void MenuChoose(int choice){
 		SFX.Play("Confirm");
@@ -94,25 +102,24 @@ public partial class LevelMenu : ScrollableMenu{
 				SceneTransitioner.SwitchToScene(Game.SceneType.Game);
 			}
 		}
-		
 	}
+	
 	//Either returns back to the last Menu if not in a folder else exits the folder
 	public override void MenuBack(){
 		SFX.Play("Back");
 		if(FoldersOpened.Count <= 1){
 			if(lastMenu == "ModeMenu" && Online.IsOnline){
 				MenuScene.MenuNode.AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "ModeMenu" + ".tscn").Instantiate<Node>());
-            	QueueFree();
+				QueueFree();
 			}else{
 				MenuScene.LoadMenu(lastMenu);
 			}
 		}else{
 			FolderNavigation(false);
 		}
-        
-    }
+	}
+
 	//Colors current selection green
-	
 	protected override void UpdateSelectionVisual(){
 		base.UpdateSelectionVisual();
 		foreach(Node node in selectionsNode.GetChildren()){
@@ -172,7 +179,6 @@ public partial class LevelMenu : ScrollableMenu{
 
 					if(levelSize.X == 0 || levelSize.Y == 0) levelSize = new Vector2(3840, 2160);
 
-					Polygon2D previewPoly = GetNode<Polygon2D>("LevelPreview");
 					Vector2 previewMin = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
 					Vector2 previewMax = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
 
@@ -248,13 +254,12 @@ public partial class LevelMenu : ScrollableMenu{
 					Node2D levelWrapper = new Node2D();
 
 					Polygon2D backgroundPoly = new Polygon2D();
-					string bgPath = $"res://Assets/Gradients/{Mode.EnumToString(Game.CurrentMode)}.tres";
-					if(ResourceLoader.Exists(bgPath)){
-						GradientTexture2D tex = GD.Load<GradientTexture2D>(bgPath);
-						backgroundPoly.Texture = tex;
+
+					if(bgGradient != null){
+						backgroundPoly.Texture = bgGradient;
 
 						// Assign UVs so the gradient scales
-						Vector2 texSize = tex.GetSize();
+						Vector2 texSize = bgGradient.GetSize();
 						backgroundPoly.UV = new Vector2[]{
 							new Vector2(0, 0),
 							new Vector2(texSize.X, 0),
@@ -284,7 +289,6 @@ public partial class LevelMenu : ScrollableMenu{
 						}
 						levelWrapper.AddChild(body);
 					}
-
 
 					// Get the parent's scale (LevelPreview might be stretched in the editor)
 					Vector2 parentScale = previewPoly.Scale;
