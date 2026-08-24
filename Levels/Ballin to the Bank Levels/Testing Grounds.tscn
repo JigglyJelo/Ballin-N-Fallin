@@ -42,7 +42,7 @@ CoinPatterns = Array[int]([0, 1, 4])
 [node name="Piggy" parent="." index="19" instance=ExtResource("3_e1kcq")]
 position = Vector2(728, 592)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="20" groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="20" groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@58307" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]

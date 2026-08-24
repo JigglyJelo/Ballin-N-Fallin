@@ -44,7 +44,7 @@ position = Vector2(704, 384)
 [node name="Piggy" parent="." index="22" instance=ExtResource("7_j27rd")]
 position = Vector2(0, 1088)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="23" groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="23" groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@57758" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]

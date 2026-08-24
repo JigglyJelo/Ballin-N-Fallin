@@ -105,7 +105,7 @@ team = "B"
 [node name="CollisionShape2D" parent="Goal2" index="0"]
 debug_color = Color(0, 0, 1, 0.501961)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@83492" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

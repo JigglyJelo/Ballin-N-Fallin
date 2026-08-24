@@ -31,7 +31,7 @@ public partial class TargetTest : Mode, IModeStartEvent{
     public void OnModeStart(){
         if(Online.IsHost()){
             foreach(TargetZone zone in TargetZones){
-                if(zone.ZoneValue != TargetZone.ZoneValueEnum.Static) zone.UpdatePointValue();
+                zone.UpdatePointValue();
             }
         }
     }

@@ -126,7 +126,7 @@ id = 3
 position = Vector2(64, 192)
 shape = SubResource("RectangleShape2D_l2cxn")
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@56895" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

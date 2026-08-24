@@ -135,7 +135,7 @@ position = Vector2(-2240, 576)
 [node name="ItemSpawner2" parent="." instance=ExtResource("7_wuq4t")]
 position = Vector2(2240, 576)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="Path2DPolygon" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
