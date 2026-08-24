@@ -93,35 +93,7 @@ position = Vector2(3712, 2176)
 shape = SubResource("RectangleShape2D_hvuos")
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-768, 2304)
-texture = ExtResource("3_3smvq")
-
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-896, 2304)
-texture = ExtResource("3_3smvq")
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1024, 2304)
-texture = ExtResource("3_3smvq")
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1152, 2304)
-texture = ExtResource("3_3smvq")
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-768, 2176)
-texture = ExtResource("3_3smvq")
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-896, 2176)
-texture = ExtResource("3_3smvq")
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1024, 2176)
-texture = ExtResource("3_3smvq")
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1152, 2176)
+position = Vector2(-832, 2304)
 texture = ExtResource("3_3smvq")
 
 [node name="ItemSpawner" parent="." instance=ExtResource("4_pcvki")]

@@ -76,7 +76,7 @@ curve = SubResource("Curve2D_lv7jl")
 position = Vector2(-128, 0)
 polygon = PackedVector2Array(-1856, -512, -1856, -448, -1728, -384, -1664, -256, -1344, -256, -832, -640, 1856, -640, 1856, -704, 1984, -832, 1984, -896, 1216, -896, 1216, -1344, 960, -1344, 960, -1024, 64, -1024, 64, -1216, -192, -1216, -192, -1024, -1216, -1024, -1216, -1408, -1472, -1408, -1472, -1152, -1344, -1024, -1344, -640, -1472, -512)
 
-[node name="FinishLine" parent="." instance=ExtResource("2_kk2qc")]
+[node name="FinishLine" parent="." groups=["Previewable"] instance=ExtResource("2_kk2qc")]
 position = Vector2(640, -320)
 
 [node name="CollisionShape2D" parent="FinishLine" index="0"]
@@ -127,35 +127,7 @@ position = Vector2(-3456, 0)
 shape = SubResource("RectangleShape2D_e1q34")
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1664, 320)
-texture = ExtResource("4_yq54d")
-
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1792, 192)
-texture = ExtResource("4_yq54d")
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1920, 64)
-texture = ExtResource("4_yq54d")
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2048, -64)
-texture = ExtResource("4_yq54d")
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1216, 320)
-texture = ExtResource("4_yq54d")
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1344, 192)
-texture = ExtResource("4_yq54d")
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1472, 64)
-texture = ExtResource("4_yq54d")
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1600, -64)
+position = Vector2(-1344, 64)
 texture = ExtResource("4_yq54d")
 
 [node name="ItemSpawner" parent="." instance=ExtResource("5_6mwx3")]

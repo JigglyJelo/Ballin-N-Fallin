@@ -52,35 +52,7 @@ position = Vector2(-128, 832)
 polygon = PackedVector2Array(-1088, -960, -1088, -704, -1024, -640, 1286.81, -640, 1344, -704, 1344, -960, 1280, -1024, -1024, -1024)
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1088, 640)
-texture = ExtResource("2_2jfr5")
-
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1088, 512)
-texture = ExtResource("2_2jfr5")
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-960, 512)
-texture = ExtResource("2_2jfr5")
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-832, 512)
-texture = ExtResource("2_2jfr5")
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-960, 640)
-texture = ExtResource("2_2jfr5")
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-832, 640)
-texture = ExtResource("2_2jfr5")
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-704, 640)
-texture = ExtResource("2_2jfr5")
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-704, 512)
+position = Vector2(-896, 576)
 texture = ExtResource("2_2jfr5")
 
 [node name="ItemSpawner" parent="." instance=ExtResource("3_dxurg")]

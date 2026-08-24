@@ -39,35 +39,7 @@ polygon = PackedVector2Array(2176, 1792, 2240, 1792, 2240, 1920, 2304, 1920, 230
 metadata/invert = true
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1920, 1536)
-texture = ExtResource("5_b12bs")
-
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2048, 1536)
-texture = ExtResource("5_b12bs")
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2176, 1536)
-texture = ExtResource("5_b12bs")
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2304, 1536)
-texture = ExtResource("5_b12bs")
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1920, 1408)
-texture = ExtResource("5_b12bs")
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2048, 1408)
-texture = ExtResource("5_b12bs")
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2176, 1408)
-texture = ExtResource("5_b12bs")
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2304, 1408)
+position = Vector2(-2112, 1664)
 texture = ExtResource("5_b12bs")
 
 [node name="DeathZone" parent="." instance=ExtResource("4_ljy0i")]

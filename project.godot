@@ -104,6 +104,7 @@ Regain=""
 Bump=""
 Trash=""
 NoRegain=""
+Previewable="This Node should appear in Level Previews"
 
 [input]
 

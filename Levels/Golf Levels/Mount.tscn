@@ -40,35 +40,7 @@ metadata/invert = true
 polygon = PackedVector2Array(1664, -64, 1792, -128, 1856, -192, 1984, 1664, 1792, 1600, 1664, 1408, 1600, 1216, 1472, 1088, 1536, 960)
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1536, 1280)
-texture = ExtResource("2_od1ly")
-
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1664, 1280)
-texture = ExtResource("2_od1ly")
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1792, 1280)
-texture = ExtResource("2_od1ly")
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1920, 1280)
-texture = ExtResource("2_od1ly")
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1536, 1152)
-texture = ExtResource("2_od1ly")
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1664, 1152)
-texture = ExtResource("2_od1ly")
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1792, 1152)
-texture = ExtResource("2_od1ly")
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1920, 1152)
+position = Vector2(-1728, 1408)
 texture = ExtResource("2_od1ly")
 
 [node name="ItemSpawner" parent="." instance=ExtResource("3_58ora")]
@@ -93,9 +65,6 @@ shape = SubResource("RectangleShape2D_olfxr")
 
 [node name="Hole" parent="." instance=ExtResource("5_b7t0i")]
 position = Vector2(1088, 1984)
-
-[node name="PoleTop" parent="Hole/Pole" index="0"]
-polygon = PackedVector2Array(0, -32, 8.282209, -30.909626, 16, -27.712812, 22.627417, -22.627417, 27.712814, -15.999999, 30.909626, -8.28221, 32, 1.3987644e-06, 30.909626, 8.282209, 27.712812, 16.000002, 22.627417, 22.627417, 16.000002, 27.712812, 8.282212, 30.909626, -2.7975289e-06, 32, -8.28221, 30.909626, -15.999999, 27.712812, -22.627415, 22.627419, -27.712814, 15.999997, -30.909628, 8.2822075, -32, -3.8159618e-07, -30.909626, -8.282208, -27.712814, -15.999997, -22.62742, -22.627413, -16.000006, -27.71281, -8.282203, -30.909628)
 
 [node name="Inside" parent="Hole" index="6"]
 texture_offset = Vector2(64, 0)
