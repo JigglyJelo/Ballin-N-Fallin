@@ -114,7 +114,7 @@ debug_color = Color(1, 0, 0, 0.501961)
 [node name="ItemSpawner" parent="." instance=ExtResource("5_6yxn6")]
 position = Vector2(0, -320)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@80444" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

@@ -100,7 +100,7 @@ polygon = PackedVector2Array(0, -32, 8.282209, -30.909626, 16, -27.712812, 22.62
 [node name="Inside" parent="Hole" index="6"]
 texture_offset = Vector2(64, 0)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@65626" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

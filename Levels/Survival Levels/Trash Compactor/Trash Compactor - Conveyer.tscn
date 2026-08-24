@@ -144,7 +144,7 @@ one_way_collision = true
 [node name="ItemSpawner" parent="." instance=ExtResource("12_4yfsd")]
 position = Vector2(3072, -64)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

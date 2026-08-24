@@ -205,7 +205,7 @@ public partial class LevelMenu : ScrollableMenu{
 					bool hasInverted = false;
 
 					foreach(Node node in staticBodies){
-						if(node.IsInGroup("BakedLevelGeometry")){
+						if(node.IsInGroup(Level.GROUP_BAKED_ELEMENT)){
 							StaticBody2D body = node as StaticBody2D;
 							validBodies.Add(body);
 

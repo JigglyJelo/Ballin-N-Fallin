@@ -20,7 +20,7 @@ public partial class Level : Node2D {
 	public const float OUTLINE_WIDTH = 9;
 	private const float BAKE_INTERVAL = 50;
 	private static readonly StringName META_INVERT = new StringName("invert");
-	private static readonly StringName GROUP_BAKED_GEOMETRY = new StringName("BakedLevelGeometry");
+	public static readonly StringName GROUP_BAKED_ELEMENT = new StringName("BakedLevelElement");
 	private static readonly StringName GROUP_SPAWN = new StringName("Spawn");
 	private static readonly StringName GROUP_RESPAWN = new StringName("Respawn");
 	private static readonly StringName GROUP_REGAIN = new StringName("Regain");
@@ -32,10 +32,10 @@ public partial class Level : Node2D {
 
 	[ExportGroup("Level Generation")]
 	[Export]
-	public bool BakeLevelGeometry {
+	public bool BakeLevelGeometry{
 		get => false;
-		set {
-			if (value) {
+		set{
+			if(value){
 				BakeLevel();
 			}
 		}
@@ -46,7 +46,7 @@ public partial class Level : Node2D {
 
 		//Delete the editor Bodies at runtime so only the baked version exists in game
 		foreach(Node child in GetChildren()){
-			if(child is StaticBody2D staticBody && !staticBody.IsInGroup(GROUP_BAKED_GEOMETRY)){
+			if(child is StaticBody2D staticBody && !staticBody.IsInGroup(GROUP_BAKED_ELEMENT)){
 				staticBody.QueueFree();
 			}
 		}
@@ -55,7 +55,7 @@ public partial class Level : Node2D {
 		//THIS SHOULD BE REMOVED AT SOME POINT AND LEFT AT Z 0 BUT 
 		//THERE IS JUST A LOT OF Z INDEX STUFF THAT NEEDS TO BE UPDATED FOR PROPER LAYERING
 		//MAINLY GOLF HOLE AND SAND THAT HAS TO BE MANUALLY FIXED BEFORE THEN
-		foreach(Node node in GetTree().GetNodesInGroup(GROUP_BAKED_GEOMETRY)){
+		foreach(Node node in GetTree().GetNodesInGroup(GROUP_BAKED_ELEMENT)){
 			if(node is StaticBody2D body){
 				foreach(Node child in body.FindChildren("*", "CollisionPolygon2D")){
 					if(child.GetChildCount() >= 2){
@@ -124,7 +124,15 @@ public partial class Level : Node2D {
 		ClearPreviousBake();
 	
 		GD.Print("Baking Level Geometry...");
-		List<StaticBody2D> editorBodies = GatherEditorBodies();
+		List<StaticBody2D> editorBodies = new List<StaticBody2D>();
+		List<IBakeableLevelObject> editorBakeables = new List<IBakeableLevelObject>();
+		foreach(Node child in GetChildren()){
+			if(child is StaticBody2D staticBody && !staticBody.IsInGroup(GROUP_BAKED_ELEMENT)){
+				editorBodies.Add(staticBody);
+			}else if(child is IBakeableLevelObject bakeableObject){
+				editorBakeables.Add(bakeableObject);
+			}
+		}
 		List<StaticBody2D> bakedBodies = CreateBakedBodies(editorBodies);
 		
 		List<CollisionPolygon2D>[] collisions = ConvertPathsToPolygons(editorBodies, bakedBodies);
@@ -133,16 +141,17 @@ public partial class Level : Node2D {
 		MergeInvertedPolygons(collisions);
 		
 		GenerateLevelVisuals(collisions, bakedBodies);
+		GenerateObjectVisuals(editorBakeables);
 
-		foreach (StaticBody2D body in editorBodies) {
-			body.Visible = false; 
+		foreach(StaticBody2D body in editorBodies){
+			body.Visible = false;
 		}
 		AdjustCameraBoundaryTo16x9();
 		GD.Print("Bake Complete! Save the scene (Ctrl+S).");
 	}
 
 	private void ClearPreviousBake(){
-		Godot.Collections.Array<Node> oldNodes = GetTree().GetNodesInGroup(GROUP_BAKED_GEOMETRY);
+		Godot.Collections.Array<Node> oldNodes = GetTree().GetNodesInGroup(GROUP_BAKED_ELEMENT);
 		foreach(Node node in oldNodes){
 			if(IsInstanceValid(node) && IsAncestorOf(node)){
 				node.Free();
@@ -153,7 +162,7 @@ public partial class Level : Node2D {
 	private List<StaticBody2D> GatherEditorBodies(){
 		List<StaticBody2D> editorBodies = new List<StaticBody2D>();
 		foreach(Node child in GetChildren()){
-			if(child is StaticBody2D staticBody && !staticBody.IsInGroup(GROUP_BAKED_GEOMETRY)){
+			if(child is StaticBody2D staticBody && !staticBody.IsInGroup(GROUP_BAKED_ELEMENT)){
 				editorBodies.Add(staticBody);
 			}
 		}
@@ -177,7 +186,7 @@ public partial class Level : Node2D {
 				bakedBody.AddToGroup(GROUP_REGAIN, true);
 			}
 
-			bakedBody.AddToGroup(GROUP_BAKED_GEOMETRY, true);
+			bakedBody.AddToGroup(GROUP_BAKED_ELEMENT, true);
 			
 			AddChild(bakedBody);
 			if(Engine.IsEditorHint()) bakedBody.Owner = GetTree().EditedSceneRoot;
@@ -565,12 +574,12 @@ public partial class Level : Node2D {
 					Godot.Collections.Array<Vector2[]> mergedPhysics = Geometry2D.MergePolygons(collisionPolygon.Polygon, topCollisionArr);
 					if (mergedPhysics.Count > 0) {
 						collisionPolygon.Polygon = mergedPhysics[0]; 
-						for (int m = 1; m < mergedPhysics.Count; m++) {
+						for(int m = 1; m < mergedPhysics.Count; m++){
 							CollisionPolygon2D extraPoly = new CollisionPolygon2D();
 							extraPoly.Position = collisionPolygon.Position;
 							extraPoly.Polygon = mergedPhysics[m];
 							bakedBodies[i].AddChild(extraPoly);
-							if (Engine.IsEditorHint()) extraPoly.Owner = GetTree().EditedSceneRoot;
+							if(Engine.IsEditorHint()) extraPoly.Owner = GetTree().EditedSceneRoot;
 							bakedBodies[i].MoveChild(extraPoly, 0);
 						}
 					}
@@ -615,12 +624,43 @@ public partial class Level : Node2D {
 				topPolygon.Free();
 
 				collisionPolygon.AddChild(aaTopPolygon as Node);
-				if (Engine.IsEditorHint()) (aaTopPolygon as Node).Owner = GetTree().EditedSceneRoot;
+				if(Engine.IsEditorHint()) (aaTopPolygon as Node).Owner = GetTree().EditedSceneRoot;
 				collisionPolygon.AddChild(aaInsidePolygon as Node);
-				if (Engine.IsEditorHint()) (aaInsidePolygon as Node).Owner = GetTree().EditedSceneRoot;
+				if(Engine.IsEditorHint()) (aaInsidePolygon as Node).Owner = GetTree().EditedSceneRoot;
 			}
 		}
 	}
+
+	private void GenerateObjectVisuals(List<IBakeableLevelObject> editorBakeables){
+		foreach(IBakeableLevelObject bakeableObject in editorBakeables){
+			if(bakeableObject is Node bakeableNode){
+				GD.Print($"Baked: {bakeableNode.Name}");
+				if(bakeableNode is CanvasItem bakeableNode2D){
+					bakeableNode2D.Visible = false;
+				}
+			}
+
+			Node bakedObject = bakeableObject.GenerateBakedObject();
+
+			if(bakedObject != null){
+				bakedObject.AddToGroup(GROUP_BAKED_ELEMENT, true);
+				AddChild(bakedObject);
+
+				if(Engine.IsEditorHint()){
+					SetOwnerRecursively(bakedObject, GetTree().EditedSceneRoot);
+				}
+			}
+		}
+
+		void SetOwnerRecursively(Node node, Node owner){
+			node.Owner = owner;
+			foreach(Node child in node.GetChildren()){
+				SetOwnerRecursively(child, owner);
+			}
+		}
+	}
+
+	
 
 	private void SetupCamera(){
 		Game.UpdateContentScaleVector();

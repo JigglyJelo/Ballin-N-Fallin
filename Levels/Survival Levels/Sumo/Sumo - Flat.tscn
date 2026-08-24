@@ -78,7 +78,7 @@ position = Vector2(576, -512)
 [node name="TheRing" parent="." instance=ExtResource("7_85klk")]
 scale = Vector2(0.9, 0.9)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@81946" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

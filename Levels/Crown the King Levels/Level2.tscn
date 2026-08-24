@@ -9,7 +9,7 @@
 [node name="StaticBody2D" parent="." index="1"]
 visible = false
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="12" groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="12" groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@59682" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]

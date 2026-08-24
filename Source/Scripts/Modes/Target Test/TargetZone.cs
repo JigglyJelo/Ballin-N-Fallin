@@ -4,8 +4,9 @@ using Godot;
 
 public partial class TargetZone : Area2D{
 	[Export]
-	public ZoneValueEnum ZoneValue = ZoneValueEnum.Static;
+	private int minPointValue = 10;
 	[Export]
+	private int maxPointValue = 10;
 	private int pointValue = 10;
 	private Label pointLabel;
 	private Polygon2D zoneVisual;
@@ -47,7 +48,7 @@ public partial class TargetZone : Area2D{
 				break;
 		}
 		(Mode.ModeNode as TargetTest).TargetZones.Add(this);
-		pointLabel.Text = pointValue.ToString();
+		if(minPointValue > maxPointValue) minPointValue = maxPointValue;
 		pointLabel.Visible = true;
 		pointLabel.PivotOffset = pointLabel.Size / 2;
 		pointLabel.GlobalPosition -= new Vector2(0,pointLabel.Size.Y/2);
@@ -60,6 +61,7 @@ public partial class TargetZone : Area2D{
 		pointLabel.Reparent(zoneVisual);
 		AddChild(outline);
 		canvasGroup.ZIndex--;
+		UpdatePointValue();
 		if(!Online.IsHost()) SetPhysicsProcess(false);
 	}
 
@@ -96,28 +98,16 @@ public partial class TargetZone : Area2D{
 	}
 
 	public void UpdatePointValue(){
-		switch(ZoneValue){
-			case ZoneValueEnum.Static: return;
-			case ZoneValueEnum.IDK: pointValue = Game.Random.Next(-20,20) * 5; break;
-			case ZoneValueEnum.Good: pointValue = Game.Random.Next(2,20) * 5; break;
-			case ZoneValueEnum.Easy: pointValue = Game.Random.Next(2,6) * 5; break; // 10-30 5 point intervals
-			case ZoneValueEnum.Medium: pointValue = Game.Random.Next(6,8) * 5; break;
-			case ZoneValueEnum.Hard: pointValue = Game.Random.Next(9,15) * 5; break;
-			case ZoneValueEnum.Legendary: pointValue = Game.Random.Next(15,20) * 5; break;
-			case ZoneValueEnum.Poor: pointValue = Game.Random.Next(-2,0) * 5; break;
-			case ZoneValueEnum.Bad: pointValue = Game.Random.Next(-6,-2) * 5; break;
-			case ZoneValueEnum.Horrid: pointValue = Game.Random.Next(-10,-6) * 5; break;
-			case ZoneValueEnum.Catastrophic: pointValue = Game.Random.Next(-20,-15) * 5; break;
-		}
+		pointValue = GetRandomPointValue(); //5 point intervals
 		byte[] shortPointValue = BitConverter.GetBytes((short)pointValue);
 		Rpc(nameof(SyncPointValue),shortPointValue);
 		pointLabel.Text = pointValue.ToString();
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = false,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void SyncPointValue(byte[] pointValue){
-		this.pointValue = BitConverter.ToInt16(pointValue, 0);
-		pointLabel.Text = this.pointValue.ToString();
+	private void SyncPointValue(byte[] pointValueArray){
+		pointValue = BitConverter.ToInt16(pointValueArray, 0);
+		pointLabel.Text = pointValue.ToString();
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -129,17 +119,11 @@ public partial class TargetZone : Area2D{
 		}
 	}
 
-	public enum ZoneValueEnum{
-		Static,
-		IDK, //-100 to 100
-		Good, //10 to 100
-		Easy, //10-30pts
-		Medium, //30-40
-		Hard, //45-75
-		Legendary, //75-100
-		Poor, // [-10,0]
-		Bad, //[-30,-20]
-		Horrid, //[-50,30]
-		Catastrophic //[-100,-75]
+	private int GetRandomPointValue(){
+		//Gets value in min max range at intervals of 5
+		int minMultiplier = (int)Math.Ceiling(minPointValue / 5f);
+		int maxMultiplier = (int)Math.Floor(maxPointValue / 5f);
+		int randomMultiplier = Random.Shared.Next(minMultiplier, maxMultiplier + 1);
+		return randomMultiplier * 5;
 	}
 }

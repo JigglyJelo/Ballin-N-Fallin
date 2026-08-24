@@ -31,7 +31,7 @@ position = Vector2(1066, 1164)
 [node name="DominationZone7" parent="." index="18" instance=ExtResource("6_7snal")]
 position = Vector2(-992, 1171)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="19" groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." index="19" groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@62748" type="CollisionPolygon2D" parent="StaticBody2D_Baked" index="0"]

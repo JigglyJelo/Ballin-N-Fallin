@@ -82,7 +82,7 @@ position = Vector2(0, -320)
 points = PackedVector2Array(-1920, 192, 0, 1024, 1920, 192)
 default_color = Color(0.25098, 0.25098, 0.25098, 1)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@79416" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

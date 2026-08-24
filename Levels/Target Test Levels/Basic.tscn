@@ -50,7 +50,8 @@ offset_bottom = 2143.0
 
 [node name="TargetZone" parent="." instance=ExtResource("3_8yf67")]
 position = Vector2(2008, 1016)
-ZoneValue = 2
+minPointValue = 20
+maxPointValue = 50
 
 [node name="TargetCollision" parent="TargetZone" index="0"]
 position = Vector2(-1096, -56)
@@ -58,17 +59,16 @@ shape = SubResource("RectangleShape2D_cyc5n")
 
 [node name="TargetZone2" parent="." instance=ExtResource("3_8yf67")]
 position = Vector2(2008, 1016)
-ZoneValue = 7
-pointValue = 0
+minPointValue = -50
 
 [node name="TargetCollision" parent="TargetZone2" index="0"]
-position = Vector2(-1712, 296)
+position = Vector2(-1704, 296)
 shape = SubResource("RectangleShape2D_6m5xj")
 
 [node name="TargetZone3" parent="." instance=ExtResource("3_8yf67")]
 position = Vector2(2008, 1016)
-ZoneValue = 4
-pointValue = 20
+minPointValue = 30
+maxPointValue = 70
 
 [node name="TargetCollision" parent="TargetZone3" index="0"]
 position = Vector2(-24, -600)
@@ -76,8 +76,8 @@ shape = SubResource("RectangleShape2D_ab55j")
 
 [node name="TargetZone5" parent="." instance=ExtResource("3_8yf67")]
 position = Vector2(2008, 1016)
-ZoneValue = 5
-pointValue = 20
+minPointValue = 50
+maxPointValue = 100
 
 [node name="TargetCollision" parent="TargetZone5" index="0"]
 position = Vector2(424, -800)
@@ -85,8 +85,8 @@ shape = SubResource("RectangleShape2D_5exfi")
 
 [node name="TargetZone4" parent="." instance=ExtResource("3_8yf67")]
 position = Vector2(2008, 1016)
-ZoneValue = 2
-pointValue = 20
+minPointValue = 30
+maxPointValue = 60
 
 [node name="TargetCollision" parent="TargetZone4" index="0"]
 position = Vector2(-504, -344)
@@ -180,7 +180,7 @@ position = Vector2(-2488, -1280)
 position = Vector2(3132, 0)
 shape = SubResource("RectangleShape2D_7ucr2")
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
@@ -201,7 +201,7 @@ polygon = PackedVector2Array(-1152, 2688, -2752, 2688, -2752, -1216, -2560, -121
 script = ExtResource("9_fj4qf")
 stroke_color = Color(0.56078434, 0.73333335, 0.6, 1)
 
-[node name="StaticBody2D2_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "NoRegain"]]
+[node name="StaticBody2D2_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "NoRegain"]]
 modulate = Color(0.85, 0.85, 0.85, 1)
 collision_layer = 3
 

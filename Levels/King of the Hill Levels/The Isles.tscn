@@ -100,7 +100,7 @@ position = Vector2(0, 2240)
 [node name="CollisionShape2D" parent="DeathZone" index="0"]
 shape = SubResource("RectangleShape2D_ihjk8")
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

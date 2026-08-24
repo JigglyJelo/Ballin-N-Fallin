@@ -86,7 +86,7 @@ metadata/team = "B"
 [node name="ItemSpawner" parent="." instance=ExtResource("6_5osmp")]
 position = Vector2(0, -320)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@58872" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

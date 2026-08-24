@@ -69,7 +69,7 @@ flip_h = true
 [node name="ItemSpawner" parent="." instance=ExtResource("4_l0k4f")]
 position = Vector2(0, 960)
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@68553" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]

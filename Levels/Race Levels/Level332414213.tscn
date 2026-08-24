@@ -250,7 +250,7 @@ position = Vector2(-2624, -64)
 [node name="RacePath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_0m82f")
 
-[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelGeometry", "Regain"]]
+[node name="StaticBody2D_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "Regain"]]
 collision_layer = 3
 
 [node name="@CollisionPolygon2D@55697" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
