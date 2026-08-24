@@ -168,35 +168,7 @@ shape = SubResource("RectangleShape2D_ucuik")
 debug_color = Color(0, 1, 0, 0.501961)
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1344, 1664)
-texture = ExtResource("4_frdcu")
-
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1344, 1536)
-texture = ExtResource("4_frdcu")
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1216, 1536)
-texture = ExtResource("4_frdcu")
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1088, 1536)
-texture = ExtResource("4_frdcu")
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1216, 1664)
-texture = ExtResource("4_frdcu")
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1088, 1664)
-texture = ExtResource("4_frdcu")
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-960, 1664)
-texture = ExtResource("4_frdcu")
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-960, 1536)
+position = Vector2(-1216, 1600)
 texture = ExtResource("4_frdcu")
 
 [node name="ItemSpawner" parent="." instance=ExtResource("5_rvt75")]

@@ -21,8 +21,9 @@ public partial class Level : Node2D {
 	private const float BAKE_INTERVAL = 50;
 	private static readonly StringName META_INVERT = new StringName("invert");
 	public static readonly StringName GROUP_BAKED_ELEMENT = new StringName("BakedLevelElement");
-	private static readonly StringName GROUP_SPAWN = new StringName("Spawn");
-	private static readonly StringName GROUP_RESPAWN = new StringName("Respawn");
+	public static readonly StringName GROUP_SPAWN = new StringName("Spawn");
+	public static readonly StringName GROUP_RESPAWN = new StringName("Respawn");
+	public static readonly StringName GROUP_PREVIEWABLE = new StringName("Previewable");
 	private static readonly StringName GROUP_REGAIN = new StringName("Regain");
 	private static readonly StringName GROUP_NO_REGAIN = new StringName("NoRegain");
 	private static readonly StringName META_TEAM = new StringName("team");
