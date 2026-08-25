@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://7f1lfyswuxqv"]
+[gd_scene load_steps=19 format=3 uid="uid://7f1lfyswuxqv"]
 
 [ext_resource type="Script" uid="uid://csht4xe0ktspv" path="res://Source/Scripts/Level Objects/Level.cs" id="1_6m04d"]
 [ext_resource type="Texture2D" uid="uid://pylypiewve4i" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Hot Potato Tile.png" id="2_obci2"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cryhqyifcuaju" path="res://Source/Scenes/Level Stuff/EmotionZone.tscn" id="12_12o7r"]
 [ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="13_v1x8x"]
 [ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="14_rxcv8"]
+[ext_resource type="Texture2D" uid="uid://xu3vyba8w572" path="res://Assets/Sprites/Level Stuff/CameraFocusPoint.png" id="15_n7j2f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cc2qt"]
 size = Vector2(1280, 256)
@@ -186,6 +187,10 @@ invert_border = 1792.0
 polygon = PackedVector2Array(1408, -1664, 2688, -448, 2688, 1472, 896, 1728, 896, 2112, 1024, 2432, 1024, 2688, -256, 2688, -256, 2432, -128, 2112, -128, 1728, -1920, 1536, -1920, -448, -640, -1664)
 script = ExtResource("14_rxcv8")
 stroke_color = Color(0, 0, 0.117647, 1)
+
+[node name="CameraFocusPoint" type="Sprite2D" parent="." groups=["CameraFocusPoint"]]
+position = Vector2(384, -760)
+texture = ExtResource("15_n7j2f")
 
 [connection signal="body_entered" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_entered"]
 [connection signal="body_exited" from="ConveyorBelt" to="ConveyorBelt" method="_on_body_exited"]

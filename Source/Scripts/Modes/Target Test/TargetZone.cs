@@ -21,10 +21,6 @@ public partial class TargetZone : Area2D{
 		outline.Closed = true;
 		outline.Position = collision.Position;
 		switch(collision){
-			case CollisionPolygon2D collisionPolygon:
-				zoneVisual.Polygon = collisionPolygon.Polygon;
-				outline.Points = collisionPolygon.Polygon;
-				break;
 			case CollisionShape2D collisionShape:
 				switch(collisionShape.Shape){
 					case RectangleShape2D rectangleShape:
@@ -37,6 +33,7 @@ public partial class TargetZone : Area2D{
 						};
 						zoneVisual.Polygon = points;
 						outline.Points = points;
+						Mode.AddCameraTarget(collision);
 						break;
 					default:
 						GD.PrintErr(collisionShape.Shape.GetType() + " is not supported as a Target Zone collision");

@@ -7,16 +7,16 @@ public partial class DynamicCamera : Camera2D{
 	private float zoomOutSpeed = 3f;
 	private float zoomInSpeed = 1.5f;   
 
-	private float maxZoomLimit = 0.75f;
+	private float maxZoomLimit = 0.5f;
 	
 	private Vector2 margin = new Vector2(300, 300);
 
 	//Makes the camera push further ahead of moving players
 	private float lookAheadFactor = 1f;
-	private float maxLookAheadDistance = 800f;
+	private float maxLookAheadDistance = 600f;
 	
 	//How fast the camera reacts to sudden changes in direction (higher = snappier)
-	private float velocitySmoothSpeed = 5f;
+	private float velocitySmoothSpeed = 4f;
 
 	//Keeps the zoom from violently snapping when velocity spikes
 	private float velocityZoomInfluence = 0.5f; 
