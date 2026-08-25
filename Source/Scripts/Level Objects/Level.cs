@@ -24,6 +24,7 @@ public partial class Level : Node2D {
 	public static readonly StringName GROUP_SPAWN = new StringName("Spawn");
 	public static readonly StringName GROUP_RESPAWN = new StringName("Respawn");
 	public static readonly StringName GROUP_PREVIEWABLE = new StringName("Previewable");
+	private static readonly StringName GROUP_CAMERA_POINT = new StringName("CameraFocusPoint");
 	private static readonly StringName GROUP_REGAIN = new StringName("Regain");
 	private static readonly StringName GROUP_NO_REGAIN = new StringName("NoRegain");
 	private static readonly StringName META_TEAM = new StringName("team");
@@ -67,6 +68,12 @@ public partial class Level : Node2D {
 					}
 				}
 			}
+		}
+
+		//Add any camera points and make them invisible
+		foreach(Node2D node in GetTree().GetNodesInGroup(GROUP_CAMERA_POINT)){
+			Mode.AddCameraTarget(node);
+			node.Visible = false;
 		}
 
 		LevelNode = this;
