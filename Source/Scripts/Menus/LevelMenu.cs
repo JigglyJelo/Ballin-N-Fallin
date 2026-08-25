@@ -70,14 +70,13 @@ public partial class LevelMenu : ScrollableMenu{
 		}else InputChecks(delta);
 	}
 	
-	//Either starts the level that's selected or opens the folder that's selected
 	protected override void MenuChoose(int choice){
 		SFX.Play("Confirm");
 		foreach(Node node in selectionsNode.GetChildren()){
 			Label label;
 			if(node is Label) label = node as Label;
 			else break;
-			//Start Level
+			
 			if(label.Name.ToString().Equals("Level" + (choice - 1))){
 				if(Game.TotalPlayers == 1){
 					if(Game.CurrentMode == Mode.GameMode.Race) RaceHUD.LevelName = string.Join("",FoldersOpened) + optionNames[choice - 1];
@@ -92,10 +91,8 @@ public partial class LevelMenu : ScrollableMenu{
 					if(OnlineLobby.Lobby != null) OnlineLobby.Lobby.StartGame();
 				}
 				
-			//Open Folder
 			}else if(label.Name.ToString().Equals("Folder" + (choice - 1)) && (!GolfCup.IsCup || !(optionNames[choice - 1].Contains("Cup")))){
 				FolderNavigation(true);
-			//Start Golf Cup
 			}else if(label.Name.ToString().Equals("Folder" + (choice - 1)) && GolfCup.IsCup && optionNames[choice - 1].Contains("Cup")){
 				GolfCup.PrepareCup(FoldersOpened);
 				MenuScene.MenuBackgroundFadeout();
@@ -104,7 +101,6 @@ public partial class LevelMenu : ScrollableMenu{
 		}
 	}
 	
-	//Either returns back to the last Menu if not in a folder else exits the folder
 	public override void MenuBack(){
 		SFX.Play("Back");
 		if(FoldersOpened.Count <= 1){
@@ -119,7 +115,6 @@ public partial class LevelMenu : ScrollableMenu{
 		}
 	}
 
-	//Colors current selection green
 	protected override void UpdateSelectionVisual(){
 		base.UpdateSelectionVisual();
 		foreach(Node node in selectionsNode.GetChildren()){
@@ -135,7 +130,6 @@ public partial class LevelMenu : ScrollableMenu{
 		if(optionNames.Count > 0) LoadLevelVisual();
 	}
 	
-	///<summary>Opens or closes a folder.</summary><param name="opening">true to open, false to close.</param>
 	private void FolderNavigation(bool opening){
 		if(opening) FoldersOpened.Add(optionNames[Selection - 1]);
 		else FoldersOpened.RemoveAt(FoldersOpened.Count - 1);
@@ -204,6 +198,7 @@ public partial class LevelMenu : ScrollableMenu{
 					bool hasVisuals = false;
 					bool hasInverted = false;
 					const int NO_SCRIPT_FLAGS = (int)Node.DuplicateFlags.Groups;
+					
 					foreach(Node node in allNodes){
 						switch(node){
 							case StaticBody2D body when node.IsInGroup(Level.GROUP_BAKED_ELEMENT):
@@ -227,11 +222,14 @@ public partial class LevelMenu : ScrollableMenu{
 								break;
 							case ItemSpawner itemSpawner:
 								Sprite2D spawnerCopy = (Sprite2D)itemSpawner.Duplicate(NO_SCRIPT_FLAGS);
-								spawnerCopy.SetScript(new Variant());
 								foreach(Node child in spawnerCopy.GetChildren()){
 									child.Free();
 								}
 								levelObjects.Add(spawnerCopy);
+								break;
+							case GolfHole hole:
+								Node holeCopy = hole.Duplicate(NO_SCRIPT_FLAGS);
+								levelObjects.Add(holeCopy);
 								break;
 							case Sprite2D sprite when node.IsInGroup(Level.GROUP_SPAWN) || node.IsInGroup(Level.GROUP_RESPAWN):
 								levelObjects.Add(sprite);
@@ -239,7 +237,6 @@ public partial class LevelMenu : ScrollableMenu{
 							default:
 								if(node.IsInGroup(Level.GROUP_PREVIEWABLE)){
 									Node dumbVisual = node.Duplicate(NO_SCRIPT_FLAGS);
-									dumbVisual.SetScript(new Variant());
 									levelObjects.Add(dumbVisual);
 								}
 								break;
@@ -260,28 +257,58 @@ public partial class LevelMenu : ScrollableMenu{
 						levelCenter = minVisual + (levelSize / 2f);
 					}
 
+					Vector2 parentScale = previewPoly.Scale;
+					if(parentScale.X == 0) parentScale.X = 1f; 
+					if(parentScale.Y == 0) parentScale.Y = 1f;
+
+					Vector2 truePreviewSize = previewSize * parentScale;
+					float scaleX = truePreviewSize.X / levelSize.X;
+					float scaleY = truePreviewSize.Y / levelSize.Y;
+					float uniformScale = Mathf.Min(scaleX, scaleY);
+
+					Vector2 wrapperScale = new Vector2(uniformScale / parentScale.X, uniformScale / parentScale.Y);
+					float rightEdgeOfLevel = levelCenter.X + (levelSize.X / 2f);
+					float positionX = previewMax.X - (rightEdgeOfLevel * wrapperScale.X);
+					float positionY = previewCenter.Y - (levelCenter.Y * wrapperScale.Y);
+
 					Node2D levelWrapper = new Node2D();
+					levelWrapper.Scale = wrapperScale;
+					levelWrapper.Position = new Vector2(positionX, positionY);
+
 					Polygon2D backgroundPoly = new Polygon2D();
+					backgroundPoly.ZIndex = -9;
+					Vector2[] mappedPreviewPoints = new Vector2[previewPoly.Polygon.Length];
+					Vector2 minMapped = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+					Vector2 maxMapped = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
+
+					for(int i = 0; i < previewPoly.Polygon.Length; i++){
+						Vector2 pt = previewPoly.Polygon[i];
+						Vector2 mappedPt = new Vector2((pt.X - positionX) / wrapperScale.X, (pt.Y - positionY) / wrapperScale.Y);
+						mappedPreviewPoints[i] = mappedPt;
+						
+						minMapped.X = Mathf.Min(minMapped.X, mappedPt.X);
+						minMapped.Y = Mathf.Min(minMapped.Y, mappedPt.Y);
+						maxMapped.X = Mathf.Max(maxMapped.X, mappedPt.X);
+						maxMapped.Y = Mathf.Max(maxMapped.Y, mappedPt.Y);
+					}
+
+					backgroundPoly.Polygon = mappedPreviewPoints;
 
 					if(bgGradient != null){
 						backgroundPoly.Texture = bgGradient;
 						Vector2 texSize = bgGradient.GetSize();
-						backgroundPoly.UV = new Vector2[]{
-							new Vector2(0, 0),
-							new Vector2(texSize.X, 0),
-							new Vector2(texSize.X, texSize.Y),
-							new Vector2(0, texSize.Y)
-						};
+						Vector2[] uvs = new Vector2[mappedPreviewPoints.Length];
+						Vector2 mappedSize = maxMapped - minMapped;
+						
+						for(int i = 0; i < mappedPreviewPoints.Length; i++){
+							float u = mappedSize.X != 0 ? (mappedPreviewPoints[i].X - minMapped.X) / mappedSize.X : 0;
+							float v = mappedSize.Y != 0 ? (mappedPreviewPoints[i].Y - minMapped.Y) / mappedSize.Y : 0;
+							uvs[i] = new Vector2(u * texSize.X, v * texSize.Y);
+						}
+						backgroundPoly.UV = uvs;
 					}else{
 						backgroundPoly.Color = Game.CLEAR;
 					}
-
-					backgroundPoly.Polygon = new Vector2[]{
-						new Vector2(minVisual.X, minVisual.Y), //Top Left
-						new Vector2(maxVisual.X, minVisual.Y), //Top Right
-						new Vector2(maxVisual.X, maxVisual.Y), //Bottom Right
-						new Vector2(minVisual.X, maxVisual.Y)  //Bottom Left
-					};
 
 					levelWrapper.AddChild(backgroundPoly);
 
@@ -305,25 +332,20 @@ public partial class LevelMenu : ScrollableMenu{
 						levelWrapper.AddChild(obj);
 					}
 
-					Vector2 parentScale = previewPoly.Scale;
-					if(parentScale.X == 0) parentScale.X = 1f; 
-					if(parentScale.Y == 0) parentScale.Y = 1f;
-
-					Vector2 truePreviewSize = previewSize * parentScale;
-					float scaleX = truePreviewSize.X / levelSize.X;
-					float scaleY = truePreviewSize.Y / levelSize.Y;
-					float uniformScale = Mathf.Min(scaleX, scaleY);
-
-					Vector2 wrapperScale = new Vector2(uniformScale / parentScale.X, uniformScale / parentScale.Y);
-					float rightEdgeOfLevel = levelCenter.X + (levelSize.X / 2f);
-					float positionX = previewMax.X - (rightEdgeOfLevel * wrapperScale.X);
-					float positionY = previewCenter.Y - (levelCenter.Y * wrapperScale.Y);
-
-					levelWrapper.Scale = wrapperScale;
-					levelWrapper.Position = new Vector2(positionX, positionY);
-
 					levelVisual = levelWrapper;
 					previewPoly.AddChild(levelVisual);
+
+					foreach(Node n in tempLevel.FindChildren("*", "Polygon2D")){
+						try{
+							Variant lineVar = n.Get("line_2d");
+							if(lineVar.VariantType == Variant.Type.Object){
+								Node lineNode = lineVar.As<Node>();
+								if(lineNode != null && !lineNode.IsInsideTree()){
+									lineNode.Free();
+								}
+							}
+						}catch{}
+					}
 
 					tempLevel.QueueFree();
 				}
