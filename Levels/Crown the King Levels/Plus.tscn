@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5elfcp3ptose"]
 
-[ext_resource type="PackedScene" uid="uid://1eyv3h661uqs" path="res://Levels/_Base Levels/Level3.tscn" id="1_kks7p"]
+[ext_resource type="PackedScene" uid="uid://1eyv3h661uqs" path="res://Levels/_Base Levels/Plus.tscn" id="1_kks7p"]
 [ext_resource type="Texture2D" uid="uid://djp6mq2cffy0u" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Crown the King Tile.png" id="2_hv75f"]
 [ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="3_xafdg"]
 

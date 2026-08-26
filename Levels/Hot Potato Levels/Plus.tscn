@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ckkhio56am11j"]
 
-[ext_resource type="PackedScene" uid="uid://1eyv3h661uqs" path="res://Levels/_Base Levels/Level3.tscn" id="1_ry5xf"]
+[ext_resource type="PackedScene" uid="uid://1eyv3h661uqs" path="res://Levels/_Base Levels/Plus.tscn" id="1_ry5xf"]
 [ext_resource type="Texture2D" uid="uid://pylypiewve4i" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Hot Potato Tile.png" id="2_idani"]
 [ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="3_oityd"]
 
