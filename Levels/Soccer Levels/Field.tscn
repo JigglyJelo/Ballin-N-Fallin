@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=3 uid="uid://blmaeou7tx214"]
 
-[ext_resource type="Script" uid="uid://csht4xe0ktspv" path="res://Source/Scripts/Level Objects/Level.cs" id="1_uepfe"]
-[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="2_l3tp1"]
-[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="2_r0jfx"]
-[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="3_jnjac"]
-[ext_resource type="Script" uid="uid://bx4fssuv7j8ji" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="4_x0515"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_mtbnw"]
-[ext_resource type="Texture2D" uid="uid://ctv0ow7j447pg" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Soccer Tile.png" id="7_wjlhk"]
-[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_ia5we"]
+[ext_resource type="Script" uid="uid://csht4xe0ktspv" path="res://Source/Scripts/Level Objects/Level.cs" id="1_e05tl"]
+[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="2_w0dik"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_pe80i"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_f3iia"]
+[ext_resource type="Script" uid="uid://bx4fssuv7j8ji" path="res://Source/Scripts/Level Objects/DeathTile.cs" id="5_svg1e"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="6_s62a6"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="7_6tdlo"]
+[ext_resource type="Texture2D" uid="uid://ctv0ow7j447pg" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Soccer Tile.png" id="8_nh83i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rciy3"]
 size = Vector2(128, 1152)
@@ -17,8 +17,8 @@ size = Vector2(4096, 2304)
 
 [node name="Level" type="Node2D"]
 position = Vector2(0, -448)
-script = ExtResource("1_uepfe")
-background = ExtResource("2_l3tp1")
+script = ExtResource("1_e05tl")
+background = ExtResource("2_w0dik")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Regain"]]
 visible = false
@@ -29,62 +29,62 @@ metadata/invert = true
 
 [node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
 position = Vector2(0, 576)
-texture = ExtResource("2_r0jfx")
+texture = ExtResource("3_pe80i")
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(1, 0, 0, 1)
 position = Vector2(-640, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 metadata/team = "A"
 
 [node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(1, 0, 0, 1)
 position = Vector2(-960, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 metadata/team = "A"
 
 [node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(1, 0, 0, 1)
 position = Vector2(-1280, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 metadata/team = "A"
 
 [node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(1, 0, 0, 1)
 position = Vector2(-1600, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 metadata/team = "A"
 
 [node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(0, 0, 1, 1)
 position = Vector2(640, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 flip_h = true
 metadata/team = "B"
 
 [node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(0, 0, 1, 1)
 position = Vector2(960, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 flip_h = true
 metadata/team = "B"
 
 [node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(0, 0, 1, 1)
 position = Vector2(1280, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 flip_h = true
 metadata/team = "B"
 
 [node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
 self_modulate = Color(0, 0, 1, 1)
 position = Vector2(1600, 1280)
-texture = ExtResource("3_jnjac")
+texture = ExtResource("4_f3iia")
 flip_h = true
 metadata/team = "B"
 
 [node name="DeathZone" type="Area2D" parent="."]
-script = ExtResource("4_x0515")
+script = ExtResource("5_svg1e")
 team = "B"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
@@ -93,7 +93,7 @@ shape = SubResource("RectangleShape2D_rciy3")
 debug_color = Color(0, 0, 1, 0.501961)
 
 [node name="DeathZone2" type="Area2D" parent="."]
-script = ExtResource("4_x0515")
+script = ExtResource("5_svg1e")
 team = "A"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone2"]
@@ -101,7 +101,7 @@ position = Vector2(-2496, 512)
 shape = SubResource("RectangleShape2D_rciy3")
 debug_color = Color(1, 0, 0, 0.501961)
 
-[node name="ItemSpawner" parent="." instance=ExtResource("5_mtbnw")]
+[node name="ItemSpawner" parent="." instance=ExtResource("6_s62a6")]
 position = Vector2(0, -320)
 
 [node name="CameraBoundary" type="CollisionShape2D" parent="."]
@@ -124,17 +124,17 @@ color = Color(0, 0.5686275, 0, 1)
 invert_enabled = true
 invert_border = 768.0
 polygon = PackedVector2Array(1920, -96, 2560, -96, 2560, 1056, 1920, 1056, 1920, 1440, -1920, 1440, -1920, 1056, -2560, 1056, -2560, -96, -1920, -96, -1920, -480, 1920, -480)
-script = ExtResource("8_ia5we")
+script = ExtResource("7_6tdlo")
 stroke_color = Color(0, 0.2509804, 0, 1)
 
 [node name="@Polygon2D@79931" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 texture_repeat = 2
 color = Color(0, 0.78431374, 0, 1)
-texture = ExtResource("7_wjlhk")
+texture = ExtResource("8_nh83i")
 invert_enabled = true
 invert_border = 768.0
 polygon = PackedVector2Array(1920, -64, 2560, -64, 2560, 1088, 1920, 1088, 1920, 1472, -1920, 1472, -1920, 1088, -2560, 1088, -2560, -64, -1920, -64, -1920, -448, 1920, -448)
-script = ExtResource("8_ia5we")
+script = ExtResource("7_6tdlo")
 stroke_color = Color(0, 0.2509804, 0, 1)
 
 [connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_area_2d_body_entered"]
