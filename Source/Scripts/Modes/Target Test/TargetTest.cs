@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class TargetTest : Mode, IModeStartEvent{
+public partial class TargetTest : Mode, IModeStartEvent, ILevelLoadedEvent{
     public static int TopScore;
     public static int TotalScore = 250;
     public static int[] PlayerScores;
@@ -36,6 +36,10 @@ public partial class TargetTest : Mode, IModeStartEvent{
         }
     }
 
+	public void OnLevelLoaded(){
+		foreach(Player player in Game.Players) player.Invulnerable = true;
+	}
+
     protected override void SetPoints(){
         int[] sortedScores = new int[Game.MAX_PLAYERS];
         // Populate Scores and sortedScores
@@ -54,6 +58,10 @@ public partial class TargetTest : Mode, IModeStartEvent{
             Positions[i] = (byte)(Array.IndexOf(sortedScores, PlayerScores[i]) + 1);
         }
     }
+
+	public override bool IsSamePlayerSpawns(){
+		return true;
+	}
 
     public override Item GiveItem(Player player){
         Tuple<Item, int>[] items = {

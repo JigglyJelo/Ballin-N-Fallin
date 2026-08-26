@@ -186,8 +186,9 @@ public partial class Level : Node2D {
 			bakedBody.CollisionLayer = 0b11;
 
 			if(editorBody.IsInGroup(GROUP_NO_REGAIN)){
+				const float NO_REGAIN_DARKEN = 0.85f;
 				bakedBody.AddToGroup(GROUP_NO_REGAIN, true);
-				bakedBody.Modulate = new Color(0.85f,0.85f,0.85f);
+				bakedBody.Modulate = new Color(NO_REGAIN_DARKEN,NO_REGAIN_DARKEN,NO_REGAIN_DARKEN);
 			}else if(!editorBody.IsInGroup(GROUP_REGAIN)){
 				GD.PrintErr($"{Game.CurrentLevelName}: FORGOT TO ASSIGN EITHER Regain or NoRegain group to {editorBody.Name} Node");
 			}else{

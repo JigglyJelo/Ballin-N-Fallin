@@ -1,14 +1,14 @@
 [gd_scene load_steps=19 format=3 uid="uid://dm1poqe4ov8r"]
 
-[ext_resource type="Script" uid="uid://csht4xe0ktspv" path="res://Source/Scripts/Level Objects/Level.cs" id="1_70flo"]
-[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="2_6sc0l"]
-[ext_resource type="PackedScene" uid="uid://d0sn2fn12sqmb" path="res://Source/Scenes/Mode Stuff/Target Test/TargetZone.tscn" id="3_8yf67"]
-[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="3_phowq"]
-[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="4_2kgbe"]
-[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="5_ekiax"]
-[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Level Stuff/DeathZone.tscn" id="7_cbo1j"]
-[ext_resource type="Texture2D" uid="uid://bqnq3n7hdasdf" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Target Test Tile.png" id="8_h061q"]
-[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="9_fj4qf"]
+[ext_resource type="Script" uid="uid://csht4xe0ktspv" path="res://Source/Scripts/Level Objects/Level.cs" id="1_agh85"]
+[ext_resource type="PackedScene" uid="uid://b0gmwbgcx6cx4" path="res://Source/Scenes/Backgrounds/FullBackgrounds/Checkerboard.tscn" id="2_hsbeu"]
+[ext_resource type="PackedScene" uid="uid://d0sn2fn12sqmb" path="res://Source/Scenes/Mode Stuff/Target Test/TargetZone.tscn" id="3_51kcs"]
+[ext_resource type="Texture2D" uid="uid://doxkh26up1xhp" path="res://Assets/Sprites/Level Stuff/Respawn Point.png" id="4_45225"]
+[ext_resource type="Texture2D" uid="uid://07q2o0v0njha" path="res://Assets/Sprites/Level Stuff/SpawnPoint.png" id="5_q7k2k"]
+[ext_resource type="PackedScene" uid="uid://cbm3uk52m42id" path="res://Source/Scenes/Level Stuff/ItemSpawner.tscn" id="6_wqw11"]
+[ext_resource type="PackedScene" uid="uid://b5rrbsu37fsgt" path="res://Source/Scenes/Level Stuff/DeathZone.tscn" id="7_0yclr"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_rvr43"]
+[ext_resource type="Texture2D" uid="uid://bqnq3n7hdasdf" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Target Test Tile.png" id="9_xe26c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cyc5n"]
 size = Vector2(608, 257)
@@ -39,8 +39,8 @@ size = Vector2(6392, 128)
 
 [node name="Level" type="Node2D"]
 position = Vector2(0, -448)
-script = ExtResource("1_70flo")
-background = ExtResource("2_6sc0l")
+script = ExtResource("1_agh85")
+background = ExtResource("2_hsbeu")
 
 [node name="CameraBoundary" type="ReferenceRect" parent="."]
 offset_left = -2688.0
@@ -48,7 +48,7 @@ offset_top = -989.0
 offset_right = 2880.0
 offset_bottom = 2143.0
 
-[node name="TargetZone" parent="." instance=ExtResource("3_8yf67")]
+[node name="TargetZone" parent="." instance=ExtResource("3_51kcs")]
 position = Vector2(2008, 1016)
 minPointValue = 20
 maxPointValue = 50
@@ -57,7 +57,7 @@ maxPointValue = 50
 position = Vector2(-1096, -56)
 shape = SubResource("RectangleShape2D_cyc5n")
 
-[node name="TargetZone2" parent="." instance=ExtResource("3_8yf67")]
+[node name="TargetZone2" parent="." instance=ExtResource("3_51kcs")]
 position = Vector2(2008, 1016)
 minPointValue = -50
 
@@ -65,7 +65,7 @@ minPointValue = -50
 position = Vector2(-1704, 296)
 shape = SubResource("RectangleShape2D_6m5xj")
 
-[node name="TargetZone3" parent="." instance=ExtResource("3_8yf67")]
+[node name="TargetZone3" parent="." instance=ExtResource("3_51kcs")]
 position = Vector2(2008, 1016)
 minPointValue = 30
 maxPointValue = 70
@@ -74,7 +74,7 @@ maxPointValue = 70
 position = Vector2(-24, -600)
 shape = SubResource("RectangleShape2D_ab55j")
 
-[node name="TargetZone5" parent="." instance=ExtResource("3_8yf67")]
+[node name="TargetZone5" parent="." instance=ExtResource("3_51kcs")]
 position = Vector2(2008, 1016)
 minPointValue = 50
 maxPointValue = 100
@@ -83,7 +83,7 @@ maxPointValue = 100
 position = Vector2(424, -800)
 shape = SubResource("RectangleShape2D_5exfi")
 
-[node name="TargetZone4" parent="." instance=ExtResource("3_8yf67")]
+[node name="TargetZone4" parent="." instance=ExtResource("3_51kcs")]
 position = Vector2(2008, 1016)
 minPointValue = 30
 maxPointValue = 60
@@ -107,73 +107,38 @@ polygon = PackedVector2Array(1696, 2496, 1696, 1216, 2304, 1216, 2304, 896, 2912
 
 [node name="RespawnPoint" type="Sprite2D" parent="." groups=["Respawn"]]
 position = Vector2(-2384, 1232)
-texture = ExtResource("3_phowq")
+texture = ExtResource("4_45225")
 
 [node name="SpawnPoint" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1180, 1272)
-texture = ExtResource("4_2kgbe")
+position = Vector2(-1856, 1216)
+texture = ExtResource("5_q7k2k")
 metadata/team = "A"
 
-[node name="SpawnPoint2" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1500, 1272)
-texture = ExtResource("4_2kgbe")
-metadata/team = "A"
-
-[node name="SpawnPoint3" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1820, 1272)
-texture = ExtResource("4_2kgbe")
-metadata/team = "A"
-
-[node name="SpawnPoint4" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2140, 1272)
-texture = ExtResource("4_2kgbe")
-metadata/team = "A"
-
-[node name="SpawnPoint5" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-2304, 985)
-texture = ExtResource("4_2kgbe")
-metadata/team = "B"
-
-[node name="SpawnPoint6" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1984, 985)
-texture = ExtResource("4_2kgbe")
-metadata/team = "B"
-
-[node name="SpawnPoint7" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1664, 985)
-texture = ExtResource("4_2kgbe")
-metadata/team = "B"
-
-[node name="SpawnPoint8" type="Sprite2D" parent="." groups=["Spawn"]]
-position = Vector2(-1344, 985)
-texture = ExtResource("4_2kgbe")
-metadata/team = "B"
-
-[node name="ItemSpawner" parent="." instance=ExtResource("5_ekiax")]
+[node name="ItemSpawner" parent="." instance=ExtResource("6_wqw11")]
 position = Vector2(-1400, 232)
 
-[node name="DeathZone" parent="." instance=ExtResource("7_cbo1j")]
+[node name="DeathZone" parent="." instance=ExtResource("7_0yclr")]
 position = Vector2(-1080, 2376)
 
 [node name="CollisionShape2D" parent="DeathZone" index="0"]
 position = Vector2(504, 240)
 shape = SubResource("RectangleShape2D_64h1s")
 
-[node name="DeathZone2" parent="." instance=ExtResource("7_cbo1j")]
+[node name="DeathZone2" parent="." instance=ExtResource("7_0yclr")]
 position = Vector2(3776, 2368)
 
 [node name="CollisionShape2D" parent="DeathZone2" index="0"]
 position = Vector2(-512, 256)
 shape = SubResource("RectangleShape2D_tl2cg")
 
-[node name="DeathZone3" parent="." instance=ExtResource("7_cbo1j")]
+[node name="DeathZone3" parent="." instance=ExtResource("7_0yclr")]
 position = Vector2(3768, 176)
 
 [node name="CollisionShape2D" parent="DeathZone3" index="0"]
 position = Vector2(8, 496)
 shape = SubResource("RectangleShape2D_q228w")
 
-[node name="DeathZone4" parent="." instance=ExtResource("7_cbo1j")]
+[node name="DeathZone4" parent="." instance=ExtResource("7_0yclr")]
 position = Vector2(-2488, -1280)
 
 [node name="CollisionShape2D" parent="DeathZone4" index="0"]
@@ -190,15 +155,15 @@ polygon = PackedVector2Array(-2560, 1455, -1152, 1455, -1152, 2688, -2752, 2688,
 light_mask = 3
 color = Color(0.6901961, 0.99607843, 0.4627451, 1)
 polygon = PackedVector2Array(-1152, 2656, -2752, 2656, -2752, -1248, -2560, -1248, -2560, 1440, -1152, 1440)
-script = ExtResource("9_fj4qf")
+script = ExtResource("8_rvr43")
 stroke_color = Color(0.56078434, 0.73333335, 0.6, 1)
 
 [node name="@Polygon2D@82976" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 texture_repeat = 2
 color = Color(0.5058824, 0.9137255, 0.4745098, 1)
-texture = ExtResource("8_h061q")
+texture = ExtResource("9_xe26c")
 polygon = PackedVector2Array(-1152, 2688, -2752, 2688, -2752, -1216, -2560, -1216, -2560, 1472, -1152, 1472)
-script = ExtResource("9_fj4qf")
+script = ExtResource("8_rvr43")
 stroke_color = Color(0.56078434, 0.73333335, 0.6, 1)
 
 [node name="StaticBody2D2_Baked" type="StaticBody2D" parent="." groups=["BakedLevelElement", "NoRegain"]]
@@ -212,15 +177,15 @@ polygon = PackedVector2Array(2688, 2688, 0, 2688, 0, 1391, 608, 1391, 608, 1071,
 light_mask = 3
 color = Color(0.6901961, 0.99607843, 0.4627451, 1)
 polygon = PackedVector2Array(0, 2656, 0, 1376, 608, 1376, 608, 1056, 1216, 1056, 1216, 800, 1792, 800, 1792, 480, 2176, 480, 2176, 288, 2688, 288, 2688, 2656)
-script = ExtResource("9_fj4qf")
+script = ExtResource("8_rvr43")
 stroke_color = Color(0.56078434, 0.73333335, 0.6, 1)
 
 [node name="@Polygon2D@82980" type="Polygon2D" parent="StaticBody2D2_Baked/CollisionPolygon2D"]
 texture_repeat = 2
 color = Color(0.5058824, 0.9137255, 0.4745098, 1)
-texture = ExtResource("8_h061q")
+texture = ExtResource("9_xe26c")
 polygon = PackedVector2Array(0, 2688, 0, 1408, 608, 1408, 608, 1088, 1216, 1088, 1216, 832, 1792, 832, 1792, 512, 2176, 512, 2176, 320, 2688, 320, 2688, 2688)
-script = ExtResource("9_fj4qf")
+script = ExtResource("8_rvr43")
 stroke_color = Color(0.56078434, 0.73333335, 0.6, 1)
 
 [editable path="TargetZone"]
