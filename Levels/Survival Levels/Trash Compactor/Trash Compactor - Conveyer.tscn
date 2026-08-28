@@ -28,7 +28,6 @@ size = Vector2(1344, 1792)
 size = Vector2(1664, 128)
 
 [node name="Level" type="Node2D"]
-position = Vector2(-384, -448)
 script = ExtResource("1_66h86")
 floorColorOverride = Color(0.294118, 0.294118, 0.294118, 1)
 InsideColorOverride = Color(0, 0.333333, 0, 1)
@@ -155,14 +154,14 @@ collision_layer = 3
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Baked"]
 polygon = PackedVector2Array(4224, 1984, -2944, 1984, -2944, 1327, 4096, 1327, 4096, -320, -2944, -320, -2944, -1105, 4224, -1105)
 
-[node name="@Polygon2D@82458" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@31168" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 light_mask = 3
 color = Color(0.294118, 0.294118, 0.294118, 1)
 polygon = PackedVector2Array(-2944, -1120, 4224, -1120, 4224, 1952, -2944, 1952, -2944, 1312, 4096, 1312, 4096, -352, -2944, -352)
 script = ExtResource("13_va0fi")
 stroke_color = Color(0, 0.117647, 0, 1)
 
-[node name="@Polygon2D@82460" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
+[node name="@Polygon2D@31170" type="Polygon2D" parent="StaticBody2D_Baked/CollisionPolygon2D"]
 texture_repeat = 2
 color = Color(0, 0.333333, 0, 1)
 texture = ExtResource("2_nvooh")
