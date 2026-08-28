@@ -6,14 +6,24 @@
 
 [node name="Background" instance=ExtResource("1_xe1ir")]
 
-[node name="Polygon2D" type="Polygon2D" parent="BackgroundLayers" index="0"]
+[node name="Parallax2D" type="Parallax2D" parent="BackgroundLayers" index="0"]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(3174, 1587)
+repeat_times = 2
+follow_viewport = false
+
+[node name="Polygon2D" type="Polygon2D" parent="BackgroundLayers/Parallax2D" index="0"]
 texture_repeat = 2
 color = Color(0.784314, 0.784314, 0.784314, 1)
 texture = ExtResource("2_q8c0d")
 texture_scale = Vector2(1.25, 1.25)
 polygon = PackedVector2Array(0, 0, 3840, 0, 3840, 2160, 0, 2160)
 
-[node name="TGirder" type="Sprite2D" parent="BackgroundLayers" index="1"]
+[node name="Parallax2D2" type="Parallax2D" parent="BackgroundLayers" index="1"]
+scroll_scale = Vector2(0.55, 0.55)
+follow_viewport = false
+
+[node name="TGirder" type="Sprite2D" parent="BackgroundLayers/Parallax2D2" index="0"]
 self_modulate = Color(0.882353, 0.882353, 0.882353, 1)
 texture_repeat = 2
 position = Vector2(1920, 750)
@@ -21,20 +31,20 @@ rotation = 1.5708
 scale = Vector2(2, 2)
 texture = ExtResource("4_bgc0w")
 region_enabled = true
-region_rect = Rect2(148, 128, 148, 1920)
+region_rect = Rect2(148, 128, 148, 2944)
 
-[node name="LGirder" type="Sprite2D" parent="BackgroundLayers" index="2"]
+[node name="LGirder" type="Sprite2D" parent="BackgroundLayers/Parallax2D2" index="1"]
 texture_repeat = 2
 position = Vector2(532, 1080)
 scale = Vector2(2, 2)
 texture = ExtResource("4_bgc0w")
 region_enabled = true
-region_rect = Rect2(148, 128, 148, 1080)
+region_rect = Rect2(148, 128, 148, 2104)
 
-[node name="RGirder" type="Sprite2D" parent="BackgroundLayers" index="3"]
+[node name="RGirder" type="Sprite2D" parent="BackgroundLayers/Parallax2D2" index="2"]
 texture_repeat = 2
 position = Vector2(3308, 1080)
 scale = Vector2(2, 2)
 texture = ExtResource("4_bgc0w")
 region_enabled = true
-region_rect = Rect2(148, 128, 148, 1080)
+region_rect = Rect2(148, 128, 148, 2104)
