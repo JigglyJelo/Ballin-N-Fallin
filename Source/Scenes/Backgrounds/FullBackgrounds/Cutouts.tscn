@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2ydssn5bu2oi"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_k3b7k"]
+[ext_resource type="Script" uid="uid://cfcx24gcr1ook" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_k3b7k"]
 [ext_resource type="Texture2D" uid="uid://c5oh3psce46md" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/Abstract/SquareCutouts.png" id="2_r6otd"]
 
 [node name="Background" type="CanvasLayer"]
@@ -13,7 +13,12 @@ offset_bottom = 2160.0
 
 [node name="BackgroundLayers" type="Node" parent="."]
 
-[node name="Tiles" type="Sprite2D" parent="BackgroundLayers"]
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.8, 0.8)
+repeat_size = Vector2(3840, 2160)
+follow_viewport = false
+
+[node name="Tiles" type="Sprite2D" parent="Parallax2D"]
 self_modulate = Color(1, 1, 1, 0.188235)
 texture_filter = 1
 texture_repeat = 2
