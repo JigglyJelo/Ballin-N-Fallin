@@ -5,12 +5,15 @@ https://creativecommons.org/licenses/by/4.0/
 -----------------------------------
 Charge: Fireball Impact by EminYILDIRIM -- https://freesound.org/s/577450/ -- License: CC BY Attribution 4.0
 https://freesound.org/people/EminYILDIRIM/sounds/577450/
+
+Lap: "UI_Synth_02.wav" by LittleRobotSoundFactory
+https://freesound.org/people/LittleRobotSoundFactory/sounds/274203/
 -----------------------------------
 
 CC BY 3.0:
 https://creativecommons.org/licenses/by/3.0/
 -----------------------------------
-Item & Complete: "UI and Item sound effect Jingles Sample 2" by ViRiX
+Complete: "UI and Item sound effect Jingles Sample 2" by ViRiX
 "Some of the sounds in this project were created by ViRiX Dreamcore soundcloud.com/virix"
 https://opengameart.org/content/ui-and-item-sound-effect-jingles-sample-2
 -----------------------------------
@@ -72,6 +75,7 @@ https://opengameart.org/content/interface-sounds
 
 kenneynl_tone1: "Digital Audio" tone1.ogg by Kenny.nl
 https://kenney.nl/assets/digital-audio
------------------------------------
 
-Lap: Lost source will probably replace sound if can't be found :(
+Coin: "Coin collect Sound" by Gavynator
+https://freesound.org/people/Gavynator/sounds/691965/
+-----------------------------------
