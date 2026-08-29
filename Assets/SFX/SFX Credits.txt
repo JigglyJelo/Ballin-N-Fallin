@@ -10,7 +10,7 @@ https://freesound.org/people/EminYILDIRIM/sounds/577450/
 CC BY 3.0:
 https://creativecommons.org/licenses/by/3.0/
 -----------------------------------
-Others: "UI and Item sound effect Jingles Sample 2" by ViRiX
+Item & Complete: "UI and Item sound effect Jingles Sample 2" by ViRiX
 "Some of the sounds in this project were created by ViRiX Dreamcore soundcloud.com/virix"
 https://opengameart.org/content/ui-and-item-sound-effect-jingles-sample-2
 -----------------------------------
@@ -66,4 +66,12 @@ https://freesound.org/people/unfa/sounds/221528/
 
 Round Start: "whip and crack sound" by JayRom01
 https://freesound.org/people/JayRom01/sounds/615761/
+
+Bad: "Interface Sounds" error_003.ogg by Kenney.nl
+https://opengameart.org/content/interface-sounds
+
+kenneynl_tone1: "Digital Audio" tone1.ogg by Kenny.nl
+https://kenney.nl/assets/digital-audio
 -----------------------------------
+
+Lap: Lost source will probably replace sound if can't be found :(
