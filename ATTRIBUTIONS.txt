@@ -1,4 +1,4 @@
-Required Attributions:
+Required 3rd-Party Attributions:
 
 Music:
 "Egmont Overture Finale" Kevin MacLeod (incompetech.com)
@@ -18,5 +18,10 @@ SFX:
 Fireball Impact by EminYILDIRIM -- https://freesound.org/s/577450/ -- License: Attribution 4.0
 Licensed under Creative Commons: By Attribution 4.0 License
 https://creativecommons.org/licenses/by/4.0/
+
+"UI and Item sound effect Jingles Sample 2" by ViRiX
+Licensed under Creative Commons: By Attribution 3.0 License
+https://creativecommons.org/licenses/by/3.0/
+"Some of the sounds in this project were created by ViRiX Dreamcore soundcloud.com/virix"
 
 Additional non-required credits for CC0 and public domain assets can be found in their respective folders and credits files.
