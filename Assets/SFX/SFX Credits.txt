@@ -1,11 +1,14 @@
 SFX Credits:
 
 CC BY 4.0:
+https://creativecommons.org/licenses/by/4.0/
 -----------------------------------
 Charge: Fireball Impact by EminYILDIRIM -- https://freesound.org/s/577450/ -- License: CC BY Attribution 4.0
+https://freesound.org/people/EminYILDIRIM/sounds/577450/
 -----------------------------------
 
-CC BY 3.0
+CC BY 3.0:
+https://creativecommons.org/licenses/by/3.0/
 -----------------------------------
 Others: "UI and Item sound effect Jingles Sample 2" by ViRiX
 "Some of the sounds in this project were created by ViRiX Dreamcore soundcloud.com/virix"
@@ -13,6 +16,7 @@ https://opengameart.org/content/ui-and-item-sound-effect-jingles-sample-2
 -----------------------------------
 
 CC0 1.0:
+https://creativecommons.org/publicdomain/zero/1.0/
 -----------------------------------
 Bounce: "basketball" by vhschool2019
 https://freesound.org/people/vhschool2019/sounds/461118/
@@ -30,7 +34,7 @@ Swish: "Swish - bamboo stick weapon swhoshes" by qubodup
 https://opengameart.org/content/swish-bamboo-stick-weapon-swhoshes
 
 Item: "Cash register" by MaoDin204
-https://openverse.org/en-za/audio/deafdf72-1f73-4d0a-a849-356212e09e83?p=46
+https://openverse.org/audio/deafdf72-1f73-4d0a-a849-356212e09e83
 https://freesound.org/people/MaoDin204/sounds/721774/
 
 Pop: "Balloon Sounds" by AntumDeluge
