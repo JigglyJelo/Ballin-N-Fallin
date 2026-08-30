@@ -104,7 +104,7 @@ public class PlayerPhysics{
     public void OnRigidBodyEntered(PhysicsBody2D body){
 		if(body.IsInGroup("NoRegain")){
 			player.BounceEffects();
-			if(body.IsInGroup("Bump")) player.PlayerEmotion = Player.Emotion.Bumped;
+			if(body.IsInGroup("Bump")) player.Visuals.PlayerEmotion = Player.Emotion.Bumped;
 			if(player.IsStomping && player.Rb.LinearVelocity.Y <= MIN_STOMP_SPEED){
 				//IsStomping = false;
 			}
@@ -118,7 +118,7 @@ public class PlayerPhysics{
 				//IsStomping = false;
 			}
 		}else if(body.IsInGroup("Bump")){
-			player.PlayerEmotion = Player.Emotion.Bumped;
+			player.Visuals.PlayerEmotion = Player.Emotion.Bumped;
 			if(player.IsStomping && player.Rb.LinearVelocity.Y <= MIN_STOMP_SPEED){
 				//IsStomping = false;
 			}
@@ -135,8 +135,8 @@ public class PlayerPhysics{
 				}
 			}else{
 				if(Online.IsHost()) Mode.ModeNode.PlayerBumpedPlayer(otherPlayer,player);
-				player.PlayerEmotion = Player.Emotion.Bumped;
-        		otherPlayer.PlayerEmotion = Player.Emotion.Bumped;
+				player.Visuals.PlayerEmotion = Player.Emotion.Bumped;
+        		otherPlayer.Visuals.PlayerEmotion = Player.Emotion.Bumped;
 			}
 
 			bool isSuccessfulStomp(){

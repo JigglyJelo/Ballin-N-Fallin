@@ -2,7 +2,7 @@ public class Moon : TransformItem{
 	public Moon(Player player): base(player,ItemEnum.Moon,10){}
 
 	public override void UseItem(){
-		if(!Activated) Player.PlayerEmotion = Player.Emotion.Shocked;
+		if(!Activated) Player.Visuals.PlayerEmotion = Player.Emotion.Shocked;
 		Activated = true;
 		SetTransformation();
 	}

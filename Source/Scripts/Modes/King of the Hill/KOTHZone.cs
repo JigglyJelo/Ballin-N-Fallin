@@ -31,7 +31,7 @@ public partial class KOTHZone : Area2D{
 		if(body.GetParent().IsInGroup("Player")){
 			Player player = body.GetParent() as Player;
 			playersInZone.Add(player);
-			if(player.PlayerEmotion == Player.Emotion.Annoyed) player.PlayerEmotion = Player.Emotion.Neutral;
+			if(player.Visuals.PlayerEmotion == Player.Emotion.Annoyed) player.Visuals.PlayerEmotion = Player.Emotion.Neutral;
 			if(playersInZone.Count == 1){
 				visualPolygon.Color = new Color(playersInZone[0].PlayerColor,0.8f);
 			}else{
@@ -67,8 +67,8 @@ public partial class KOTHZone : Area2D{
 			}
 			if(player.Score >= KOTH.TotalScore - timeToLose){
 				player.Score = KOTH.TotalScore - timeToLose;
-				player.PlayerEmotion = Player.Emotion.Angry;
-			}else player.PlayerEmotion = Player.Emotion.Annoyed;
+				player.Visuals.PlayerEmotion = Player.Emotion.Angry;
+			}else player.Visuals.PlayerEmotion = Player.Emotion.Annoyed;
 
 
 			player.Visuals.ShowPlayerText();

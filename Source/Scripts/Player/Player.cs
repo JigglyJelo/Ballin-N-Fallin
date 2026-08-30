@@ -461,13 +461,6 @@ public partial class Player : Node2D{
 		Happy, Sad, Angry, Annoyed, Shocked, Bumped, Neutral
 	}
 
-	public Emotion PlayerEmotion{
-		get{return playerEmotion;}
-		set{
-			playerEmotion = value;
-		}
-	}
-
 	//Online & Networking
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void PlayerOffscreenOnHost(){

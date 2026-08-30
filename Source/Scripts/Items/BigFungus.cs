@@ -7,7 +7,7 @@ public class BigFungus : TransformItem{
 	}
 
 	public override void UseItem(){
-		if(!Activated) Player.PlayerEmotion = Player.Emotion.Angry;
+		if(!Activated) Player.Visuals.PlayerEmotion = Player.Emotion.Angry;
 		Activated = true;
 		SetTransformation();
 	}

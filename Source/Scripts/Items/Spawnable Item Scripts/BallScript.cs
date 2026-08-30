@@ -64,7 +64,7 @@ public partial class BallScript : SpawnableItemScript{
                     player.Rb.LinearVelocity = new Vector2(player.Rb.LinearVelocity.X,-2000f);
                 }
             }else{
-                player.PlayerEmotion = Player.Emotion.Bumped;
+                player.Visuals.PlayerEmotion = Player.Emotion.Bumped;
 			    if(player.Rb.Freeze && !player.Finished){
 				    player.Rb.SetDeferred("freeze",false);
 				    GD.Print("Unfrozen");

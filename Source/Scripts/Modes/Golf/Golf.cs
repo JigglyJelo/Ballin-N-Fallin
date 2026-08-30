@@ -123,7 +123,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
                 player.SetNewPos = false;
                 player.Physics.StillTimer = 0;
             }else if(player.Physics.StillTimer >= 1 && player.Physics.StillTimer < 2 && Mathf.Abs(player.Rb.GlobalPosition.DistanceTo(player.SpawnPoint)) < 512 && Golf.PlayerStrokes[player.Index] != 0){
-                player.PlayerEmotion = Player.Emotion.Annoyed;
+                player.Visuals.PlayerEmotion = Player.Emotion.Annoyed;
             }
             player.Physics.StillTimer += delta;
         }
@@ -142,7 +142,7 @@ public partial class Golf : Mode, ILevelLoadedEvent{
     private void GolfPlayerRespawned(byte playerId){
         Player player = Game.Players[playerId-1];
         player.Visuals.ShowPlayerText();
-        player.PlayerEmotion = Player.Emotion.Annoyed;
+        player.Visuals.PlayerEmotion = Player.Emotion.Annoyed;
     }
 
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
