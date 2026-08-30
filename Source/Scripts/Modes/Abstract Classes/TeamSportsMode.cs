@@ -68,8 +68,8 @@ public abstract partial class TeamSportsMode : TeamMode, ILevelLoadedEvent, IMod
         }
         
         foreach(Player player in Game.Players){
-            if(player.Team.Equals(teamScoredOn)) player.PlayerEmotion = Player.Emotion.Annoyed;
-            else player.PlayerEmotion = Player.Emotion.Happy;
+            if(player.Team.Equals(teamScoredOn)) player.Visuals.PlayerEmotion = Player.Emotion.Annoyed;
+            else player.Visuals.PlayerEmotion = Player.Emotion.Happy;
         }
         if(Online.IsHost()){
             SportBall.Rb.SetDeferred("freeze",true);

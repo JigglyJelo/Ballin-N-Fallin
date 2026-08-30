@@ -4,7 +4,7 @@ public class Pepper : SingleUseItem{
 	public Pepper(Player player,byte amount): base(player,ItemEnum.Pepper,amount){}
 
 	public override void ItemAbility(){
-		Player.PlayerEmotion = Player.Emotion.Angry;
+		Player.Visuals.PlayerEmotion = Player.Emotion.Angry;
 		Player.Rb.Freeze = false;
 		//If player is moving in direction opposite of aiming stop their momentum in that direction
 		if(Math.Sign(Player.Rb.LinearVelocity.X) != Math.Sign(Player.InputVector.X)) 

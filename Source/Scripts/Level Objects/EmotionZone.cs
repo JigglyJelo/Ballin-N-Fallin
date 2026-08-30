@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public partial class EmotionZone : Area2D{
@@ -10,13 +9,13 @@ public partial class EmotionZone : Area2D{
 	public void _on_body_entered(PhysicsBody2D body){
 		if(body.GetParent().IsInGroup("Player")){
 			Player player = body.GetParent() as Player;
-			player.PlayerEmotion = Emotion;
+			player.Visuals.PlayerEmotion = Emotion;
 			players.Add(player);
 		}
 	}
 
 	public override void _PhysicsProcess(double delta){
-		foreach(Player player in players) player.PlayerEmotion = Emotion;
+		foreach(Player player in players) player.Visuals.PlayerEmotion = Emotion;
 	}
 
 	public void _on_body_exited(PhysicsBody2D body){

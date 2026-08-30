@@ -47,16 +47,16 @@ public partial class CTK : Mode, ILevelLoadedEvent, IModeStartEvent{
 				}
 				if(modeNode.king.Score >= CTK.TotalScore - timeToLose){
 					modeNode.king.Score = CTK.TotalScore - timeToLose;
-					modeNode.king.PlayerEmotion = Player.Emotion.Angry;
+					modeNode.king.Visuals.PlayerEmotion = Player.Emotion.Angry;
 					modeNode.king.Visuals.ShowPlayerText();
-				}else modeNode.king.PlayerEmotion = Player.Emotion.Sad;
+				}else modeNode.king.Visuals.PlayerEmotion = Player.Emotion.Sad;
             }
             //Set new King
             modeNode.king = value;
             if(value != null){
                 Sprite2D crownSprite = modeNode.king.Visuals.RotationsNode.GetNodeOrNull<Sprite2D>("Crown");
                 crownSprite.Visible = true;
-				modeNode.king.PlayerEmotion = Player.Emotion.Happy;
+				modeNode.king.Visuals.PlayerEmotion = Player.Emotion.Happy;
                 if(modeNode.king.Score >= TotalScore*(2.0/3.0)) MusicPlayer.SetPitch(FAST_MUSIC_SPEED);
                 else if(MusicPlayer.GetPitch() != 1) MusicPlayer.SetPitch(1);
             }

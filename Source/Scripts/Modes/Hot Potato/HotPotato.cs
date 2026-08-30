@@ -19,14 +19,14 @@ public partial class HotPotato : Mode, ILevelLoadedEvent{
                 modeNode.potatoHolder.Visuals.BallSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.Visuals.BallSprite.SelfModulate.A);
                 modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate = new Color(Colors.Black,modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate.A);
                 modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate.A);
-				modeNode.potatoHolder.PlayerEmotion = Player.Emotion.Neutral;
+				modeNode.potatoHolder.Visuals.PlayerEmotion = Player.Emotion.Neutral;
             }
             modeNode.potatoHolder = value;
             if(value != null){
                 modeNode.potatoHolder.Visuals.BallSprite.SelfModulate = new Color(Color.Color8(15,15,15),modeNode.potatoHolder.Visuals.BallSprite.SelfModulate.A);
                 modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate = new Color(modeNode.potatoHolder.PlayerColor,modeNode.potatoHolder.Visuals.LinesSprite.SelfModulate.A);
                 modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate = new Color(Colors.Black,modeNode.potatoHolder.Visuals.ShadingSprite.SelfModulate.A);
-				modeNode.potatoHolder.PlayerEmotion = Player.Emotion.Shocked;
+				modeNode.potatoHolder.Visuals.PlayerEmotion = Player.Emotion.Shocked;
             }
         }
     }
@@ -104,7 +104,7 @@ public partial class HotPotato : Mode, ILevelLoadedEvent{
                 furthestPlayer = player;
                 furthestDistance = distance;
             }
-            if(distance <= 1024) player.PlayerEmotion = Player.Emotion.Shocked;
+            if(distance <= 1024) player.Visuals.PlayerEmotion = Player.Emotion.Shocked;
         }
 
         if(eligiblePlayers.Count > 0){

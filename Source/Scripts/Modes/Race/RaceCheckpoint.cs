@@ -61,7 +61,7 @@ public partial class RaceCheckpoint : Area2D{
 		//Sets checkpoint back if gone back
 		}else if(id < Race.PlayerCheckpoints[player.Id-1]){
 			Race.PlayerCheckpoints[player.Id-1] = id;
-			player.PlayerEmotion = Player.Emotion.Angry;
+			player.Visuals.PlayerEmotion = Player.Emotion.Angry;
 		}
         //If Multiplayer finished
 		if(FinishedPlayers >= Game.TotalPlayers -1 && !Mode.Finished && Game.TotalPlayers > 1) Mode.GameFinished();

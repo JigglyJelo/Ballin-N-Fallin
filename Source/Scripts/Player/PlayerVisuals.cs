@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Reflection.Metadata.Ecma335;
 
 public partial class PlayerVisuals : Node2D{
 	private static readonly float ONLINE_UPDATE_RATE = (float)PlayerSync.VISUAL_SYNC_INTERVAL / Engine.PhysicsTicksPerSecond;
@@ -19,6 +20,14 @@ public partial class PlayerVisuals : Node2D{
 	public static int BallSize;
 	private static int bigBallSize;
 	private float textTimer = 3, itemRouletteTimer, emotionTimer;
+	private Player.Emotion playerEmotion = Player.Emotion.Neutral;
+	public Player.Emotion PlayerEmotion{
+		get{return playerEmotion;}
+		set{
+			playerEmotion = value;
+			SetPlayerEmotionalSprites(playerEmotion);
+		}
+	}
 	public Label ItemAmountText;
 	private Label playerText, usernameText;
 	private CanvasGroup usernameGroup;
@@ -160,7 +169,7 @@ public partial class PlayerVisuals : Node2D{
 
 		//Emotion Timer
 		if(emotionTimer > 0) emotionTimer -= delta;
-		else if(player.PlayerEmotion != Player.Emotion.Neutral) player.PlayerEmotion = Player.Emotion.Neutral;
+		else if(PlayerEmotion != Player.Emotion.Neutral) PlayerEmotion = Player.Emotion.Neutral;
 	}
 
 	private void EyeAndArrowUpdate(float fDelta){
@@ -205,14 +214,14 @@ public partial class PlayerVisuals : Node2D{
 			lerpAmount = 1;
 		}
 		//Eyes
-		if(player.PlayerEmotion != Player.Emotion.Bumped){
+		if(PlayerEmotion != Player.Emotion.Bumped){
 			Vector2 eyePosition = player.RawInputVector * (6/TextureScale);
 			eyePosition = eyePosition.Rotated(-(player.Rb.Rotation+RotationsNode.Rotation));
 			PupilsSprite.Position = PupilsSprite.Position.Lerp(eyePosition,lerpAmount);
 		}else PupilsSprite.Position = Vector2.Zero;
 		
 		if(player.LaunchPower == PlayerPhysics.MAX_LAUNCH_POWER){ //Move this elsewhere
-			player.PlayerEmotion = Player.Emotion.Angry;
+			PlayerEmotion = Player.Emotion.Angry;
 			emotionTimer = 1/3f;
 		}
 	}
@@ -458,7 +467,7 @@ public partial class PlayerVisuals : Node2D{
 		LinesSprite.Texture = isBig ? bigLinesTexture : LinesTexture;
 		OutlineSprite.Texture = isBig ? BigOutlineTexture : OutlineTexture;
 		ShadingSprite.Scale = new Vector2(0.38f * player.PlayerScale, 0.38f * player.PlayerScale);
-		SetPlayerEmotionalSprites(player.PlayerEmotion);
+		SetPlayerEmotionalSprites(PlayerEmotion);
 		if(Game.CurrentMode == Mode.GameMode.CrownTheKing){
 			Sprite2D crownSprite = SpritesNode.GetNodeOrNull<Sprite2D>("Crown");
 			if(crownSprite != null){

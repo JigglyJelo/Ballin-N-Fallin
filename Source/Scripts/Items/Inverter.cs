@@ -2,7 +2,7 @@ public class Inverter : TransformItem{
 	public Inverter(Player player): base(player,ItemEnum.Inverter,10){}
 
 	public override void UseItem(){
-		if(!Activated) Player.PlayerEmotion = Player.Emotion.Shocked;
+		if(!Activated) Player.Visuals.PlayerEmotion = Player.Emotion.Shocked;
 		Activated = true;
 		SetTransformation();
 	}
