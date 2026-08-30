@@ -7,8 +7,7 @@ public partial class SurvivalHUD : Node{
 	private float[] medals;
 	private float personalBest;
 	public override void _Ready(){
-		Game.Save.Load(Game.SAVE_PATH);
-		LoadData();
+		personalBest = Game.GetSavedLevelRecord(Mode.GameMode.Survival,LevelName);
 		medals = (float[])Mode.ModeNode.GetNode<Level>("Level").GetMeta("medals",new float[]{0,0,0,0});
 		GetNode<CanvasLayer>("CanvasLayer").Scale =  Game.ContentScaleVector2;
 		timerText = GetNode<Label>("CanvasLayer/TimerText");
@@ -30,17 +29,12 @@ public partial class SurvivalHUD : Node{
 			SaveData();
 			GD.Print("Saved");
 			QueueFree();
-		} 
+		}
     }
 
-	private void LoadData(){
-		personalBest = (float)Game.Save.GetValue("Survival Time",LevelName, float.MaxValue);
-	}
-
 	private void SaveData(){
-		if(Survival.TotalTime < personalBest){
-			Game.Save.SetValue("Survival Time",LevelName, Survival.TotalTime);
-			Game.Save.Save(Game.SAVE_PATH);
-		} 
+		if(Survival.TotalTime > personalBest || float.IsNaN(personalBest)){
+			Game.SaveLevelRecord(Mode.GameMode.Survival,LevelName,Survival.TotalTime);
+		}
 	}
 }

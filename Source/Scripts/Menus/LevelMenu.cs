@@ -14,6 +14,8 @@ public partial class LevelMenu : ScrollableMenu{
 	private int inputId = (int)Game.PlayerDatas[0].InputDevice;
 	private Polygon2D previewPoly;
 	private GradientTexture2D bgGradient = null;
+	private RichTextLabel soloStatsLabel;
+	private string soloLevelDataText;
 
 	public override void _Ready(){
 		base._Ready();
@@ -27,7 +29,6 @@ public partial class LevelMenu : ScrollableMenu{
 		int index = 0;
 		foreach(string folder in DirAccess.GetDirectoriesAt(Game.LEVELS_PATH + Mode.EnumToString(Game.CurrentMode) + " Levels/" + string.Join("",FoldersOpened))){
 			Label folderLabel = GD.Load<PackedScene>(MenuScene.MENU_PATH + "LevelLabel.tscn").Instantiate<Label>();
-			
 			optionNames.Add(folder + "/");
 			folderLabel.Text = folder;
 			folderLabel.Name = "Folder" + index;
@@ -57,6 +58,8 @@ public partial class LevelMenu : ScrollableMenu{
 		if(ResourceLoader.Exists(bgPath)){
 			bgGradient = GD.Load<GradientTexture2D>(bgPath);
 		}
+		soloStatsLabel = GetNode<RichTextLabel>("SoloStats");
+		if(Game.TotalPlayers > 1) soloStatsLabel.Visible = false;
 		UpdateSelectionVisual();
 	}
 
@@ -127,7 +130,27 @@ public partial class LevelMenu : ScrollableMenu{
 				else label.SelfModulate = new Color(0.5f,0.75f,1);
 			}
 		}
-		if(optionNames.Count > 0) LoadLevelVisual();
+		if(optionNames.Count > 0){
+			LoadLevelVisual();
+			if(Game.TotalPlayers == 1){
+				soloStatsLabel.Visible = !optionNames[Selection - 1].EndsWith("/"); //Hide if folder
+				string currentLevelName = string.Join("", FoldersOpened) + optionNames[Selection - 1];
+				float savedRecord = Game.GetSavedLevelRecord(Game.CurrentMode,currentLevelName);
+				bool hasRecord = !float.IsNaN(savedRecord);
+
+				switch(Game.CurrentMode){
+					case Mode.GameMode.Race:
+						soloStatsLabel.Text = $"{soloLevelDataText}\nBest Time: {(hasRecord ? FormatTime(savedRecord) : "--:--.---")}";
+						break;
+					case Mode.GameMode.Golf:
+						soloStatsLabel.Text = $"Par: {soloLevelDataText}\nBest Score: {(hasRecord ? ((int)savedRecord).ToString("0") : "--")}";
+						break;
+					case Mode.GameMode.Survival:
+						soloStatsLabel.Text = $"{soloLevelDataText}\nLongest Time Survived: {(hasRecord ? FormatTime(savedRecord) : "--:--.---")}";
+						break;
+				}
+			}
+		}
 	}
 	
 	private void FolderNavigation(bool opening){
@@ -152,6 +175,49 @@ public partial class LevelMenu : ScrollableMenu{
 				PackedScene scene = GD.Load<PackedScene>(fullPath);
 				if(scene != null){
 					Node tempLevel = scene.Instantiate();
+					if(Game.TotalPlayers == 1){
+						switch(Game.CurrentMode){
+							case Mode.GameMode.Race:
+							case Mode.GameMode.Survival:
+								soloLevelDataText = generateMedalText();
+								break;
+
+							case Mode.GameMode.Golf:
+								soloLevelDataText = tempLevel.HasMeta("Par") ? tempLevel.GetMeta("Par").AsInt32().ToString() : "--";
+								break;
+						}
+
+						string generateMedalText(){
+							if(!tempLevel.HasMeta("Medals")) return "";
+
+							Godot.Collections.Array<float> medals = (Godot.Collections.Array<float>)tempLevel.GetMeta("Medals");
+							if(medals.Count < 4) return "";
+							string currentLevelName = string.Join("", FoldersOpened) + optionNames[Selection - 1];
+							float savedRecord = Game.GetSavedLevelRecord(Game.CurrentMode, currentLevelName);
+
+							//Check if they beat gold (Index 2)
+							bool displayDiamond = false;
+							switch(Game.CurrentMode){
+								case Mode.GameMode.Race:
+									displayDiamond = savedRecord <= medals[2];
+									break;
+								case Mode.GameMode.Survival:
+									displayDiamond = savedRecord >= medals[2];
+									break;
+							}
+
+							string text = "Medals:\n";
+							if(displayDiamond){
+								text += $"[color=#27F5EE]Diamond: {FormatTime(medals[3])}[/color]\n";
+							}
+
+							text += $"[color=gold]Gold: {FormatTime(medals[2])}[/color]\n";
+							text += $"[color=silver]Silver: {FormatTime(medals[1])}[/color]\n";
+							text += $"[color=#CD7F32]Bronze: {FormatTime(medals[0])}[/color]";
+
+							return text;
+						}
+					}
 
 					Vector2 levelSize = new Vector2(3840, 2160); 
 					Vector2 levelCenter = Vector2.Zero;
@@ -353,5 +419,13 @@ public partial class LevelMenu : ScrollableMenu{
 				GD.PrintErr("Failed to load visual for level: " + currentOption + "\nError: " + ex.Message);
 			}
 		}
+	}
+
+
+	private static string FormatTime(float timeInSeconds){
+		int minutes = Mathf.FloorToInt(timeInSeconds / 60f);
+		int seconds = Mathf.FloorToInt(timeInSeconds % 60f);
+		int milliseconds = Mathf.FloorToInt((timeInSeconds - Mathf.Floor(timeInSeconds)) * 1000f);
+		return $"{minutes:D2}:{seconds:D2}.{milliseconds:D3}";
 	}
 }

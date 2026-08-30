@@ -104,23 +104,23 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
 	}
 
     private void SaveData(){
-        Game.Save.SetValue("Sound","Master Volume",Game.MasterVolume);
-        Game.Save.SetValue("Sound","Music Volume",Game.MusicVolume);
-        Game.Save.SetValue("Sound","SFX Volume",Game.SFXVolume);
-        Game.Save.SetValue("Sound","Custom Soundtrack",Game.CustomSoundtrack);
-        Game.Save.Save(Game.SAVE_PATH);
+        Game.SettingsSave.SetValue("Sound","Master Volume",Game.MasterVolume);
+        Game.SettingsSave.SetValue("Sound","Music Volume",Game.MusicVolume);
+        Game.SettingsSave.SetValue("Sound","SFX Volume",Game.SFXVolume);
+        Game.SettingsSave.SetValue("Sound","Custom Soundtrack",Game.CustomSoundtrack);
+        Game.SettingsSave.Save(Game.SETTINGS_PATH);
     }
 
     public static void LoadData(){
-        Game.Save.Load(Game.SAVE_PATH);
+        Game.SettingsSave.Load(Game.SETTINGS_PATH);
         //Volume
-        Game.MasterVolume = (byte)Game.Save.GetValue("Sound", "Master Volume", 50);
-        Game.MusicVolume = (byte)Game.Save.GetValue("Sound", "Music Volume", 50);
-        Game.SFXVolume = (byte)Game.Save.GetValue("Sound", "SFX Volume", 50);
+        Game.MasterVolume = (byte)Game.SettingsSave.GetValue("Sound", "Master Volume", 50);
+        Game.MusicVolume = (byte)Game.SettingsSave.GetValue("Sound", "Music Volume", 50);
+        Game.SFXVolume = (byte)Game.SettingsSave.GetValue("Sound", "SFX Volume", 50);
         SetAudioVolume("Master",Game.MasterVolume);
         SetAudioVolume("Music",Game.MusicVolume);
         SetAudioVolume("SFX",Game.SFXVolume);
-        Game.CustomSoundtrack = (string)Game.Save.GetValue("Sound", "Custom Soundtrack", "");
+        Game.CustomSoundtrack = (string)Game.SettingsSave.GetValue("Sound", "Custom Soundtrack", "");
     }
 
     private static void SetAudioVolume(string bus, byte volume){

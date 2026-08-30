@@ -115,24 +115,24 @@ public partial class SettingsOnlineMenu : VerticalMenu, ILeftRightSelections{
 		try{
 			NohubHostManager.NohubPort = ushort.Parse(nohubPortEntry.Text);
 		}catch{}
-		Game.Save.SetValue("Online","Chat", (int)OnlineChatSetting);
-		Game.Save.SetValue("Online","Prediction", UsePlayerPrediction);
-		Game.Save.SetValue("Online","noray IP", NoraySetup.NorayIP);
-		Game.Save.SetValue("Online","noray Port", NoraySetup.NorayPort);
-		Game.Save.SetValue("Online","nohub IP", NohubHostManager.NohubIP);
-		Game.Save.SetValue("Online","nohub Port", NohubHostManager.NohubPort);
-		Game.Save.Save(Game.SAVE_PATH);
+		Game.SettingsSave.SetValue("Online","Chat", (int)OnlineChatSetting);
+		Game.SettingsSave.SetValue("Online","Prediction", UsePlayerPrediction);
+		Game.SettingsSave.SetValue("Online","noray IP", NoraySetup.NorayIP);
+		Game.SettingsSave.SetValue("Online","noray Port", NoraySetup.NorayPort);
+		Game.SettingsSave.SetValue("Online","nohub IP", NohubHostManager.NohubIP);
+		Game.SettingsSave.SetValue("Online","nohub Port", NohubHostManager.NohubPort);
+		Game.SettingsSave.Save(Game.SETTINGS_PATH);
 	}
 
 	public static void LoadData(){
-		Game.Save.Load(Game.SAVE_PATH);
+		Game.SettingsSave.Load(Game.SETTINGS_PATH);
 		//Volume
-		OnlineChatSetting = (ChatSetting)(int)Game.Save.GetValue("Online", "Chat", (int)ChatSetting.Filtered);
-		UsePlayerPrediction = (bool)Game.Save.GetValue("Online", "Prediction", true);
-		NoraySetup.NorayIP = (string)Game.Save.GetValue("Online", "noray IP", DEFAULT_NORAY_IP);
-		NoraySetup.NorayPort = (ushort)Game.Save.GetValue("Online", "noray Port", DEFAULT_NORAY_PORT);
-		NohubHostManager.NohubIP = (string)Game.Save.GetValue("Online", "nohub IP", DEFAULT_NOHUB_IP);
-		NohubHostManager.NohubPort = (ushort)Game.Save.GetValue("Online", "nohub Port", DEFAULT_NOHUB_PORT);
+		OnlineChatSetting = (ChatSetting)(int)Game.SettingsSave.GetValue("Online", "Chat", (int)ChatSetting.Filtered);
+		UsePlayerPrediction = (bool)Game.SettingsSave.GetValue("Online", "Prediction", true);
+		NoraySetup.NorayIP = (string)Game.SettingsSave.GetValue("Online", "noray IP", DEFAULT_NORAY_IP);
+		NoraySetup.NorayPort = (ushort)Game.SettingsSave.GetValue("Online", "noray Port", DEFAULT_NORAY_PORT);
+		NohubHostManager.NohubIP = (string)Game.SettingsSave.GetValue("Online", "nohub IP", DEFAULT_NOHUB_IP);
+		NohubHostManager.NohubPort = (ushort)Game.SettingsSave.GetValue("Online", "nohub Port", DEFAULT_NOHUB_PORT);
 	}
 
 	public enum ChatSetting : int{

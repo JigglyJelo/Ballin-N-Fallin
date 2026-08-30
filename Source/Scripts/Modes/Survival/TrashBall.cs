@@ -7,7 +7,7 @@ public partial class TrashBall : Trash{
         base._Ready();
         Sprite2D ballSprite = GetNode<Sprite2D>("Smoothing2D/BallSprite");
         shadingSprite = GetNode<Sprite2D>("Smoothing2D/Shading");
-        if(Game.CurrentMode == Mode.GameMode.Survival && Game.CurrentLevelName.Contains("Trash Compactor - ")){
+        if(Game.CurrentMode == Mode.GameMode.Survival && Game.CurrentLevelName.Contains("TC - ")){
             TrashCompactor trashCompactor = Mode.ModeNode.GetNode<TrashCompactor>("Level/TrashSpawner");
             ballSprite.SelfModulate = Game.Colors.ElementAt(trashCompactor.BallColorRandom.Next(0,Game.Colors.Count)).Value;
             shadingSprite.SelfModulate = ballSprite.SelfModulate;
@@ -38,7 +38,7 @@ public partial class TrashBall : Trash{
                 player.Rpc(nameof(player.PlayerStomped));
                 player.Rb.LinearVelocity = new Vector2(player.Rb.LinearVelocity.X,-2000f);
                 ParticleManager.SpawnPopParticles(Rb.GlobalPosition, GetNode<Sprite2D>("Smoothing2D/BallSprite").SelfModulate);
-                if(Game.CurrentMode == Mode.GameMode.Survival && Game.CurrentLevelName.Contains("Trash Compactor - ")){
+                if(Game.CurrentMode == Mode.GameMode.Survival && Game.CurrentLevelName.Contains("TC - ")){
                     TrashCompactor trashCompactor = Mode.ModeNode.GetNode<TrashCompactor>("Level/TrashSpawner");
                     byte key = trashCompactor.SpawnedTrash.FirstOrDefault(x => x.Value.Rb == Rb).Key;
                     trashCompactor.Rpc(nameof(trashCompactor.RemoveTrash),key);

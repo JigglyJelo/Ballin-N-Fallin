@@ -53,8 +53,8 @@ public static class ControlProfileManager{
         Profiles.Clear();
         Profiles.Add(DEFAULT_PROFILE);
 
-        if(Game.Save.HasSection("Controls")){
-            string[] savedProfiles = Game.Save.GetSectionKeys("Controls");
+        if(Game.SettingsSave.HasSection("Controls")){
+            string[] savedProfiles = Game.SettingsSave.GetSectionKeys("Controls");
             foreach(string profile in savedProfiles){
                 if(profile != DEFAULT_PROFILE && !Profiles.Contains(profile)){
                     Profiles.Add(profile);
@@ -74,14 +74,14 @@ public static class ControlProfileManager{
 
     public static Godot.Collections.Dictionary GetProfileData(string profileName){
         Variant defaultDict = new Godot.Collections.Dictionary();
-        Variant data = Game.Save.GetValue("Controls", profileName, defaultDict);
+        Variant data = Game.SettingsSave.GetValue("Controls", profileName, defaultDict);
         if(data.Obj is Godot.Collections.Dictionary dict) return dict;
         return new Godot.Collections.Dictionary();
     }
 
     private static void SaveProfileData(string profileName, Godot.Collections.Dictionary data){
-        Game.Save.SetValue("Controls", profileName, data);
-        Game.Save.Save(Game.SAVE_PATH);
+        Game.SettingsSave.SetValue("Controls", profileName, data);
+        Game.SettingsSave.Save(Game.SETTINGS_PATH);
     }
 
     public static void DeleteProfile(string profileName){
@@ -92,9 +92,9 @@ public static class ControlProfileManager{
         }
 
         //Erase the data from the save file
-        if(Game.Save.HasSectionKey("Controls", profileName)){
-            Game.Save.EraseSectionKey("Controls", profileName);
-            Game.Save.Save(Game.SAVE_PATH);
+        if(Game.SettingsSave.HasSectionKey("Controls", profileName)){
+            Game.SettingsSave.EraseSectionKey("Controls", profileName);
+            Game.SettingsSave.Save(Game.SETTINGS_PATH);
         }
     }
 
