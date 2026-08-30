@@ -2,7 +2,7 @@ using Godot;
 
 public partial class CreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
-	private Label headerLabel, subheaderLabel, musicLabel,sfxLabel;
+	private Label headerLabel, subheaderLabel, creditsLabel;
 	private const float VISIBLE_AREA_HEIGHT = 600f;
 	
 	public override void _Ready(){
@@ -10,8 +10,7 @@ public partial class CreditsMenu : VerticalMenu{
 		Selection = 1;
 		headerLabel = GetNode<Label>("CreditsHeader");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
-		musicLabel = GetNode<Label>("MusicCredits");
-		sfxLabel = GetNode<Label>("SFXCredits");
+		creditsLabel = GetNode<Label>("CreditsLabel");
 		totalSelections = 5;
 		UpdateSelectionVisual();
 	}
@@ -19,7 +18,7 @@ public partial class CreditsMenu : VerticalMenu{
 	public override void _Process(double delta){
 		if(displayingSubCredits){
 			float topLimit = -838f;
-			float bottomLimit = topLimit - Mathf.Max(0, (musicLabel.Size.Y * musicLabel.Scale.Y) - VISIBLE_AREA_HEIGHT);
+			float bottomLimit = topLimit - Mathf.Max(0, (creditsLabel.Size.Y * creditsLabel.Scale.Y) - VISIBLE_AREA_HEIGHT);
 
 			//Only check for back button
 			for(int i = 0; i < Game.MAX_PLAYERS; i++){
@@ -28,20 +27,20 @@ public partial class CreditsMenu : VerticalMenu{
 					return;
 				}else{
 					float y = Input.GetVector("Aim Left" + i, "Aim Right" + i, "Aim Up" + i, "Aim Down" + i).Y;
-					if(y > 0.5f && musicLabel.Position.Y > bottomLimit){
-						musicLabel.Position -= new Vector2(0,(float)delta * 400);
+					if(y > 0.5f && creditsLabel.Position.Y > bottomLimit){
+						creditsLabel.Position -= new Vector2(0,(float)delta * 400);
 						return;
-					}else if(y < -0.5f && musicLabel.Position.Y < topLimit){
-						musicLabel.Position += new Vector2(0,(float)delta * 400);
+					}else if(y < -0.5f && creditsLabel.Position.Y < topLimit){
+						creditsLabel.Position += new Vector2(0,(float)delta * 400);
 						return;
 					}
 				}
 			}
-			if(Input.IsActionJustReleased("ScrollWheelUp") && musicLabel.Position.Y < topLimit){
-				musicLabel.Position += new Vector2(0,(float)delta * 4000);
+			if(Input.IsActionJustReleased("ScrollWheelUp") && creditsLabel.Position.Y < topLimit){
+				creditsLabel.Position += new Vector2(0,(float)delta * 4000);
 				return;
-			}else if(Input.IsActionJustReleased("ScrollWheelDown") && musicLabel.Position.Y > bottomLimit){
-				musicLabel.Position -= new Vector2(0,(float)delta * 4000);
+			}else if(Input.IsActionJustReleased("ScrollWheelDown") && creditsLabel.Position.Y > bottomLimit){
+				creditsLabel.Position -= new Vector2(0,(float)delta * 4000);
 				return;
 			}
 		}else{
@@ -77,21 +76,30 @@ public partial class CreditsMenu : VerticalMenu{
 			}
 		}
 		subheaderLabel.Visible = !displayingSubCredits;
-		musicLabel.Visible = subCredits == 2;
-		sfxLabel.Visible = subCredits == 3;
+		creditsLabel.Visible = subCredits == 2 || subCredits == 3;
 		switch(subCredits){
 			case 0: headerLabel.Text = "Ballin N Fallin by JigglyJello"; break;
 			case 2:
 				headerLabel.Text = "Music Used";
-				musicLabel.Text = GetMusicCredits();
-				musicLabel.Position = new Vector2(-1920, -838);
+				creditsLabel.Text = GetMusicCredits();
+				creditsLabel.Position = new Vector2(-1920, -838);
 				break;
-			case 3: headerLabel.Text = "SFX Used"; break;
+			case 3:
+				headerLabel.Text = "SFX Used";
+				creditsLabel.Text = GetSFXCredits();
+				creditsLabel.Position = new Vector2(-1920, -838);
+				break;
 		}
 	}
 
 	private static string GetMusicCredits(){
 		using FileAccess file = FileAccess.Open("res://Assets/Music/Music Credits.txt", FileAccess.ModeFlags.Read);
+		if(file != null) return file.GetAsText();
+		return null; 
+	}
+
+	private static string GetSFXCredits(){
+		using FileAccess file = FileAccess.Open("res://Assets/SFX/SFX Credits.txt", FileAccess.ModeFlags.Read);
 		if(file != null) return file.GetAsText();
 		return null; 
 	}
