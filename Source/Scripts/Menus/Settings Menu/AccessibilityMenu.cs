@@ -54,14 +54,14 @@ public partial class AccessibilityMenu : VerticalMenu{
 	}
 
     private void SaveData(){
-        Game.Save.SetValue("Accessibility","Dynamic Camera",DynamicCameraEnabled);
-        Game.Save.SetValue("Accessibility","Always show names",AlwaysShowNames);
-        Game.Save.Save(Game.SAVE_PATH);
+        Game.SettingsSave.SetValue("Accessibility","Dynamic Camera",DynamicCameraEnabled);
+        Game.SettingsSave.SetValue("Accessibility","Always show names",AlwaysShowNames);
+        Game.SettingsSave.Save(Game.SETTINGS_PATH);
     }
 
     public static void LoadData(){
-        Game.Save.Load(Game.SAVE_PATH);
-        DynamicCameraEnabled = (bool)Game.Save.GetValue("Accessibility", "Dynamic Camera", true);
-        AlwaysShowNames = (bool)Game.Save.GetValue("Accessibility", "Always show names", false);
+        Game.SettingsSave.Load(Game.SETTINGS_PATH);
+        DynamicCameraEnabled = (bool)Game.SettingsSave.GetValue("Accessibility", "Dynamic Camera", true);
+        AlwaysShowNames = (bool)Game.SettingsSave.GetValue("Accessibility", "Always show names", false);
     }
 }

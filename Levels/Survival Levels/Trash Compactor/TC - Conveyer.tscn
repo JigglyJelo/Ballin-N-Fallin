@@ -34,6 +34,7 @@ InsideColorOverride = Color(0, 0.333333, 0, 1)
 OutlineColorOverride = Color(0, 0.117647, 0, 1)
 groundTexture = ExtResource("2_nvooh")
 background = ExtResource("3_eji3x")
+metadata/Medals = PackedFloat32Array(30, 60, 90, 120)
 
 [node name="CameraBoundary" type="ReferenceRect" parent="."]
 offset_left = -2176.0

@@ -99,34 +99,34 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
     }
 
     private void SaveData(){
-        Game.Save.SetValue("Video","Resolution",resolutionIndex);
-        Game.Save.SetValue("Video","Framerate Cap",fpsCap);
-        Game.Save.SetValue("Video","VSync",vSyncEnabled);
-        Game.Save.SetValue("Video","Fullscreen",(int)DisplayServer.WindowGetMode());
-        Game.Save.Save(Game.SAVE_PATH);
+        Game.SettingsSave.SetValue("Video","Resolution",resolutionIndex);
+        Game.SettingsSave.SetValue("Video","Framerate Cap",fpsCap);
+        Game.SettingsSave.SetValue("Video","VSync",vSyncEnabled);
+        Game.SettingsSave.SetValue("Video","Fullscreen",(int)DisplayServer.WindowGetMode());
+        Game.SettingsSave.Save(Game.SETTINGS_PATH);
     }
 
     public static void LoadData(){
-        Game.Save.Load(Game.SAVE_PATH);
+        Game.SettingsSave.Load(Game.SETTINGS_PATH);
         //Resolution
-        resolutionIndex = (byte)Game.Save.GetValue("Video","Resolution", GetDefaultResolution());
+        resolutionIndex = (byte)Game.SettingsSave.GetValue("Video","Resolution", GetDefaultResolution());
         int oldResolution = Game.Resolution;
         Game.Resolution = RESOLUTIONS[resolutionIndex];
 
         //Framerate
-        fpsCap = (int)Game.Save.GetValue("Video","Framerate Cap", GetDefaultFPS());
+        fpsCap = (int)Game.SettingsSave.GetValue("Video","Framerate Cap", GetDefaultFPS());
         //Clamp loaded data just in case of file modification
         if (fpsCap < 60 && fpsCap != 0) fpsCap = 0;
         Engine.MaxFps = fpsCap;
 
         //VSync
-        vSyncEnabled = (bool) Game.Save.GetValue("Video","VSync", true);
+        vSyncEnabled = (bool) Game.SettingsSave.GetValue("Video","VSync", true);
         DisplayServer.WindowSetVsyncMode(vSyncEnabled ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
 
         //Screen Mode
-        if((int)Game.Save.GetValue("Video","Fullscreen", (int)DisplayServer.WindowMode.ExclusiveFullscreen) == (int)DisplayServer.WindowMode.ExclusiveFullscreen){
+        if((int)Game.SettingsSave.GetValue("Video","Fullscreen", (int)DisplayServer.WindowMode.ExclusiveFullscreen) == (int)DisplayServer.WindowMode.ExclusiveFullscreen){
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-        }else if((int)Game.Save.GetValue("Video","Fullscreen",(int)DisplayServer.WindowMode.ExclusiveFullscreen) == (int)DisplayServer.WindowMode.Windowed){
+        }else if((int)Game.SettingsSave.GetValue("Video","Fullscreen",(int)DisplayServer.WindowMode.ExclusiveFullscreen) == (int)DisplayServer.WindowMode.Windowed){
             if(oldResolution != Game.Resolution) DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
             Game.UpdateWindowSize();

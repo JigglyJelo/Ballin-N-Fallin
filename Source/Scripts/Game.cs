@@ -7,10 +7,11 @@ public partial class Game : Node{
     public static Game GameNode;
     public static SceneType CurrentScene;
     public static Camera2D Camera;
-    public static ConfigFile Save = new ConfigFile();
+    public static ConfigFile SettingsSave = new ConfigFile();
     public static bool FirstBoot = true;
 	public const int MAX_PLAYERS = 8;
-    public const string SAVE_PATH = "user://Save.cfg";
+    public const string SETTINGS_PATH = "user://Settings.cfg";
+	public const string SAVE_PATH = "user://Records.sav";
     public const string LEVELS_PATH = "res://Levels/";
     public const int BASE_RES = 2160; //Base/Default Resolution of Ballin N Fallin 4k 2160p
     public static int TotalPlayers = 1;
@@ -156,6 +157,38 @@ public partial class Game : Node{
         if(levelName.Contains(".remap")) newLevelName = levelName.Replace(".remap",""); //Needed for exported version of game
         SetLevel(mode,newLevelName,string.IsNullOrEmpty(randomFolder) ? "" : randomFolder+"/");
     }
+
+	public static float GetSavedLevelRecord(Mode.GameMode modeEnum, string levelName){
+		if(FileAccess.FileExists(SAVE_PATH)){
+			using FileAccess file = FileAccess.Open(SAVE_PATH, FileAccess.ModeFlags.Read);
+			if(file != null){
+				Godot.Collections.Dictionary timesDict = (Godot.Collections.Dictionary)file.GetVar();
+				string levelKey = Mode.EnumToString(modeEnum) + levelName;
+				if(timesDict.ContainsKey(levelKey)){
+					return (float)timesDict[levelKey];
+				}
+			}
+		}
+		
+		return float.NaN;
+	}
+
+	public static void SaveLevelRecord(Mode.GameMode modeEnum, string levelName, float record){
+		Godot.Collections.Dictionary timesDict = new Godot.Collections.Dictionary();
+
+		if(FileAccess.FileExists(SAVE_PATH)){
+			using FileAccess loadFile = FileAccess.Open(SAVE_PATH, FileAccess.ModeFlags.Read);
+			if(loadFile != null){
+				timesDict = (Godot.Collections.Dictionary)loadFile.GetVar();
+			}
+		}
+		timesDict[Mode.EnumToString(modeEnum) + levelName] = record;
+
+		using FileAccess saveFile = FileAccess.Open(SAVE_PATH, FileAccess.ModeFlags.Write);
+		if(saveFile != null){
+			saveFile.StoreVar(timesDict);
+		}
+	}
 
     public static void ClearFontCache(){
         Font font = ResourceLoader.Load<FontFile>("res://Assets/Font/din1451alt.ttf");
