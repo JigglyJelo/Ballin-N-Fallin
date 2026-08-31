@@ -16,6 +16,10 @@ public partial class LevelMenu : ScrollableMenu{
 	private GradientTexture2D bgGradient = null;
 	private RichTextLabel soloStatsLabel;
 	private string soloLevelDataText;
+	public static readonly Color DIAMOND_COLOR = new Color(0x27F5EEFF);
+	public static readonly Color GOLD_COLOR = new Color(0xffd700FF);
+	public static readonly Color SILVER_COLOR = new Color(0xc0c0c0FF);
+	public static readonly Color BRONZE_COLOR = new Color(0xCD7F32FF);
 
 	public override void _Ready(){
 		base._Ready();
@@ -82,8 +86,11 @@ public partial class LevelMenu : ScrollableMenu{
 			
 			if(label.Name.ToString().Equals("Level" + (choice - 1))){
 				if(Game.TotalPlayers == 1){
-					if(Game.CurrentMode == Mode.GameMode.Race) RaceHUD.LevelName = string.Join("",FoldersOpened) + optionNames[choice - 1];
-					else if(Game.CurrentMode == Mode.GameMode.Survival) SurvivalHUD.LevelName = string.Join("",FoldersOpened) + optionNames[choice - 1];
+					switch(Game.CurrentMode){
+						case Mode.GameMode.Race: RaceHUD.LevelName = string.Join("",FoldersOpened) + optionNames[choice - 1]; break;
+						case Mode.GameMode.Golf: GolfHUD.LevelName = string.Join("",FoldersOpened) + optionNames[choice - 1]; break;
+						case Mode.GameMode.Survival: SurvivalHUD.LevelName = string.Join("",FoldersOpened) + optionNames[choice - 1]; break;
+					}
 				}
 				Game.SetLevel(Game.CurrentMode,optionNames[choice - 1],string.Join("",FoldersOpened));
 				
@@ -211,8 +218,8 @@ public partial class LevelMenu : ScrollableMenu{
 								text += $"[color=#27F5EE]Diamond: {FormatTime(medals[3])}[/color]\n";
 							}
 
-							text += $"[color=gold]Gold: {FormatTime(medals[2])}[/color]\n";
-							text += $"[color=silver]Silver: {FormatTime(medals[1])}[/color]\n";
+							text += $"[color=#ffd700]Gold: {FormatTime(medals[2])}[/color]\n";
+							text += $"[color=c0c0c0]Silver: {FormatTime(medals[1])}[/color]\n";
 							text += $"[color=#CD7F32]Bronze: {FormatTime(medals[0])}[/color]";
 
 							return text;
