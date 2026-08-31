@@ -6,7 +6,11 @@
 [sub_resource type="LabelSettings" id="LabelSettings_4g2nv"]
 font = ExtResource("2_yionq")
 font_size = 75
-shadow_size = 20
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(4, 4)
 
 [node name="Panel" type="Panel"]
 anchors_preset = 8
