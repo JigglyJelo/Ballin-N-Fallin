@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6rx7k5x7l2dl"]
+[gd_scene load_steps=7 format=3 uid="uid://b6rx7k5x7l2dl"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/CreditsMenu/AddonCreditsMenu.cs" id="1_m0s58"]
+[ext_resource type="Script" uid="uid://frx6uobsjgx4" path="res://Source/Scripts/Menus/CreditsMenu/AddonCreditsMenu.cs" id="1_m0s58"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="1_moqiu"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="2_8cuce"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_srjj2"]
+[ext_resource type="PackedScene" uid="uid://bc551o4gjyk00" path="res://Source/Scenes/Menus/Credits/CreditsPanel.tscn" id="5_4vwhe"]
+[ext_resource type="Script" uid="uid://dthj42m4mmobc" path="res://Source/Scripts/Menus/CreditsMenu/CreditsPanel.cs" id="6_8vrm6"]
 
 [node name="AddonsCreditsMenu" type="Node2D"]
 script = ExtResource("1_m0s58")
@@ -44,59 +46,52 @@ autowrap_mode = 2
 [node name="MenuBackButton" parent="." instance=ExtResource("2_8cuce")]
 position = Vector2(1750, 970)
 
-[node name="Selections" type="Node2D" parent="."]
+[node name="Selections" type="VBoxContainer" parent="."]
+offset_left = -1918.0
+offset_top = -455.0
+offset_right = 1918.0
+offset_bottom = 968.0
 
 [node name="antialiased_line2d" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -480.0
-offset_right = 1920.0
-offset_bottom = -246.0
-pivot_offset = Vector2(1920, 117)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "antialiased_line2d | MIT"
 label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="netfox_internals" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -180.0
-offset_right = 1920.0
-offset_bottom = 54.0
-pivot_offset = Vector2(1920, 117)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "netfox.internals | MIT"
 label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="NorayText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 120.0
-offset_right = 1920.0
-offset_bottom = 354.0
-pivot_offset = Vector2(1920, 117)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "netfox.noray | MIT"
 label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="NohubText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 420.0
-offset_right = 1920.0
-offset_bottom = 654.0
-pivot_offset = Vector2(1920, 117)
-text = "nohub.gd | MIT
-"
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "nohub.gd | MIT"
 label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TrimsockText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 720.0
-offset_right = 1920.0
-offset_bottom = 954.0
-pivot_offset = Vector2(1920, 117)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "trimsock.gd | MIT"
 label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
@@ -113,7 +108,11 @@ text = "© 2026 JigglyJello. Some rights reserved"
 label_settings = ExtResource("1_moqiu")
 
 [node name="InputPrompts" parent="." instance=ExtResource("3_srjj2")]
-InputMessages = {
+InputMessages = Dictionary[int, String]({
 2: "View License",
 3: "Back"
-}
+})
+
+[node name="Panel" parent="." instance=ExtResource("5_4vwhe")]
+visible = false
+script = ExtResource("6_8vrm6")

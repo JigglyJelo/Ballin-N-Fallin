@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bc551o4gjyk00"]
+[gd_scene load_steps=5 format=3 uid="uid://bc551o4gjyk00"]
 
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_j5yr6"]
+[ext_resource type="Script" uid="uid://dthj42m4mmobc" path="res://Source/Scripts/Menus/CreditsMenu/CreditsPanel.cs" id="2_1g1id"]
 [ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="2_yionq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4g2nv"]
@@ -27,6 +28,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_j5yr6")
+script = ExtResource("2_1g1id")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1

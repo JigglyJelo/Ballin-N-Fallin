@@ -2,7 +2,8 @@ using Godot;
 
 public partial class CodeCreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
-	private Label licenseLabel, subheaderLabel;
+	private CreditsPanel creditsPanel;
+	private Label headerLabel, subheaderLabel;
 	private Node2D selectionsNode;
 	
 	private float startY;
@@ -12,46 +13,21 @@ public partial class CodeCreditsMenu : VerticalMenu{
 		base._Ready();
 		Selection = 1;
 		totalSelections = 3;
+		headerLabel = GetNode<Label>("CreditsHeader");
+		creditsPanel = GetNode<CreditsPanel>("Panel");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
-		licenseLabel = GetNode<Label>("LicenseLabel");
 		selectionsNode = GetNode<Node2D>("Selections");
-		
-		// Capture the initial Y position as our top boundary
-		startY = licenseLabel.Position.Y;
 		UpdateSelectionVisual();
 	}
 
 	public override void _Process(double delta){
 		if(displayingSubCredits){
-			// Dynamically calculate the bottom limit based on the label's actual height and scale
-			float bottomLimit = startY - Mathf.Max(0, (licenseLabel.Size.Y * licenseLabel.Scale.Y) - visibleTextHeight);
-
 			//Only check for back button
 			for(int i = 0; i < Game.MAX_PLAYERS; i++){
 				if(Input.IsActionJustReleased("B" + i)){
 					MenuBack();
 					return;
-				}else{
-					float y = Input.GetVector("Aim Left" + i, "Aim Right" + i, "Aim Up" + i, "Aim Down" + i).Y;
-					if(y > 0.5f && licenseLabel.Position.Y > bottomLimit){
-						float newY = Mathf.Clamp(licenseLabel.Position.Y - (float)delta * 400, bottomLimit, startY);
-						licenseLabel.Position = new Vector2(licenseLabel.Position.X, newY);
-						return;
-					}else if(y < -0.5f && licenseLabel.Position.Y < startY){
-						float newY = Mathf.Clamp(licenseLabel.Position.Y + (float)delta * 400, bottomLimit, startY);
-						licenseLabel.Position = new Vector2(licenseLabel.Position.X, newY);
-						return;
-					}
 				}
-			}
-			if(Input.IsActionJustReleased("ScrollWheelUp") && licenseLabel.Position.Y < startY){
-				float newY = Mathf.Clamp(licenseLabel.Position.Y + (float)delta * 4000, bottomLimit, startY);
-				licenseLabel.Position = new Vector2(licenseLabel.Position.X, newY);
-				return;
-			}else if(Input.IsActionJustReleased("ScrollWheelDown") && licenseLabel.Position.Y > bottomLimit){
-				float newY = Mathf.Clamp(licenseLabel.Position.Y - (float)delta * 4000, bottomLimit, startY);
-				licenseLabel.Position = new Vector2(licenseLabel.Position.X, newY);
-				return;
 			}
 		}else{
 			InputChecks(delta);
@@ -80,15 +56,11 @@ public partial class CodeCreditsMenu : VerticalMenu{
 				label.Visible = !show;
 			}
 		}
+		headerLabel.Visible = !show;
 		subheaderLabel.Visible = !show;
 		selectionsNode.Visible = !show;
-		
-		// Reset the scroll position to the top every time a new license is opened
-		if(show){
-			licenseLabel.Position = new Vector2(licenseLabel.Position.X, startY);
-		}
-		
-		licenseLabel.Text = show ? getLicenseString(selection) : "";
+		creditsPanel.Visible = show;
+		creditsPanel.LicenseText = show ? getLicenseString(selection) : "";
 
 		string getLicenseString(int selection){
 			switch(selection){
