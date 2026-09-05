@@ -2,35 +2,12 @@ using Godot;
 using System.Text;
 
 public partial class GodotCreditsMenu : Menu{
-	private ScrollContainer scrollContainer;
-	private Label licenseLabel;
-	private const float SCROLL_SPEED = 2000;
-
 	public override void _Ready(){
-		scrollContainer = GetNode<ScrollContainer>("Panel/ScrollContainer");
-		licenseLabel = scrollContainer.GetNode<Label>("CreditsLabel");
-		
-		licenseLabel.Text = GetLicensesString();
+		GetNode<CreditsPanel>("Panel").LicenseText = GetLicensesString();
 	}
 
 	public override void _Process(double delta){
-		VScrollBar vScroll = scrollContainer.GetVScrollBar();
-
-		for(int i = 0; i < Game.MAX_PLAYERS; i++){
-			if(Input.IsActionJustReleased("B" + i)){
-				MenuBack();
-				return;
-			}else{
-				float y = Input.GetVector("Aim Left" + i, "Aim Right" + i, "Aim Up" + i, "Aim Down" + i).Y;
-				if(y > 0.5f){
-					vScroll.Value += SCROLL_SPEED * delta;
-					return;
-				}else if(y < -0.5f){
-					vScroll.Value -= SCROLL_SPEED * delta;
-					return;
-				}
-			}
-		}
+		InputChecks(delta);
 	}
 
 	protected override void InputChecks(double delta, int inputId){}
