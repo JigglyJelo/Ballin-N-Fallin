@@ -143,8 +143,12 @@ public partial class MiniProfileMenu : ScrollableMenu{
 			SFX.Play("Confirm");
 		}else{ 
 			string selectedProfile = ControlProfileManager.Profiles[choice - 2];
-			SFX.Play("Confirm");
-			OnProfileSelected?.Invoke(selectedProfile);
+			if(selectedProfile != ControlProfileManager.DEFAULT_PROFILE){
+				SFX.Play("Confirm");
+				OnProfileSelected?.Invoke(selectedProfile);
+			}else{
+				SFX.Play("Error");
+			}
 		}
 	}
 

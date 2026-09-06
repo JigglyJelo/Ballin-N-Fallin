@@ -20,16 +20,7 @@ public partial class LobbyBrowserMenu : ScrollableMenu{
         base._Ready();
         statusLabel = GetNode<Label>("StatusLabel");
         lobbyInfoLabel = GetNode<Label>("LobbyInfoLabel");
-        asyncBridgeScript = new GDScript();
-        asyncBridgeScript.SourceCode = @"
-extends RefCounted
-signal task_completed(result)
-func call_async(target: Object, method: String, args: Array = []):
-    var result = await target.callv(method, args)
-    task_completed.emit(result)
-        ";
-        asyncBridgeScript.Reload();
-
+		asyncBridgeScript = GD.Load<GDScript>("res://Source/Scripts/Online/AsyncBridge.gd");
         UpdateStatus("Connecting to Nohub...");
         InitializeNohub();
     }
@@ -46,11 +37,8 @@ func call_async(target: Object, method: String, args: Array = []):
     }
 
     private async void InitializeNohub(){
-        string host = "foxssake.studio"; 
-        int port = 12980;
-
         nohubConnection = (GodotObject)ClassDB.Instantiate("StreamPeerTCP");
-        Error error = (Error)(int)nohubConnection.Call("connect_to_host",host,port);
+		Error error = (Error)(int)nohubConnection.Call("connect_to_host",NohubHostManager.NohubIP,NohubHostManager.NohubPort);
 
         if(error != Error.Ok){
             UpdateStatus("Failed to connect to matchmaking server.");
@@ -205,10 +193,10 @@ func call_async(target: Object, method: String, args: Array = []):
 
         for(int i = 0; i < Selections.Count; i++){
             Label label = Selections[i] as Label;
-            if (label == null) continue;
+			if(label == null) continue;
             
             string key = lobbyIds.ElementAt(i).Key;
-            if (key.Equals(REFRESH_KEY)) continue;
+			if(key.Equals(REFRESH_KEY)) continue;
 
             bool isLocked = lobbyIds[key]["locked"].AsBool();
             if(Selection == i + 1){
@@ -254,8 +242,8 @@ func call_async(target: Object, method: String, args: Array = []):
             return;
         }
 
-        if(lobbyIds[selectedLobbyId]["locked"].AsBool()) {
-            SFX.Play("Error"); 
+		if(lobbyIds[selectedLobbyId]["locked"].AsBool()){
+			SFX.Play("Error");
             UpdateStatus("That lobby is currently locked.");
             return;
         }
