@@ -7,7 +7,7 @@ public partial class SettingsOnlineMenu : VerticalMenu, ILeftRightSelections{
 	private LineEdit norayEntry, norayPortEntry, nohubEntry, nohubPortEntry;
 	private const string DEFAULT_NORAY_IP = "127.0.0.1";
 	private const ushort DEFAULT_NORAY_PORT = 8890;
-	private const string DEFAULT_NOHUB_IP = "foxssake.studio";
+	private const string DEFAULT_NOHUB_IP = "127.0.0.1";
 	private const ushort DEFAULT_NOHUB_PORT = 12980;
 	public override void _Ready(){
 		base._Ready();

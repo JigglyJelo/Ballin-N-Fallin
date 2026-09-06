@@ -1,25 +1,25 @@
 using Godot;
 
 public partial class DynamicCamera : Camera2D{
-	private float moveSpeed = 3f;
+	private const float MOVE_SPEED = 3f;
 	
 	//Zoom speeds
-	private float zoomOutSpeed = 3f;
-	private float zoomInSpeed = 1.5f;   
+	private const float ZOOM_OUT_SPEED = 3f;
+	private const float ZOOM_IN_SPEED = 1.5f;   
 
-	private float maxZoomLimit = 0.5f;
+	private const float MAX_ZOOM_LIMIT = 0.5f;
 	
-	private Vector2 margin = new Vector2(300, 300);
+	private readonly Vector2 MARGIN = new Vector2(300, 300);
 
 	//Makes the camera push further ahead of moving players
-	private float lookAheadFactor = 1f;
-	private float maxLookAheadDistance = 600f;
+	private const float LOOK_AHEAD_FACTOR = 1f;
+	private const float MAX_LOOK_AHEAD_DISTANCE = 600f;
 	
 	//How fast the camera reacts to sudden changes in direction (higher = snappier)
-	private float velocitySmoothSpeed = 4f;
+	private const float VELOCITY_SMOOTH_SPEED = 4f;
 
 	//Keeps the zoom from violently snapping when velocity spikes
-	private float velocityZoomInfluence = 0.5f; 
+	private const float VELOCITY_ZOOM_INFLUENCE = 0.5f; 
 
 	private Vector2 smoothedVelocity = Vector2.Zero; 
 
@@ -160,19 +160,19 @@ public partial class DynamicCamera : Camera2D{
 		}else{
 			//Calculate look ahead with velocity smoothing
 			Vector2 rawAverageVelocity = velocityContributors > 0 ? (totalRawVelocity / velocityContributors) : Vector2.Zero;
-			smoothedVelocity = smoothedVelocity.Lerp(rawAverageVelocity, velocitySmoothSpeed * fDelta);
-			Vector2 lookAheadOffset = smoothedVelocity * lookAheadFactor;
+			smoothedVelocity = smoothedVelocity.Lerp(rawAverageVelocity, VELOCITY_SMOOTH_SPEED * fDelta);
+			Vector2 lookAheadOffset = smoothedVelocity * LOOK_AHEAD_FACTOR;
 
-			if(lookAheadOffset.Length() > maxLookAheadDistance){
-				lookAheadOffset = lookAheadOffset.Normalized() * maxLookAheadDistance;
+			if(lookAheadOffset.Length() > MAX_LOOK_AHEAD_DISTANCE){
+				lookAheadOffset = lookAheadOffset.Normalized() * MAX_LOOK_AHEAD_DISTANCE;
 			}
 
 			targetPosition = ((minPos + maxPos) / 2f) + lookAheadOffset;
 
 			if(hasBounds){
 				//Padding scales gently so the camera doesn't violently zoom out when moving fast
-				Vector2 lookAheadPadding = new Vector2(Mathf.Abs(lookAheadOffset.X), Mathf.Abs(lookAheadOffset.Y)) * velocityZoomInfluence;
-				Vector2 requiredSize = maxPos - minPos + margin + lookAheadPadding;
+				Vector2 lookAheadPadding = new Vector2(Mathf.Abs(lookAheadOffset.X), Mathf.Abs(lookAheadOffset.Y)) * VELOCITY_ZOOM_INFLUENCE;
+				Vector2 requiredSize = maxPos - minPos + MARGIN + lookAheadPadding;
 
 				//Calculate standard required zoom based on targets
 				Vector2 baseScale = Game.ContentScaleVector2; 
@@ -184,7 +184,7 @@ public partial class DynamicCamera : Camera2D{
 				float calculatedZoom = Mathf.Min(zoomX, zoomY);
 				
 				//Dynamically raise the max zoom limit on smaller maps so it doesn't get stuck zooming out
-				float dynamicMaxZoom = Mathf.Max(maxZoomLimit, Level.LevelNode.CameraZoom * 1.25f);
+				float dynamicMaxZoom = Mathf.Max(MAX_ZOOM_LIMIT, Level.LevelNode.CameraZoom * 1.25f);
 				
 				//Never zoom in further than the dynamic limit, but let it zoom out to the boundary
 				float clampedZoom = Mathf.Min(calculatedZoom, dynamicMaxZoom);
@@ -216,8 +216,8 @@ public partial class DynamicCamera : Camera2D{
 		}
 
 		//Apply zoom lerp
-		GlobalPosition = GlobalPosition.Lerp(targetPosition, moveSpeed * fDelta);
-		float currentZoomSpeed = (targetZoom.X < Zoom.X) ? zoomOutSpeed : zoomInSpeed;
+		GlobalPosition = GlobalPosition.Lerp(targetPosition, MOVE_SPEED * fDelta);
+		float currentZoomSpeed = (targetZoom.X < Zoom.X) ? ZOOM_OUT_SPEED : ZOOM_IN_SPEED;
 		Zoom = Zoom.Lerp(targetZoom, currentZoomSpeed * fDelta);
 	}
 }

@@ -31,17 +31,8 @@ public partial class NohubHostManager : Node{
     }
 
     public override void _Ready(){
-        asyncBridgeScript = new GDScript();
-        asyncBridgeScript.SourceCode = @"
-extends RefCounted
-signal task_completed(result)
-func call_async(target: Object, method: String, args: Array = []):
-    var result = await target.callv(method, args)
-    task_completed.emit(result)
-        ";
-        asyncBridgeScript.Reload();
-
-        ConnectAndRegister();
+		asyncBridgeScript = GD.Load<GDScript>("res://Source/Scripts/Online/AsyncBridge.gd");
+		ConnectAndRegister();
     }
 
     public override void _Process(double delta){

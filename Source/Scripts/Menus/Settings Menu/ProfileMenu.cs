@@ -62,11 +62,15 @@ public partial class ProfileMenu : ScrollableMenu{
             if(selectionsContainer != null) selectionsContainer.Visible = false; 
             keypadPopup.Open(0); 
             SFX.Play("Confirm");
-        }else{ 
+        }else{
             string selectedProfile = ControlProfileManager.Profiles[choice - 2];
-            ControlsMenu.TargetProfile = selectedProfile; 
-            SFX.Play("Confirm");
-            MenuScene.LoadMenu("Settings/ControlsMenu"); 
+			if(selectedProfile != ControlProfileManager.DEFAULT_PROFILE){
+				ControlsMenu.TargetProfile = selectedProfile; 
+				SFX.Play("Confirm");
+				MenuScene.LoadMenu("Settings/ControlsMenu"); 
+			}else{
+				SFX.Play("Error");
+			}
         }
     }
 
