@@ -58,8 +58,8 @@ public partial class TargetZone : Area2D{
 		pointLabel.Reparent(zoneVisual);
 		AddChild(outline);
 		canvasGroup.ZIndex--;
-		UpdatePointValue();
 		if(!Online.IsHost()) SetPhysicsProcess(false);
+		else UpdatePointValue();
 	}
 
 	public override void _PhysicsProcess(double delta){
