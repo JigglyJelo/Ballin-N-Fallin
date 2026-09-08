@@ -9,15 +9,14 @@ public partial class Coin : Node2D{
 
 	public override void _Ready(){
 		Sprite = GetNode<Sprite2D>("Sprite2D");
-		
 	}
 
-    public override void _Process(double delta){
+	public override void _Process(double delta){
 		Sprite.Scale = BTTB.CoinScale;
-        Sprite.Texture = BTTB.COIN_TEXTURES[BTTB.AnimationFrame];
+		Sprite.Texture = BTTB.COIN_TEXTURES[BTTB.AnimationFrame];
 		if(BTTB.AnimationFrame == 3) Sprite.FlipH = true;
 		else if(BTTB.AnimationFrame == 0) Sprite.FlipH = false;
-    }
+	}
 
 
 	public void _on_area_2d_body_entered(PhysicsBody2D body){

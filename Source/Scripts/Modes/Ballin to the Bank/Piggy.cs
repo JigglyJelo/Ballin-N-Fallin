@@ -101,7 +101,7 @@ public partial class Piggy : Node2D{
 	private void UpdateMoneyText(Player player){
 		moneyText.SelfModulate = player.PlayerColor;
 		moneyText.Text = "$"+BTTB.DepositedMoney[player.Index] + " / $" + BTTB.MoneyToWin;
-		if(Online.IsHost() && BTTB.DepositedMoney[player.Index] == BTTB.MoneyToWin && !Mode.Finished) Mode.GameFinished();
+		if(Online.IsHost() && BTTB.DepositedMoney[player.Index] >= BTTB.MoneyToWin && !Mode.Finished) Mode.GameFinished();
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

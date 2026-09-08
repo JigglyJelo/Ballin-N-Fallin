@@ -19,28 +19,33 @@ public partial class DroppedCoin : Node{
 
 	public override void _Process(double delta){
 		Sprite.Scale = BTTB.CoinScale;
-        Sprite.Texture = BTTB.COIN_TEXTURES[BTTB.AnimationFrame];
+		Sprite.Texture = BTTB.COIN_TEXTURES[BTTB.AnimationFrame];
 		if(BTTB.AnimationFrame == 3) Sprite.FlipH = true;
 		else if(BTTB.AnimationFrame == 0) Sprite.FlipH = false;
 	}
 
 	//Only runs on host (Set in Ready)
-    public override void _PhysicsProcess(double delta){
-        LifeTimer -= (float)delta;
+	public override void _PhysicsProcess(double delta){
+		LifeTimer -= (float)delta;
 		if(collectable){
-			if(LifeTimer <= 0) BTTB.RpcRemoveDroppedCoin(Id);
+			if(LifeTimer <= 0){
+				collectable = false;
+				BTTB.RpcRemoveDroppedCoin(Id);
+				SetPhysicsProcess(false);
+			}
 		}else{
 			if(LifeTimer < LIFETIME - UNCOLLECTABLE_TIME){
 				collectable = true;
 			}
 		}
-    }
-
+	}
 
 	public void _on_area_2d_body_entered(PhysicsBody2D body){
 		if(Online.IsHost()){
 			if(collectable){
 				if(body.IsInGroup("Player")){
+					collectable = false;
+					SetPhysicsProcess(false);
 					Player player = body.GetParent() as Player;
 					BTTB.RpcDroppedCoinCollected(Id,player.Id);
 				}
