@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://cpx0owow74byb" path="res://Source/Scripts/Modes/MusicPlayer.cs" id="2_yikq2"]
 [ext_resource type="AudioStream" uid="uid://cf7uht76mpgh7" path="res://Assets/SFX/bad.ogg" id="3_35lsv"]
 [ext_resource type="Script" uid="uid://2j3rnc5opn5k" path="res://Source/Scripts/SFX.cs" id="3_sswyi"]
-[ext_resource type="AudioStream" uid="uid://di1d11gds8qel" path="res://Assets/SFX/lap.ogg" id="5_8mvj1"]
-[ext_resource type="AudioStream" uid="uid://d0ais7f4uxvo1" path="res://Assets/SFX/complete.ogg" id="6_yc106"]
+[ext_resource type="AudioStream" uid="uid://53p1g3bogcre" path="res://Assets/SFX/404359__kagateni__success2.ogg" id="4_uxntg"]
+[ext_resource type="AudioStream" uid="uid://dmqr2jh6riuib" path="res://Assets/SFX/404360__kagateni__success3.ogg" id="5_714mi"]
 [ext_resource type="AudioStream" uid="uid://c7u8giea1yepf" path="res://Assets/SFX/golf hole.ogg" id="7_7bd4n"]
 [ext_resource type="AudioStream" uid="uid://cycloo1q2qegb" path="res://Assets/SFX/airhorn.ogg" id="8_7ifns"]
 [ext_resource type="AudioStream" uid="uid://cndmgulqss8h" path="res://Assets/SFX/quaker540__hq-explosion.ogg" id="8_dklq0"]
@@ -43,14 +43,14 @@ max_polyphony = 8
 bus = &"SFX"
 
 [node name="Lap" type="AudioStreamPlayer2D" parent="SFXManager"]
-stream = ExtResource("5_8mvj1")
+stream = ExtResource("4_uxntg")
 max_distance = 10000.0
 attenuation = 0.001
 max_polyphony = 8
 bus = &"SFX"
 
 [node name="Finish" type="AudioStreamPlayer2D" parent="SFXManager"]
-stream = ExtResource("6_yc106")
+stream = ExtResource("5_714mi")
 max_distance = 10000.0
 attenuation = 0.001
 max_polyphony = 8
