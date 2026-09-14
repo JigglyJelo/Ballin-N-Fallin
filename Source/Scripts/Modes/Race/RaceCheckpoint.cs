@@ -5,22 +5,21 @@ public partial class RaceCheckpoint : Area2D{
 	public int id;
 	[Export]
 	public bool isFinish = false;
-    public static int TotalCheckpoints;
-    public static int FinishedPlayers = 0;
-	private AudioStreamPlayer2D lapSound, finishSound;
+	public static int TotalCheckpoints;
+	public static int FinishedPlayers = 0;
 
-    public override void _Ready(){
-        FinishedPlayers = 0;
+	public override void _Ready(){
+		FinishedPlayers = 0;
 		if(isFinish)ZIndex = -1;	
-    }
+	}
 
 	public void _body_entered(PhysicsBody2D body) {
-    	if(body.GetParent().IsInGroup("Player")){
+		if(body.GetParent().IsInGroup("Player")){
 			Player player = body.GetParent() as Player;
 			if(!Online.IsOnline || Online.IsHost()){
 				CheckPointEntered(player.Id,Race.RaceTimer);
 			}
-    	}
+		}
 	}
 
 	//Runs on Host
@@ -28,7 +27,7 @@ public partial class RaceCheckpoint : Area2D{
 		Player player = Game.Players[playerId-1];
 		int playerLap = Race.PlayerLaps[player.Id-1];
 		//Player crosses checkpoint
-        if(id == Race.PlayerCheckpoints[player.Id-1] + 1 && !isFinish){
+		if(id == Race.PlayerCheckpoints[player.Id-1] + 1 && !isFinish){
 			Race.PlayerCheckpoints[player.Id-1]++;
 			if(playerLap >= Race.TopLap && Race.PlayerCheckpoints[player.Id-1] >= Race.TopCheckPoint){
 				Race.TopLap = playerLap;
@@ -41,13 +40,16 @@ public partial class RaceCheckpoint : Area2D{
 			if(Race.PlayerCheckpoints[player.Id-1] == TotalCheckpoints - 1){
 				Race.PlayerLaps[player.Id-1]++; //Can't use playerLap because we need to increase the actual variable (pointer)
 				playerLap = Race.PlayerLaps[player.Id-1]; //Sync for readability
-            	Race.PlayerCheckpoints[player.Id-1] = 0;
-            	//Player finishes
-            	if(playerLap >= Race.TotalLaps){
+				Race.PlayerCheckpoints[player.Id-1] = 0;
+				//Player finishes
+				if(playerLap >= Race.TotalLaps){
 					SFX.Play("Finish");
-            	    player.Finished = true;
-            	    Race.PlayerFinished(player,playersTime);
-				}else SFX.Play("Lap");
+					player.Finished = true;
+					Race.PlayerFinished(player,playersTime);
+				}else{
+					SFX.Play("Lap");
+				}
+
 				if(playerLap > Race.TopLap){
 					Race.TopLap = playerLap;
 					Race.TopCheckPoint = 0;
@@ -63,7 +65,7 @@ public partial class RaceCheckpoint : Area2D{
 			Race.PlayerCheckpoints[player.Id-1] = id;
 			player.Visuals.PlayerEmotion = Player.Emotion.Angry;
 		}
-        //If Multiplayer finished
+		//If Multiplayer finished
 		if(FinishedPlayers >= Game.TotalPlayers -1 && !Mode.Finished && Game.TotalPlayers > 1) Mode.GameFinished();
 		//If Solo finished
 		else if(Game.TotalPlayers == 1 && Race.PlayerLaps[player.Id-1] >= Race.TotalLaps) Mode.GameFinished();

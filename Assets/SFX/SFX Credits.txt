@@ -5,17 +5,6 @@ https://creativecommons.org/licenses/by/4.0/
 -----------------------------------
 Charge: "Fireball Impact" by EminYILDIRIM
 https://freesound.org/people/EminYILDIRIM/sounds/577450/
-
-Lap: "UI_Synth_02.wav" by LittleRobotSoundFactory
-https://freesound.org/people/LittleRobotSoundFactory/sounds/274203/
------------------------------------
-
-CC BY 3.0:
-https://creativecommons.org/licenses/by/3.0/
------------------------------------
-Complete: "UI and Item sound effect Jingles Sample 2" by ViRiX
-"Some of the sounds in this project were created by ViRiX Dreamcore soundcloud.com/virix"
-https://opengameart.org/content/ui-and-item-sound-effect-jingles-sample-2
 -----------------------------------
 
 CC0 1.0:
@@ -42,6 +31,12 @@ https://freesound.org/people/MaoDin204/sounds/721774/
 
 Pop: "Balloon Sounds" by AntumDeluge
 https://opengameart.org/content/balloon-sounds
+
+Lap: "Success2.wav" by Kagateni
+https://freesound.org/people/Kagateni/sounds/404359/
+
+Finish: "Success3.wav" by Kagateni
+https://freesound.org/people/Kagateni/sounds/404360/
 
 Golf Hole: "golf_putting.wav" by inbeeld
 https://freesound.org/people/inbeeld/sounds/21878/
