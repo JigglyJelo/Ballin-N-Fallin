@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dgxf7pk383ys5"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_ht6m4"]
+[ext_resource type="Script" uid="uid://cfcx24gcr1ook" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_ht6m4"]
 [ext_resource type="Texture2D" uid="uid://u2r2qe0mwwa" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/Abstract/L.png" id="2_i7p75"]
 
 [node name="Background" type="CanvasLayer"]
@@ -23,3 +23,4 @@ texture = ExtResource("2_i7p75")
 centered = false
 region_enabled = true
 region_rect = Rect2(1, 0, 20, 11)
+metadata/ParallaxDepth = 0.25

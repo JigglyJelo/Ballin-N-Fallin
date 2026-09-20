@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhywldkplxcw3"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_2w76q"]
+[ext_resource type="Script" uid="uid://cfcx24gcr1ook" path="res://Source/Scripts/Backgrounds/LevelBackground.cs" id="1_2w76q"]
 [ext_resource type="Texture2D" uid="uid://cgrdi0pin5r5a" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/Abstract/Checker.png" id="2_30ebn"]
 
 [node name="Background" type="CanvasLayer"]
@@ -22,3 +22,4 @@ texture_offset = Vector2(45, 0)
 texture_scale = Vector2(0.004, 0.004)
 texture_rotation = 0.785398
 polygon = PackedVector2Array(0, 0, 3840, 0, 3840, 2160, 0, 2160)
+metadata/ParallaxDepth = 0.25

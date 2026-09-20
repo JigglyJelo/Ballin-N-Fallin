@@ -13,12 +13,7 @@ offset_bottom = 2160.0
 
 [node name="BackgroundLayers" type="Node" parent="."]
 
-[node name="Parallax2D" type="Parallax2D" parent="."]
-scroll_scale = Vector2(0.8, 0.8)
-repeat_size = Vector2(3840, 2400)
-follow_viewport = false
-
-[node name="Tiles" type="Sprite2D" parent="Parallax2D"]
+[node name="Tiles" type="Sprite2D" parent="BackgroundLayers"]
 self_modulate = Color(1, 1, 1, 0.188235)
 texture_filter = 1
 texture_repeat = 2
@@ -26,4 +21,5 @@ scale = Vector2(240, 240)
 texture = ExtResource("2_3m76w")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 16, 10)
+region_rect = Rect2(0, 0, 16, 9)
+metadata/ParallaxDepth = 0.25
