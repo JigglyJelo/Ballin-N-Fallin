@@ -16,7 +16,7 @@ centered = false
 
 [node name="Bot" type="Polygon2D" parent="BackgroundLayers/Back" index="1"]
 color = Color(0.92549, 0.92549, 0.92549, 1)
-polygon = PackedVector2Array(0, 1340, 3840, 1340, 3840, 1598, 0, 1598)
+polygon = PackedVector2Array(0, 1340, 3840, 1340, 3840, 2160, 0, 2160)
 
 [node name="Front" type="Node2D" parent="BackgroundLayers" index="1"]
 

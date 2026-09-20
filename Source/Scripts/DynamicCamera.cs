@@ -1,8 +1,10 @@
 using Godot;
 
 public partial class DynamicCamera : Camera2D{
+	public Vector2 LevelBoundsCenter { get; private set; }
+	public Vector2 AbsoluteMinZoomFloor { get; private set; } = Vector2.One;
+	public bool HasValidBounds { get; private set; }
 	private const float MOVE_SPEED = 3f;
-	
 	//Zoom speeds
 	private const float ZOOM_OUT_SPEED = 3f;
 	private const float ZOOM_IN_SPEED = 1.5f;   
@@ -76,6 +78,11 @@ public partial class DynamicCamera : Camera2D{
 			float minAllowedZoomX = viewportSize.X / mapSize.X;
 			float minAllowedZoomY = viewportSize.Y / mapSize.Y;
 			absoluteMinZoomFloor = Mathf.Max(minAllowedZoomX, minAllowedZoomY);
+			LevelBoundsCenter = trueCenter;
+			AbsoluteMinZoomFloor = new Vector2(absoluteMinZoomFloor, absoluteMinZoomFloor);
+			HasValidBounds = true;
+		}else{
+			HasValidBounds = false;
 		}
 
 		if(currentLevel != Level.LevelNode || !AccessibilityMenu.DynamicCameraEnabled){
