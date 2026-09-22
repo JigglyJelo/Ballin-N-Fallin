@@ -7,6 +7,7 @@
 [node name="Background" instance=ExtResource("1_lxvqr")]
 
 [node name="Back" type="Node2D" parent="BackgroundLayers" index="0"]
+metadata/ParallaxDepth = 0.1
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Back" index="0"]
 position = Vector2(0, 874)
@@ -19,6 +20,7 @@ color = Color(0.92549, 0.92549, 0.92549, 1)
 polygon = PackedVector2Array(0, 1340, 3840, 1340, 3840, 2160, 0, 2160)
 
 [node name="Front" type="Node2D" parent="BackgroundLayers" index="1"]
+metadata/ParallaxDepth = 0.2
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Front" index="0"]
 position = Vector2(0, 1360)

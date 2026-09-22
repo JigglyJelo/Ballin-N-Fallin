@@ -7,6 +7,7 @@
 [node name="Background" instance=ExtResource("1_bdfev")]
 
 [node name="Mount" type="Node2D" parent="BackgroundLayers" index="0"]
+metadata/ParallaxDepth = 0.05
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Mount" index="0"]
 position = Vector2(0, 239)
@@ -16,7 +17,7 @@ centered = false
 
 [node name="Bot" type="Polygon2D" parent="BackgroundLayers/Mount" index="1"]
 color = Color(0.631373, 0.631373, 0.631373, 1)
-polygon = PackedVector2Array(0, 1281, 3840, 1281, 3840, 1696, 0, 1696)
+polygon = PackedVector2Array(0, 1281, 3840, 1281, 3840, 2160, 0, 2160)
 
 [node name="Clouds" type="Node2D" parent="BackgroundLayers" index="1"]
 

@@ -7,6 +7,7 @@
 [node name="Background" instance=ExtResource("1_mnmui")]
 
 [node name="Mountains" type="Node2D" parent="BackgroundLayers" index="0"]
+metadata/ParallaxDepth = 0.1
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Mountains" index="0"]
 texture_repeat = 2
@@ -24,6 +25,7 @@ color = Color(0.92549, 0.92549, 0.92549, 1)
 polygon = PackedVector2Array(0, 1148, 3840, 1148, 3840, 1575, 0, 1575)
 
 [node name="Forest" type="Node2D" parent="BackgroundLayers" index="1"]
+metadata/ParallaxDepth = 0.2
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Forest" index="0"]
 texture_repeat = 2
