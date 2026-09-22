@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://gry0r2s1m3ge" path="res://Source/Scenes/Backgrounds/BackgroundTemplate.tscn" id="1_b6qqi"]
 [ext_resource type="PackedScene" uid="uid://ck6hegmlr65da" path="res://Source/Scenes/Backgrounds/BackgroundElements/Clouds.tscn" id="2_ir8gv"]
 [ext_resource type="PackedScene" uid="uid://cl8q23tlnfw1k" path="res://Source/Scenes/Backgrounds/BackgroundElements/Mount1.tscn" id="4_5j3xh"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="4_gg03h"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="4_gg03h"]
 [ext_resource type="Texture2D" uid="uid://day2tkuhk8i43" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Front/Hills/HillsQuarter.png" id="5_uwds6"]
 
 [node name="Background" instance=ExtResource("1_b6qqi")]
@@ -11,10 +11,11 @@
 [node name="Clouds" parent="." index="1" instance=ExtResource("2_ir8gv")]
 
 [node name="MountainBack" type="Node2D" parent="BackgroundLayers" index="0"]
+metadata/ParallaxDepth = 0.08
 
 [node name="B" type="Polygon2D" parent="BackgroundLayers/MountainBack" index="0"]
 color = Color(0.631373, 0.631373, 0.631373, 1)
-polygon = PackedVector2Array(11, 1280, 0, 1280, 0, 1806, 3840, 1806, 3840, 1279, 3330, 860, 3209, 798, 3065, 837, 3054, 837, 3036, 830, 2940, 765, 2869, 712, 2849, 703, 2832, 696, 2810, 688, 2741, 687, 2638, 721, 2201, 1116, 1395, 591, 192, 1263)
+polygon = PackedVector2Array(11, 1280, 0, 1280, 0, 2155, 3842, 2155, 3842, 1279, 3330, 860, 3209, 798, 3065, 837, 3054, 837, 3036, 830, 2940, 765, 2869, 712, 2849, 703, 2832, 696, 2810, 688, 2741, 687, 2638, 721, 2201, 1116, 1395, 591, 192, 1263)
 script = ExtResource("4_gg03h")
 stroke_color = Color(0.631373, 0.631373, 0.631373, 1)
 
@@ -41,6 +42,7 @@ stroke_sharp_limit = 0.0
 
 [node name="Mountains" type="Node2D" parent="BackgroundLayers" index="1"]
 modulate = Color(0.784314, 0.784314, 0.784314, 1)
+metadata/ParallaxDepth = 0.15
 
 [node name="1" parent="BackgroundLayers/Mountains" index="0" instance=ExtResource("4_5j3xh")]
 position = Vector2(544, 1435)
@@ -59,6 +61,7 @@ scale = Vector2(1.667, 2.5)
 
 [node name="Hills" type="Node2D" parent="BackgroundLayers" index="2"]
 modulate = Color(0.882353, 0.882353, 0.882353, 1)
+metadata/ParallaxDepth = 0.3
 
 [node name="Top" type="Sprite2D" parent="BackgroundLayers/Hills" index="0"]
 texture_repeat = 2
