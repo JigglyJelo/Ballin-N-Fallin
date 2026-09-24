@@ -47,4 +47,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 label_settings = SubResource("LabelSettings_4g2nv")
 horizontal_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
