@@ -26,15 +26,6 @@ COMPOSED BY / @officialphilman
 https://pmmusic.pro/wp-content/uploads/2023/09/Russian-Dance-PM-Music.wav
 -----------------------------------
 
-Creative Commons Public Domain Dedication
-https://creativecommons.org/publicdomain/certification/1.0/us/
------------------------------------
-King of the Hill:
-Orpheus in the Underworld - Overture, Can Can section - European Archive
-https://commons.wikimedia.org/wiki/File:Offenbach_-_Orpheus_in_the_Underworld_-_Overture,_Can_Can_section.ogg
-https://musopen.org/music/15185-orpheus-in-the-underworld/
------------------------------------
-
 CC0 1.0:
 https://creativecommons.org/publicdomain/zero/1.0/
 -----------------------------------
@@ -42,6 +33,15 @@ Target Test:
 Carmen - Prelude, Act I - European Archive
 https://commons.wikimedia.org/wiki/File:Carmen_-_Prelude_to_Act_1.ogg
 https://musopen.org/music/6045-carmen/
+-----------------------------------
+
+Creative Commons Public Domain Dedication
+https://creativecommons.org/publicdomain/certification/1.0/us/
+-----------------------------------
+King of the Hill:
+Orpheus in the Underworld - Overture, Can Can section - European Archive
+https://commons.wikimedia.org/wiki/File:Offenbach_-_Orpheus_in_the_Underworld_-_Overture,_Can_Can_section.ogg
+https://musopen.org/music/15185-orpheus-in-the-underworld/
 -----------------------------------
 
 Public Domain

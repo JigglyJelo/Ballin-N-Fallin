@@ -25,13 +25,12 @@ vertical_alignment = 1
 
 [node name="LinkSubheader" type="Label" parent="."]
 self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
-offset_left = -935.0
+offset_left = -1123.0
 offset_top = -762.0
-offset_right = 2807.0
-offset_bottom = -291.0
+offset_right = 3369.0
+offset_bottom = -528.0
 scale = Vector2(0.5, 0.5)
-text = "https://github.com/JigglyJelo/Ballin-N-Fallin
-for more info and credits"
+text = "Open-source at github.com/JigglyJelo/Ballin-N-Fallin"
 label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -52,33 +51,22 @@ label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MusicText" type="Label" parent="Selections"]
+[node name="AssetText" type="Label" parent="Selections"]
 offset_left = -1920.0
 offset_top = -180.0
 offset_right = 1920.0
 offset_bottom = 54.0
 pivot_offset = Vector2(1920, 117)
-text = "Music Credits"
+text = "Asset Credits"
 label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SFXText" type="Label" parent="Selections"]
+[node name="AddonText" type="Label" parent="Selections"]
 offset_left = -1920.0
 offset_top = 120.0
 offset_right = 1920.0
 offset_bottom = 354.0
-pivot_offset = Vector2(1920, 117)
-text = "SFX Credits"
-label_settings = ExtResource("1_xubh5")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MiscText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 420.0
-offset_right = 1920.0
-offset_bottom = 654.0
 pivot_offset = Vector2(1920, 117)
 text = "Addon Credits"
 label_settings = ExtResource("1_xubh5")
@@ -87,9 +75,9 @@ vertical_alignment = 1
 
 [node name="GodotText" type="Label" parent="Selections"]
 offset_left = -1920.0
-offset_top = 720.0
+offset_top = 420.0
 offset_right = 1920.0
-offset_bottom = 954.0
+offset_bottom = 654.0
 pivot_offset = Vector2(1920, 117)
 text = "Godot Credits"
 label_settings = ExtResource("1_xubh5")
