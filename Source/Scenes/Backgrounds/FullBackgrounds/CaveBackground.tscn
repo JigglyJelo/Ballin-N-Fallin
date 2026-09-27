@@ -1,25 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://chmv8a46qy7f0"]
+[gd_scene load_steps=5 format=3 uid="uid://chmv8a46qy7f0"]
 
 [ext_resource type="PackedScene" uid="uid://gry0r2s1m3ge" path="res://Source/Scenes/Backgrounds/BackgroundTemplate.tscn" id="1_7aacc"]
-[ext_resource type="Texture2D" uid="uid://fe3a4mt06wqc" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/CaveBack/cave.png" id="2_pmjwk"]
+[ext_resource type="Texture2D" uid="uid://dq2vbvvog2iwc" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/CaveBack/cave_0002_back.png" id="2_efoth"]
+[ext_resource type="Texture2D" uid="uid://c0yq2uv2su4e5" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/CaveBack/cave_0001_mid.png" id="3_rjjs5"]
+[ext_resource type="Texture2D" uid="uid://jf0oejf8lf0u" path="res://Assets/Sprites/Backgrounds/Level Backgrounds/Back/CaveBack/cave_0000_front.png" id="4_gbn0g"]
 
 [node name="Background" instance=ExtResource("1_7aacc")]
 
-[node name="Front" type="Node2D" parent="BackgroundLayers" index="0"]
+[node name="BG" type="Polygon2D" parent="BackgroundLayers" index="0"]
+color = Color(0.9515795, 0.95157963, 0.9515795, 1)
+polygon = PackedVector2Array(0, 0, 3840, 0, 3840, 2160, 0, 2160)
 
-[node name="Top" type="Polygon2D" parent="BackgroundLayers/Front" index="0"]
-color = Color(0.27451, 0.27451, 0.27451, 1)
-polygon = PackedVector2Array(3840, 0, 3840, 324, 0, 324, 0, 0)
-
-[node name="Mid" type="Sprite2D" parent="BackgroundLayers/Front" index="1"]
+[node name="Back" type="Sprite2D" parent="BackgroundLayers" index="1"]
 texture_repeat = 2
-position = Vector2(0, 324)
-scale = Vector2(2, 2)
-texture = ExtResource("2_pmjwk")
+scale = Vector2(3, 3)
+texture = ExtResource("2_efoth")
 centered = false
 region_enabled = true
-region_rect = Rect2(1080, 829, 1920, 829)
+region_rect = Rect2(0, 0, 1280, 720)
+metadata/ParallaxDepth = 0.1
 
-[node name="Bot" type="Polygon2D" parent="BackgroundLayers/Front" index="2"]
-color = Color(0.27451, 0.27451, 0.27451, 1)
-polygon = PackedVector2Array(3840, 1982, 3840, 2160, 0, 2160, 0, 1982)
+[node name="Middle" type="Sprite2D" parent="BackgroundLayers" index="2"]
+texture_repeat = 2
+scale = Vector2(2, 2)
+texture = ExtResource("3_rjjs5")
+centered = false
+region_enabled = true
+region_rect = Rect2(256, 0, 1920, 1080)
+metadata/ParallaxDepth = 0.15
+
+[node name="Front" type="Sprite2D" parent="BackgroundLayers" index="3"]
+texture_repeat = 2
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_gbn0g")
+centered = false
+region_enabled = true
+region_rect = Rect2(256, 0, 2560, 1440)
+metadata/ParallaxDepth = 0.25
