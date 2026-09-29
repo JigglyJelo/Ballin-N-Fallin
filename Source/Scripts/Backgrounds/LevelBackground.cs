@@ -55,7 +55,7 @@ public partial class LevelBackground : CanvasLayer{
 
 	public override void _Process(double delta){
 		if(DynamicCamera.CameraNode == null || !DynamicCamera.CameraNode.HasValidBounds) return;
-
+		//Handles the parallax scaling
 		Vector2 camPos = DynamicCamera.CameraNode.GlobalPosition;
 		Vector2 camZoom = DynamicCamera.CameraNode.Zoom;
 		Vector2 levelCenter = DynamicCamera.CameraNode.LevelBoundsCenter;
@@ -65,32 +65,54 @@ public partial class LevelBackground : CanvasLayer{
 			minZoom.X > 0 ? camZoom.X / minZoom.X : 1f,
 			minZoom.Y > 0 ? camZoom.Y / minZoom.Y : 1f
 		);
+		// Prevent floating-point problems by snapping to 0 when fully zoomed out
+		Vector2 parallaxIntensity = new Vector2(
+			zoomRatio.X <= 1.001f ? 0f : 1f - (1f / zoomRatio.X),
+			zoomRatio.Y <= 1.001f ? 0f : 1f - (1f / zoomRatio.Y)
+		);
 
-		Vector2 worldOffset = camPos - levelCenter;
-		Vector2 screenSpaceOffset = (worldOffset * camZoom) / Scale;
-		Vector2 localViewportCenter = (GetViewport().GetVisibleRect().Size / 2f) / Scale;
+		// Adjust position so the layer visually scales from the center of the screen
+		Vector2 screenSpaceOffset = ((camPos - levelCenter) * camZoom) / Scale;
+		Vector2 localViewportSize = GetViewport().GetVisibleRect().Size / Scale;
+		Vector2 localViewportCenter = localViewportSize / 2f;
 
 		for(int i = 0; i < backgroundLayers.Length; i++){
 			Node2D layer = backgroundLayers[i];
 			if(layer == null) continue;
-			
+
 			float depth = baseDepths[i];
 			
-			// Zoom
 			Vector2 targetScale = baseScales[i] * new Vector2(
 				Mathf.Lerp(1f, zoomRatio.X, depth),
 				Mathf.Lerp(1f, zoomRatio.Y, depth)
 			);
 			layer.Scale = targetScale;
 
-			// Zoom Centering Pivot
-			Vector2 scaleRatio = targetScale / baseScales[i];
-			Vector2 zoomCenteringOffset = localViewportCenter - (localViewportCenter * scaleRatio);
+			Vector2 zoomCenteringOffset = localViewportCenter - (localViewportCenter * (targetScale / baseScales[i]));
+			Vector2 motionShift = -screenSpaceOffset * depth * parallaxIntensity;
+			Vector2 finalPos = basePositions[i] + zoomCenteringOffset + motionShift;
 
-			// Motion Shift
-			Vector2 motionShift = -screenSpaceOffset * depth;
+			// Clamp position to ensure the layer's sprites physical edges never enter the viewport
+			if(layer is Sprite2D sprite){
+				if(sprite.Texture != null){
+					// Get unscaled bounds that automatically account for region and centering
+					Rect2 localRect = sprite.GetRect();
 
-			layer.Position = basePositions[i] + zoomCenteringOffset + motionShift;
+					float leftBound = localRect.Position.X * targetScale.X;
+					float rightBound = localRect.End.X * targetScale.X;
+					float topBound = localRect.Position.Y * targetScale.Y;
+					float bottomBound = localRect.End.Y * targetScale.Y;
+					// Calculate the absolute position limits needed to cover the screen
+					float minX = localViewportSize.X - rightBound;
+					float maxX = -leftBound;
+					float minY = localViewportSize.Y - bottomBound;
+					float maxY = -topBound;
+
+					if(minX <= maxX) finalPos.X = Mathf.Clamp(finalPos.X, minX, maxX);
+					if(minY <= maxY) finalPos.Y = Mathf.Clamp(finalPos.Y, minY, maxY);
+				}
+			}
+			layer.Position = finalPos;
 		}
 	}
 }
