@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://qtn7hbcmglhq"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/Survival/SurvivalHUD.cs" id="1_r20i7"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_6ps4t"]
+[ext_resource type="Script" uid="uid://c1vwh3trq8jeb" path="res://Source/Scripts/Modes/Survival/SurvivalHUD.cs" id="1_r20i7"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_6ps4t"]
 
 [node name="SurvivalTimerText" type="Node"]
 process_mode = 3

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bg831gigbstmm"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Score Screen/ScoreScreen.cs" id="1_pjjuc"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_23ukh"]
+[ext_resource type="Script" uid="uid://bg5d8e23nfpsg" path="res://Source/Scripts/Score Screen/ScoreScreen.cs" id="1_pjjuc"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_23ukh"]
 
 [node name="ScoreScreen" type="CanvasLayer"]
 process_mode = 2

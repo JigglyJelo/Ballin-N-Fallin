@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://fa8nrg1y0bvm"]
 
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="1_oit7c"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="1_oit7c"]
 
 [node name="Label" type="Label"]
 offset_right = 3840.0

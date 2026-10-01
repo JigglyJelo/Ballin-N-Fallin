@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://4145nahxlkx2"]
 
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="1_1k6co"]
-[ext_resource type="Script" path="res://Source/Scripts/Menus/Menu Stuff/MenuBackButton.cs" id="1_ldiw2"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_cyswe"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="1_1k6co"]
+[ext_resource type="Script" uid="uid://u4tvoqtr803c" path="res://Source/Scripts/Menus/Menu Stuff/MenuBackButton.cs" id="1_ldiw2"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_cyswe"]
 [ext_resource type="Texture2D" uid="uid://c2kkarucbt417" path="res://Assets/Sprites/1.png" id="2_em7ye"]
 
 [node name="MenuBackButton" type="Node2D"]

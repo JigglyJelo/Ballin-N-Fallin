@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://j1rk64jq7nm5"]
+[gd_scene load_steps=4 format=3 uid="uid://j1rk64jq7nm5"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/Keypad.cs" id="1_5g6kr"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="5_wvrtc"]
+[ext_resource type="Script" uid="uid://3ogifqqxuraq" path="res://Source/Scripts/Menus/Keypad.cs" id="1_5g6kr"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="3_jin65"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="5_wvrtc"]
 
 [node name="Keypad" type="Node2D"]
 script = ExtResource("1_5g6kr")
@@ -141,11 +142,10 @@ label_settings = ExtResource("5_wvrtc")
 z_index = 1
 offset_left = -624.0
 offset_top = -523.0
-offset_right = 1871.0
-offset_bottom = -289.0
-scale = Vector2(0.5, 0.5)
+offset_right = 623.5
+offset_bottom = -406.0
 text = "WWWWWWWWWWWWWWW"
-label_settings = ExtResource("5_wvrtc")
+label_settings = ExtResource("3_jin65")
 horizontal_alignment = 1
 
 [node name="Selections" type="Node2D" parent="."]

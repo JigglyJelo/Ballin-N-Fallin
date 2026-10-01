@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6kehpuuetcw8"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/PlayerSettingsMenu/MiniControlsMenu.cs" id="1_tcxdu"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_vrxvp"]
+[ext_resource type="Script" uid="uid://da0pqe4pmh0sm" path="res://Source/Scripts/Menus/PlayerSettingsMenu/MiniControlsMenu.cs" id="1_tcxdu"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_vrxvp"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_0qjee"]
 
 [node name="MiniControlsMenu" type="Node2D"]

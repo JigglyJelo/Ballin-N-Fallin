@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://nj6kipa3fs7d"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Score Screen/EndscreenResult.cs" id="1_yumwt"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_00l8t"]
+[ext_resource type="Script" uid="uid://uft2d2w3wy4b" path="res://Source/Scripts/Score Screen/EndscreenResult.cs" id="1_yumwt"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_00l8t"]
 [ext_resource type="PhysicsMaterial" uid="uid://cl78t0kopdgd6" path="res://Source/Materials/PlayerPhysicsMaterial.tres" id="3_kg24c"]
-[ext_resource type="Script" path="res://Source/Scripts/Score Screen/ScoreScreenPlayer.cs" id="4_j1agt"]
+[ext_resource type="Script" uid="uid://d2q1wk2indrvd" path="res://Source/Scripts/Score Screen/ScoreScreenPlayer.cs" id="4_j1agt"]
 [ext_resource type="Shape2D" uid="uid://mmicm5qifgge" path="res://Source/Materials/PlayerShape.tres" id="5_xtvoh"]
 [ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="6_n5hdi"]
 [ext_resource type="AudioStream" uid="uid://c4exk1s5oqhbl" path="res://Assets/SFX/bounce.ogg" id="6_sbqx5"]

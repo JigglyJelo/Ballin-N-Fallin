@@ -1,17 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bc551o4gjyk00"]
+[gd_scene load_steps=4 format=3 uid="uid://bc551o4gjyk00"]
 
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_j5yr6"]
 [ext_resource type="Script" uid="uid://dthj42m4mmobc" path="res://Source/Scripts/Menus/CreditsMenu/CreditsPanel.cs" id="2_1g1id"]
-[ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="2_yionq"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_4g2nv"]
-font = ExtResource("2_yionq")
-font_size = 75
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 8
-shadow_color = Color(0, 0, 0, 1)
-shadow_offset = Vector2(4, 4)
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="3_1g1id"]
 
 [node name="Panel" type="Panel"]
 anchors_preset = 8
@@ -45,6 +36,6 @@ custom_minimum_size = Vector2(1000, 1000)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-label_settings = SubResource("LabelSettings_4g2nv")
+label_settings = ExtResource("3_1g1id")
 horizontal_alignment = 1
 autowrap_mode = 3

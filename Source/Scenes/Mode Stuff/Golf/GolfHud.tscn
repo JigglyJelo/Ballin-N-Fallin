@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cda2dw4oj66hh"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/Golf/GolfHUD.cs" id="1_1jnpy"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_d4m66"]
+[ext_resource type="Script" uid="uid://c12ichkcn7vts" path="res://Source/Scripts/Modes/Golf/GolfHUD.cs" id="1_1jnpy"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_d4m66"]
 
 [node name="GolfHUD" type="Node"]
 script = ExtResource("1_1jnpy")

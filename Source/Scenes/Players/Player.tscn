@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://b78ro40qrxhlk"]
+[gd_scene load_steps=39 format=3 uid="uid://b78ro40qrxhlk"]
 
 [ext_resource type="Script" uid="uid://bjawjsp5wcx1i" path="res://Source/Scripts/Player/Player.cs" id="1_5nebf"]
 [ext_resource type="PhysicsMaterial" uid="uid://cl78t0kopdgd6" path="res://Source/Materials/PlayerPhysicsMaterial.tres" id="1_xiy12"]
@@ -10,9 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://dlm0ki33nhb7f" path="res://Assets/Sprites/Player/Ball31.png" id="5_mmhx2"]
 [ext_resource type="Texture2D" uid="uid://2n6tbh4lhy5d" path="res://Assets/Sprites/Player/190/BallLines.png" id="6_khj8r"]
 [ext_resource type="Texture2D" uid="uid://t6tm52yejvsb" path="res://Assets/Sprites/Player/190/Eyes/NeutralEyes.png" id="6_qw1l1"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="6_wk4mh"]
 [ext_resource type="Texture2D" uid="uid://3m0fhcijwhc6" path="res://Assets/Sprites/Player/190/Pupils/NeutralPupils.png" id="7_i2jnn"]
 [ext_resource type="Texture2D" uid="uid://br0xolkmnp2kg" path="res://Assets/Sprites/Player/190/Outline.png" id="8_0x18p"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="10_p03id"]
 [ext_resource type="Texture2D" uid="uid://cyxwobqv8r4ui" path="res://Assets/Sprites/Items/Small/Pepper.png" id="11_7llrt"]
 [ext_resource type="AudioStream" uid="uid://c2ooj1e2e16qo" path="res://Assets/SFX/slots.ogg" id="12_3bcce"]
 [ext_resource type="Texture2D" uid="uid://k6timim6853t" path="res://Assets/Sprites/Player/TransformBar.png" id="12_fhs5s"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="15_vudw1"]
 [ext_resource type="Texture2D" uid="uid://cbwj4dorfrndb" path="res://Assets/Sprites/Items/Small/Small Ball.png" id="16_uhq62"]
 [ext_resource type="Texture2D" uid="uid://117w2mhl1472" path="res://Assets/Sprites/Items/Small/Stop Sign.png" id="17_7tfd0"]
+[ext_resource type="LabelSettings" uid="uid://bhgwnlc6rddnp" path="res://Source/Materials/LabelSettings50.tres" id="17_wk4mh"]
 [ext_resource type="Texture2D" uid="uid://b0r8dbxt4aur6" path="res://Assets/Sprites/Items/Small/Moon.png" id="18_tvn25"]
 [ext_resource type="Texture2D" uid="uid://c8n25xoxfwogo" path="res://Assets/Sprites/Items/Small/Wings.png" id="19_vednr"]
 [ext_resource type="Texture2D" uid="uid://d4esn3d6vhohv" path="res://Assets/Sprites/Items/Small/Ball.png" id="20_alnmc"]
@@ -118,15 +119,16 @@ color = Color(1, 0.368627, 0, 0.501961)
 color_ramp = SubResource("Gradient_xiyfj")
 
 [node name="ModeText" type="Label" parent="Visuals/HUD"]
-offset_left = -683.0
-offset_top = -10.0
-offset_right = 683.0
-offset_bottom = 246.0
-scale = Vector2(0.375, 0.375)
-pivot_offset = Vector2(683, 128)
-label_settings = ExtResource("10_p03id")
+offset_left = -320.0
+offset_top = 80.0
+offset_right = 320.0
+offset_bottom = 176.0
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(320, 48)
+label_settings = ExtResource("6_wk4mh")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="UsernameGroup" type="CanvasGroup" parent="Visuals/HUD"]
 
@@ -137,7 +139,7 @@ offset_right = 1137.0
 offset_bottom = -63.0
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(1136.5, 117)
-label_settings = ExtResource("10_p03id")
+label_settings = ExtResource("6_wk4mh")
 horizontal_alignment = 1
 
 [node name="RouletteAnimation" type="AnimatedSprite2D" parent="Visuals/HUD"]
@@ -150,11 +152,9 @@ position = Vector2(0, -180)
 
 [node name="ItemAmountLabel" type="Label" parent="Visuals/HUD/ItemSprite"]
 offset_left = 34.0
-offset_right = 130.0
-offset_bottom = 234.0
-scale = Vector2(0.25, 0.25)
-text = " "
-label_settings = ExtResource("10_p03id")
+offset_right = 112.0
+offset_bottom = 61.0
+label_settings = ExtResource("17_wk4mh")
 
 [node name="ItemTriangle" type="Polygon2D" parent="Visuals/HUD"]
 visible = false

@@ -18,7 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://dfpy1y6bip17b" path="res://Assets/SFX/sieuamthanh__orchestra-hit-a7-a8.ogg" id="13_qv56m"]
 [ext_resource type="AudioStream" uid="uid://i2srjvx1wggd" path="res://Assets/SFX/jayrom01__whip-and-crack-sound.ogg" id="14_mj3by"]
 [ext_resource type="AudioStream" uid="uid://dntmgv83chc8b" path="res://Assets/SFX/coin-gavynator.ogg" id="15_370ei"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="15_gxw6u"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="15_gxw6u"]
 [ext_resource type="AudioStream" uid="uid://b2hg5ebch3f1m" path="res://Assets/SFX/kenneynl_tone1.ogg" id="16_3hmsa"]
 [ext_resource type="Script" uid="uid://bwqavs2y8cf2t" path="res://Source/Scripts/Visual Effects/ParticleManager.cs" id="17_ivexy"]
 [ext_resource type="Script" uid="uid://bt5cn8l278tcw" path="res://Source/Scripts/Death.cs" id="20_jyd88"]

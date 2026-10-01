@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b27qggy5s6wvn"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/Race/RaceHUD.cs" id="1_wpfcq"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_cc5da"]
+[ext_resource type="Script" uid="uid://c11cok5nx87hw" path="res://Source/Scripts/Modes/Race/RaceHUD.cs" id="1_wpfcq"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_cc5da"]
 
 [node name="RaceTimerText" type="Node"]
 process_mode = 3

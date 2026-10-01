@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cvw8cs2hdichg"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/TeamHud.cs" id="1_4hqwh"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_c7c63"]
+[ext_resource type="Script" uid="uid://c3uh0ybpa6tuy" path="res://Source/Scripts/Modes/TeamHud.cs" id="1_4hqwh"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_c7c63"]
 
 [node name="Team HUD" type="CanvasLayer"]
 layer = 2

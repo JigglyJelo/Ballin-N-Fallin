@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://bvrkggycrj4wr"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/PlayerSettingsMenu/ColorMenu.cs" id="1_mock4"]
+[ext_resource type="Script" uid="uid://c6cs8prm2o8jr" path="res://Source/Scripts/Menus/PlayerSettingsMenu/ColorMenu.cs" id="1_mock4"]
 [ext_resource type="Texture2D" uid="uid://dsqbjuon6kn2j" path="res://Assets/Sprites/Menus/Color/colorButton.png" id="3_3ys2e"]
 [ext_resource type="Texture2D" uid="uid://bcebx8kxnajhr" path="res://Assets/Sprites/Menus/Color/Circle.png" id="3_d7kdi"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_suqww"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="8_2fx5h"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="8_2fx5h"]
 
 [node name="ColorMenu" type="Node2D"]
 script = ExtResource("1_mock4")

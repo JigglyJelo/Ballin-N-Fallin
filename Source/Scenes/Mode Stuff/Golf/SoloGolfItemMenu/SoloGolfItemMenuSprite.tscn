@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b01s0h5qttqhj"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/Golf/SoloGolfItemMenuOption.cs" id="1_xldpq"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_xtycf"]
+[ext_resource type="Script" uid="uid://on4nuv4schav" path="res://Source/Scripts/Modes/Golf/SoloGolfItemMenuOption.cs" id="1_xldpq"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_xtycf"]
 
 [node name="ItemSprite" type="Sprite2D"]
 script = ExtResource("1_xldpq")

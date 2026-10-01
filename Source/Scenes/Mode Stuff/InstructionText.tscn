@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://clskjhmutxbf"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/InstructionsText.cs" id="2_hpb7k"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_q6pac"]
+[ext_resource type="Script" uid="uid://b8t4pxe70r3mg" path="res://Source/Scripts/Modes/InstructionsText.cs" id="2_hpb7k"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_q6pac"]
 
 [node name="InstructionText" type="Node2D"]
 script = ExtResource("2_hpb7k")

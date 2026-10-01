@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://d3wjs3uhwa4g"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/PlayerSettingsMenu/PlayerSettingsMenu.cs" id="1_vxn7b"]
+[ext_resource type="Script" uid="uid://dkprk5ppb4h4l" path="res://Source/Scripts/Menus/PlayerSettingsMenu/PlayerSettingsMenu.cs" id="1_vxn7b"]
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="2_f38xk"]
 [ext_resource type="PackedScene" uid="uid://bvrkggycrj4wr" path="res://Source/Scenes/Menus/PlayerSettingsMenu/ColorMenu.tscn" id="3_ue8qe"]
 [ext_resource type="PackedScene" uid="uid://ck8ha1j442bxx" path="res://Source/Scenes/Menus/PlayerSettingsMenu/MiniProfileMenu.tscn" id="4_ihl7d"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="5_odugn"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="5_odugn"]
 
 [node name="PlayerSettingsMenu" type="Node2D"]
 script = ExtResource("1_vxn7b")

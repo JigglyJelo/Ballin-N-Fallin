@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b6rx7k5x7l2dl"]
 
 [ext_resource type="Script" uid="uid://frx6uobsjgx4" path="res://Source/Scripts/Menus/CreditsMenu/AddonCreditsMenu.cs" id="1_m0s58"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="1_moqiu"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="1_moqiu"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="2_8cuce"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_srjj2"]
 [ext_resource type="PackedScene" uid="uid://bc551o4gjyk00" path="res://Source/Scenes/Menus/Credits/CreditsPanel.tscn" id="5_4vwhe"]

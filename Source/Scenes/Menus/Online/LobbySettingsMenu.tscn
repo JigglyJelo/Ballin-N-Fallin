@@ -1,12 +1,16 @@
 [gd_scene load_steps=11 format=3 uid="uid://dn5tuyi0fexhi"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/LobbySettingsMenu.cs" id="1_geijo"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_jfy81"]
+[ext_resource type="Script" uid="uid://0o786kneadsc" path="res://Source/Scripts/Menus/Online Menus/LobbySettingsMenu.cs" id="1_geijo"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_jfy81"]
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="2_xpvv8"]
-[ext_resource type="Script" path="res://Source/Scripts/InGameChat.cs" id="3_iadom"]
+[ext_resource type="Script" uid="uid://bs2cpoe1hgwgh" path="res://Source/Scripts/InGameChat.cs" id="3_iadom"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_na08j"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3iktt"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="6_dgd7k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tksag"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebldv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjqkx"]
 bg_color = Color(0, 0, 0, 0.784314)
@@ -14,10 +18,6 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebldv"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tksag"]
 
 [node name="LobbySettingsMenu" type="Node2D"]
 script = ExtResource("1_geijo")
@@ -71,9 +71,9 @@ size_flags_vertical = 3
 
 [node name="LineEdit" type="LineEdit" parent="Screen/Panel/ChatMessages"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_xjqkx")
-theme_override_styles/read_only = SubResource("StyleBoxEmpty_ebldv")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tksag")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_ebldv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xjqkx")
 alignment = 2
 
 [node name="Header" type="Control" parent="Screen"]
@@ -279,8 +279,8 @@ position = Vector2(1750, 970)
 [node name="InputPrompts" parent="." instance=ExtResource("6_dgd7k")]
 offset_left = -745.0
 offset_right = 4647.0
-InputMessages = {
+InputMessages = Dictionary[int, String]({
 0: "Change Color",
 2: "Confirm",
 3: "Back"
-}
+})

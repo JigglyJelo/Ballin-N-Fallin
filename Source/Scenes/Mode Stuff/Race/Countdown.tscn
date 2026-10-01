@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2uo5l7l82tji"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/Race/Countdown.cs" id="2_kn6k1"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_uejbn"]
+[ext_resource type="Script" uid="uid://oncxnvjluwhi" path="res://Source/Scripts/Modes/Race/Countdown.cs" id="2_kn6k1"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_uejbn"]
 
 [node name="Countdown" type="Node"]
 script = ExtResource("2_kn6k1")
