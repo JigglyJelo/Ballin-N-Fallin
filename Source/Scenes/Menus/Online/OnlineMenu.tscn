@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://wyun4hyflt3x"]
+[gd_scene load_steps=9 format=3 uid="uid://wyun4hyflt3x"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/OnlineMenu.cs" id="1_sh81n"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_5jqju"]
+[ext_resource type="Script" uid="uid://b0ugvupem7so7" path="res://Source/Scripts/Menus/Online Menus/OnlineMenu.cs" id="1_sh81n"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_5jqju"]
 [ext_resource type="PackedScene" uid="uid://bmnn6w55xjnt1" path="res://Source/Scenes/Players/StaticPlayer.tscn" id="4_pgopc"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_t7sip"]
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="5_hx7j2"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_sahyo"]
 [ext_resource type="Texture2D" uid="uid://dx5i7dgjkkohm" path="res://Assets/Sprites/Player/500/Eyes/HappyEyes.png" id="6_p8gky"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="8_mqo8f"]
 
 [node name="OnlineMenu" type="Node2D"]
 position = Vector2(-480, -270)
@@ -178,11 +179,10 @@ offset_bottom = 1467.0
 [node name="SubHeaderText" type="Label" parent="."]
 offset_left = -1440.0
 offset_top = 1052.0
-offset_right = 6240.0
-offset_bottom = 1286.0
-scale = Vector2(0.5, 0.5)
+offset_right = 2400.0
+offset_bottom = 1169.0
 text = "Create your own lobby for others to join."
-label_settings = ExtResource("3_5jqju")
+label_settings = ExtResource("8_mqo8f")
 horizontal_alignment = 1
 
 [editable path="Selections/HostButton/Player"]

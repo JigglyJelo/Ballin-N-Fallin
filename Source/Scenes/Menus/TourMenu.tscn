@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://fsyp7xhhbpup"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/TourMenu.cs" id="1_oosdl"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_6fscv"]
+[ext_resource type="Script" uid="uid://d2mtv6ip81mei" path="res://Source/Scripts/Menus/TourMenu.cs" id="1_oosdl"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_6fscv"]
 [ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="2_7rvig"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_0353d"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3kpyk"]

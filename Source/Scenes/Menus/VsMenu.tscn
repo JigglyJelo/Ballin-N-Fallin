@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://o4cw4adu2ry1"]
+[gd_scene load_steps=16 format=3 uid="uid://o4cw4adu2ry1"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/VsMenu.cs" id="1_n6mne"]
+[ext_resource type="Script" uid="uid://dgtbarl8wjqtj" path="res://Source/Scripts/Menus/VsMenu.cs" id="1_n6mne"]
 [ext_resource type="Texture2D" uid="uid://ytpljltjqyub" path="res://Assets/Sprites/Menus/Trophy.png" id="3_o456u"]
 [ext_resource type="Texture2D" uid="uid://iu2o7up6gedt" path="res://Assets/Sprites/Player/380/BallLines.png" id="4_6845c"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="5_tbmwm"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="5_tbmwm"]
 [ext_resource type="Texture2D" uid="uid://ul3iw4cn2nvk" path="res://Assets/Sprites/Player/380/Eyes/HappyEyes.png" id="6_exgrr"]
 [ext_resource type="Texture2D" uid="uid://dn1h2bqbd5t17" path="res://Assets/Sprites/Player/380/Eyes/AnnoyedEyes.png" id="7_nisig"]
 [ext_resource type="Texture2D" uid="uid://cbj6rakvp5gus" path="res://Assets/Sprites/Player/380/Pupils/NeutralPupils.png" id="7_tm7ll"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://2r1hf8bgmhew" path="res://Assets/Sprites/Player/380/Eyes/AngryEyes.png" id="9_4m6qy"]
 [ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="10_vo5ex"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="12_8jqmn"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="14_h45fs"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hj38g"]
 font = ExtResource("10_vo5ex")
@@ -311,11 +312,10 @@ horizontal_alignment = 1
 [node name="SubHeaderText" type="Label" parent="."]
 offset_left = -1440.0
 offset_top = 1052.0
-offset_right = 6240.0
-offset_bottom = 1286.0
-scale = Vector2(0.5, 0.5)
+offset_right = 2400.0
+offset_bottom = 1169.0
 text = "Play multiple rounds of mini-games; the first to earn enough points wins!"
-label_settings = ExtResource("5_tbmwm")
+label_settings = ExtResource("14_h45fs")
 horizontal_alignment = 1
 
 [editable path="Selections/TourButton/Orange"]

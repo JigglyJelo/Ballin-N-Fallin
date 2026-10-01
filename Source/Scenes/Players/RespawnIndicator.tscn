@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6fxj2araxyyq"]
 
 [ext_resource type="Texture2D" uid="uid://dackt2kb3nbo7" path="res://Assets/Sprites/Player/Ball63.png" id="1_a5lir"]
-[ext_resource type="Script" path="res://Source/Scripts/Visual Effects/RespawnIndicator.cs" id="1_qve7n"]
+[ext_resource type="Script" uid="uid://ddm0rgcl7tdoj" path="res://Source/Scripts/Visual Effects/RespawnIndicator.cs" id="1_qve7n"]
 [ext_resource type="Texture2D" uid="uid://dg0t5gagwh4b1" path="res://Assets/Sprites/Player/380/Outline.png" id="3_vccs3"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="4_yknqm"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="4_yknqm"]
 
 [node name="RespawnIndicator" type="Node2D"]
 script = ExtResource("1_qve7n")

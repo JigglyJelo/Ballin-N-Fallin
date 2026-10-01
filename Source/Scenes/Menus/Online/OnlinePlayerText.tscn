@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bjos8gm3q4aaj"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Menus/Online Menus/OnlinePlayerText.cs" id="1_ivfmn"]
-[ext_resource type="Script" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="2_8o1h8"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_nntlc"]
+[ext_resource type="Script" uid="uid://bxam6lxbrynog" path="res://Source/Scripts/Menus/Online Menus/OnlinePlayerText.cs" id="1_ivfmn"]
+[ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="2_8o1h8"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_nntlc"]
 
 [node name="OnlinePlayerStatus" type="Node2D"]
 script = ExtResource("1_ivfmn")

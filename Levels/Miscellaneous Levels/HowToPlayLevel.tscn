@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://3bryswakmbir" path="res://Levels/_Base Levels/Testing Grounds.tscn" id="1_asyk1"]
 [ext_resource type="AudioStream" uid="uid://cie2v6uyo5syk" path="res://Assets/Music/Score.ogg" id="2_5568q"]
 [ext_resource type="Texture2D" uid="uid://dl6c0u37pwxhv" path="res://Assets/Sprites/Level Stuff/Ground Patterns/Race Tile.png" id="2_ltdpt"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="3_88v1r"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_88v1r"]
 [ext_resource type="Texture2D" uid="uid://cl7m6s4mcdctv" path="res://Assets/Sprites/Input Prompts/LeftStick.png" id="4_ipb5a"]
 [ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="4_l48nl"]
 [ext_resource type="Texture2D" uid="uid://cbnguvlc7876c" path="res://Assets/Sprites/Input Prompts/FaceButton.png" id="5_n0bqy"]

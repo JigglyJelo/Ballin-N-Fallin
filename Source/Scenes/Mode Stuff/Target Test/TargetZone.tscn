@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d0sn2fn12sqmb"]
 
-[ext_resource type="Script" path="res://Source/Scripts/Modes/Target Test/TargetZone.cs" id="1_oxbiv"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/FontSetting.tres" id="2_l32i6"]
+[ext_resource type="Script" uid="uid://bkw30fo1rxyug" path="res://Source/Scripts/Modes/Target Test/TargetZone.cs" id="1_oxbiv"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_l32i6"]
 
 [node name="TargetZone" type="Area2D"]
 script = ExtResource("1_oxbiv")
