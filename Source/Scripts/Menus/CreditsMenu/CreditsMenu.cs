@@ -8,10 +8,12 @@ public partial class CreditsMenu : VerticalMenu{
 	public override void _Ready(){
 		base._Ready();
 		Selection = 1;
-		creditsPanel = GetNode<CreditsPanel>("Panel");
 		headerLabel = GetNode<Label>("CreditsHeader");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
 		totalSelections = 4;
+		foreach(Control selectionNode in GetNode<Control>("Selections").GetChildren()){
+			selectionNode.PivotOffset = selectionNode.Size / 2f;
+		}
 		UpdateSelectionVisual();
 	}
 

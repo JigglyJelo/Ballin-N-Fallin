@@ -1,21 +1,33 @@
-[gd_scene load_steps=6 format=3 uid="uid://bm504q8blox00"]
+[gd_scene load_steps=7 format=3 uid="uid://bm504q8blox00"]
 
 [ext_resource type="Script" uid="uid://bh621s1brmvm" path="res://Source/Scripts/Menus/Settings Menu/ControlsMenu.cs" id="1_kjtbf"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="2_narvi"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_k3j3p"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="4_5b1de"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_j1sl6"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_aw65n"]
 
-[node name="Controls Menu" type="Node2D"]
+[node name="Controls Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_kjtbf")
 
 [node name="ArrowSelections" parent="." instance=ExtResource("2_narvi")]
+visible = false
 
 [node name="ProfileText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
 offset_left = -1920.0
-offset_top = -935.0
 offset_right = 1920.0
-offset_bottom = -695.0
+offset_bottom = 240.0
+grow_horizontal = 2
 text = "Editing "
 label_settings = ExtResource("3_k3j3p")
 horizontal_alignment = 1
@@ -23,73 +35,92 @@ vertical_alignment = 1
 metadata/setting = true
 metadata/nonclickable = true
 
-[node name="Selections" type="Node2D" parent="."]
-position = Vector2(215, 0)
+[node name="Selections" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 200.0
+offset_top = -556.25
+offset_right = 1138.0
+offset_bottom = 308.0
+grow_vertical = 2
 
 [node name="ActionLabel_0" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -668.0
-offset_right = 56.0
-offset_bottom = -428.0
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
 text = "Charge"
-label_settings = ExtResource("3_k3j3p")
+label_settings = ExtResource("4_5b1de")
 vertical_alignment = 1
-metadata/setting = true
 metadata/nonclickable = true
 
 [node name="ActionLabel_1" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -434.0
-offset_right = 56.0
-offset_bottom = -194.0
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
 text = "Slam"
-label_settings = ExtResource("3_k3j3p")
+label_settings = ExtResource("4_5b1de")
 vertical_alignment = 1
-metadata/setting = true
 metadata/nonclickable = true
 
 [node name="ActionLabel_2" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -134.0
-offset_right = -315.0
-offset_bottom = 106.0
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
 text = "Item"
-label_settings = ExtResource("3_k3j3p")
+label_settings = ExtResource("4_5b1de")
 vertical_alignment = 1
-metadata/setting = true
 metadata/nonclickable = true
 
 [node name="ActionLabel_3" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 166.0
-offset_right = -483.0
-offset_bottom = 406.0
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
 text = "Show Text"
-label_settings = ExtResource("3_k3j3p")
+label_settings = ExtResource("4_5b1de")
 vertical_alignment = 1
-metadata/setting = true
 metadata/nonclickable = true
 
 [node name="VibrationLabel" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 408.0
-offset_right = -483.0
-offset_bottom = 648.0
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
 text = "Vibration"
-label_settings = ExtResource("3_k3j3p")
+label_settings = ExtResource("4_5b1de")
 vertical_alignment = 1
 metadata/setting = true
 metadata/nonclickable = true
 
-[node name="MenuBackButton" parent="." instance=ExtResource("4_j1sl6")]
-position = Vector2(1750, 970)
-
 [node name="InputPrompts" parent="." instance=ExtResource("5_aw65n")]
-offset_left = 14.0
-offset_right = 3888.0
-InputMessages = {
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3874.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+InputMessages = Dictionary[int, String]({
 0: "Reset",
 1: "Clear",
 2: "Confirm",
 3: "Back"
-}
+})
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_j1sl6")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -457.0
+offset_top = -154.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_vertical = 0

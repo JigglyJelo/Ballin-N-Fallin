@@ -3,7 +3,7 @@ using Godot;
 /// Abstract base class for UI menus. Handles switching between controller and mouse input, 
 /// managing selection states, and calculating custom mouse hitboxes for standard Godot nodes.
 /// </summary>
-public abstract partial class Menu : Node2D{
+public abstract partial class Menu : Control{
     public static readonly Color SELECTED_COLOR = new Color(0,1,0);
     public static readonly Color SELECTED_BUTTON_COLOR = Color.Color8(255,216,134);
     public static readonly Color BUTTON_COLOR = Color.Color8(255,163,74);
@@ -22,7 +22,7 @@ public abstract partial class Menu : Node2D{
     protected abstract void InputChecks(double delta);
     protected abstract void InputChecks(double delta, int id);
     public override void _Ready(){
-        Node2D backButton = GetNodeOrNull<Node2D>("MenuBackButton");
+        Control backButton = GetNodeOrNull<Control>("MenuBackButton");
         if(backButton != null) SetControllerUsage(!Cursor.UsingCursor);
     }
     public override void _Process(double delta){
@@ -113,7 +113,7 @@ public abstract partial class Menu : Node2D{
     protected void SetControllerUsage(bool usingController){
         InputPrompts inputPrompts = GetNodeOrNull<InputPrompts>("InputPrompts");
         if(inputPrompts != null) inputPrompts.Visible = usingController;
-        Node2D backButton = GetNodeOrNull<Node2D>("MenuBackButton");
+        Control backButton = GetNodeOrNull<Control>("MenuBackButton");
         Cursor.UsingCursor = !usingController;
         if(usingController){
             if(backButton != null) backButton.Modulate = new Color(0,0,0,float.Epsilon); //Hack needed cause gdscript add on used for aa lines because godot's implementation doesnt work

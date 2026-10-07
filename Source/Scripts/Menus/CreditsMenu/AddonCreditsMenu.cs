@@ -16,6 +16,9 @@ public partial class AddonCreditsMenu : VerticalMenu{
 		headerLabel = GetNode<Label>("CreditsHeader");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
 		selectionsNode = GetNode<Control>("Selections");
+		foreach(Control selectionNode in selectionsNode.GetChildren()){
+			selectionNode.PivotOffset = selectionNode.Size / 2f;
+		}
 		UpdateSelectionVisual();
 	}
 
@@ -73,17 +76,5 @@ public partial class AddonCreditsMenu : VerticalMenu{
 			}
 			return "Error: License not found.";
 		}
-	}
-
-	protected override void UpdateSelectionVisual(){
-		if(Selections == null) Selections = GetNode("Selections").GetChildren();
-
-		foreach(Node selection in Selections){
-			if(selection is Label label){
-				label.PivotOffset = label.Size / 2f;
-			}
-		}
-		
-		base.UpdateSelectionVisual();
 	}
 }

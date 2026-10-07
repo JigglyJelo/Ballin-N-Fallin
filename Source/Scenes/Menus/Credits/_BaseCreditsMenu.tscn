@@ -1,0 +1,100 @@
+[gd_scene load_steps=6 format=3 uid="uid://rsf1iv44mes6"]
+
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_5xjac"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="3_cu3w6"]
+[ext_resource type="PackedScene" uid="uid://bc551o4gjyk00" path="res://Source/Scenes/Menus/Credits/CreditsPanel.tscn" id="4_3hm17"]
+[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_epyyl"]
+[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="6_ouetj"]
+
+[node name="CreditsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="CreditsHeader" type="Label" parent="."]
+layout_mode = 0
+offset_right = 3072.0
+offset_bottom = 234.0
+scale = Vector2(1.25, 1.25)
+text = "Credits"
+label_settings = ExtResource("2_5xjac")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinkSubheader" type="Label" parent="."]
+self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -1871.0
+offset_top = 347.0
+offset_right = 1871.0
+offset_bottom = 584.0
+grow_horizontal = 2
+text = "https://github.com/JigglyJelo/Ballin-N-Fallin
+for more info and credits"
+label_settings = ExtResource("3_cu3w6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Selections" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1920.0
+offset_top = -480.0
+offset_right = 1916.0
+offset_bottom = 943.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Option1" type="Label" parent="Selections"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Option 1"
+label_settings = ExtResource("2_5xjac")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" parent="." instance=ExtResource("4_3hm17")]
+visible = false
+layout_mode = 1
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_epyyl")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2402.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+InputMessages = Dictionary[int, String]({
+2: "View License",
+3: "Back"
+})
+
+[node name="MenuBackButton" parent="." instance=ExtResource("6_ouetj")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -457.0
+offset_top = -154.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_vertical = 0

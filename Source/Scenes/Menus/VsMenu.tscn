@@ -20,15 +20,31 @@ font = ExtResource("10_vo5ex")
 font_size = 200
 font_color = Color(0.287526, 0.287526, 0, 1)
 
-[node name="VsMenu" type="Node2D"]
-position = Vector2(-480, -270)
+[node name="VsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_n6mne")
 
-[node name="MenuBackButton" parent="." instance=ExtResource("8_ldtqb")]
-position = Vector2(2230, 1240)
+[node name="HeaderText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2880.0
+offset_right = 960.0
+offset_bottom = 234.0
+grow_horizontal = 2
+scale = Vector2(1.5, 1.5)
+text = "Select a gameplay mode"
+label_settings = ExtResource("5_tbmwm")
+horizontal_alignment = 1
 
 [node name="Selections" type="Node2D" parent="."]
-position = Vector2(-400, 0)
+position = Vector2(1020, 836)
 
 [node name="TourButton" type="Polygon2D" parent="Selections"]
 position = Vector2(0, 95)
@@ -294,26 +310,45 @@ label_settings = ExtResource("5_tbmwm")
 metadata/_edit_use_anchors_ = true
 
 [node name="InputPrompts" parent="." instance=ExtResource("12_8jqmn")]
-offset_left = 1230.0
-offset_top = 1233.0
-offset_right = 3632.0
-offset_bottom = 1467.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2402.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
 
-[node name="HeaderText" type="Label" parent="."]
-offset_left = -2400.0
-offset_top = -850.0
-offset_right = 1440.0
-offset_bottom = -616.0
-scale = Vector2(1.5, 1.5)
-text = "Select a gameplay mode"
-label_settings = ExtResource("5_tbmwm")
-horizontal_alignment = 1
+[node name="MenuBackButton" parent="." instance=ExtResource("8_ldtqb")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -457.0
+offset_top = -154.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_vertical = 0
 
 [node name="SubHeaderText" type="Label" parent="."]
-offset_left = -1440.0
-offset_top = 1052.0
-offset_right = 2400.0
-offset_bottom = 1169.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -1920.0
+offset_top = -284.0
+offset_right = 1920.0
+offset_bottom = -167.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "Play multiple rounds of mini-games; the first to earn enough points wins!"
 label_settings = ExtResource("14_h45fs")
 horizontal_alignment = 1

@@ -4,11 +4,15 @@
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_aaaqf"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_dx1ft"]
 
-[node name="ScoreScreenMenu" type="Node2D"]
+[node name="ScoreScreenMenu" type="Control"]
 process_mode = 1
+layout_mode = 3
+anchors_preset = 0
+offset_right = 3840.0
+offset_bottom = 2160.0
 script = ExtResource("1_qoh07")
 
-[node name="Selections" type="Node" parent="."]
+[node name="Selections" type="Node2D" parent="."]
 
 [node name="PlayText" type="Label" parent="Selections"]
 offset_left = 1466.5
@@ -41,7 +45,15 @@ label_settings = ExtResource("2_aaaqf")
 horizontal_alignment = 1
 
 [node name="InputPrompts" parent="." instance=ExtResource("3_dx1ft")]
-offset_left = 2639.0
-offset_top = 2043.0
-offset_right = 5041.0
-offset_bottom = 2277.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2402.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0

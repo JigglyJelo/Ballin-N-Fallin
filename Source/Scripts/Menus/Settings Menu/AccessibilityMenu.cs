@@ -40,11 +40,21 @@ public partial class AccessibilityMenu : VerticalMenu{
         MenuScene.LoadMenu("Settings/SettingsMenu");
     }
 
-    private void UpdateTexts(){
+    private async void UpdateTexts(){
         cameraText.Text = "Dynamic Camera: " + (DynamicCameraEnabled ? "On" : "Off");
         nameText.Text = "Display Names: " + (AlwaysShowNames ? "Always" : "At start");
         SaveData();
         LoadData();
+		//Manually set back scales to what they should be since updating text sometimes resets it to 1.0
+		if(Selections != null){
+			Vector2 ogScale = new Vector2(VerticalMenu.SELECTION_SCALE,VerticalMenu.SELECTION_SCALE);
+			Label selectedLabel = Selections[Selection-1] as Label;
+			selectedLabel.Scale = ogScale;
+			GD.Print(selectedLabel.Scale);
+			await ToSignal(GetTree().CreateTimer(0.001,true,false,true), "timeout");
+			selectedLabel.Scale = ogScale;
+			GD.Print(selectedLabel.Scale);
+		}
     }
 
 	private void SetToDefaultSettings(){

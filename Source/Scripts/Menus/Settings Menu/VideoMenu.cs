@@ -19,8 +19,8 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
         fpsText = GetNode<Label>("Selections/FPS Text");
         vsyncText = GetNode<Label>("Selections/V-Sync Text");
         fullscreenText = GetNode<Label>("Selections/Fullscreen Text");
+		UpdateTexts();
         UpdateSelectionVisual();
-        UpdateTexts();
     }
 
 	public override void _Process(double delta){
@@ -32,12 +32,18 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
 		}
 	}
 
-    protected override void MenuChoose(int choice){
-        if(choice == 4){
-            ToggleFullscreen();
-            UpdateTexts();
-        }
-    }
+	protected override void MenuChoose(int choice){
+		switch(choice){
+			case 3:
+				vSyncEnabled = !vSyncEnabled;
+				UpdateTexts();
+				break;
+			case 4:
+				ToggleFullscreen();
+				UpdateTexts();
+				break;
+		}
+	}
 
     public override void MenuBack(){
         SFX.Play("Back");
@@ -55,9 +61,6 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
                 if(fpsCap == 0) fpsCap = 60;
                 else if(fpsCap < 1000) fpsCap++;
                 break;
-            case 3: 
-                vSyncEnabled = !vSyncEnabled;
-                break;
         }
         joystickTimer = 0;
         UpdateTexts();
@@ -73,9 +76,6 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
                 if(fpsCap == 60) fpsCap = 0;
                 else if(fpsCap > 60) fpsCap--;
                 break;
-            case 3: 
-                vSyncEnabled = !vSyncEnabled;
-                break;
         }
         joystickTimer = 0;
         UpdateTexts();
@@ -86,16 +86,23 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
         else DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
     }
 
-    private void UpdateTexts(){
+    private async void UpdateTexts(){
         resolutionText.Text = "Resolution: " + Math.Ceiling(16f/9f * RESOLUTIONS[resolutionIndex]) + " x " + RESOLUTIONS[resolutionIndex];
-        
-        if(fpsCap == 0) fpsText.Text = "FPS Cap: Unlimited";
-        else fpsText.Text = "FPS Cap: " + fpsCap;
-        
+        fpsText.Text = "FPS Cap: " + (fpsCap == 0 ? "Unlimited" : fpsCap);
         vsyncText.Text = vSyncEnabled ? "V-Sync: On" : "V-Sync: Off";
         fullscreenText.Text = (DisplayServer.WindowGetMode().Equals(DisplayServer.WindowMode.ExclusiveFullscreen)) ? "Fullscreen: On" : "Fullscreen: Off";
         SaveData();
         LoadData();
+		//Manually set back scales to what they should be since updating text sometimes resets it to 1.0
+		if(Selections != null){
+			Vector2 ogScale = new Vector2(VerticalMenu.SELECTION_SCALE,VerticalMenu.SELECTION_SCALE);
+			Label selectedLabel = Selections[Selection-1] as Label;
+			selectedLabel.Scale = ogScale;
+			GD.Print(selectedLabel.Scale);
+			await ToSignal(GetTree().CreateTimer(0.001,true,false,true), "timeout");
+			selectedLabel.Scale = ogScale;
+			GD.Print(selectedLabel.Scale);
+		}
     }
 
     private void SaveData(){

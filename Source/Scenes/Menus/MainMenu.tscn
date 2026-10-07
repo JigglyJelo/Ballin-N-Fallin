@@ -1,13 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://cv2evldohts40"]
+[gd_scene load_steps=5 format=3 uid="uid://cv2evldohts40"]
 
 [ext_resource type="Script" uid="uid://d1ryyupvcj0ne" path="res://Source/Scripts/Menus/MainMenu.cs" id="1_7hwb8"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_6iaex"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_45pv8"]
+[ext_resource type="LabelSettings" uid="uid://bhgwnlc6rddnp" path="res://Source/Materials/LabelSettings50.tres" id="3_bhb3f"]
 
-[node name="Main Menu" type="Node2D"]
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_7hwb8")
 
 [node name="Selections" type="Node2D" parent="."]
+position = Vector2(1920, 1080)
 
 [node name="Play Text" type="Label" parent="Selections"]
 anchors_preset = 8
@@ -87,16 +95,42 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Copyright" type="Label" parent="."]
 self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
-offset_left = -1920.0
-offset_top = 1008.0
-offset_right = -391.0
-offset_bottom = 1242.0
-scale = Vector2(0.333, 0.333)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -59.0
+offset_right = 860.0
+grow_vertical = 0
 text = "© 2026 JigglyJello. Some rights reserved"
-label_settings = ExtResource("3_45pv8")
+label_settings = ExtResource("3_bhb3f")
+vertical_alignment = 2
 
 [node name="InputPrompts" parent="." instance=ExtResource("3_6iaex")]
-InputMessages = {
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2402.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+InputMessages = Dictionary[int, String]({
 2: "Confirm",
 3: "Exit"
-}
+})
+
+[node name="Logo" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(929, 993)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -472.0
+offset_right = 457.0
+offset_bottom = 993.0
+grow_horizontal = 2

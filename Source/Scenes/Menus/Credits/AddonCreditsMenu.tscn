@@ -1,67 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6rx7k5x7l2dl"]
+[gd_scene load_steps=4 format=3 uid="uid://dd1ss15aanvlf"]
 
 [ext_resource type="Script" uid="uid://frx6uobsjgx4" path="res://Source/Scripts/Menus/CreditsMenu/AddonCreditsMenu.cs" id="1_m0s58"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="1_moqiu"]
-[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="2_8cuce"]
-[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="3_srjj2"]
-[ext_resource type="PackedScene" uid="uid://bc551o4gjyk00" path="res://Source/Scenes/Menus/Credits/CreditsPanel.tscn" id="5_4vwhe"]
-[ext_resource type="Script" uid="uid://dthj42m4mmobc" path="res://Source/Scripts/Menus/CreditsMenu/CreditsPanel.cs" id="6_8vrm6"]
+[ext_resource type="PackedScene" uid="uid://rsf1iv44mes6" path="res://Source/Scenes/Menus/Credits/_BaseCreditsMenu.tscn" id="1_okr6b"]
 
-[node name="AddonsCreditsMenu" type="Node2D"]
+[node name="AddonCreditsMenu" instance=ExtResource("1_okr6b")]
 script = ExtResource("1_m0s58")
 
-[node name="CreditsHeader" type="Label" parent="."]
-offset_left = -1920.0
-offset_top = -1090.0
-offset_right = 1152.0
-offset_bottom = -856.0
-scale = Vector2(1.25, 1.25)
+[node name="CreditsHeader" parent="." index="0"]
 text = "Addons Used"
-label_settings = ExtResource("1_moqiu")
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="LinkSubheader" type="Label" parent="."]
-self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
-offset_left = -935.0
-offset_top = -762.0
-offset_right = 2807.0
-offset_bottom = -291.0
-scale = Vector2(0.5, 0.5)
-text = "https://github.com/JigglyJelo/Ballin-N-Fallin
-for more info and credits"
-label_settings = ExtResource("1_moqiu")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LicenseLabel" type="Label" parent="."]
-offset_left = -1920.0
-offset_top = -838.0
-offset_right = 5750.0
-offset_bottom = 2084.0
-scale = Vector2(0.5, 0.5)
-label_settings = ExtResource("1_moqiu")
-autowrap_mode = 2
-
-[node name="MenuBackButton" parent="." instance=ExtResource("2_8cuce")]
-position = Vector2(1750, 970)
-
-[node name="Selections" type="VBoxContainer" parent="."]
-offset_left = -1918.0
-offset_top = -455.0
-offset_right = 1918.0
-offset_bottom = 968.0
-
-[node name="antialiased_line2d" type="Label" parent="Selections"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
+[node name="Option1" parent="Selections" index="0"]
 text = "antialiased_line2d | MIT"
-label_settings = ExtResource("1_moqiu")
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="netfox_internals" type="Label" parent="Selections"]
+[node name="Option2" type="Label" parent="Selections" index="1"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
@@ -70,7 +22,7 @@ label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NorayText" type="Label" parent="Selections"]
+[node name="Option3" type="Label" parent="Selections" index="2"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
@@ -79,7 +31,7 @@ label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NohubText" type="Label" parent="Selections"]
+[node name="Option4" type="Label" parent="Selections" index="3"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
@@ -88,7 +40,7 @@ label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TrimsockText" type="Label" parent="Selections"]
+[node name="Option5" type="Label" parent="Selections" index="4"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
@@ -96,23 +48,3 @@ text = "trimsock.gd | MIT"
 label_settings = ExtResource("1_moqiu")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Copyright" type="Label" parent="."]
-self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
-offset_left = -1920.0
-offset_top = 1008.0
-offset_right = -391.0
-offset_bottom = 1242.0
-scale = Vector2(0.333, 0.333)
-text = "© 2026 JigglyJello. Some rights reserved"
-label_settings = ExtResource("1_moqiu")
-
-[node name="InputPrompts" parent="." instance=ExtResource("3_srjj2")]
-InputMessages = Dictionary[int, String]({
-2: "View License",
-3: "Back"
-})
-
-[node name="Panel" parent="." instance=ExtResource("5_4vwhe")]
-visible = false
-script = ExtResource("6_8vrm6")
