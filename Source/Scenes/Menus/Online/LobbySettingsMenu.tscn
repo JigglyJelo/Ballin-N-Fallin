@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dn5tuyi0fexhi"]
+[gd_scene load_steps=12 format=3 uid="uid://dn5tuyi0fexhi"]
 
 [ext_resource type="Script" uid="uid://0o786kneadsc" path="res://Source/Scripts/Menus/Online Menus/LobbySettingsMenu.cs" id="1_geijo"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_jfy81"]
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="2_xpvv8"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="3_5fsfq"]
 [ext_resource type="Script" uid="uid://bs2cpoe1hgwgh" path="res://Source/Scripts/InGameChat.cs" id="3_iadom"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_na08j"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3iktt"]
@@ -19,64 +20,16 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[node name="LobbySettingsMenu" type="Node2D"]
-script = ExtResource("1_geijo")
-
-[node name="Screen" type="Control" parent="."]
+[node name="LobbySettingsMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -1920.0
 offset_top = -1080.0
 offset_right = 1920.0
 offset_bottom = 1080.0
+script = ExtResource("1_geijo")
 
-[node name="Panel" type="Panel" parent="Screen"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -532.0
-offset_top = -487.0
-offset_right = 532.0
-offset_bottom = 906.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(1500, 14)
-theme = ExtResource("2_xpvv8")
-
-[node name="ChatMessages" type="VBoxContainer" parent="Screen/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_xpvv8")
-alignment = 2
-script = ExtResource("3_iadom")
-isLobbyChat = true
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Screen/Panel/ChatMessages"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 3
-
-[node name="MessageList" type="VBoxContainer" parent="Screen/Panel/ChatMessages/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="LineEdit" type="LineEdit" parent="Screen/Panel/ChatMessages"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_tksag")
-theme_override_styles/read_only = SubResource("StyleBoxEmpty_ebldv")
-theme_override_styles/focus = SubResource("StyleBoxFlat_xjqkx")
-alignment = 2
-
-[node name="Header" type="Control" parent="Screen"]
+[node name="Header" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -85,8 +38,22 @@ offset_left = -1920.0
 offset_right = 1920.0
 offset_bottom = 637.0
 grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="SettingsText" type="Label" parent="Screen/Header"]
+[node name="LobbyText" type="Label" parent="Header"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -253.5
+offset_right = 253.5
+offset_bottom = 234.0
+grow_horizontal = 2
+text = "Lobby"
+label_settings = ExtResource("2_jfy81")
+horizontal_alignment = 1
+
+[node name="SettingsText" type="Label" parent="Header"]
 self_modulate = Color(0.643137, 0.643137, 0.643137, 1)
 layout_mode = 1
 anchors_preset = 4
@@ -100,20 +67,7 @@ text = "Settings"
 label_settings = ExtResource("2_jfy81")
 horizontal_alignment = 1
 
-[node name="LobbyText" type="Label" parent="Screen/Header"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -253.5
-offset_right = 253.5
-offset_bottom = 234.0
-grow_horizontal = 2
-text = "Lobby"
-label_settings = ExtResource("2_jfy81")
-horizontal_alignment = 1
-
-[node name="PlayersText" type="Label" parent="Screen/Header"]
+[node name="PlayersText" type="Label" parent="Header"]
 self_modulate = Color(0.643137, 0.643137, 0.643137, 1)
 layout_mode = 1
 anchors_preset = 6
@@ -130,7 +84,7 @@ text = "Players"
 label_settings = ExtResource("2_jfy81")
 horizontal_alignment = 1
 
-[node name="ChatText" type="Label" parent="Screen/Header"]
+[node name="ChatText" type="Label" parent="Header"]
 self_modulate = Color(0.643137, 0.643137, 0.643137, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -148,139 +102,167 @@ text = "Chat"
 label_settings = ExtResource("2_jfy81")
 horizontal_alignment = 1
 
-[node name="ChatText2" type="Label" parent="."]
+[node name="TChatText" type="Label" parent="Header"]
 self_modulate = Color(0.545098, 0.545098, 0.545098, 0.772549)
-anchors_preset = 8
+layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -814.5
-offset_top = -1035.5
-offset_right = 814.5
-offset_bottom = -801.5
+anchor_bottom = 1.0
+offset_left = -618.0
+offset_top = -234.0
+offset_right = 618.0
 grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(814.5, 814.5)
+grow_vertical = 0
 text = "Press T to chat"
-label_settings = ExtResource("2_jfy81")
+label_settings = ExtResource("3_5fsfq")
 horizontal_alignment = 1
 
-[node name="ColorText" type="Label" parent="."]
-offset_left = 1002.0
-offset_top = 778.0
-offset_right = 2631.0
-offset_bottom = 1012.0
-scale = Vector2(0.5, 0.5)
-text = "Click to change color"
-label_settings = ExtResource("2_jfy81")
-horizontal_alignment = 2
-
 [node name="ArrowSelections" parent="." instance=ExtResource("4_na08j")]
+visible = false
 
-[node name="Selections" type="Node" parent="."]
+[node name="Selections" type="Node2D" parent="."]
+position = Vector2(266, 708)
 
-[node name="ModeText050" type="Label" parent="Selections"]
-anchors_preset = -1
-anchor_right = 0.20651
-offset_left = -1672.0
-offset_top = -599.0
-offset_right = -736.0
-offset_bottom = -299.0
-scale = Vector2(0.5, 0.5)
+[node name="ModeText" type="Label" parent="Selections"]
+offset_right = 983.0
+offset_bottom = 117.0
 text = "Mode: Tour"
-label_settings = ExtResource("2_jfy81")
+label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/setting = true
 
-[node name="ScoreText050" type="Label" parent="Selections"]
-anchors_preset = -1
-anchor_right = 0.184375
-offset_left = -1672.0
-offset_top = -399.0
-offset_right = -903.0
-offset_bottom = -99.0
-scale = Vector2(0.5, 0.5)
+[node name="ScoreText" type="Label" parent="Selections"]
+offset_top = 121.0
+offset_right = 983.0
+offset_bottom = 238.0
 text = "Score: 50"
-label_settings = ExtResource("2_jfy81")
+label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
-[node name="ItemsText050" type="Label" parent="Selections"]
-anchors_preset = -1
-anchor_right = 0.166667
-offset_left = -1672.0
-offset_top = -199.0
-offset_right = -874.0
-offset_bottom = 101.0
-scale = Vector2(0.5, 0.5)
+[node name="ItemsText" type="Label" parent="Selections"]
+offset_top = 242.0
+offset_right = 983.0
+offset_bottom = 359.0
 text = "Items: On"
-label_settings = ExtResource("2_jfy81")
+label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
-[node name="StompText050" type="Label" parent="Selections"]
-anchors_preset = -1
-anchor_right = 0.166667
-offset_left = -1672.0
-offset_top = 1.0
-offset_right = -874.0
-offset_bottom = 301.0
-scale = Vector2(0.5, 0.5)
+[node name="StompText" type="Label" parent="Selections"]
+offset_top = 363.0
+offset_right = 983.0
+offset_bottom = 480.0
 text = "Stomping: On"
-label_settings = ExtResource("2_jfy81")
+label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
-[node name="ModesText050" type="Label" parent="Selections"]
-anchors_preset = -1
-anchor_right = 0.166667
-offset_left = -1672.0
-offset_top = 201.0
-offset_right = -874.0
-offset_bottom = 501.0
-scale = Vector2(0.5, 0.5)
+[node name="ModesText" type="Label" parent="Selections"]
+offset_top = 484.0
+offset_right = 983.0
+offset_bottom = 601.0
 text = "Mode Toggle"
-label_settings = ExtResource("2_jfy81")
+label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BufferText050" type="Label" parent="Selections"]
-anchors_preset = -1
-anchor_right = 0.150521
-anchor_bottom = 0.140741
-offset_left = -1672.0
-offset_top = 401.0
-offset_right = -962.0
-offset_bottom = 396.999
-scale = Vector2(0.5, 0.5)
+[node name="BufferText" type="Label" parent="Selections"]
+offset_top = 605.0
+offset_right = 983.0
+offset_bottom = 722.0
 text = "Buffer: Full"
-label_settings = ExtResource("2_jfy81")
+label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
 [node name="StartText" type="Label" parent="Selections"]
-offset_left = -1672.0
-offset_top = 451.0
-offset_right = -1105.0
-offset_bottom = 918.0
+offset_top = 726.0
+offset_right = 983.0
+offset_bottom = 960.0
 text = "Start"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
 
-[node name="MenuBackButton" parent="." instance=ExtResource("5_3iktt")]
-position = Vector2(1750, 970)
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -532.0
+offset_top = -533.5
+offset_right = 532.0
+offset_bottom = 859.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_xpvv8")
 
-[node name="InputPrompts" parent="." instance=ExtResource("6_dgd7k")]
-offset_left = -745.0
-offset_right = 4647.0
+[node name="ChatMessages" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_xpvv8")
+alignment = 2
+script = ExtResource("3_iadom")
+isLobbyChat = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/ChatMessages"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="MessageList" type="VBoxContainer" parent="Panel/ChatMessages/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="Panel/ChatMessages"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tksag")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_ebldv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xjqkx")
+alignment = 2
+
+[node name="CornerStuff" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1735.0
+offset_top = -365.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="InputPrompts" parent="CornerStuff" instance=ExtResource("6_dgd7k")]
+layout_mode = 2
 InputMessages = Dictionary[int, String]({
 0: "Change Color",
 2: "Confirm",
 3: "Back"
 })
+
+[node name="ColorText" type="Label" parent="CornerStuff"]
+layout_mode = 2
+text = "Click to change color"
+label_settings = ExtResource("3_5fsfq")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="MenuBackButton" parent="CornerStuff" instance=ExtResource("5_3iktt")]
+layout_mode = 2
+size_flags_horizontal = 8

@@ -5,14 +5,24 @@
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_o6o16"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="4_pl2p4"]
 
-[node name="Settings Menu" type="Node2D"]
+[node name="Settings Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_5ia61")
 
 [node name="Settings Text" type="Label" parent="."]
-offset_left = -1920.0
-offset_top = -935.0
-offset_right = 1920.0
-offset_bottom = -695.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_right = 340.0
+offset_bottom = 240.0
+grow_horizontal = 2
 text = "Settings"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
@@ -20,64 +30,87 @@ vertical_alignment = 1
 metadata/setting = true
 metadata/nonclickable = true
 
-[node name="Selections" type="Node2D" parent="."]
+[node name="Selections" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -518.5
+offset_top = -546.0
+offset_right = 518.5
+offset_bottom = 841.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Video Text" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -500.0
-offset_right = 1920.0
-offset_bottom = -260.0
-pivot_offset = Vector2(1920, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Video"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sound Text" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -199.0
-offset_right = 1920.0
-offset_bottom = 41.0
-pivot_offset = Vector2(1920, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Sound"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Controls Text" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 100.0
-offset_right = 1920.0
-offset_bottom = 340.0
-pivot_offset = Vector2(1920, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Controls"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Accessibility Text" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 400.0
-offset_right = 1920.0
-offset_bottom = 640.0
-pivot_offset = Vector2(1920, 120)
+layout_mode = 2
+size_flags_vertical = 6
 text = "Accessibility"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Online Text" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 700.0
-offset_right = 1920.0
-offset_bottom = 940.0
-pivot_offset = Vector2(1920, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Online"
 label_settings = ExtResource("2_a7hwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MenuBackButton" parent="." instance=ExtResource("4_o6o16")]
-position = Vector2(1750, 970)
-
 [node name="InputPrompts" parent="." instance=ExtResource("4_pl2p4")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2402.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_o6o16")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -457.0
+offset_top = -154.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_vertical = 0

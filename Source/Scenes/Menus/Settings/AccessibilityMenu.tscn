@@ -1,54 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh48nfoipc6v"]
+[gd_scene load_steps=4 format=3 uid="uid://jwvklrqcv3h2"]
 
-[ext_resource type="Script" uid="uid://dwcw75kbkk2j4" path="res://Source/Scripts/Menus/Settings Menu/AccessibilityMenu.cs" id="1_8uce1"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_u726u"]
-[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="4_abqir"]
-[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_gcqj4"]
+[ext_resource type="PackedScene" uid="uid://dudwf8vc4fc6d" path="res://Source/Scenes/Menus/Settings/_BaseSettingsMenu.tscn" id="1_lw7nc"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_kqj3h"]
+[ext_resource type="Script" uid="uid://dwcw75kbkk2j4" path="res://Source/Scripts/Menus/Settings Menu/AccessibilityMenu.cs" id="2_wprij"]
 
-[node name="Accessibility Menu" type="Node2D"]
-script = ExtResource("1_8uce1")
+[node name="Accessibility Menu" instance=ExtResource("1_lw7nc")]
+script = ExtResource("2_wprij")
 
-[node name="Settings Text" type="Label" parent="."]
-offset_left = -1920.0
-offset_top = -935.0
-offset_right = 1920.0
-offset_bottom = -695.0
-text = "Accessibility"
-label_settings = ExtResource("3_u726u")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/setting = true
-metadata/nonclickable = true
+[node name="HeaderText" parent="." index="1"]
+text = "Accessibility Settings"
 
-[node name="Selections" type="Node2D" parent="."]
-position = Vector2(215, 0)
+[node name="Selections" parent="." index="2"]
+offset_bottom = -149.0
 
-[node name="Camera Text" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -662.0
-offset_right = 56.0
-offset_bottom = -422.0
+[node name="Camera Text" type="Label" parent="Selections" index="0"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
 text = "Camera: Dynamic"
-label_settings = ExtResource("3_u726u")
+label_settings = ExtResource("2_kqj3h")
 vertical_alignment = 1
 
-[node name="Name Text" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -362.0
-offset_right = 42.0
-offset_bottom = -122.0
+[node name="Name Text" type="Label" parent="Selections" index="1"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
 text = "Display Names: At start"
-label_settings = ExtResource("3_u726u")
+label_settings = ExtResource("2_kqj3h")
 vertical_alignment = 1
-
-[node name="MenuBackButton" parent="." instance=ExtResource("4_gcqj4")]
-position = Vector2(1750, 970)
-
-[node name="InputPrompts" parent="." instance=ExtResource("4_abqir")]
-offset_left = 82.0
-offset_right = 3820.0
-InputMessages = {
-0: "Set to Default",
-2: "Confirm",
-3: "Back"
-}

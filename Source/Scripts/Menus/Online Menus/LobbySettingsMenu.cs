@@ -9,11 +9,11 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		base._Ready();
 		totalSelections = 7;
 		lobbbyText = GetNode<Label>("Screen/Header/LobbyText");
-		modeText = GetNode<Label>("Selections/ModeText050");
-		pointsText = GetNode<Label>("Selections/ScoreText050");
-		itemsText = GetNode<Label>("Selections/ItemsText050");
-		stompText = GetNode<Label>("Selections/StompText050");
-		bufferText = GetNode<Label>("Selections/BufferText050");
+		modeText = GetNode<Label>("Selections/ModeText");
+		pointsText = GetNode<Label>("Selections/ScoreText");
+		itemsText = GetNode<Label>("Selections/ItemsText");
+		stompText = GetNode<Label>("Selections/StompText");
+		bufferText = GetNode<Label>("Selections/BufferText");
 		startText = GetNode<Label>("Selections/StartText");
 		colorText = GetNode<Label>("ColorText");
 		if(!Game.UsingMouse()){

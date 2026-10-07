@@ -4,10 +4,13 @@
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_vrxvp"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="4_0qjee"]
 
-[node name="MiniControlsMenu" type="Node2D"]
+[node name="MiniControlsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_tcxdu")
 
 [node name="ProfileText" type="Label" parent="."]
+layout_mode = 0
 offset_left = -1920.0
 offset_top = -935.0
 offset_right = 1920.0
@@ -76,4 +79,10 @@ label_settings = ExtResource("3_vrxvp")
 vertical_alignment = 1
 
 [node name="MenuBackButton" parent="." instance=ExtResource("4_0qjee")]
-position = Vector2(1032, 753)
+layout_mode = 0
+offset_left = 785.0
+offset_top = 859.0
+offset_right = 1242.0
+offset_bottom = 1013.0
+grow_horizontal = 1
+grow_vertical = 1

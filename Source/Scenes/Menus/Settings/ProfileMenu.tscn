@@ -6,32 +6,70 @@
 [ext_resource type="PackedScene" uid="uid://j1rk64jq7nm5" path="res://Source/Scenes/Menus/Keypad.tscn" id="4_ylbyt"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_mlf3w"]
 
-[node name="ProfileMenu" type="Node2D"]
+[node name="ProfileMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_mpifo")
 VisibleItems = 7
 
 [node name="InfoLabel" type="Label" parent="."]
-offset_left = -2330.0
-offset_top = -1097.0
-offset_right = 3495.0
-offset_bottom = -863.0
-scale = Vector2(0.8, 0.8)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2912.5
+offset_right = 2912.5
+offset_bottom = 234.0
+grow_horizontal = 2
 text = "Choose a Profile to edit"
 label_settings = ExtResource("2_wb2t2")
 horizontal_alignment = 1
 
-[node name="MenuBackButton" parent="." instance=ExtResource("3_r5v6g")]
-position = Vector2(1750, 970)
-
 [node name="Selections" type="Node2D" parent="."]
+position = Vector2(1920, 1080)
 
 [node name="Keypad" parent="." instance=ExtResource("4_ylbyt")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="InputPrompts" parent="." instance=ExtResource("5_mlf3w")]
-offset_left = -108.0
-offset_right = 4010.0
-InputMessages = {
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4118.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+InputMessages = Dictionary[int, String]({
 1: "Delete",
 2: "Confirm",
 3: "Back"
-}
+})
+
+[node name="MenuBackButton" parent="." instance=ExtResource("3_r5v6g")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -457.0
+offset_top = -154.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_vertical = 0

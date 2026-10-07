@@ -19,6 +19,12 @@ text = "Press A to Join"
 label_settings = ExtResource("2_kl2x5")
 horizontal_alignment = 1
 
+[node name="InputPrompts" parent="." instance=ExtResource("5_ym35b")]
+offset_left = -559.0
+offset_top = 913.0
+offset_right = 1843.0
+offset_bottom = 1030.0
+
 [node name="MenuBackButton" type="Node2D" parent="."]
 position = Vector2(1750, 970)
 
@@ -40,5 +46,3 @@ offset_bottom = 157.0
 scale = Vector2(0.667, 0.667)
 text = "Back"
 label_settings = ExtResource("2_kl2x5")
-
-[node name="InputPrompts" parent="." instance=ExtResource("5_ym35b")]

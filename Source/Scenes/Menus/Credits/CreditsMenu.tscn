@@ -1,97 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdc6cb6l6jcvd"]
+[gd_scene load_steps=4 format=3 uid="uid://csbk4fcys0fxr"]
 
 [ext_resource type="Script" uid="uid://c5160y5477hes" path="res://Source/Scripts/Menus/CreditsMenu/CreditsMenu.cs" id="1_02wbn"]
+[ext_resource type="PackedScene" uid="uid://rsf1iv44mes6" path="res://Source/Scenes/Menus/Credits/_BaseCreditsMenu.tscn" id="1_p56kb"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="1_xubh5"]
-[ext_resource type="PackedScene" uid="uid://bc551o4gjyk00" path="res://Source/Scenes/Menus/Credits/CreditsPanel.tscn" id="2_owwwf"]
-[ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="3_1kban"]
-[ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="4_odaxy"]
 
-[node name="CreditsMenu" type="Node2D"]
+[node name="CreditsMenu" instance=ExtResource("1_p56kb")]
 script = ExtResource("1_02wbn")
 
-[node name="Panel" parent="." instance=ExtResource("2_owwwf")]
-visible = false
-
-[node name="CreditsHeader" type="Label" parent="."]
-offset_left = -1920.0
-offset_top = -1090.0
-offset_right = 1152.0
-offset_bottom = -856.0
-scale = Vector2(1.25, 1.25)
+[node name="CreditsHeader" parent="." index="0"]
 text = "Ballin N Fallin by JigglyJello"
-label_settings = ExtResource("1_xubh5")
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="LinkSubheader" type="Label" parent="."]
-self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
-offset_left = -1123.0
-offset_top = -762.0
-offset_right = 3369.0
-offset_bottom = -528.0
-scale = Vector2(0.5, 0.5)
+[node name="LinkSubheader" parent="." index="1"]
 text = "Open-source at github.com/JigglyJelo/Ballin-N-Fallin"
-label_settings = ExtResource("1_xubh5")
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="MenuBackButton" parent="." instance=ExtResource("3_1kban")]
-position = Vector2(1750, 970)
-
-[node name="Selections" type="Node" parent="."]
-
-[node name="CodeText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -480.0
-offset_right = 1920.0
-offset_bottom = -246.0
-pivot_offset = Vector2(1920, 117)
+[node name="Option1" parent="Selections" index="0"]
 text = "Code Credits"
-label_settings = ExtResource("1_xubh5")
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="AssetText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = -180.0
-offset_right = 1920.0
-offset_bottom = 54.0
-pivot_offset = Vector2(1920, 117)
+[node name="Option2" type="Label" parent="Selections" index="1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Asset Credits"
 label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AddonText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 120.0
-offset_right = 1920.0
-offset_bottom = 354.0
-pivot_offset = Vector2(1920, 117)
+[node name="Option3" type="Label" parent="Selections" index="2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Addon Credits"
 label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GodotText" type="Label" parent="Selections"]
-offset_left = -1920.0
-offset_top = 420.0
-offset_right = 1920.0
-offset_bottom = 654.0
-pivot_offset = Vector2(1920, 117)
+[node name="Option4" type="Label" parent="Selections" index="3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Godot Credits"
 label_settings = ExtResource("1_xubh5")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Copyright" type="Label" parent="."]
-self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
-offset_left = -1920.0
-offset_top = 1008.0
-offset_right = -391.0
-offset_bottom = 1242.0
-scale = Vector2(0.333, 0.333)
-text = "© 2026 JigglyJello. Some rights reserved"
-label_settings = ExtResource("1_xubh5")
-
-[node name="InputPrompts" parent="." instance=ExtResource("4_odaxy")]

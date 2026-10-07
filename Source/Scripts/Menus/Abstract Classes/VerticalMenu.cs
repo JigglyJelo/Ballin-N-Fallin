@@ -4,6 +4,7 @@ using Godot;
 /// Automatically supports horizontal adjustments (like sliders or toggles) if the derived class implements <see cref="ILeftRightSelections"/>.
 /// </summary>
 public abstract partial class VerticalMenu : Menu{
+	public const float SELECTION_SCALE = 1 + (1/3f);
     protected int totalSelections;
     private bool hasLeftRight = false;
     private ILeftRightSelections leftRightCast;
@@ -103,13 +104,12 @@ public abstract partial class VerticalMenu : Menu{
         for(int i = 0; i < Selections.Count; i++){
             Node selectionOption = Selections[i];
             if(selectionOption is Label textOption){
-                const float SIZE = 1 + (1/3f);
                 if(Selection == i+1){ //Current Selection becomes green and grows
                     float bigFontScale;
                     try{
-					    bigFontScale = int.Parse(textOption.Name.ToString().Substring(textOption.Name.ToString().Length-3))*SIZE/100f;
+					    bigFontScale = int.Parse(textOption.Name.ToString().Substring(textOption.Name.ToString().Length-3))*SELECTION_SCALE/100f;
 				    }catch{
-					    bigFontScale = defaultFontSize*SIZE;
+					    bigFontScale = defaultFontSize*SELECTION_SCALE;
 				    }
                     textOption.SelfModulate = SELECTED_COLOR;
                     textOption.ZIndex = 1;

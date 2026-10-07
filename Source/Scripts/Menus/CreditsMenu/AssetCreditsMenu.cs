@@ -4,7 +4,7 @@ public partial class AssetCreditsMenu : VerticalMenu{
 	private bool displayingSubCredits = false;
 	private CreditsPanel creditsPanel;
 	private Label headerLabel, subheaderLabel;
-	private Node2D selectionsNode;
+	private Control selectionsNode;
 	
 	private float startY;
 	private float visibleTextHeight = 400f; 
@@ -16,7 +16,10 @@ public partial class AssetCreditsMenu : VerticalMenu{
 		headerLabel = GetNode<Label>("CreditsHeader");
 		creditsPanel = GetNode<CreditsPanel>("Panel");
 		subheaderLabel = GetNode<Label>("LinkSubheader");
-		selectionsNode = GetNode<Node2D>("Selections");
+		selectionsNode = GetNode<Control>("Selections");
+		foreach(Control selectionNode in selectionsNode.GetChildren()){
+			selectionNode.PivotOffset = selectionNode.Size / 2f;
+		}
 		UpdateSelectionVisual();
 	}
 

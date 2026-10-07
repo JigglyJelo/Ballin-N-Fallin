@@ -1,33 +1,32 @@
 using Godot;
 
-public partial class MenuBackButton : Node2D{
-	public const int LEFT = -380;
-	public const int RIGHT = 280;
-	public const int TOP = -70;
-	public const int BOTTOM = 70;
-	private bool hovered;
+public partial class MenuBackButton : Label{
+	private bool hovered = false;
 
-    public override void _PhysicsProcess(double delta){
-		if(Visible){
-			Vector2 mousePosition = GetLocalMousePosition();
-			if(mousePosition.X > LEFT && mousePosition.X < RIGHT && mousePosition.Y > TOP && mousePosition.Y < BOTTOM){
-				if(!hovered){
-					hovered = true;
-					Modulate = Menu.SELECTED_COLOR;
-					SFX.Play("Move");
-				}
-				if(hovered){
-					Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
-				}
-				if(Input.IsActionJustReleased("Charge N Launch Mouse") && GetParent() is Menu menu){
-					menu.MenuBack();
-				}
-			}else{
-				if(hovered){
-					hovered = false;
-					Modulate = Colors.White;
+	public override void _Process(double delta){
+		if(hovered && Visible){
+			Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
+			if(Input.IsActionJustReleased("Charge N Launch Mouse")){
+				while(GetParent() != null){
+					if(GetParent() is Menu menu){
+						menu.MenuBack();
+						break;
+					}
 				}
 			}
 		}
+	}
+
+	public void _on_mouse_entered(){
+		hovered = true;
+		if(Visible){
+			Modulate = Menu.SELECTED_COLOR;
+			SFX.Play("Move");
+		}
+	}
+
+	public void _on_mouse_exited(){
+		hovered = false;
+		Modulate = Colors.White;
 	}
 }

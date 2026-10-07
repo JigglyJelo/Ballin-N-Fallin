@@ -1,3 +1,5 @@
+using Godot;
+
 public partial class SettingsMenu : VerticalMenu{
 
     public override void _Ready(){
@@ -6,6 +8,9 @@ public partial class SettingsMenu : VerticalMenu{
         totalSelections = 5;
         defaultFontSize = 1;
         LoadData();
+		foreach(Label label in GetNode("Selections").GetChildren()){
+			label.PivotOffset = label.Size / 2f;
+		}
         UpdateSelectionVisual();
     }
 

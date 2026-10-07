@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://b6kehpuuetcw8" path="res://Source/Scenes/Menus/PlayerSettingsMenu/MiniControlsMenu.tscn" id="4_shmgb"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_puexh"]
 
-[node name="MiniProfileMenu" type="Node2D"]
+[node name="MiniProfileMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_p177w")
 
 [node name="Background" type="Polygon2D" parent="."]
@@ -26,6 +28,7 @@ polygon = PackedVector2Array(-450, -383, 450, -383, 450, 333, -450, 333)
 
 [node name="TitleLabel" type="Label" parent="."]
 z_index = 1
+layout_mode = 0
 offset_left = -471.0
 offset_top = -395.0
 offset_right = 1377.0
@@ -36,19 +39,22 @@ horizontal_alignment = 1
 
 [node name="Keypad" parent="." instance=ExtResource("3_vyqqb")]
 visible = false
+layout_mode = 0
 
 [node name="MiniControlsMenu" parent="." instance=ExtResource("4_shmgb")]
+layout_mode = 0
 scale = Vector2(0.4, 0.4)
 
 [node name="InputPrompts" parent="." instance=ExtResource("5_puexh")]
+layout_mode = 0
 offset_left = -470.0
 offset_top = 360.0
-offset_right = 3290.0
-offset_bottom = 594.0
-scale = Vector2(0.25, 0.25)
-InputMessages = {
+offset_right = 1412.0
+offset_bottom = 477.0
+scale = Vector2(0.5, 0.5)
+InputMessages = Dictionary[int, String]({
 0: "Edit",
 1: "Delete",
 2: "Confirm",
 3: "Back"
-}
+})

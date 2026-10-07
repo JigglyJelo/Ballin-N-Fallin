@@ -16,13 +16,19 @@ shadow_size = 20
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(11, 11)
 
-[node name="TourMenu" type="Node2D"]
+[node name="TourMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_oosdl")
 
 [node name="SettingsText" type="Label" parent="."]
-offset_left = -1920.0
-offset_top = -1105.0
-offset_bottom = -855.0
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 250.0
 scale = Vector2(2, 2)
 text = "Settings"
 label_settings = ExtResource("2_6fscv")
@@ -31,6 +37,7 @@ vertical_alignment = 1
 
 [node name="EventsText" type="Label" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -1920.0
 offset_right = -1036.0
 offset_bottom = 240.0
@@ -40,6 +47,7 @@ vertical_alignment = 1
 
 [node name="TeamsText" type="Label" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -1920.0
 offset_top = 240.0
 offset_right = -1813.0
@@ -50,6 +58,7 @@ vertical_alignment = 1
 
 [node name="AdvancedText" type="Label" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -1920.0
 offset_top = 480.0
 offset_right = -1106.0
@@ -59,44 +68,45 @@ label_settings = SubResource("LabelSettings_ci4ky")
 vertical_alignment = 1
 
 [node name="ArrowSelections" parent="." instance=ExtResource("4_0353d")]
+visible = false
 
 [node name="Selections" type="Node2D" parent="."]
 
 [node name="PointsText" type="Label" parent="Selections"]
-offset_left = -1735.0
-offset_top = -480.0
-offset_right = -348.0
-offset_bottom = -240.0
+offset_left = 196.0
+offset_top = 599.0
+offset_right = 1583.0
+offset_bottom = 839.0
 text = "Points to Win: 50"
 label_settings = ExtResource("2_6fscv")
 vertical_alignment = 1
 metadata/setting = true
 
 [node name="ItemsText" type="Label" parent="Selections"]
-offset_left = -1735.0
-offset_top = -215.0
-offset_right = -936.0
-offset_bottom = 25.0
+offset_left = 196.0
+offset_top = 864.0
+offset_right = 995.0
+offset_bottom = 1104.0
 text = "Items: On"
 label_settings = ExtResource("2_6fscv")
 vertical_alignment = 1
 metadata/setting = true
 
 [node name="StompText" type="Label" parent="Selections"]
-offset_left = -1735.0
-offset_top = 50.0
-offset_right = -606.0
-offset_bottom = 290.0
+offset_left = 196.0
+offset_top = 1129.0
+offset_right = 1325.0
+offset_bottom = 1369.0
 text = "Stomping: On"
 label_settings = ExtResource("2_6fscv")
 vertical_alignment = 1
 metadata/setting = true
 
 [node name="ModesText" type="Label" parent="Selections"]
-offset_left = -1735.0
-offset_top = 315.0
-offset_right = -674.0
-offset_bottom = 555.0
+offset_left = 196.0
+offset_top = 1394.0
+offset_right = 1726.0
+offset_bottom = 1634.0
 text = "Mini-Game Toggle"
 label_settings = ExtResource("2_6fscv")
 vertical_alignment = 1
@@ -107,10 +117,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 319.0
-offset_top = 690.0
-offset_right = 960.0
-offset_bottom = 940.0
+offset_left = 2250.0
+offset_top = 1769.0
+offset_right = 2891.0
+offset_bottom = 2019.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
@@ -120,16 +130,45 @@ label_settings = ExtResource("2_6fscv")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MenuBackButton" parent="." instance=ExtResource("5_3kpyk")]
-position = Vector2(1750, 970)
-
-[node name="InputPrompts" parent="." instance=ExtResource("6_huxux")]
-
 [node name="InfoText" type="Label" parent="."]
-offset_left = 591.0
-offset_top = -555.0
-offset_right = 1971.0
-offset_bottom = 828.0
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1380.0
+offset_top = -691.5
+offset_bottom = 691.5
+grow_horizontal = 0
+grow_vertical = 2
 label_settings = ExtResource("2_6fscv")
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="InputPrompts" parent="." instance=ExtResource("6_huxux")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2402.0
+offset_top = -117.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MenuBackButton" parent="." instance=ExtResource("5_3kpyk")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -457.0
+offset_top = -154.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_vertical = 0

@@ -15,8 +15,7 @@ public partial class MainMenu : VerticalMenu{
 		exitText = GetNode<Label>("Selections/Exit Text");
 		copyrightText = GetNode<Label>("Copyright");
 		UpdateSelectionVisual();
-		Input.MouseMode = Input.MouseModeEnum.Visible;
-		AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Logo.tscn").Instantiate());
+		GetNode<TextureRect>("Logo").Texture = GD.Load<Texture2D>("res://Assets/Sprites/Logo.png");
 	}
 
     public override void _Process(double delta){

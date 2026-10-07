@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static class ControlProfileManager{
     public const string DEFAULT_PROFILE = "Default";
-    public static readonly string[] REMAP_ACTIONS = {"Charge N Launch", "Slam", "Item", "Y"};
+    public static readonly string[] REMAP_ACTIONS = {"Charge N Launch", "Slam", "Item", "Show Stats"};
     public static List<string> Profiles = new List<string>{DEFAULT_PROFILE};
 
     // AUTO-CREATE PROFILES

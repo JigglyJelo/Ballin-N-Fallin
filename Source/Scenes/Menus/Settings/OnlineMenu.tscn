@@ -7,10 +7,13 @@
 [ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="4_vdux5"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="5_j6qsr"]
 
-[node name="Online Menu" type="Node2D"]
+[node name="Online Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_qer8i")
 
 [node name="Settings Text" type="Label" parent="."]
+layout_mode = 0
 offset_left = -1920.0
 offset_top = -1030.0
 offset_right = 1920.0
@@ -49,6 +52,7 @@ vertical_alignment = 1
 metadata/setting = true
 
 [node name="NorayIPText" type="Label" parent="."]
+layout_mode = 0
 offset_left = -1705.0
 offset_top = -200.0
 offset_right = -87.0
@@ -59,6 +63,7 @@ vertical_alignment = 1
 metadata/setting = true
 
 [node name="NorayPortText" type="Label" parent="."]
+layout_mode = 0
 offset_left = -1705.0
 offset_top = 100.0
 offset_right = -87.0
@@ -69,6 +74,7 @@ vertical_alignment = 1
 metadata/setting = true
 
 [node name="NohubIPText" type="Label" parent="."]
+layout_mode = 0
 offset_left = -1705.0
 offset_top = 400.0
 offset_right = -87.0
@@ -79,6 +85,7 @@ vertical_alignment = 1
 metadata/setting = true
 
 [node name="NohubPortText" type="Label" parent="."]
+layout_mode = 0
 offset_left = -1705.0
 offset_top = 700.0
 offset_right = -87.0
@@ -89,6 +96,7 @@ vertical_alignment = 1
 metadata/setting = true
 
 [node name="NorayIPEntry" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = -700.0
 offset_top = -200.0
 offset_right = 1032.0
@@ -97,6 +105,7 @@ theme = ExtResource("4_vdux5")
 placeholder_text = "Enter Noray IP"
 
 [node name="NorayPortEntry" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = -700.0
 offset_top = 100.0
 offset_right = 1032.0
@@ -105,6 +114,7 @@ theme = ExtResource("4_vdux5")
 placeholder_text = "Enter Noray Port"
 
 [node name="NohubIPEntry" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = -700.0
 offset_top = 400.0
 offset_right = 1032.0
@@ -113,6 +123,7 @@ theme = ExtResource("4_vdux5")
 placeholder_text = "Enter Nohub IP"
 
 [node name="NohubPortEntry" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = -700.0
 offset_top = 700.0
 offset_right = 1032.0
@@ -121,13 +132,20 @@ theme = ExtResource("4_vdux5")
 placeholder_text = "Enter Nohub Port"
 
 [node name="MenuBackButton" parent="." instance=ExtResource("4_52tca")]
-position = Vector2(1750, 970)
+layout_mode = 0
+offset_left = 1750.0
+offset_top = 970.0
+offset_right = 2207.0
+offset_bottom = 1124.0
 
 [node name="InputPrompts" parent="." instance=ExtResource("5_j6qsr")]
-offset_left = 207.0
-offset_right = 3695.0
-InputMessages = {
+layout_mode = 0
+offset_left = -1322.0
+offset_top = 991.0
+offset_right = 2166.0
+offset_bottom = 1108.0
+InputMessages = Dictionary[int, String]({
 0: "Set to Default",
 2: "Confirm",
 3: "Back"
-}
+})

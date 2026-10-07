@@ -4,7 +4,9 @@
 [ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="3_jin65"]
 [ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="5_wvrtc"]
 
-[node name="Keypad" type="Node2D"]
+[node name="Keypad" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_5g6kr")
 
 [node name="KeypadBackground" type="Polygon2D" parent="."]
@@ -140,6 +142,7 @@ label_settings = ExtResource("5_wvrtc")
 
 [node name="TagLabel" type="Label" parent="."]
 z_index = 1
+layout_mode = 0
 offset_left = -624.0
 offset_top = -523.0
 offset_right = 623.5
