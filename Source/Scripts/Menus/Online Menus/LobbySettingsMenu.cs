@@ -8,14 +8,14 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 	public override void _Ready(){
 		base._Ready();
 		totalSelections = 7;
-		lobbbyText = GetNode<Label>("Screen/Header/LobbyText");
+		lobbbyText = GetNode<Label>("Header/LobbyText");
 		modeText = GetNode<Label>("Selections/ModeText");
 		pointsText = GetNode<Label>("Selections/ScoreText");
 		itemsText = GetNode<Label>("Selections/ItemsText");
 		stompText = GetNode<Label>("Selections/StompText");
 		bufferText = GetNode<Label>("Selections/BufferText");
 		startText = GetNode<Label>("Selections/StartText");
-		colorText = GetNode<Label>("ColorText");
+		colorText = GetNode<Label>("CornerStuff/ColorText");
 		if(!Game.UsingMouse()){
 			colorText.QueueFree();
 		}
@@ -41,7 +41,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 						InputChecks(delta,inputId);
 						if(!InColorMenu){
 							if(Game.UsingMouse() || inputId == (int)PlayerData.PlayerInputDevice.Mouse){
-								if(Input.IsActionJustReleased("Charge N Launch Mouse") && hoveredOverColorText()) createColorMenu();
+								if(Input.IsActionJustReleased("Charge N Launch Mouse") && IsMouseOverLabel(colorText)) createColorMenu();
 							}else{
 								if(Input.IsActionJustReleased("Y" + inputId)) createColorMenu();
 							}
@@ -50,7 +50,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 				}
 			}else if(OnlineLobby.Lobby.LobbyShown){
 				if(Game.UsingMouse()){
-					if(Input.IsActionJustReleased("Charge N Launch Mouse") && hoveredOverColorText() && colorChangeTimer >= 1) createColorMenu();
+					if(Input.IsActionJustReleased("Charge N Launch Mouse") && IsMouseOverLabel(colorText) && colorChangeTimer >= 1) createColorMenu();
 				}else{
 					for(int i = 0; i < Game.MAX_PLAYERS; i++){
 						if(Input.IsActionJustReleased("B" + i)) MenuBack();
@@ -61,11 +61,10 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		}
 		void createColorMenu(){
 			InColorMenu = true;
-			AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/PlayerSettingsMenu/PlayerSettingsMenu.tscn").Instantiate());
-		}
-		bool hoveredOverColorText(){
-			Vector2 mousePosition = colorText.GetLocalMousePosition();
-			return mousePosition.X > 294 && mousePosition.X < 2016 && mousePosition.Y > 44 && mousePosition.Y < 200;
+			GD.Print("Spawned");
+			PlayerSettingsMenu colorMenu = PlayerMenu.PLAYER_SETTINGS_MENU_SCENE.Instantiate<PlayerSettingsMenu>();
+			AddChild(colorMenu);
+			colorMenu.GlobalPosition = new Vector2(0,300);
 		}
 	}
 

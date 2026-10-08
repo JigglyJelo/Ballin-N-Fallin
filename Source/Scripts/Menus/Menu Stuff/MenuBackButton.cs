@@ -7,11 +7,13 @@ public partial class MenuBackButton : Label{
 		if(hovered && Visible){
 			Cursor.CursorThisFrame = Input.CursorShape.PointingHand;
 			if(Input.IsActionJustReleased("Charge N Launch Mouse")){
-				while(GetParent() != null){
-					if(GetParent() is Menu menu){
+				Node current = GetParent();
+				while(current != null){
+					if(current is Menu menu){
 						menu.MenuBack();
 						break;
 					}
+					current = current.GetParent();
 				}
 			}
 		}
