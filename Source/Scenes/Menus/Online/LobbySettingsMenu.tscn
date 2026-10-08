@@ -27,6 +27,7 @@ offset_left = -1920.0
 offset_top = -1080.0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 script = ExtResource("1_geijo")
 
 [node name="Header" type="Control" parent="."]
@@ -122,21 +123,24 @@ horizontal_alignment = 1
 [node name="ArrowSelections" parent="." instance=ExtResource("4_na08j")]
 visible = false
 
-[node name="Selections" type="Node2D" parent="."]
-position = Vector2(266, 708)
+[node name="Selections" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 266.0
+offset_top = 708.0
+offset_right = 266.0
+offset_bottom = 708.0
 
 [node name="ModeText" type="Label" parent="Selections"]
-offset_right = 983.0
-offset_bottom = 117.0
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Mode: Tour"
 label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/setting = true
 
 [node name="ScoreText" type="Label" parent="Selections"]
-offset_top = 121.0
-offset_right = 983.0
-offset_bottom = 238.0
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Score: 50"
 label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
@@ -144,9 +148,8 @@ metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
 [node name="ItemsText" type="Label" parent="Selections"]
-offset_top = 242.0
-offset_right = 983.0
-offset_bottom = 359.0
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Items: On"
 label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
@@ -154,9 +157,8 @@ metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
 [node name="StompText" type="Label" parent="Selections"]
-offset_top = 363.0
-offset_right = 983.0
-offset_bottom = 480.0
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Stomping: On"
 label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
@@ -164,18 +166,16 @@ metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
 [node name="ModesText" type="Label" parent="Selections"]
-offset_top = 484.0
-offset_right = 983.0
-offset_bottom = 601.0
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Mode Toggle"
 label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="BufferText" type="Label" parent="Selections"]
-offset_top = 605.0
-offset_right = 983.0
-offset_bottom = 722.0
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Buffer: Full"
 label_settings = ExtResource("3_5fsfq")
 vertical_alignment = 1
@@ -183,9 +183,8 @@ metadata/_edit_use_anchors_ = true
 metadata/setting = true
 
 [node name="StartText" type="Label" parent="Selections"]
-offset_top = 726.0
-offset_right = 983.0
-offset_bottom = 960.0
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Start"
 label_settings = ExtResource("2_jfy81")
 vertical_alignment = 1
@@ -248,16 +247,9 @@ grow_horizontal = 0
 grow_vertical = 0
 alignment = 2
 
-[node name="InputPrompts" parent="CornerStuff" instance=ExtResource("6_dgd7k")]
-layout_mode = 2
-InputMessages = Dictionary[int, String]({
-0: "Change Color",
-2: "Confirm",
-3: "Back"
-})
-
 [node name="ColorText" type="Label" parent="CornerStuff"]
 layout_mode = 2
+size_flags_horizontal = 8
 text = "Click to change color"
 label_settings = ExtResource("3_5fsfq")
 horizontal_alignment = 2
@@ -266,3 +258,12 @@ vertical_alignment = 2
 [node name="MenuBackButton" parent="CornerStuff" instance=ExtResource("5_3iktt")]
 layout_mode = 2
 size_flags_horizontal = 8
+
+[node name="InputPrompts" parent="CornerStuff" instance=ExtResource("6_dgd7k")]
+layout_mode = 2
+size_flags_horizontal = 8
+InputMessages = Dictionary[int, String]({
+0: "Change Color",
+2: "Confirm",
+3: "Back"
+})

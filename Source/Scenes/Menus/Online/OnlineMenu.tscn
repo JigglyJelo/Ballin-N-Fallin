@@ -29,13 +29,6 @@ placeholder_text = "Enter Username"
 alignment = 1
 max_length = 15
 
-[node name="MenuBackButton" parent="." instance=ExtResource("4_t7sip")]
-layout_mode = 0
-offset_left = 2230.0
-offset_top = 1240.0
-offset_right = 2687.0
-offset_bottom = 1394.0
-
 [node name="Selections" type="Node2D" parent="."]
 position = Vector2(-400, 0)
 
@@ -180,13 +173,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="InputPrompts" parent="." instance=ExtResource("5_sahyo")]
-layout_mode = 0
-offset_left = 258.0
-offset_top = 1264.0
-offset_right = 2660.0
-offset_bottom = 1498.0
-
 [node name="SubHeaderText" type="Label" parent="."]
 layout_mode = 0
 offset_left = -1440.0
@@ -196,6 +182,22 @@ offset_bottom = 1169.0
 text = "Create your own lobby for others to join."
 label_settings = ExtResource("8_mqo8f")
 horizontal_alignment = 1
+
+[node name="InputPrompts" parent="." instance=ExtResource("5_sahyo")]
+layout_mode = 0
+offset_left = -11.0
+offset_top = 1240.0
+offset_right = 2391.0
+offset_bottom = 1474.0
+
+[node name="MenuBackButton" parent="." instance=ExtResource("4_t7sip")]
+layout_mode = 0
+offset_left = 1961.0
+offset_top = 1216.0
+offset_right = 2418.0
+offset_bottom = 1370.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [editable path="Selections/HostButton/Player"]
 [editable path="Selections/JoinButton/Player"]

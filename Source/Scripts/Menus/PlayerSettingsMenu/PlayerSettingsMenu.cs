@@ -53,8 +53,7 @@ public partial class PlayerSettingsMenu : Node2D{
 		SetPlayerColor(Game.PlayerDatas[Id-1].PlayerColor);
 
 		if(Game.TotalPlayers > 4) Scale = new Vector2(0.7f,0.7f);
-		if(Online.IsOnline) Position = new Vector2(0,300);
-		else SetPosition();
+		if(!Online.IsOnline) SetPosition();
 
 		SwitchToColorMenu(); 
 	}

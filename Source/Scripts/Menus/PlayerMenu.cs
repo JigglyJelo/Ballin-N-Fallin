@@ -5,7 +5,7 @@ using System.Linq;
 public partial class PlayerMenu : Node2D{
 	private Label topText,backButtonText;
 	private Polygon2D backPolygon;
-	private readonly PackedScene PLAYER_SETTINGS_MENU_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Menus/PlayerSettingsMenu/PlayerSettingsMenu.tscn");
+	public static readonly PackedScene PLAYER_SETTINGS_MENU_SCENE = GD.Load<PackedScene>("res://Source/Scenes/Menus/PlayerSettingsMenu/PlayerSettingsMenu.tscn");
 	public static List<Color> selectedColors; //Keeps track of what colors are currently selected so no repeats
 	public static List<PlayerSettingsMenu> SettingMenus = new List<PlayerSettingsMenu>();
 
