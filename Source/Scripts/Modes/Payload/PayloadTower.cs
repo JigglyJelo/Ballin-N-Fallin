@@ -76,6 +76,7 @@ public partial class PayloadTower : Node2D{
 				ushort distanceUpdate = UnreliableManager.GetChannelLastUpdate(UnreliableManager.UnreliableChannel.Payload);
 				BitConverter.GetBytes(distanceUpdate).CopyTo(distanceData, distanceData.Length-2);
 				Rpc(nameof(SyncDistance),distanceData);
+				UnreliableManager.HostIncrementLastUpdate(UnreliableManager.UnreliableChannel.Payload);
 			}
 		}
 	}

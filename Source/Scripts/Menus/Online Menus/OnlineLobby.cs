@@ -338,7 +338,7 @@ public partial class OnlineLobby : Node{
             }
         }
         Lobby.GetNode<Node2D>("PlayerTexts").Visible = isShown;
-        if(Game.UsingMouse()) Lobby.GetNode<Node2D>("LobbySettingsMenu/MenuBackButton").Visible = isShown;
+        if(Game.UsingMouse()) Lobby.GetNode<Control>("LobbySettingsMenu/CornerStuff/MenuBackButton").Visible = isShown;
     }
 
     private void CreatePingGetter(){

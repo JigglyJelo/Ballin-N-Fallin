@@ -27,8 +27,7 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		}
 		if(!Online.IsHost()){
 			GetNode<Node2D>("ArrowSelections").Visible = false;
-			if(Game.UsingMouse()) GetNode<Node2D>("MenuBackButton").Modulate = Colors.White;
-		} 
+		}
 	}
 
 	public override void _Process(double delta){
@@ -197,9 +196,10 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		if(Online.IsHost()){
 			switch(choice){
 				case 5:
-					OnlineLobby.ShowLobby(false);
+					GD.Print("Bruh");
 					ModeMenu.ModeToggleMenu = true;
-					GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());		
+					GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());
+					OnlineLobby.ShowLobby(false);
 					break;
 				case 7:
 					if(Tour.IsTour){
@@ -207,9 +207,10 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 						OnlineLobby.Lobby.StartGame();
 						QueueFree();
 					}else{
+						GD.Print("Bruh");
 						ModeMenu.ModeToggleMenu = false;
+						GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());
 						OnlineLobby.ShowLobby(false);
-						GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());		
 					}
 					break;
 			}
