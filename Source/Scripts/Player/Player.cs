@@ -249,6 +249,7 @@ public partial class Player : Node2D{
 					if(InputVector.X < 0) Visuals.Flip(true,InputVector.Angle() + MathF.PI);
 					else Visuals.Flip(false,InputVector.Angle());
 				}
+				Rb.Freeze = false;
 				CanLaunch = false;
 			}
 			PlayerInput.SetWeakVibration(0);
