@@ -102,15 +102,16 @@ public partial class ModeMenu : ScrollableMenu{
     }
 
     protected override void UpdateSelectionVisual(){
-        base.UpdateSelectionVisual(); //CRITICAL: This triggers ScrollableMenu's sliding window movement and scale tweens
+        base.UpdateSelectionVisual();
         if(texts == null || texts.Length == 0) return;
         
         for(int i = 0; i < texts.Length; i++){
             if(texts[i] != null){
+				bool modeDisabled = ModeToggleMenu && !Tour.EnabledGameModes[modes[i]];
                 if(Selection - 1 == i){
-                    texts[i].SelfModulate = Tour.EnabledGameModes[modes[i]] ? SELECTED_COLOR : Colors.Red;
+                    texts[i].SelfModulate = modeDisabled ? Colors.Red : SELECTED_COLOR;
                 }else{
-                    texts[i].SelfModulate = Tour.EnabledGameModes[modes[i]] ? Colors.White : DISABLED_TINT;
+                    texts[i].SelfModulate = modeDisabled ? DISABLED_TINT: Colors.White;
                 }
             }
         }
