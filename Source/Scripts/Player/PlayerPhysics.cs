@@ -151,7 +151,7 @@ public class PlayerPhysics{
 			//Unfreeze frozen players on collision
 			if(otherPlayer.Rb.Freeze && !otherPlayer.Finished){
 				otherPlayer.Rb.SetDeferred("freeze",false);
-				GD.Print("Unfrozen");
+				//GD.Print("Unfrozen");
 			}
 			player.PlayerInput.ApplyVibration();
 		}

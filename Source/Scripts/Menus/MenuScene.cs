@@ -9,7 +9,6 @@ public partial class MenuScene : Node{
 	public static Node CurrentMenuNode = null;
 	public override void _Ready(){
 		Game.DisableProcesses(this);
-		GD.Print("Menu");
 		MenuNode = this;
 		Music = GetNode<AudioStreamPlayer>("Music");
 		Music.Playing = false;
@@ -25,7 +24,6 @@ public partial class MenuScene : Node{
 			Game.SetResolution();
 			LoadMenu(!string.IsNullOrEmpty(MenuToLoad) ? MenuToLoad : "MainMenu");
 		}
-		GD.Print(Game.CustomSoundtrack);
 		AudioStream stream = MusicPlayer.GetCustomSong("Menu");
 		if(stream != null) Music.Stream = stream;
 		else Music.Stream = GD.Load<AudioStream>("res://Assets/Music/Menu.ogg");

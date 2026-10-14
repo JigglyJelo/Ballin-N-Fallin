@@ -165,6 +165,7 @@ public partial class InGameChat : VBoxContainer{
 	}
 
 	public static void CreateNonChatMessage(Color messageColor, string message){
+		GD.Print($"[Chat Notification] {message}");
 		Label label = (InGameChatNode.isLobbyChat ? LOBBY_CHAT_MESSAGE_SCENE : IN_GAME_CHAT_MESSAGE_SCENE).Instantiate<Label>();
 		label.Text = message;
 		label.SelfModulate = messageColor;
@@ -175,6 +176,7 @@ public partial class InGameChat : VBoxContainer{
 		if(SettingsOnlineMenu.OnlineChatSetting != SettingsOnlineMenu.ChatSetting.Disabled){
 			foreach(PlayerData playerData in Game.PlayerDatas){
 				if(playerData.UUID == senderUUID){
+					GD.Print($"[Chat]  {playerData.UUID} {playerData.Username}: {message}");
 					if(SettingsOnlineMenu.OnlineChatSetting == SettingsOnlineMenu.ChatSetting.Filtered){
 						message = WordFilter.FilterChatMessage(message);
 					}

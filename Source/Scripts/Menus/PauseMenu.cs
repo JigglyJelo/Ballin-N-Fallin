@@ -119,10 +119,8 @@ public partial class PauseMenu : VerticalMenu{
 						//Click button
 						if(Input.IsActionJustReleased("Charge N Launch Mouse")){
 							Online.BanPlayer(playerTexts[i].UUID);
-							//GD.Print("Banned " + Online.PlayerInfos[i].Username);
 						}else if(Input.IsActionJustReleased("Slam Mouse")){
 							Online.KickPlayer(playerTexts[i].UUID);
-							//GD.Print("Kicked " + Online.PlayerInfos[i].Username);
 						}
 					}else{
 						banButton.SelfModulate = new Color(1,0,0);

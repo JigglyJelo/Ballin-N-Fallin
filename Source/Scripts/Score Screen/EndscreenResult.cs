@@ -211,7 +211,7 @@ public partial class EndscreenResult : Node2D{
 		}
 		
 		float startingHeight = BAR_FULL_HEIGHT*(startingScore/(float)Tour.CurrentTour.PointsToWin);
-		GD.Print(startingHeight);
+		//GD.Print(startingHeight);
 		Vector2[] polygon = visualPolygon.Polygon;
 		polygon[0].Y = startingHeight;
 		polygon[1].Y = startingHeight;

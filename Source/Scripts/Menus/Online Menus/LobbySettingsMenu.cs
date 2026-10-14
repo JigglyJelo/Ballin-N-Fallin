@@ -60,7 +60,6 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		}
 		void createColorMenu(){
 			InColorMenu = true;
-			GD.Print("Spawned");
 			PlayerSettingsMenu colorMenu = PlayerMenu.PLAYER_SETTINGS_MENU_SCENE.Instantiate<PlayerSettingsMenu>();
 			AddChild(colorMenu);
 			colorMenu.GlobalPosition = new Vector2(0,300);
@@ -196,7 +195,6 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 		if(Online.IsHost()){
 			switch(choice){
 				case 5:
-					GD.Print("Bruh");
 					ModeMenu.ModeToggleMenu = true;
 					GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());
 					OnlineLobby.ShowLobby(false);
@@ -207,7 +205,6 @@ public partial class LobbySettingsMenu : VerticalMenu, ILeftRightSelections{
 						OnlineLobby.Lobby.StartGame();
 						QueueFree();
 					}else{
-						GD.Print("Bruh");
 						ModeMenu.ModeToggleMenu = false;
 						GetParent().GetParent().AddChild(GD.Load<PackedScene>("res://Source/Scenes/Menus/ModeMenu.tscn").Instantiate());
 						OnlineLobby.ShowLobby(false);
