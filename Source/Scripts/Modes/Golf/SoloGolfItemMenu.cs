@@ -23,7 +23,6 @@ public partial class SoloGolfItemMenu : Menu2D{
 		Game.Paused = true;
 		juiceText = GetNode<Label>("ItemMenu/JuiceText");
 		if(!GolfCup.IsCup) GolfCup.Juice = float.PositiveInfinity;
-		else GD.Print("Bruh");
 		juiceText.Text = string.Format("Juice: {0:F1}",GolfCup.Juice);
 		int index = 0;
 		foreach(Item item in items.Keys){

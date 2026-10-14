@@ -13,7 +13,7 @@ public partial class RaceHUD : Node{
 		raceTimerText = GetNode<Label>("CanvasLayer/TimerText");
 		lapText = GetNode<Label>("CanvasLayer/LapText");
 		lapText.SelfModulate = Game.PlayerDatas[0].PlayerColor;
-		GD.Print(personalBest);
+		//GD.Print(personalBest);
 	}
 
 	public override void _PhysicsProcess(double delta){
@@ -40,7 +40,7 @@ public partial class RaceHUD : Node{
 	private void SaveData(){
 		if(Race.RaceTimer < personalBest || float.IsNaN(personalBest)){
 			Game.SaveLevelRecord(Mode.GameMode.Race,LevelName,Race.RaceTimer);
-			GD.Print("Saved");
+			GD.Print("Saved New Record: " + Race.RaceTimer);
 		}
 	}
 }

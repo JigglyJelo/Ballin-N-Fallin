@@ -239,7 +239,7 @@ public partial class Online{
 				GodotObject collidedObject = collision.GetCollider();
 				
 				if(collidedObject is Node collidedNode){
-					GD.Print(collidedNode.Name);
+					//GD.Print(collidedNode.Name);
 					
 					Vector2 preBounceVelocity = currentVelocity; 
 					
@@ -356,13 +356,13 @@ public partial class Online{
 							area.EmitSignal("body_entered", rb);
 						}
 						areasEntered.Add(area);
-						GD.Print("Entered " + area.Name);
+						//GD.Print("Entered " + area.Name);
 					}else if(!isInside && areasEntered.Contains(area)){
 						if(!firstIteration){
 							area.EmitSignal("body_exited", rb);
 						}
 						areasEntered.Remove(area);
-						GD.Print("Exited " + area.Name);
+						//GD.Print("Exited " + area.Name);
 					}
 				}
 			}

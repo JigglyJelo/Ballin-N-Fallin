@@ -26,10 +26,10 @@ public partial class Soccer : TeamSportsMode{
 
         float teamDeficit = 0;
         if(losingTeam) teamDeficit = (float)pointDifference / (TotalScore - 1);
-        GD.Print(teamDeficit);
+        //GD.Print(teamDeficit);
 
         float comebackScore = GetItemLuck(teamDeficit, GetComebackLuck(player));
-        GD.Print(comebackScore);
+        //GD.Print(comebackScore);
         Tuple<Item, int>[] items = {
             Tuple.Create(new BigFungus(player) as Item, 10),
             Tuple.Create(new Wings(player) as Item, 9),
@@ -46,7 +46,7 @@ public partial class Soccer : TeamSportsMode{
         float[] probabilities = GenerateProbabilities(items, comebackScore);
         // Select an item based on weighted probabilities
         item = SelectWeightedItem(items, probabilities);
-        GD.Print(string.Join(",", probabilities));
+        //GD.Print(string.Join(",", probabilities));
         return item;
     }
 }

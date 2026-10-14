@@ -29,7 +29,7 @@ public partial class Payload : TeamMode, ILevelLoadedEvent{
                 break;
         }
         float comebackScore = GetItemLuck(teamDeficit,GetComebackLuck(player));
-        GD.Print(comebackScore);
+        //GD.Print(comebackScore);
         Tuple<Item, int>[] items = {
             Tuple.Create(new Booll(player) as Item, 12),
             Tuple.Create(new BigFungus(player) as Item, 10),
@@ -46,7 +46,7 @@ public partial class Payload : TeamMode, ILevelLoadedEvent{
         float[] probabilities = GenerateProbabilities(items, comebackScore);
         // Select an item based on weighted probabilities
         item = SelectWeightedItem(items, probabilities);
-        GD.Print(string.Join(",",probabilities));
+        //GD.Print(string.Join(",",probabilities));
         return item;
     }
 }

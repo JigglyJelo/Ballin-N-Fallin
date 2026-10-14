@@ -98,10 +98,8 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
 			Vector2 ogScale = new Vector2(VerticalMenu.SELECTION_SCALE,VerticalMenu.SELECTION_SCALE);
 			Label selectedLabel = Selections[Selection-1] as Label;
 			selectedLabel.Scale = ogScale;
-			GD.Print(selectedLabel.Scale);
 			await ToSignal(GetTree().CreateTimer(0.001,true,false,true), "timeout");
 			selectedLabel.Scale = ogScale;
-			GD.Print(selectedLabel.Scale);
 		}
     }
 

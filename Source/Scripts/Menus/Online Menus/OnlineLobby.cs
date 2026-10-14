@@ -46,8 +46,7 @@ public partial class OnlineLobby : Node{
             playerText.Id = i;
             playerText.Visible = false;
         }
-        
-        GD.Print(Online.IsOnline);
+
         if(!Online.IsOnline){
             if(IsHost) HostLobby();
             else JoinLobby();
@@ -120,7 +119,7 @@ public partial class OnlineLobby : Node{
 		ChatManager.ResetMutedPlayers();
         PingGetter.LastPing = 0;
         PingGetter.Pings[0] = 0;
-        GD.Print("Host");
+        GD.Print("Hosting Lobby");
         
         if (!Game.IsDedicatedServer && (Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray)) {
             SendPlayerInfoDirect(Online.Username, (byte)Online.InputId, 1);
@@ -192,7 +191,7 @@ public partial class OnlineLobby : Node{
     }
 
     private void ConnectedToServer(){
-        GD.Print("Connected");
+        GD.Print("Connected to host");
         if(Online.Network == Online.NetworkType.Direct || Online.Network == Online.NetworkType.Noray) {
             RpcId(1, nameof(SendPlayerInfoDirect), Online.Username, (byte)Online.InputId, Game.GameNode.Multiplayer.GetUniqueId());
         }
@@ -362,7 +361,7 @@ public partial class OnlineLobby : Node{
     
     [Rpc(MultiplayerApi.RpcMode.Authority,CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     private void StartingGame(Mode.GameMode mode,string level,string folderPath){
-        GD.Print("Start");
+        GD.Print("Starting Online Game");
         Online.IsOnline = true;
         Tour.ResetPlayerScores();
         Game.TotalPlayers = Game.PlayerDatas.Count;

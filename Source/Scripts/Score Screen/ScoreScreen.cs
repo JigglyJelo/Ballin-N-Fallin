@@ -49,7 +49,6 @@ public partial class ScoreScreen : CanvasLayer{
 
 		music.Play();
 
-		if(playVictoryMusic) GD.Print("VICTORY");
 		for(int i = 1; i <= Game.TotalPlayers; i++){
 			CreateNextEndScreen(i);
 		}

@@ -36,7 +36,7 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
         switch(Selection){
             case 4:
                 AddChild(GD.Load<PackedScene>(MenuScene.MENU_PATH + "Settings/SoundtrackDialog.tscn").Instantiate<SoundtrackDialog>());
-                GD.Print("Opened");
+                GD.Print("Opened soundtrack dialog");
                 break;
         }
     }
@@ -98,10 +98,8 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
 			Vector2 ogScale = new Vector2(VerticalMenu.SELECTION_SCALE,VerticalMenu.SELECTION_SCALE);
 			Label selectedLabel = Selections[Selection-1] as Label;
 			selectedLabel.Scale = ogScale;
-			GD.Print(selectedLabel.Scale);
 			await ToSignal(GetTree().CreateTimer(0.001,true,false,true), "timeout");
 			selectedLabel.Scale = ogScale;
-			GD.Print(selectedLabel.Scale);
 		}
     }
 

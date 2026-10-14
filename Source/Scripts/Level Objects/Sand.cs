@@ -80,7 +80,6 @@ public partial class Sand : Area2D{
 			Player player = body.GetParent() as Player;
 			if (Timers.ContainsKey(player.Id)){
 				Timers.Remove(player.Id);
-				GD.Print("Removed " + player.Id);
 				Rpc(nameof(UnstickPlayer), player.Id);
 			}
 		}

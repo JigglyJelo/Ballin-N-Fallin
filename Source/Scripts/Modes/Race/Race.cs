@@ -139,7 +139,7 @@ public partial class Race : Mode, ILevelLoadedEvent{
         line = new Line2D();
         line.Name = "VisualLine";
         
-        GD.Print(startingIndex + " " + endingIndex + " " + racePathBakedPoints.Length);
+        //GD.Print(startingIndex + " " + endingIndex + " " + racePathBakedPoints.Length);
         for(int i = startingIndex; i <= endingIndex; i++){
             line.AddPoint(racePathBakedPoints[i]);
         }
@@ -179,9 +179,9 @@ public partial class Race : Mode, ILevelLoadedEvent{
             lapDistance = playerRemainingLapDistance;
         }
         float distance = getLength(line.Points);
-        GD.Print("dist between 1st and start or u: " + distance + " Your lap dist: " + playerLapDistance + " Ur Remaining lap: " + playerRemainingLapDistance);
+        //GD.Print("dist between 1st and start or u: " + distance + " Your lap dist: " + playerLapDistance + " Ur Remaining lap: " + playerRemainingLapDistance);
 		itemValue = distance + lapDistance;
-        GD.Print("End total dist: " + itemValue);
+        //GD.Print("End total dist: " + itemValue);
         float raceDeficit = itemValue / 12500;
         float comebackScore = GetItemLuck(raceDeficit,GetComebackLuck(player));
     

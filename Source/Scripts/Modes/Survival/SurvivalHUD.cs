@@ -11,7 +11,7 @@ public partial class SurvivalHUD : Node{
 		medals = (float[])Mode.ModeNode.GetNode<Level>("Level").GetMeta("Medals",new float[]{0,0,0,0});
 		GetNode<CanvasLayer>("CanvasLayer").Scale =  Game.ContentScaleVector2;
 		timerText = GetNode<Label>("CanvasLayer/TimerText");
-		GD.Print(personalBest);
+		//GD.Print(personalBest);
 	}
 
 	public override void _PhysicsProcess(double delta){
@@ -27,7 +27,6 @@ public partial class SurvivalHUD : Node{
 	public override void _Process(double delta){
 		if(Mode.Finished){
 			SaveData();
-			GD.Print("Saved");
 			QueueFree();
 		}
 	}
@@ -35,6 +34,7 @@ public partial class SurvivalHUD : Node{
 	private void SaveData(){
 		if(Survival.TotalTime > personalBest || float.IsNaN(personalBest)){
 			Game.SaveLevelRecord(Mode.GameMode.Survival,LevelName,Survival.TotalTime);
+			GD.Print("Saved new record: " + Survival.TotalTime);
 		}
 	}
 }

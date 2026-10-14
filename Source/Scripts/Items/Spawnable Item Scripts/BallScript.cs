@@ -58,7 +58,6 @@ public partial class BallScript : SpawnableItemScript{
             Player player = body.GetParent() as Player;
             if(player.IsStomping && isSuccessfulStomp()){
                 if(Online.IsHost()){
-                    GD.Print("STOMP");
                     DeleteItem();
                     player.Rpc(nameof(player.PlayerStomped));
                     player.Rb.LinearVelocity = new Vector2(player.Rb.LinearVelocity.X,-2000f);
@@ -67,7 +66,6 @@ public partial class BallScript : SpawnableItemScript{
                 player.Visuals.PlayerEmotion = Player.Emotion.Bumped;
 			    if(player.Rb.Freeze && !player.Finished){
 				    player.Rb.SetDeferred("freeze",false);
-				    GD.Print("Unfrozen");
 			    }
             }
 
