@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://rsf1iv44mes6" path="res://Source/Scenes/Menus/Credits/_BaseCreditsMenu.tscn" id="1_0xh5g"]
 [ext_resource type="Script" uid="uid://lfbdn7hkk607" path="res://Source/Scripts/Menus/CreditsMenu/AssetCreditsMenu.cs" id="1_2tusa"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="3_6rkrn"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="3_6rkrn"]
 
 [node name="AssetCreditsMenu" instance=ExtResource("1_0xh5g")]
 script = ExtResource("1_2tusa")

@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=5 format=3 uid="uid://b3rgpxcpctcs5"]
 
 [ext_resource type="FontFile" uid="uid://c8yln70sajdar" path="res://Assets/Font/din1451alt.ttf" id="1_0ylt7"]
-[ext_resource type="StyleBox" uid="uid://c2j26a5ic6j61" path="res://Source/Materials/LineEditStyleBox.tres" id="2_dfnc6"]
+[ext_resource type="StyleBox" uid="uid://c2j26a5ic6j61" path="res://Source/Resources/LineEditStyleBox.tres" id="2_dfnc6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xfmdo"]
 bg_color = Color(0.25098, 0.25098, 0.25098, 0.501961)

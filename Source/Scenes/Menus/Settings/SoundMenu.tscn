@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c2sfbth1dbfh6"]
 
 [ext_resource type="PackedScene" uid="uid://dudwf8vc4fc6d" path="res://Source/Scenes/Menus/Settings/_BaseSettingsMenu.tscn" id="1_qbdq0"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_duck3"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="2_duck3"]
 [ext_resource type="Script" uid="uid://b0qm3vgoag5ep" path="res://Source/Scripts/Menus/Settings Menu/SoundMenu.cs" id="2_uqew8"]
 
 [node name="Sound Menu" instance=ExtResource("1_qbdq0")]

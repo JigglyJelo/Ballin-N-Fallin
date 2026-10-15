@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://jwvklrqcv3h2"]
 
 [ext_resource type="PackedScene" uid="uid://dudwf8vc4fc6d" path="res://Source/Scenes/Menus/Settings/_BaseSettingsMenu.tscn" id="1_lw7nc"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_kqj3h"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="2_kqj3h"]
 [ext_resource type="Script" uid="uid://dwcw75kbkk2j4" path="res://Source/Scripts/Menus/Settings Menu/AccessibilityMenu.cs" id="2_wprij"]
 
 [node name="Accessibility Menu" instance=ExtResource("1_lw7nc")]

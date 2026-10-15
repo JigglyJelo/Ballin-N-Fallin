@@ -24,7 +24,7 @@ config/windows_native_icon="res://Assets/Sprites/Ballin N Fallin.ico"
 
 [audio]
 
-buses/default_bus_layout="res://Source/Materials/default_bus_layout.tres"
+buses/default_bus_layout="res://Source/Resources/default_bus_layout.tres"
 
 [autoload]
 
@@ -70,7 +70,7 @@ folder_colors={
 "res://Levels/Target Test Levels/": "teal",
 "res://Levels/Volleyball Levels/": "yellow",
 "res://Source/": "blue",
-"res://Source/Materials/": "teal",
+"res://Source/Resources/": "teal",
 "res://Source/Scenes/": "purple",
 "res://Source/Scenes/Mode Stuff/Ballin to the Bank/": "yellow",
 "res://Source/Scenes/Mode Stuff/Bomb Ball/": "gray",

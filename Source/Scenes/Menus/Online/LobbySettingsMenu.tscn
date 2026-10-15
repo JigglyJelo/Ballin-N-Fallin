@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://dn5tuyi0fexhi"]
 
 [ext_resource type="Script" uid="uid://0o786kneadsc" path="res://Source/Scripts/Menus/Online Menus/LobbySettingsMenu.cs" id="1_geijo"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_jfy81"]
-[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="2_xpvv8"]
-[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="3_5fsfq"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="2_jfy81"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Resources/DefaultTheme.tres" id="2_xpvv8"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Resources/LabelSettings100.tres" id="3_5fsfq"]
 [ext_resource type="Script" uid="uid://bs2cpoe1hgwgh" path="res://Source/Scripts/InGameChat.cs" id="3_iadom"]
 [ext_resource type="PackedScene" uid="uid://dovpipxb8speq" path="res://Source/Scenes/Menus/MenuStuff/ArrowSelections.tscn" id="4_na08j"]
 [ext_resource type="PackedScene" uid="uid://4145nahxlkx2" path="res://Source/Scenes/Menus/MenuStuff/MenuBackButton.tscn" id="5_3iktt"]

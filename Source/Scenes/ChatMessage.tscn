@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c45e7hb3xpgch"]
 
-[ext_resource type="LabelSettings" uid="uid://bhgwnlc6rddnp" path="res://Source/Materials/LabelSettings50.tres" id="1_b80r0"]
+[ext_resource type="LabelSettings" uid="uid://bhgwnlc6rddnp" path="res://Source/Resources/LabelSettings50.tres" id="1_b80r0"]
 
 [node name="ChatMessage" type="Label"]
 custom_minimum_size = Vector2(1291, 67)

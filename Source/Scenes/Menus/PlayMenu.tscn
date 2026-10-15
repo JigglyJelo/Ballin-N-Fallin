@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://dx5i7dgjkkohm" path="res://Assets/Sprites/Player/500/Eyes/HappyEyes.png" id="5_rd018"]
 [ext_resource type="Texture2D" uid="uid://ifddckmf2atm" path="res://Assets/Sprites/Player/500/Eyes/ShockedEyes.png" id="7_rvnb6"]
 [ext_resource type="Texture2D" uid="uid://4opjs3px0271" path="res://Assets/Sprites/Player/500/Pupils/ShockedPupils.png" id="8_58wg2"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="9_xlwba"]
-[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="12_jtwuf"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="9_xlwba"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Resources/LabelSettings100.tres" id="12_jtwuf"]
 [ext_resource type="PackedScene" uid="uid://wm80m76l1jpw" path="res://Source/Scenes/Menus/MenuStuff/InputPrompts.tscn" id="12_wuxlj"]
 
 [node name="PlayMenu" type="Control"]
