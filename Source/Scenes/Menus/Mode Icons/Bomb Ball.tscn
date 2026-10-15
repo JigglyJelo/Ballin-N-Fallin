@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cyf06ne765poi" path="res://Assets/Sprites/Particles/Shadow.png" id="6_gb00i"]
 [ext_resource type="Texture2D" uid="uid://bqedcq64h6f46" path="res://Assets/Sprites/Mode Stuff/Soccer/SportBall.png" id="7_nspvi"]
 [ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="8_d1t5l"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="9_12ta7"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="9_12ta7"]
 [ext_resource type="Texture2D" uid="uid://inqb2vgvt3px" path="res://Assets/Sprites/Player/BallShading.png" id="10_vsv3y"]
 
 [node name="BombBall" type="Node2D"]

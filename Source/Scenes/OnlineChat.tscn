@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://6khvvot1hckv"]
 
-[ext_resource type="Script" path="res://Source/Scripts/GameCanvasLayer.cs" id="1_5fxsi"]
-[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="1_hggle"]
-[ext_resource type="Script" path="res://Source/Scripts/InGameChat.cs" id="2_wg7qd"]
+[ext_resource type="Script" uid="uid://4v2ii7rhspcn" path="res://Source/Scripts/GameCanvasLayer.cs" id="1_5fxsi"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Resources/DefaultTheme.tres" id="1_hggle"]
+[ext_resource type="Script" uid="uid://bs2cpoe1hgwgh" path="res://Source/Scripts/InGameChat.cs" id="2_wg7qd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrtvp"]
 bg_color = Color(0, 0, 0, 0.784314)

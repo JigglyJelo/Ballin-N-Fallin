@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cyocxmby6rdhk" path="res://addons/antialiased_line2d/antialiased_polygon2d.gd" id="1_1k6co"]
 [ext_resource type="Script" uid="uid://u4tvoqtr803c" path="res://Source/Scripts/Menus/Menu Stuff/MenuBackButton.cs" id="1_ldiw2"]
 [ext_resource type="Texture2D" uid="uid://c2kkarucbt417" path="res://Assets/Sprites/1.png" id="2_em7ye"]
-[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="2_x5g7q"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Resources/LabelSettings100.tres" id="2_x5g7q"]
 
 [node name="MenuBackButton" type="Label"]
 custom_minimum_size = Vector2(227, 154)

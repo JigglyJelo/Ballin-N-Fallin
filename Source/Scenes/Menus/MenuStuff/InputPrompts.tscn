@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://wm80m76l1jpw"]
 
 [ext_resource type="Script" uid="uid://cxjshifoxuyxp" path="res://Source/Scripts/Menus/Menu Stuff/InputPrompts.cs" id="1_ktaxw"]
-[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Materials/DefaultTheme.tres" id="2_jj7ty"]
+[ext_resource type="Theme" uid="uid://b3rgpxcpctcs5" path="res://Source/Resources/DefaultTheme.tres" id="2_jj7ty"]
 
 [node name="InputPrompts" type="RichTextLabel"]
 offset_right = 2402.0

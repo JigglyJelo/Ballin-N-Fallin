@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dd1ss15aanvlf"]
 
 [ext_resource type="Script" uid="uid://frx6uobsjgx4" path="res://Source/Scripts/Menus/CreditsMenu/AddonCreditsMenu.cs" id="1_m0s58"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="1_moqiu"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="1_moqiu"]
 [ext_resource type="PackedScene" uid="uid://rsf1iv44mes6" path="res://Source/Scenes/Menus/Credits/_BaseCreditsMenu.tscn" id="1_okr6b"]
 
 [node name="AddonCreditsMenu" instance=ExtResource("1_okr6b")]

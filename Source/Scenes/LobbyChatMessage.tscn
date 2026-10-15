@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bsf4f418av3c2"]
 
-[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Materials/LabelSettings100.tres" id="1_ytp0x"]
+[ext_resource type="LabelSettings" uid="uid://dpti7x78bcjdm" path="res://Source/Resources/LabelSettings100.tres" id="1_ytp0x"]
 
 [node name="Label" type="Label"]
 size_flags_horizontal = 3

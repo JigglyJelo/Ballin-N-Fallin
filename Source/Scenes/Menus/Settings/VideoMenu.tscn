@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dudwf8vc4fc6d" path="res://Source/Scenes/Menus/Settings/_BaseSettingsMenu.tscn" id="1_0ujkp"]
 [ext_resource type="Script" uid="uid://b0pc2s7tyucg5" path="res://Source/Scripts/Menus/Settings Menu/VideoMenu.cs" id="2_dxnsc"]
-[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Materials/LabelSettings200.tres" id="2_tk20e"]
+[ext_resource type="LabelSettings" uid="uid://db32ti2uhafpf" path="res://Source/Resources/LabelSettings200.tres" id="2_tk20e"]
 
 [node name="Video Menu" instance=ExtResource("1_0ujkp")]
 script = ExtResource("2_dxnsc")
