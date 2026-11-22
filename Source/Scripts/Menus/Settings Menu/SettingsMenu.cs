@@ -7,7 +7,7 @@ public partial class SettingsMenu : VerticalMenu{
         Selection = 1;
         totalSelections = 5;
         defaultFontSize = 1;
-        LoadData();
+        SaveManager.LoadSaveData();
 		foreach(Label label in GetNode("Selections").GetChildren()){
 			label.PivotOffset = label.Size / 2f;
 		}
@@ -28,13 +28,5 @@ public partial class SettingsMenu : VerticalMenu{
     public override void MenuBack(){
         SFX.Play("Back");
         MenuScene.LoadMenu("MainMenu");
-    }
-
-    public static void LoadData(){
-        VideoMenu.LoadData();
-        SoundMenu.LoadData();
-        ControlProfileManager.LoadProfiles();
-        AccessibilityMenu.LoadData();
-		SettingsOnlineMenu.LoadData();
     }
 }

@@ -7,8 +7,10 @@ public static class SaveManager{
     public const string AUDIO_SECTION = "Sound";
     public const string ONLINE_SECTION = "Online";
     public const string ACCESSIBILITY_SECTION = "Accessibility";
+    public static ConfigFile ControlsConfig = new ConfigFile();
     public const string CONTROLS_PATH = "user://Controls.cfg";
-	public const string SAVE_PATH = "user://Records.sav";
+    public const string CONTROLS_SECTION = "Controls";
+    public const string SAVE_PATH = "user://Records.sav";
 
     public static float GetSavedLevelRecord(Mode.GameMode modeEnum, string levelName){
         if(FileAccess.FileExists(SAVE_PATH)){
@@ -40,5 +42,15 @@ public static class SaveManager{
         if(saveFile != null){
             saveFile.StoreVar(timesDict);
         }
+    }
+
+    public static void LoadSaveData(){
+        SettingsConfig.Load(SETTINGS_PATH);
+        VideoMenu.LoadData();
+        SoundMenu.LoadData();
+        AccessibilityMenu.LoadData();
+        SettingsOnlineMenu.LoadData();
+        SettingsConfig.Load(CONTROLS_PATH);
+        ControlProfileManager.LoadProfiles();
     }
 }

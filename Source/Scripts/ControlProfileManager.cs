@@ -24,8 +24,8 @@ public static class ControlProfileManager{
     }
 
     public static string SerializeEvent(InputEvent @event){
-        if(@event is InputEventJoypadButton btn){
-            return $"JoyBtn:{(int)btn.ButtonIndex}";
+        if(@event is InputEventJoypadButton button){
+            return $"JoyBtn:{(int)button.ButtonIndex}";
         }else if(@event is InputEventJoypadMotion motion){
             return $"JoyAxis:{(int)motion.Axis}:{(motion.AxisValue > 0 ? "1" : "-1")}";
         }
@@ -37,9 +37,9 @@ public static class ControlProfileManager{
         if(parts.Length < 2) return null;
 
         if(parts[0] == "JoyBtn"){
-            InputEventJoypadButton btn = new InputEventJoypadButton();
-            btn.ButtonIndex = (JoyButton)int.Parse(parts[1]);
-            return btn;
+            InputEventJoypadButton button = new InputEventJoypadButton();
+            button.ButtonIndex = (JoyButton)int.Parse(parts[1]);
+            return button;
         }else if(parts[0] == "JoyAxis" && parts.Length == 3){
             InputEventJoypadMotion motion = new InputEventJoypadMotion();
             motion.Axis = (JoyAxis)int.Parse(parts[1]);
@@ -53,8 +53,8 @@ public static class ControlProfileManager{
         Profiles.Clear();
         Profiles.Add(DEFAULT_PROFILE);
 
-        if(SaveManager.SettingsConfig.HasSection("Controls")){
-            string[] savedProfiles = SaveManager.SettingsConfig.GetSectionKeys("Controls");
+        if(SaveManager.ControlsConfig.HasSection(SaveManager.CONTROLS_SECTION)){
+            string[] savedProfiles = SaveManager.ControlsConfig.GetSectionKeys(SaveManager.CONTROLS_SECTION);
             foreach(string profile in savedProfiles){
                 if(profile != DEFAULT_PROFILE && !Profiles.Contains(profile)){
                     Profiles.Add(profile);
@@ -74,14 +74,14 @@ public static class ControlProfileManager{
 
     public static Godot.Collections.Dictionary GetProfileData(string profileName){
         Variant defaultDict = new Godot.Collections.Dictionary();
-        Variant data = SaveManager.SettingsConfig.GetValue("Controls", profileName, defaultDict);
+        Variant data = SaveManager.ControlsConfig.GetValue(SaveManager.CONTROLS_SECTION, profileName, defaultDict);
         if(data.Obj is Godot.Collections.Dictionary dict) return dict;
         return new Godot.Collections.Dictionary();
     }
 
     private static void SaveProfileData(string profileName, Godot.Collections.Dictionary data){
-        SaveManager.SettingsConfig.SetValue("Controls", profileName, data);
-        SaveManager.SettingsConfig.Save(SaveManager.SETTINGS_PATH);
+        SaveManager.ControlsConfig.SetValue(SaveManager.CONTROLS_SECTION, profileName, data);
+        SaveManager.ControlsConfig.Save(SaveManager.CONTROLS_PATH);
     }
 
     public static void DeleteProfile(string profileName){
@@ -92,9 +92,9 @@ public static class ControlProfileManager{
         }
 
         //Erase the data from the save file
-        if(SaveManager.SettingsConfig.HasSectionKey("Controls", profileName)){
-            SaveManager.SettingsConfig.EraseSectionKey("Controls", profileName);
-            SaveManager.SettingsConfig.Save(SaveManager.SETTINGS_PATH);
+        if(SaveManager.ControlsConfig.HasSectionKey(SaveManager.CONTROLS_SECTION, profileName)){
+            SaveManager.ControlsConfig.EraseSectionKey(SaveManager.CONTROLS_SECTION, profileName);
+            SaveManager.ControlsConfig.Save(SaveManager.CONTROLS_PATH);
         }
     }
 
@@ -102,23 +102,23 @@ public static class ControlProfileManager{
         Godot.Collections.Array<InputEvent> events = new Godot.Collections.Array<InputEvent>();
         switch(action){
             case "Charge N Launch":
-                InputEventJoypadButton aBtn = new InputEventJoypadButton();
-                aBtn.ButtonIndex = JoyButton.A; 
-                events.Add(aBtn);
+                InputEventJoypadButton aButton = new InputEventJoypadButton();
+                aButton.ButtonIndex = JoyButton.A; 
+                events.Add(aButton);
                 break;
             case "Slam":
-                InputEventJoypadButton xBtn = new InputEventJoypadButton();
-                xBtn.ButtonIndex = JoyButton.X; 
-                events.Add(xBtn);
+                InputEventJoypadButton xButton = new InputEventJoypadButton();
+                xButton.ButtonIndex = JoyButton.X; 
+                events.Add(xButton);
                 break;
             case "Item":
-                InputEventJoypadButton lbBtn = new InputEventJoypadButton();
-                lbBtn.ButtonIndex = JoyButton.LeftShoulder; 
-                events.Add(lbBtn);
+                InputEventJoypadButton lbButton = new InputEventJoypadButton();
+                lbButton.ButtonIndex = JoyButton.LeftShoulder; 
+                events.Add(lbButton);
                 
-                InputEventJoypadButton rbBtn = new InputEventJoypadButton();
-                rbBtn.ButtonIndex = JoyButton.RightShoulder; 
-                events.Add(rbBtn);
+                InputEventJoypadButton rbButton = new InputEventJoypadButton();
+                rbButton.ButtonIndex = JoyButton.RightShoulder; 
+                events.Add(rbButton);
                 
                 InputEventJoypadMotion ltMotion = new InputEventJoypadMotion();
                 ltMotion.Axis = JoyAxis.TriggerLeft; 
@@ -131,9 +131,9 @@ public static class ControlProfileManager{
                 events.Add(rtMotion);
                 break;
             case "Y":
-                InputEventJoypadButton yBtn = new InputEventJoypadButton();
-                yBtn.ButtonIndex = JoyButton.Y; 
-                events.Add(yBtn);
+                InputEventJoypadButton yButton = new InputEventJoypadButton();
+                yButton.ButtonIndex = JoyButton.Y; 
+                events.Add(yButton);
                 break;
         }
         return events;

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class MenuScene : Node{
 	public static MenuScene MenuNode;
@@ -13,17 +12,13 @@ public partial class MenuScene : Node{
 		Music = GetNode<AudioStreamPlayer>("Music");
 		Music.Playing = false;
 		if(Game.FirstBoot){
-			SaveManager.SettingsConfig.Load(SaveManager.SETTINGS_PATH);
-			SettingsMenu.LoadData();
-			AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Music"),(float)(20 * Math.Log10(Game.MusicVolume / 100.0)));
-			AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("SFX"),(float)(20 * Math.Log10(Game.SFXVolume / 100.0)));
+			SaveManager.LoadSaveData();
 			Game.FirstBoot = false;
 			LoadMenu("MainMenu");
-			Game.SetResolution();
 		}else{
-			Game.SetResolution();
 			LoadMenu(!string.IsNullOrEmpty(MenuToLoad) ? MenuToLoad : "MainMenu");
 		}
+		Game.SetResolution();
 		AudioStream stream = MusicPlayer.GetCustomSong("Menu");
 		if(stream != null) Music.Stream = stream;
 		else Music.Stream = GD.Load<AudioStream>("res://Assets/Music/Menu.ogg");

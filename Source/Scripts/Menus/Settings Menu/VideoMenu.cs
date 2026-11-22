@@ -6,7 +6,7 @@ public partial class VideoMenu : VerticalMenu, ILeftRightSelections{
     public static readonly short[] RESOLUTIONS = {360,486,720,1080,1440,2160,2880,4320};
     
     private static byte resolutionIndex = 0;
-    private static int fpsCap = 0; // 0 is Unlimited, otherwise 60-1000
+    private static int fpsCap = 0; //0 is Unlimited
     private static bool vSyncEnabled = true;
 
     public override void _Ready(){
