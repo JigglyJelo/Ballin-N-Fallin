@@ -52,7 +52,7 @@ public static class ControlProfileManager{
     public static void LoadProfiles(){
         Profiles.Clear();
         Profiles.Add(DEFAULT_PROFILE);
-
+        SaveManager.ControlsConfig.Load(SaveManager.CONTROLS_PATH);
         if(SaveManager.ControlsConfig.HasSection(SaveManager.CONTROLS_SECTION)){
             string[] savedProfiles = SaveManager.ControlsConfig.GetSectionKeys(SaveManager.CONTROLS_SECTION);
             foreach(string profile in savedProfiles){

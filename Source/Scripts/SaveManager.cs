@@ -50,7 +50,7 @@ public static class SaveManager{
         SoundMenu.LoadData();
         AccessibilityMenu.LoadData();
         SettingsOnlineMenu.LoadData();
-        SettingsConfig.Load(CONTROLS_PATH);
+        ControlsConfig.Load(CONTROLS_PATH);
         ControlProfileManager.LoadProfiles();
     }
 }
