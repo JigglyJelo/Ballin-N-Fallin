@@ -7,7 +7,7 @@ public partial class GolfHUD : Node{
 	private float lockout = 0.25f;
 	private float personalBestPar;
 	public override void _Ready(){
-		personalBestPar = Game.GetSavedLevelRecord(Mode.GameMode.Golf,LevelName);
+		personalBestPar = SaveManager.GetSavedLevelRecord(Mode.GameMode.Golf,LevelName);
 		GetNode<CanvasLayer>("CanvasLayer").Scale =  Game.ContentScaleVector2;
 		parText = GetNode<Label>("CanvasLayer/ParText");
 		strokesText = GetNode<Label>("CanvasLayer/StrokesText");
@@ -36,7 +36,7 @@ public partial class GolfHUD : Node{
 
 	private void SaveData(){
 		if(float.IsNaN(personalBestPar) || Golf.TopStroke < (int)personalBestPar){
-			Game.SaveLevelRecord(Mode.GameMode.Golf,LevelName,Golf.TopStroke);
+			SaveManager.SaveLevelRecord(Mode.GameMode.Golf,LevelName,Golf.TopStroke);
 		}
 	}
 }

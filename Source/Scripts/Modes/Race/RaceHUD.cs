@@ -7,7 +7,7 @@ public partial class RaceHUD : Node{
 	private float[] medals;
 	private float personalBest;
 	public override void _Ready(){
-		personalBest = Game.GetSavedLevelRecord(Mode.GameMode.Race,LevelName);
+		personalBest = SaveManager.GetSavedLevelRecord(Mode.GameMode.Race,LevelName);
 		medals = (float[])Mode.ModeNode.GetNode<Level>("Level").GetMeta("Medals",new float[]{0,0,0,0});
 		GetNode<CanvasLayer>("CanvasLayer").Scale = Game.ContentScaleVector2;
 		raceTimerText = GetNode<Label>("CanvasLayer/TimerText");
@@ -39,7 +39,7 @@ public partial class RaceHUD : Node{
 
 	private void SaveData(){
 		if(Race.RaceTimer < personalBest || float.IsNaN(personalBest)){
-			Game.SaveLevelRecord(Mode.GameMode.Race,LevelName,Race.RaceTimer);
+			SaveManager.SaveLevelRecord(Mode.GameMode.Race,LevelName,Race.RaceTimer);
 			GD.Print("Saved New Record: " + Race.RaceTimer);
 		}
 	}

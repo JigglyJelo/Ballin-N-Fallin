@@ -112,23 +112,23 @@ public partial class SoundMenu : VerticalMenu, ILeftRightSelections{
 	}
 
     private void SaveData(){
-        Game.SettingsSave.SetValue("Sound","Master Volume",Game.MasterVolume);
-        Game.SettingsSave.SetValue("Sound","Music Volume",Game.MusicVolume);
-        Game.SettingsSave.SetValue("Sound","SFX Volume",Game.SFXVolume);
-        Game.SettingsSave.SetValue("Sound","Custom Soundtrack",Game.CustomSoundtrack);
-        Game.SettingsSave.Save(Game.SETTINGS_PATH);
+        SaveManager.SettingsConfig.SetValue(SaveManager.AUDIO_SECTION,"Master Volume",Game.MasterVolume);
+        SaveManager.SettingsConfig.SetValue(SaveManager.AUDIO_SECTION,"Music Volume",Game.MusicVolume);
+        SaveManager.SettingsConfig.SetValue(SaveManager.AUDIO_SECTION,"SFX Volume",Game.SFXVolume);
+        SaveManager.SettingsConfig.SetValue(SaveManager.AUDIO_SECTION,"Custom Soundtrack",Game.CustomSoundtrack);
+        SaveManager.SettingsConfig.Save(SaveManager.SETTINGS_PATH);
     }
 
     public static void LoadData(){
-        Game.SettingsSave.Load(Game.SETTINGS_PATH);
+        SaveManager.SettingsConfig.Load(SaveManager.SETTINGS_PATH);
         //Volume
-        Game.MasterVolume = (byte)Game.SettingsSave.GetValue("Sound", "Master Volume", 50);
-        Game.MusicVolume = (byte)Game.SettingsSave.GetValue("Sound", "Music Volume", 50);
-        Game.SFXVolume = (byte)Game.SettingsSave.GetValue("Sound", "SFX Volume", 50);
+        Game.MasterVolume = (byte)SaveManager.SettingsConfig.GetValue(SaveManager.AUDIO_SECTION, "Master Volume", 50);
+        Game.MusicVolume = (byte)SaveManager.SettingsConfig.GetValue(SaveManager.AUDIO_SECTION, "Music Volume", 50);
+        Game.SFXVolume = (byte)SaveManager.SettingsConfig.GetValue(SaveManager.AUDIO_SECTION, "SFX Volume", 50);
         SetAudioVolume("Master",Game.MasterVolume);
         SetAudioVolume("Music",Game.MusicVolume);
         SetAudioVolume("SFX",Game.SFXVolume);
-        Game.CustomSoundtrack = (string)Game.SettingsSave.GetValue("Sound", "Custom Soundtrack", "");
+        Game.CustomSoundtrack = (string)SaveManager.SettingsConfig.GetValue(SaveManager.AUDIO_SECTION, "Custom Soundtrack", "");
     }
 
     private static void SetAudioVolume(string bus, byte volume){

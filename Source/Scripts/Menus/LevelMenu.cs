@@ -142,7 +142,7 @@ public partial class LevelMenu : ScrollableMenu{
 			if(Game.TotalPlayers == 1){
 				soloStatsLabel.Visible = !optionNames[Selection - 1].EndsWith("/"); //Hide if folder
 				string currentLevelName = string.Join("", FoldersOpened) + optionNames[Selection - 1];
-				float savedRecord = Game.GetSavedLevelRecord(Game.CurrentMode,currentLevelName);
+				float savedRecord = SaveManager.GetSavedLevelRecord(Game.CurrentMode,currentLevelName);
 				bool hasRecord = !float.IsNaN(savedRecord);
 
 				switch(Game.CurrentMode){
@@ -200,7 +200,7 @@ public partial class LevelMenu : ScrollableMenu{
 							Godot.Collections.Array<float> medals = (Godot.Collections.Array<float>)tempLevel.GetMeta("Medals");
 							if(medals.Count < 4) return "";
 							string currentLevelName = string.Join("", FoldersOpened) + optionNames[Selection - 1];
-							float savedRecord = Game.GetSavedLevelRecord(Game.CurrentMode, currentLevelName);
+							float savedRecord = SaveManager.GetSavedLevelRecord(Game.CurrentMode, currentLevelName);
 
 							//Check if they beat gold (Index 2)
 							bool displayDiamond = false;

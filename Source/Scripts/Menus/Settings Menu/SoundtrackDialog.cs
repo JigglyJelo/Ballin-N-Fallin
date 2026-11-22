@@ -23,8 +23,8 @@ public partial class SoundtrackDialog : FileDialog{
 	}
 
     private void SaveSoundtrack(){
-        Game.SettingsSave.SetValue("Sound","Custom Soundtrack",Game.CustomSoundtrack);
-		Game.SettingsSave.Save(Game.SETTINGS_PATH);
+        SaveManager.SettingsConfig.SetValue(SaveManager.AUDIO_SECTION,"Custom Soundtrack",Game.CustomSoundtrack);
+		SaveManager.SettingsConfig.Save(SaveManager.SETTINGS_PATH);
     }
 
     private void ClosedDialog(){
